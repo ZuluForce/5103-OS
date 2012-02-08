@@ -3,13 +3,12 @@
 
 #include "devices/abstract_device.h"
 
-class CharDevice: public abstract_device {
-	private:
-
+class CharDevice: public AbstractDevice {
 	public:
 		CharDevice();
 		~CharDevice();
 
+		void setTimer(int usec);
 };
 
 #endif // CHAR_DEVICE_H_INCLUDED

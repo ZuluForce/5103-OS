@@ -9,3 +9,9 @@ CharDevice::~CharDevice() {
 
 	return;
 }
+
+void CharDevice::setTimer(int usec) {
+	/* Setup interrupt timer */
+
+	return;
+}

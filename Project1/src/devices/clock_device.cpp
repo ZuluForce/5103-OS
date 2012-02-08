@@ -1,4 +1,4 @@
-#include "device/clock_device.h"
+#include "devices/clock_device.h"
 
 ClockDevice::ClockDevice() {
 
@@ -7,6 +7,14 @@ ClockDevice::ClockDevice() {
 
 
 ClockDevice::~ClockDevice() {
+
+	return;
+}
+
+
+void ClockDevice::setTimer(int usec) {
+	/* Setup an interrupt timer */
+
 
 	return;
 }

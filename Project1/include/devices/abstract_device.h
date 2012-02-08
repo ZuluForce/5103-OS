@@ -4,7 +4,7 @@
 class AbstractDevice {
 
 	public:
-		virtual void
+		virtual void setTimer(int time) = 0;
 };
 
 #endif
