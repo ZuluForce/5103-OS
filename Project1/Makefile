@@ -17,6 +17,7 @@ SRCDIR=src
 INCDIR=include
 OBJDIR=obj
 BINDIR=bin
+DOCDIR=Documentation
 
 vpath %.cpp $(SRCDIR)
 vpath %.cpp $(SRCDIR)/devices
@@ -35,7 +36,14 @@ init: init.cpp init.h $(DEPS)
 %.o: %.cpp %.h
 	$(CC) $< $(OBJCFLAGS) -o $(OBJDIR)/$@
 	
+update_docs:
+	doxygen Doxyfile
 	
 clean:
 	rm -f $(OBJDIR)/*.o
 	rm -f $(BINDIR)/init
+	
+clean_docs:
+	rm -rf $(DOCDIR)/Doxygen/*
+	
+clean_all: clean clean_docs

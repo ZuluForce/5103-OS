@@ -12,7 +12,7 @@
 
 using namespace std;
 
-typedef enum {ready, running, blocked, term} eProcState;
+enum eProcState {ready, running, blocked, terminated};
 
 struct ProcessInfo {
 	/* I was thinking we could save the name so the output of
