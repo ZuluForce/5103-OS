@@ -9,7 +9,8 @@ CFLAGS=-O3 -I$(INCDIR)
 OBJCFLAGS=-O3 -c -I$(INCDIR)
 ##LFLAGS=
 
-DEPS=clock_device.o char_device.o block_device.o
+DEPS=clock_device.o char_device.o block_device.o id.o cpu.o scheduler.o fcfs.o\
+		kernel.o
 ##Dependencies with obj directory appended
 _DEPS=$(patsubst %,$(OBJDIR)/%,$(DEPS))
 
@@ -21,9 +22,13 @@ DOCDIR=Documentation
 
 vpath %.cpp $(SRCDIR)
 vpath %.cpp $(SRCDIR)/devices
+vpath %.cpp $(SRCDIR)/utility
+vpath %.cpp $(SRCDIR)/scheduler
 
 vpath %.h $(INCDIR)
 vpath %.h $(INCDIR)/devices
+vpath %.h $(INCDIR)/utility
+vpath %.h $(INCDIR)/scheduler
 
 vpath %.o $(OBJDIR)
 
@@ -35,6 +40,9 @@ init: init.cpp init.h $(DEPS)
 
 %.o: %.cpp %.h
 	$(CC) $< $(OBJCFLAGS) -o $(OBJDIR)/$@
+	
+run: all
+	cd $(BINDIR) && ./init
 	
 update_docs:
 	doxygen Doxyfile

@@ -28,7 +28,7 @@ void cCPU::run() {
 
 	while (true) {
 		/* Get the Opcode */
-		Opcode = text[PC];
+		Opcode = execText[PC];
 
 		switch (Opcode) {
 			case 'S':
