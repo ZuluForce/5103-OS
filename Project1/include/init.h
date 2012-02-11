@@ -4,7 +4,6 @@
 #include <cstdio>
 #include <iostream>
 
-#include "cpu.h"
 #include "kernel.h"
 #include "scheduler/fcfs.h"
 

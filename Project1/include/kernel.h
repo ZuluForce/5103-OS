@@ -1,16 +1,14 @@
 #ifndef KERNEL_H_INCLUDED
 #define KERNEL_H_INCLUDED
 
-#include <cstdio>
-#include <cstdlib>
-#include <string>
+/** @file */
+
 #include <vector>
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
 
 #include "cpu.h"
-#include "process.h"
 #include "devices/char_device.h"
 #include "devices/block_device.h"
 #include "devices/clock_device.h"
@@ -26,6 +24,10 @@
 typedef cFCFS schedulerType;
 /* ======================================================================== */
 
+#ifndef PROCESS_H_INCLUDED
+__attribute__((error("process.h not included by scheduler")));
+#endif
+
 using namespace std;
 
 static const char initProcessName[] = "main.trace";
@@ -40,7 +42,7 @@ class cKernel {
 		CharDevice cDevice;
 		ClockDevice clockInterrupt;
 
-		ProcessInfo *runningProc;
+		ProcessInfo *runningProc; /**< #ProcessInfo */
 
 		cIDManager idGenerator;
 		/* Need to formalize process storage datastructures

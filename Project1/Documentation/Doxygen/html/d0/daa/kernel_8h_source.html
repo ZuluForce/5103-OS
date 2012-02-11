@@ -79,83 +79,82 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="title">include/kernel.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef KERNEL_H_INCLUDED</span>
+<a href="../../d0/daa/kernel_8h.html">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef KERNEL_H_INCLUDED</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define KERNEL_H_INCLUDED</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;cstdio&gt;</span>
-<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;cstdlib&gt;</span>
-<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;string&gt;</span>
-<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;vector&gt;</span>
-<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;fcntl.h&gt;</span>
-<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
-<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;sys/stat.h&gt;</span>
-<a name="l00011"></a>00011 
-<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;<a class="code" href="../../dc/da7/cpu_8h.html">cpu.h</a>&quot;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;process.h&quot;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &quot;devices/char_device.h&quot;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">#include &quot;devices/block_device.h&quot;</span>
-<a name="l00016"></a>00016 <span class="preprocessor">#include &quot;devices/clock_device.h&quot;</span>
-<a name="l00017"></a>00017 <span class="preprocessor">#include &quot;utility/id.h&quot;</span>
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019 <span class="preprocessor">#define DEFAULT_TIMER 1000 //Not sure on this one, need to read Specs</span>
-<a name="l00020"></a>00020 <span class="preprocessor"></span><span class="preprocessor">#define DEFAULT_PRIORITY 0</span>
-<a name="l00021"></a>00021 <span class="preprocessor"></span>
-<a name="l00022"></a>00022 <span class="comment">/* ============ Modify this section to change scheduler used ============== */</span>
-<a name="l00023"></a>00023 <span class="comment">//Also have to change dependency in Makefile</span>
-<a name="l00024"></a>00024 <span class="preprocessor">#include &quot;scheduler/fcfs.h&quot;</span>
-<a name="l00025"></a>00025 <span class="comment">//#define SCHEDULER_TYPE cFCFS</span>
-<a name="l00026"></a>00026 <span class="keyword">typedef</span> <a class="code" href="../../d6/dc3/classcFCFS.html">cFCFS</a> <a class="code" href="../../d6/dc3/classcFCFS.html">schedulerType</a>;
-<a name="l00027"></a>00027 <span class="comment">/* ======================================================================== */</span>
-<a name="l00028"></a>00028 
-<a name="l00029"></a>00029 <span class="keyword">using namespace </span>std;
-<a name="l00030"></a>00030 
-<a name="l00031"></a>00031 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> initProcessName[] = <span class="stringliteral">&quot;main.trace&quot;</span>;
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;vector&gt;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;fcntl.h&gt;</span>
+<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
+<a name="l00009"></a>00009 <span class="preprocessor">#include &lt;sys/stat.h&gt;</span>
+<a name="l00010"></a>00010 
+<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;<a class="code" href="../../dc/da7/cpu_8h.html">cpu.h</a>&quot;</span>
+<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;devices/char_device.h&quot;</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;devices/block_device.h&quot;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include &quot;devices/clock_device.h&quot;</span>
+<a name="l00015"></a>00015 <span class="preprocessor">#include &quot;utility/id.h&quot;</span>
+<a name="l00016"></a>00016 
+<a name="l00017"></a>00017 <span class="preprocessor">#define DEFAULT_TIMER 1000 //Not sure on this one, need to read Specs</span>
+<a name="l00018"></a>00018 <span class="preprocessor"></span><span class="preprocessor">#define DEFAULT_PRIORITY 0</span>
+<a name="l00019"></a>00019 <span class="preprocessor"></span>
+<a name="l00020"></a>00020 <span class="comment">/* ============ Modify this section to change scheduler used ============== */</span>
+<a name="l00021"></a>00021 <span class="comment">//Also have to change dependency in Makefile</span>
+<a name="l00022"></a>00022 <span class="preprocessor">#include &quot;scheduler/fcfs.h&quot;</span>
+<a name="l00023"></a>00023 <span class="comment">//#define SCHEDULER_TYPE cFCFS</span>
+<a name="l00024"></a>00024 <span class="keyword">typedef</span> <a class="code" href="../../d6/dc3/classcFCFS.html">cFCFS</a> <a class="code" href="../../d6/dc3/classcFCFS.html">schedulerType</a>;
+<a name="l00025"></a>00025 <span class="comment">/* ======================================================================== */</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027 <span class="preprocessor">#ifndef PROCESS_H_INCLUDED</span>
+<a name="l00028"></a>00028 <span class="preprocessor"></span>__attribute__((error(<span class="stringliteral">&quot;process.h not included by scheduler&quot;</span>)));
+<a name="l00029"></a>00029 <span class="preprocessor">#endif</span>
+<a name="l00030"></a>00030 <span class="preprocessor"></span>
+<a name="l00031"></a>00031 <span class="keyword">using namespace </span>std;
 <a name="l00032"></a>00032 
-<a name="l00033"></a><a class="code" href="../../db/da5/classcKernel.html">00033</a> <span class="keyword">class </span><a class="code" href="../../db/da5/classcKernel.html">cKernel</a> {
-<a name="l00034"></a>00034     <span class="keyword">private</span>:
-<a name="l00035"></a>00035         <a class="code" href="../../d2/dc6/classcCPU.html">cCPU</a> CPUref;
-<a name="l00036"></a>00036         <span class="keywordtype">int</span> clockTick;
-<a name="l00037"></a>00037 
-<a name="l00038"></a>00038         <span class="comment">//Devices:</span>
-<a name="l00039"></a>00039         <a class="code" href="../../db/d6d/classBlockDevice.html">BlockDevice</a> bDevice;
-<a name="l00040"></a>00040         <a class="code" href="../../d8/d4f/classCharDevice.html">CharDevice</a> cDevice;
-<a name="l00041"></a>00041         <a class="code" href="../../dc/d14/classClockDevice.html">ClockDevice</a> clockInterrupt;
-<a name="l00042"></a>00042 
-<a name="l00043"></a>00043         <a class="code" href="../../dd/dc8/structProcessInfo.html">ProcessInfo</a> *runningProc;
+<a name="l00033"></a>00033 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> initProcessName[] = <span class="stringliteral">&quot;main.trace&quot;</span>;
+<a name="l00034"></a>00034 
+<a name="l00035"></a><a class="code" href="../../db/da5/classcKernel.html">00035</a> <span class="keyword">class </span><a class="code" href="../../db/da5/classcKernel.html">cKernel</a> {
+<a name="l00036"></a>00036     <span class="keyword">private</span>:
+<a name="l00037"></a>00037         <a class="code" href="../../d2/dc6/classcCPU.html">cCPU</a> CPUref;
+<a name="l00038"></a>00038         <span class="keywordtype">int</span> clockTick;
+<a name="l00039"></a>00039 
+<a name="l00040"></a>00040         <span class="comment">//Devices:</span>
+<a name="l00041"></a>00041         <a class="code" href="../../db/d6d/classBlockDevice.html">BlockDevice</a> bDevice;
+<a name="l00042"></a>00042         <a class="code" href="../../d8/d4f/classCharDevice.html">CharDevice</a> cDevice;
+<a name="l00043"></a>00043         <a class="code" href="../../dc/d14/classClockDevice.html">ClockDevice</a> clockInterrupt;
 <a name="l00044"></a>00044 
-<a name="l00045"></a>00045         <a class="code" href="../../de/dd4/classcIDManager.html">cIDManager</a> idGenerator;
-<a name="l00046"></a>00046         <span class="comment">/* Need to formalize process storage datastructures</span>
-<a name="l00047"></a>00047 <span class="comment">         * to write this one.</span>
-<a name="l00048"></a>00048 <span class="comment">         */</span>
-<a name="l00049"></a>00049         <span class="comment">//void swapProcess(...);</span>
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051         <span class="comment">/* Process Scheduler */</span>
-<a name="l00052"></a>00052         <a class="code" href="../../d6/dc3/classcFCFS.html">schedulerType</a> scheduler;
-<a name="l00053"></a>00053 
-<a name="l00059"></a>00059         <span class="keywordtype">void</span> swapProcesses(<a class="code" href="../../dd/dc8/structProcessInfo.html">ProcessInfo</a>*);
-<a name="l00060"></a>00060 
-<a name="l00061"></a>00061     <span class="keyword">public</span>:
-<a name="l00068"></a>00068         <a class="code" href="../../db/da5/classcKernel.html">cKernel</a>();
-<a name="l00069"></a>00069         ~<a class="code" href="../../db/da5/classcKernel.html">cKernel</a>();
-<a name="l00070"></a>00070 
-<a name="l00076"></a>00076         <span class="keywordtype">void</span> boot(); <span class="comment">//Starts the kernel loop</span>
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078 
-<a name="l00084"></a>00084         <span class="keywordtype">void</span> initProcess(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename, pidType parent, <span class="keywordtype">int</span> priority = DEFAULT_PRIORITY);
-<a name="l00085"></a>00085 
-<a name="l00091"></a>00091         <span class="keywordtype">void</span> cleanupProcess(pidType pid);
-<a name="l00092"></a>00092 
-<a name="l00093"></a>00093         <span class="keywordtype">void</span> _sysCall(<span class="keyword">const</span> <span class="keywordtype">char</span> call);
-<a name="l00094"></a>00094 };
-<a name="l00095"></a>00095 
-<a name="l00096"></a>00096 <span class="preprocessor">#endif // KERNEL_H_INCLUDED</span>
+<a name="l00045"></a>00045         <a class="code" href="../../dd/dc8/structProcessInfo.html">ProcessInfo</a> *runningProc; 
+<a name="l00047"></a>00047         <a class="code" href="../../de/dd4/classcIDManager.html">cIDManager</a> idGenerator;
+<a name="l00048"></a>00048         <span class="comment">/* Need to formalize process storage datastructures</span>
+<a name="l00049"></a>00049 <span class="comment">         * to write this one.</span>
+<a name="l00050"></a>00050 <span class="comment">         */</span>
+<a name="l00051"></a>00051         <span class="comment">//void swapProcess(...);</span>
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053         <span class="comment">/* Process Scheduler */</span>
+<a name="l00054"></a>00054         <a class="code" href="../../d6/dc3/classcFCFS.html">schedulerType</a> scheduler;
+<a name="l00055"></a>00055 
+<a name="l00061"></a>00061         <span class="keywordtype">void</span> swapProcesses(<a class="code" href="../../dd/dc8/structProcessInfo.html">ProcessInfo</a>*);
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063     <span class="keyword">public</span>:
+<a name="l00070"></a>00070         <a class="code" href="../../db/da5/classcKernel.html">cKernel</a>();
+<a name="l00071"></a>00071         ~<a class="code" href="../../db/da5/classcKernel.html">cKernel</a>();
+<a name="l00072"></a>00072 
+<a name="l00078"></a>00078         <span class="keywordtype">void</span> boot(); <span class="comment">//Starts the kernel loop</span>
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080 
+<a name="l00086"></a>00086         <span class="keywordtype">void</span> initProcess(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename, pidType parent, <span class="keywordtype">int</span> priority = DEFAULT_PRIORITY);
+<a name="l00087"></a>00087 
+<a name="l00093"></a>00093         <span class="keywordtype">void</span> cleanupProcess(pidType pid);
+<a name="l00094"></a>00094 
+<a name="l00095"></a>00095         <span class="keywordtype">void</span> _sysCall(<span class="keyword">const</span> <span class="keywordtype">char</span> call);
+<a name="l00096"></a>00096 };
+<a name="l00097"></a>00097 
+<a name="l00098"></a>00098 <span class="preprocessor">#endif // KERNEL_H_INCLUDED</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -167,7 +166,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 11 2012 11:41:56 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Feb 11 2012 14:08:01 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

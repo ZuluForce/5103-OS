@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
     <ul class="tablist">
       <li><a href="../../annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="../../classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="../../hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="../../inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="../../functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -84,6 +84,8 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 </div><!--header-->
 <div class="contents">
 <!-- doxytag: class="ProcessInfo" -->
+<p><code>#include &lt;<a class="el" href="../../da/d42/process_8h_source.html">process.h</a>&gt;</code></p>
+
 <p><a href="../../d4/d5b/structProcessInfo-members.html">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-attribs"></a>
@@ -96,8 +98,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>pid</b></td><
 unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>startCPU</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a6eda10132e07b1596c09822724b0c7"></a><!-- doxytag: member="ProcessInfo::totalCPU" ref="a8a6eda10132e07b1596c09822724b0c7" args="" -->
 unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>totalCPU</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a748790bb8c3ef5d2dff552f35b81298e"></a><!-- doxytag: member="ProcessInfo::state" ref="a748790bb8c3ef5d2dff552f35b81298e" args="" -->
-eProcState&#160;</td><td class="memItemRight" valign="bottom"><b>state</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../da/d42/process_8h.html#a2c72cb00af5be695c1f898162350821f">eProcState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/dc8/structProcessInfo.html#a748790bb8c3ef5d2dff552f35b81298e">state</a></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f9f55dc3548d0bed66e06db8f47d958"></a><!-- doxytag: member="ProcessInfo::priority" ref="a2f9f55dc3548d0bed66e06db8f47d958" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>priority</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9b2d3f321f21ec1ee97c8dd5e63ac6c8"></a><!-- doxytag: member="ProcessInfo::PC" ref="a9b2d3f321f21ec1ee97c8dd5e63ac6c8" args="" -->
@@ -111,6 +112,24 @@ void *&#160;</td><td class="memItemRight" valign="bottom"><b>scheduleData</b></t
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa65ed051998c0493b68feeea5ae4955f"></a><!-- doxytag: member="ProcessInfo::memory" ref="aa65ed051998c0493b68feeea5ae4955f" args="" -->
 unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>memory</b></td></tr>
 </table>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>Structure for containing process state and data</p>
+<p>This struture is created in the kernel when a process is initialized. It contains all process data needed for execution and for the kernel/scheduler to make desciions on it. </p>
+</div><hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="a748790bb8c3ef5d2dff552f35b81298e"></a><!-- doxytag: member="ProcessInfo::state" ref="a748790bb8c3ef5d2dff552f35b81298e" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../da/d42/process_8h.html#a2c72cb00af5be695c1f898162350821f">eProcState</a> <a class="el" href="../../dd/dc8/structProcessInfo.html#a748790bb8c3ef5d2dff552f35b81298e">ProcessInfo::state</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p><a class="el" href="../../da/d42/process_8h.html#a2c72cb00af5be695c1f898162350821f">eProcState</a> </p>
+
+</div>
+</div>
 <hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/<a class="el" href="../../da/d42/process_8h_source.html">process.h</a></li>
 </ul>
@@ -120,7 +139,7 @@ unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>memory</b></
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -132,7 +151,7 @@ unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>memory</b></
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 11 2012 11:41:56 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Feb 11 2012 14:08:01 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

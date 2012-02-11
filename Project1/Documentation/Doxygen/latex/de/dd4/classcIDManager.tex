@@ -4,16 +4,46 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classcIDManager_a59021595aaf85ebc151c207a8a04f101}{{\bfseries c\-I\-D\-Manager} (unsigned int start\-I\-D=0)}\label{de/dd4/classcIDManager_a59021595aaf85ebc151c207a8a04f101}
-
+\hyperlink{classcIDManager_a59021595aaf85ebc151c207a8a04f101}{c\-I\-D\-Manager} (unsigned int start\-I\-D=0)
 \item 
-\hypertarget{classcIDManager_a45420147e785cc219743e9aa2c336501}{unsigned int {\bfseries get\-I\-D} ()}\label{de/dd4/classcIDManager_a45420147e785cc219743e9aa2c336501}
-
+unsigned int \hyperlink{classcIDManager_a45420147e785cc219743e9aa2c336501}{get\-I\-D} ()
 \item 
-\hypertarget{classcIDManager_a6671d898740f88cf40860b0b9e119b02}{void {\bfseries return\-I\-D} (unsigned int id)}\label{de/dd4/classcIDManager_a6671d898740f88cf40860b0b9e119b02}
-
+void \hyperlink{classcIDManager_a6671d898740f88cf40860b0b9e119b02}{return\-I\-D} (unsigned int id)
 \end{DoxyCompactItemize}
 
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classcIDManager_a59021595aaf85ebc151c207a8a04f101}{\index{c\-I\-D\-Manager@{c\-I\-D\-Manager}!c\-I\-D\-Manager@{c\-I\-D\-Manager}}
+\index{c\-I\-D\-Manager@{c\-I\-D\-Manager}!cIDManager@{c\-I\-D\-Manager}}
+\subsubsection[{c\-I\-D\-Manager}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-I\-D\-Manager\-::c\-I\-D\-Manager} (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{start\-I\-D = {\ttfamily 0}}
+\end{DoxyParamCaption}
+)}}\label{de/dd4/classcIDManager_a59021595aaf85ebc151c207a8a04f101}
+\-Creates a new \-I\-D \-Manager object
+
+\-Default start \-I\-D is 0. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcIDManager_a45420147e785cc219743e9aa2c336501}{\index{c\-I\-D\-Manager@{c\-I\-D\-Manager}!get\-I\-D@{get\-I\-D}}
+\index{get\-I\-D@{get\-I\-D}!cIDManager@{c\-I\-D\-Manager}}
+\subsubsection[{get\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int {\bf c\-I\-D\-Manager\-::get\-I\-D} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{de/dd4/classcIDManager_a45420147e785cc219743e9aa2c336501}
+\-Reserves a unique \-I\-D
+
+\-Unique is in the sense that no one else is currently using it but it may have been used previously. are distributed in increasing order until \-U\-I\-N\-T\-\_\-\-M\-A\-X is reached. \-After this is reached, \-I\-Ds are given from the queue of returned \-I\-Ds. \-If this queue is empty then an exception is thrown. \hypertarget{classcIDManager_a6671d898740f88cf40860b0b9e119b02}{\index{c\-I\-D\-Manager@{c\-I\-D\-Manager}!return\-I\-D@{return\-I\-D}}
+\index{return\-I\-D@{return\-I\-D}!cIDManager@{c\-I\-D\-Manager}}
+\subsubsection[{return\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-I\-D\-Manager\-::return\-I\-D} (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{id}
+\end{DoxyParamCaption}
+)}}\label{de/dd4/classcIDManager_a6671d898740f88cf40860b0b9e119b02}
+\-Returns an \-I\-D to the manager
+
+\-If the \-I\-D is not equal to the one last given then it is added to a 'free queue'. \-If it is equal to the last one reserved then the \-I\-D counter is simply decremented \-If this last case happens, it causes \hyperlink{classcIDManager_a45420147e785cc219743e9aa2c336501}{c\-I\-D\-Manager\-::get\-I\-D} to stop consuming from the queue and return this newly availabe \-I\-D. 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 

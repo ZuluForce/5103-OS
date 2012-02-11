@@ -1,5 +1,6 @@
 var searchData=
 [
+  ['getid',['getID',['../de/dd4/classcIDManager.html#a45420147e785cc219743e9aa2c336501',1,'cIDManager']]],
   ['getopcode',['getOpcode',['../d2/dc6/classcCPU.html#a987e1ab511c71dcde48411f5bb16f9d8',1,'cCPU']]],
   ['getparam',['getParam',['../d2/dc6/classcCPU.html#a891d9b77e1818ca247e9d76f4db99415',1,'cCPU']]],
   ['getpsw',['getPSW',['../d2/dc6/classcCPU.html#ad485374a709476e2dfb847046d3d5215',1,'cCPU']]],

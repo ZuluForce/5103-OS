@@ -71,7 +71,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
     <ul class="tablist">
       <li><a href="../../annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="../../classes.html"><span>Class&#160;Index</span></a></li>
-      <li><a href="../../hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="../../inherits.html"><span>Class&#160;Hierarchy</span></a></li>
       <li><a href="../../functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
@@ -88,13 +88,68 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a59021595aaf85ebc151c207a8a04f101"></a><!-- doxytag: member="cIDManager::cIDManager" ref="a59021595aaf85ebc151c207a8a04f101" args="(unsigned int startID=0)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>cIDManager</b> (unsigned int startID=0)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a45420147e785cc219743e9aa2c336501"></a><!-- doxytag: member="cIDManager::getID" ref="a45420147e785cc219743e9aa2c336501" args="()" -->
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>getID</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6671d898740f88cf40860b0b9e119b02"></a><!-- doxytag: member="cIDManager::returnID" ref="a6671d898740f88cf40860b0b9e119b02" args="(unsigned int id)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>returnID</b> (unsigned int id)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/dd4/classcIDManager.html#a59021595aaf85ebc151c207a8a04f101">cIDManager</a> (unsigned int startID=0)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/dd4/classcIDManager.html#a45420147e785cc219743e9aa2c336501">getID</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/dd4/classcIDManager.html#a6671d898740f88cf40860b0b9e119b02">returnID</a> (unsigned int id)</td></tr>
 </table>
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a59021595aaf85ebc151c207a8a04f101"></a><!-- doxytag: member="cIDManager::cIDManager" ref="a59021595aaf85ebc151c207a8a04f101" args="(unsigned int startID=0)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../de/dd4/classcIDManager.html#a59021595aaf85ebc151c207a8a04f101">cIDManager::cIDManager</a> </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>startID</em> = <code>0</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Creates a new ID Manager object</p>
+<p>Default start ID is 0. </p>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a45420147e785cc219743e9aa2c336501"></a><!-- doxytag: member="cIDManager::getID" ref="a45420147e785cc219743e9aa2c336501" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="../../de/dd4/classcIDManager.html#a45420147e785cc219743e9aa2c336501">cIDManager::getID</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Reserves a unique ID</p>
+<p>Unique is in the sense that no one else is currently using it but it may have been used previously. are distributed in increasing order until UINT_MAX is reached. After this is reached, IDs are given from the queue of returned IDs. If this queue is empty then an exception is thrown. </p>
+
+</div>
+</div>
+<a class="anchor" id="a6671d898740f88cf40860b0b9e119b02"></a><!-- doxytag: member="cIDManager::returnID" ref="a6671d898740f88cf40860b0b9e119b02" args="(unsigned int id)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../de/dd4/classcIDManager.html#a6671d898740f88cf40860b0b9e119b02">cIDManager::returnID</a> </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>id</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Returns an ID to the manager</p>
+<p>If the ID is not equal to the one last given then it is added to a 'free queue'. If it is equal to the last one reserved then the ID counter is simply decremented If this last case happens, it causes <a class="el" href="../../de/dd4/classcIDManager.html#a45420147e785cc219743e9aa2c336501">cIDManager::getID</a> to stop consuming from the queue and return this newly availabe ID. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/utility/<a class="el" href="../../df/db9/id_8h_source.html">id.h</a></li>
 <li>src/utility/id.cpp</li>
@@ -105,7 +160,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>returnID</b> (unsigne
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -117,7 +172,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>returnID</b> (unsigne
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 11 2012 11:41:56 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Feb 11 2012 14:08:01 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

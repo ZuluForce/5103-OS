@@ -4,7 +4,6 @@
 #include <queue>
 #include <assert.h>
 
-#include "process.h"
 #include "scheduler/scheduler.h"
 
 using namespace std;

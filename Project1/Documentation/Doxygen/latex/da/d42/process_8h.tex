@@ -1,0 +1,81 @@
+\hypertarget{process_8h}{\section{include/process.h \-File \-Reference}
+\label{da/d42/process_8h}\index{include/process.\-h@{include/process.\-h}}
+}
+\-This graph shows which files directly or indirectly include this file\-:
+\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=230pt]{d1/d54/process_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{\-Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structProcessInfo}{\-Process\-Info}
+\end{DoxyCompactItemize}
+\subsection*{\-Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{process_8h_a1c804f1220f3edf8f809fa0ccfb7643f}{typedef unsigned int {\bfseries pid\-Type}}\label{da/d42/process_8h_a1c804f1220f3edf8f809fa0ccfb7643f}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821f}{e\-Proc\-State} \{ \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready}, 
+\hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running}, 
+\hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}{blocked}, 
+\hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd}{terminated}
+ \}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\subsection{\-Enumeration \-Type \-Documentation}
+\hypertarget{process_8h_a2c72cb00af5be695c1f898162350821f}{\index{process.\-h@{process.\-h}!e\-Proc\-State@{e\-Proc\-State}}
+\index{e\-Proc\-State@{e\-Proc\-State}!process.h@{process.\-h}}
+\subsubsection[{e\-Proc\-State}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf e\-Proc\-State}}}\label{da/d42/process_8h_a2c72cb00af5be695c1f898162350821f}
+\-Enumeration for process states
+
+\-Each values defines a current state and possible transitions. \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{ready@{ready}!process.\-h@{process.\-h}}\index{process.\-h@{process.\-h}!ready@{ready}}\item[{\em 
+\hypertarget{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready}\label{da/d42/process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}
+}]\-Process is ready to be run.
+
+\-Invariant \-State\-:\par
+ \begin{DoxyItemize}
+\item \-Kernel has initialized it at some point \item \-Process should be preparred to run\end{DoxyItemize}
+\-Potential \-Transitions\-: \begin{DoxyItemize}
+\item \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} -\/ \-Scheduler picks it to run next \end{DoxyItemize}
+\index{running@{running}!process.\-h@{process.\-h}}\index{process.\-h@{process.\-h}!running@{running}}\item[{\em 
+\hypertarget{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running}\label{da/d42/process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}
+}]\-Process is currently running
+
+\-Invariant \-State\-: \begin{DoxyItemize}
+\item \-Process is on the cpu\end{DoxyItemize}
+\-Potential \-Transitions\-: \begin{DoxyItemize}
+\item \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}{blocked} -\/ \-Makes blocking system call \item \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd}{terminated} -\/ \-Causes exception in cpu or finished normally \end{DoxyItemize}
+\index{blocked@{blocked}!process.\-h@{process.\-h}}\index{process.\-h@{process.\-h}!blocked@{blocked}}\item[{\em 
+\hypertarget{process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}{blocked}\label{da/d42/process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}
+}]\-Process is blocked and cannot run.
+
+\-Invariant \-State\-: \begin{DoxyItemize}
+\item \-Process is blocked (for now it can only block on \-I/\-O)\end{DoxyItemize}
+\-Potential \-Transitions\-: \begin{DoxyItemize}
+\item \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready} -\/ \-Kernel notifies scheduler that \-I/\-O has finished \end{DoxyItemize}
+\index{terminated@{terminated}!process.\-h@{process.\-h}}\index{process.\-h@{process.\-h}!terminated@{terminated}}\item[{\em 
+\hypertarget{process_8h_a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd}{terminated}\label{da/d42/process_8h_a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd}
+}]\-Process has been terminated. \-It will be cleaned up soon.
+
+\-Invariant \-State\-: \begin{DoxyItemize}
+\item \-Process either caused cpu exception or finished \item \-Process can no longer run\end{DoxyItemize}
+\-Potential \-Transitions\-: \begin{DoxyItemize}
+\item \-None \end{DoxyItemize}
+\end{description}
+\end{Desc}
+
