@@ -1,0 +1,59 @@
+\hypertarget{cpu_8h}{\section{include/cpu.h \-File \-Reference}
+\label{dc/da7/cpu_8h}\index{include/cpu.\-h@{include/cpu.\-h}}
+}
+{\ttfamily \#include $<$cstdio$>$}\*
+{\ttfamily \#include $<$cstdlib$>$}\*
+{\ttfamily \#include $<$assert.\-h$>$}\*
+{\ttfamily \#include $<$inttypes.\-h$>$}\*
+\subsection*{\-Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcCPU}{c\-C\-P\-U}
+\end{DoxyCompactItemize}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\#define \hyperlink{cpu_8h_a885a6481fc6d474d0be18bc0facf648d}{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-S}~2
+\item 
+\#define \hyperlink{cpu_8h_a9e34e5196b1f8e4c96f229d062c73fe0}{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E}~256
+\end{DoxyCompactItemize}
+\subsection*{\-Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9}{e\-P\-S\-W} \{ \hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9a5f0829985f41a81da1a46db3501075f1}{\-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N} =  0x1, 
+\hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9a45657e0129f354aef59ae454ef5443fd}{\-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E} =  \-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N $<$$<$ 1, 
+\hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee}{\-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L} =  \-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E $<$$<$ 1
+ \}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{cpu_8h_a9e34e5196b1f8e4c96f229d062c73fe0}{\index{cpu.\-h@{cpu.\-h}!\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E@{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E}}
+\index{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E@{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E}!cpu.h@{cpu.\-h}}
+\subsubsection[{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E}~256}}\label{dc/da7/cpu_8h_a9e34e5196b1f8e4c96f229d062c73fe0}
+\-Maximum size in bytes for an execution parameter. \-Creates exception if exceeded. \hypertarget{cpu_8h_a885a6481fc6d474d0be18bc0facf648d}{\index{cpu.\-h@{cpu.\-h}!\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-S@{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-S}}
+\index{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-S@{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-S}!cpu.h@{cpu.\-h}}
+\subsubsection[{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-S}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-S}~2}}\label{dc/da7/cpu_8h_a885a6481fc6d474d0be18bc0facf648d}
+\-Max number of execution parameters for any \-Opcode 
+
+\subsection{\-Enumeration \-Type \-Documentation}
+\hypertarget{cpu_8h_ade10811b11f1c647313bf0a60797a9f9}{\index{cpu.\-h@{cpu.\-h}!e\-P\-S\-W@{e\-P\-S\-W}}
+\index{e\-P\-S\-W@{e\-P\-S\-W}!cpu.h@{cpu.\-h}}
+\subsubsection[{e\-P\-S\-W}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf e\-P\-S\-W}}}\label{dc/da7/cpu_8h_ade10811b11f1c647313bf0a60797a9f9}
+\-Enumeration of \-Program \-Status \-Word \-Flags
+
+\-The program status word is a bit vector and this enumeration defines the meaning of particular bits. \-This is used in the interpretation of execution status. \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N@{\-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N}!cpu.\-h@{cpu.\-h}}\index{cpu.\-h@{cpu.\-h}!\-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N@{\-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N}}\item[{\em 
+\hypertarget{cpu_8h_ade10811b11f1c647313bf0a60797a9f9a5f0829985f41a81da1a46db3501075f1}{\-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N}\label{dc/da7/cpu_8h_ade10811b11f1c647313bf0a60797a9f9a5f0829985f41a81da1a46db3501075f1}
+}]\-Executing process has created an exception \index{\-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E@{\-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E}!cpu.\-h@{cpu.\-h}}\index{cpu.\-h@{cpu.\-h}!\-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E@{\-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E}}\item[{\em 
+\hypertarget{cpu_8h_ade10811b11f1c647313bf0a60797a9f9a45657e0129f354aef59ae454ef5443fd}{\-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E}\label{dc/da7/cpu_8h_ade10811b11f1c647313bf0a60797a9f9a45657e0129f354aef59ae454ef5443fd}
+}]\-Executing process has finished. \index{\-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L@{\-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L}!cpu.\-h@{cpu.\-h}}\index{cpu.\-h@{cpu.\-h}!\-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L@{\-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L}}\item[{\em 
+\hypertarget{cpu_8h_ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee}{\-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L}\label{dc/da7/cpu_8h_ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee}
+}]\-Executing process has made a system call \end{description}
+\end{Desc}
+

@@ -11,6 +11,8 @@
 
 #include "cpu.h"
 #include "process.h"
+#include "devices/char_device.h"
+#include "devices/block_device.h"
 #include "devices/clock_device.h"
 #include "utility/id.h"
 
@@ -18,8 +20,10 @@
 #define DEFAULT_PRIORITY 0
 
 /* ============ Modify this section to change scheduler used ============== */
+//Also have to change dependency in Makefile
 #include "scheduler/fcfs.h"
-#define SCHEDULER_TYPE cFCFS
+//#define SCHEDULER_TYPE cFCFS
+typedef cFCFS schedulerType;
 /* ======================================================================== */
 
 using namespace std;
@@ -28,12 +32,12 @@ static const char initProcessName[] = "main.trace";
 
 class cKernel {
 	private:
-        cCPU& CPUref;
+        cCPU CPUref;
 		int clockTick;
 
 		//Devices:
-		//vector<BlockDevice*> B_Devices;
-		//vector<CharDevice*> C_Devices;
+		BlockDevice bDevice;
+		CharDevice cDevice;
 		ClockDevice clockInterrupt;
 
 		ProcessInfo *runningProc;
@@ -45,14 +49,45 @@ class cKernel {
 		//void swapProcess(...);
 
 		/* Process Scheduler */
-		SCHEDULER_TYPE scheduler;
+		schedulerType scheduler;
+
+		/** Swap a process on the cpu
+		 *
+		 *	Takes the process in its parameter and swaps it with the
+		 *	one currently running in the cpu.
+		 */
+		void swapProcesses(ProcessInfo*);
 
 	public:
-		cKernel(cCPU& cpu);
+		/** Default cKernel constructor
+		 *
+		 *	The default constructor initializes all internal datastructures
+		 *	and loads the initial program (default: 'main.trace') but does
+		 *	not run it.
+		 */
+		cKernel();
 		~cKernel();
 
+		/** Start the 'OS' Kernel
+		 *
+		 *	Starts the main kernel loop. The initial program is loaded and
+		 * execution follows from there.
+		 */
+		void boot(); //Starts the kernel loop
 
+
+		/** Initialize a Process
+		 *
+		 *	Initializes a process by loading program file contents, setting default
+		 *	process values and adding it in a ready state to the scheduler.
+		 */
         void initProcess(const char *filename, pidType parent, int priority = DEFAULT_PRIORITY);
+
+        /** Cleans up a terminated process
+		 *
+		 *	Cleans up any memory and kernel entries associated with the terminated
+		 *	process. Also removes the process from the scheduler.
+		 */
         void cleanupProcess(pidType pid);
 
         void _sysCall(const char call);

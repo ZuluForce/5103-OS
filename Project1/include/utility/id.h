@@ -1,6 +1,7 @@
 #ifndef ID_H_INCLUDED
 #define ID_H_INCLUDED
 
+#include <cstdio>
 #include <climits>
 #include <string>
 #include <queue>

@@ -1,6 +1,7 @@
 #include "utility/id.h"
 
 cIDManager::cIDManager(unsigned int startID) {
+	//fprintf(stderr, "Max unsigned int: %ud\n", UINT_MAX);
 	currentID = startID;
 	consumeQueue = false;
 
@@ -17,6 +18,8 @@ unsigned int cIDManager::getID() {
 		if ( freeID.size() > 0 ) {
 			unsigned int newID = freeID.front();
 			freeID.pop();
+
+			//fprintf(stderr, "Returning id %f from queue\n", newID);
 			return newID;
 		} else {
 			/* This means the currentID is at the max and
@@ -26,8 +29,12 @@ unsigned int cIDManager::getID() {
 	} else {
 		if ( currentID >= UINT_MAX ) {
 			consumeQueue = true;
+
+			//fprintf(stderr, "Returning id %d: consumeQueue = true\n", currentID);
 			return currentID;
 		} else {
+
+			//fprintf(stderr, "Returning id %d\n", currentID + 1);
 			return currentID++;
 		}
 	}

@@ -72,6 +72,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
       <li><a href="../../annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="../../classes.html"><span>Class&#160;Index</span></a></li>
       <li><a href="../../hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="../../functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 </div>
@@ -87,15 +88,105 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab430160f59d38068d280588b20643453"></a><!-- doxytag: member="cKernel::cKernel" ref="ab430160f59d38068d280588b20643453" args="(cCPU &amp;cpu)" -->
-&#160;</td><td class="memItemRight" valign="bottom"><b>cKernel</b> (<a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a> &amp;cpu)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5440eace2647ffd5279de55600947b84"></a><!-- doxytag: member="cKernel::initProcess" ref="a5440eace2647ffd5279de55600947b84" args="(const char *filename, pidType parent, int priority=DEFAULT_PRIORITY)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>initProcess</b> (const char *filename, pidType parent, int priority=DEFAULT_PRIORITY)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1e7cb5c6d9e6140e197f9b18dc8bd1b1"></a><!-- doxytag: member="cKernel::cleanupProcess" ref="a1e7cb5c6d9e6140e197f9b18dc8bd1b1" args="(pidType pid)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanupProcess</b> (pidType pid)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/da5/classcKernel.html#a64d105a595a4d14a47bb65426b331159">cKernel</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/da5/classcKernel.html#a0ce9a2721bb1ea4d7f999198634f702d">boot</a> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/da5/classcKernel.html#a5440eace2647ffd5279de55600947b84">initProcess</a> (const char *filename, pidType parent, int priority=DEFAULT_PRIORITY)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/da5/classcKernel.html#a1e7cb5c6d9e6140e197f9b18dc8bd1b1">cleanupProcess</a> (pidType pid)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acdaa8be94f13fcb1f11b3bf90bc316fa"></a><!-- doxytag: member="cKernel::_sysCall" ref="acdaa8be94f13fcb1f11b3bf90bc316fa" args="(const char call)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>_sysCall</b> (const char call)</td></tr>
 </table>
+<hr/><h2>Constructor &amp; Destructor Documentation</h2>
+<a class="anchor" id="a64d105a595a4d14a47bb65426b331159"></a><!-- doxytag: member="cKernel::cKernel" ref="a64d105a595a4d14a47bb65426b331159" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../db/da5/classcKernel.html#a64d105a595a4d14a47bb65426b331159">cKernel::cKernel</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Default <a class="el" href="../../db/da5/classcKernel.html">cKernel</a> constructor</p>
+<p>The default constructor initializes all internal datastructures and loads the initial program (default: 'main.trace') but does not run it. </p>
+
+</div>
+</div>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a0ce9a2721bb1ea4d7f999198634f702d"></a><!-- doxytag: member="cKernel::boot" ref="a0ce9a2721bb1ea4d7f999198634f702d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../db/da5/classcKernel.html#a0ce9a2721bb1ea4d7f999198634f702d">cKernel::boot</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Start the 'OS' Kernel</p>
+<p>Starts the main kernel loop. The initial program is loaded and execution follows from there. </p>
+
+</div>
+</div>
+<a class="anchor" id="a1e7cb5c6d9e6140e197f9b18dc8bd1b1"></a><!-- doxytag: member="cKernel::cleanupProcess" ref="a1e7cb5c6d9e6140e197f9b18dc8bd1b1" args="(pidType pid)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../db/da5/classcKernel.html#a1e7cb5c6d9e6140e197f9b18dc8bd1b1">cKernel::cleanupProcess</a> </td>
+          <td>(</td>
+          <td class="paramtype">pidType&#160;</td>
+          <td class="paramname"><em>pid</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Cleans up a terminated process</p>
+<p>Cleans up any memory and kernel entries associated with the terminated process. Also removes the process from the scheduler. </p>
+
+</div>
+</div>
+<a class="anchor" id="a5440eace2647ffd5279de55600947b84"></a><!-- doxytag: member="cKernel::initProcess" ref="a5440eace2647ffd5279de55600947b84" args="(const char *filename, pidType parent, int priority=DEFAULT_PRIORITY)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../db/da5/classcKernel.html#a5440eace2647ffd5279de55600947b84">cKernel::initProcess</a> </td>
+          <td>(</td>
+          <td class="paramtype">const char *&#160;</td>
+          <td class="paramname"><em>filename</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">pidType&#160;</td>
+          <td class="paramname"><em>parent</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">int&#160;</td>
+          <td class="paramname"><em>priority</em> = <code>DEFAULT_PRIORITY</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Initialize a Process</p>
+<p>Initializes a process by loading program file contents, setting default process values and adding it in a ready state to the scheduler. </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="../../d0/daa/kernel_8h_source.html">kernel.h</a></li>
 <li>src/kernel.cpp</li>
@@ -106,7 +197,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>_sysCall</b> (const c
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -118,7 +209,7 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>_sysCall</b> (const c
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Feb 10 2012 22:55:55 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Feb 11 2012 11:41:56 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -72,6 +72,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
       <li><a href="../../annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="../../classes.html"><span>Class&#160;Index</span></a></li>
       <li><a href="../../hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="../../functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 </div>
@@ -98,14 +99,18 @@ Inheritance diagram for cScheduler:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb86834353cf48c1b2b851232ce8615b"></a><!-- doxytag: member="cScheduler::initProcScheduleInfo" ref="abb86834353cf48c1b2b851232ce8615b" args="(ProcessInfo *)=0" -->
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>initProcScheduleInfo</b> (<a class="el" href="../../dd/dc8/structProcessInfo.html">ProcessInfo</a> *)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a73902cf4b49b4ec39d46edfe8d8806"></a><!-- doxytag: member="cScheduler::addProcess" ref="a5a73902cf4b49b4ec39d46edfe8d8806" args="(ProcessInfo *)=0" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>addProcess</b> (<a class="el" href="../../dd/dc8/structProcessInfo.html">ProcessInfo</a> *)=0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab82ffc2909aae9047dd66c28c609abe7"></a><!-- doxytag: member="cScheduler::setBlocked" ref="ab82ffc2909aae9047dd66c28c609abe7" args="(ProcessInfo *)=0" -->
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setBlocked</b> (<a class="el" href="../../dd/dc8/structProcessInfo.html">ProcessInfo</a> *)=0</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0f1e5994d8781681b06fae453fb78b6d"></a><!-- doxytag: member="cScheduler::setRunnable" ref="a0f1e5994d8781681b06fae453fb78b6d" args="(ProcessInfo *)=0" -->
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setRunnable</b> (<a class="el" href="../../dd/dc8/structProcessInfo.html">ProcessInfo</a> *)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6e5255fc377bf27707b5958a9252eaf"></a><!-- doxytag: member="cScheduler::unblockProcess" ref="aa6e5255fc377bf27707b5958a9252eaf" args="(ProcessInfo *)=0" -->
+virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>unblockProcess</b> (<a class="el" href="../../dd/dc8/structProcessInfo.html">ProcessInfo</a> *)=0</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16978dd9cebeba3e6d37f0a28a246f96"></a><!-- doxytag: member="cScheduler::removeProcess" ref="a16978dd9cebeba3e6d37f0a28a246f96" args="(ProcessInfo *)=0" -->
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>removeProcess</b> (<a class="el" href="../../dd/dc8/structProcessInfo.html">ProcessInfo</a> *)=0</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf9efb347bb653b50870ad08ba3f6751"></a><!-- doxytag: member="cScheduler::getNextToRun" ref="abf9efb347bb653b50870ad08ba3f6751" args="()=0" -->
-virtual unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>getNextToRun</b> ()=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34d6d4e823b8b1731638f0de9e084a17"></a><!-- doxytag: member="cScheduler::getNextToRun" ref="a34d6d4e823b8b1731638f0de9e084a17" args="()=0" -->
+virtual <a class="el" href="../../dd/dc8/structProcessInfo.html">ProcessInfo</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getNextToRun</b> ()=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64106a7e965d14f7183960cf7f35200d"></a><!-- doxytag: member="cScheduler::numProcesses" ref="a64106a7e965d14f7183960cf7f35200d" args="()=0" -->
+virtual pidType&#160;</td><td class="memItemRight" valign="bottom"><b>numProcesses</b> ()=0</td></tr>
 </table>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/scheduler/<a class="el" href="../../d2/dd8/scheduler_8h_source.html">scheduler.h</a></li>
@@ -116,7 +121,7 @@ virtual unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>getNe
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -128,7 +133,7 @@ virtual unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>getNe
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Feb 10 2012 22:55:55 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Feb 11 2012 11:41:56 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

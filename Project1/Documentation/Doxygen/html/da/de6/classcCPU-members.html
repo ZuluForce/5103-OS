@@ -72,6 +72,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
       <li><a href="../../annotated.html"><span>Class&#160;List</span></a></li>
       <li><a href="../../classes.html"><span>Class&#160;Index</span></a></li>
       <li><a href="../../hierarchy.html"><span>Class&#160;Hierarchy</span></a></li>
+      <li><a href="../../functions.html"><span>Class&#160;Members</span></a></li>
     </ul>
   </div>
 </div>
@@ -82,10 +83,13 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="contents">
 This is the complete list of members for <a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a>, including all inherited members.<table>
   <tr bgcolor="#f0f0f0"><td><b>cCPU</b>() (defined in <a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a>)</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>getSetPC</b>(unsigned int) (defined in <a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a>)</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>getSetVC</b>(int) (defined in <a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a>)</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>run</b>() (defined in <a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a>)</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
-  <tr bgcolor="#f0f0f0"><td><b>setText</b>(char *) (defined in <a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a>)</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="../../d2/dc6/classcCPU.html#a987e1ab511c71dcde48411f5bb16f9d8">getOpcode</a>()</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="../../d2/dc6/classcCPU.html#a891d9b77e1818ca247e9d76f4db99415">getParam</a>(int num)</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="../../d2/dc6/classcCPU.html#ad485374a709476e2dfb847046d3d5215">getPSW</a>()</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="../../d2/dc6/classcCPU.html#ab04938ac939d530e521181db6a52944f">getSetPC</a>(unsigned int newPC)</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="../../d2/dc6/classcCPU.html#a2d593a0d3d66e532826db4754d5fc4d2">getSetVC</a>(int newVC)</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="../../d2/dc6/classcCPU.html#aee300d68026ba9f13d5434ff82f0372a">run</a>()</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
+  <tr class="memlist"><td><a class="el" href="../../d2/dc6/classcCPU.html#acd957640be8abb7c0d8a24010ed0e737">setText</a>(char *text)</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~cCPU</b>() (defined in <a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a>)</td><td><a class="el" href="../../d2/dc6/classcCPU.html">cCPU</a></td><td></td></tr>
 </table></div><!-- contents -->
 <!-- window showing the filter options -->
@@ -93,7 +97,7 @@ This is the complete list of members for <a class="el" href="../../d2/dc6/classc
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -105,7 +109,7 @@ This is the complete list of members for <a class="el" href="../../d2/dc6/classc
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Fri Feb 10 2012 22:55:55 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sat Feb 11 2012 11:41:56 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

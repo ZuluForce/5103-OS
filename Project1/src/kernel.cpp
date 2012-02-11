@@ -1,13 +1,11 @@
 #include "kernel.h"
 
-cKernel::cKernel(cCPU& cpu)
-:clockTick(0), CPUref(cpu), idGenerator(1) {
-	/* Initialize datastructures */
+cKernel::cKernel()
+:clockTick(0), idGenerator(1), runningProc(NULL) {
 
-	/* Load "main.trace" with parent 0*/
-	for ( int i = 0; i < 20000; ++i) {
-		initProcess(initProcessName, i);
-	}
+	/* Load "main.trace" with parent 0 */
+	initProcess(initProcessName, 0);
+	assert( scheduler.numProcesses() == 1 ); //Make sure it loaded
 
 	/* Setup clock interrupt. Do near end. */
 	clockInterrupt.setTimer(DEFAULT_TIMER);
@@ -39,6 +37,7 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
     int processFile = open( filename, S_IRUSR);
     if ( read(processFile, newProc->processText, fileinfo.st_size) <= 0 ) {
     	/* Error Creating Process */
+    	perror("Error creating new process");
     	free(newProc->processText);
     	free(newProc);
 
@@ -56,6 +55,8 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
     newProc->priority = priority;
 
 	/* Place in storage datastructure */
+	scheduler.initProcScheduleInfo(newProc);
+	scheduler.addProcess(newProc);
 
     newProc->state = ready;
 
@@ -63,6 +64,9 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
     printf("Process ID: %d\n", newProc->pid);
     printf("Parent ID: %d\n", newProc->parent);
     printf("Program Contents:\n%s\n", newProc->processText);
+
+    /* Cleanup */
+    close(processFile);
 
     return;
 }
@@ -87,5 +91,15 @@ void cKernel::_sysCall(char call) {
 			break;
 	}
 
+	return;
+}
+
+
+void cKernel::boot() {
+	ProcessInfo *nextToRun = scheduler.getNextToRun();
+
+	while ( scheduler.numProcesses() > 0 ) {
+
+	}
 	return;
 }

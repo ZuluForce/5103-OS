@@ -3,16 +3,10 @@
 int main(int argc, char **argv) {
 	cout << "Initializing emulated OS" << endl;
 
-	/* Initialize the CPU */
-    cCPU cpu = cCPU();
-
 	/* Initialize the Kernel */
-    cKernel kernel = cKernel(cpu);
+    cKernel kernel = cKernel();
 
-	/* Load first program to run */
-
-	while (true)
-		pause();
+	//kernel.boot();
 
 	return 0;
 }
