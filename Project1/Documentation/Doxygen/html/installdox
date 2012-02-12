@@ -54,7 +54,7 @@ foreach $sub (keys %subst)
 if ( ! @files ) {
   if (opendir(D,".")) {
     foreach $file ( readdir(D) ) {
-      $match = ".html";
+      $match = ".xhtml";
       next if ( $file =~ /^\.\.?$/ );
       ($file =~ /$match/) && (push @files, $file);
       ($file =~ /\.svg/) && (push @files, $file);

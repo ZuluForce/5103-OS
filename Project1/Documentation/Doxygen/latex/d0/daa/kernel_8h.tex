@@ -11,8 +11,7 @@
 {\ttfamily \#include \char`\"{}devices/clock\-\_\-device.\-h\char`\"{}}\*
 {\ttfamily \#include \char`\"{}utility/id.\-h\char`\"{}}\*
 {\ttfamily \#include \char`\"{}scheduler/fcfs.\-h\char`\"{}}\*
-\-Include dependency graph for kernel.\-h\-:
-\nopagebreak
+\-Include dependency graph for kernel.\-h\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
@@ -34,24 +33,37 @@ class \hyperlink{classcKernel}{c\-Kernel}
 \subsection*{\-Defines}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}{\#define {\bfseries \-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}~1000}\label{d0/daa/kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}
-
-\item 
-\hypertarget{kernel_8h_a0756f011ef667460d583017366823244}{\#define {\bfseries \-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}~0}\label{d0/daa/kernel_8h_a0756f011ef667460d583017366823244}
-
-\end{DoxyCompactItemize}
+\#define \hyperlink{kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}~1000
+\begin{DoxyCompactList}\small\item\em \-Default timer value for devices. \end{DoxyCompactList}\item 
+\#define \hyperlink{kernel_8h_a0756f011ef667460d583017366823244}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}~5
+\begin{DoxyCompactList}\small\item\em \-Default priority assigned to newly created processes. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Typedefs}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{kernel_8h_a87e7ee09eb9354187e1877a668567104}{typedef \hyperlink{classcFCFS}{c\-F\-C\-F\-S} {\bfseries scheduler\-Type}}\label{d0/daa/kernel_8h_a87e7ee09eb9354187e1877a668567104}
 
 \end{DoxyCompactItemize}
-\subsection*{\-Functions}
+\subsection*{\-Variables}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{kernel_8h_a0847dda36bbd7bf064de17946b4239a7}{{\bfseries \-\_\-\-\_\-attribute\-\_\-\-\_\-} ((error(\char`\"{}process.\-h not included by scheduler\char`\"{})))}\label{d0/daa/kernel_8h_a0847dda36bbd7bf064de17946b4239a7}
-
-\end{DoxyCompactItemize}
+static const char \hyperlink{kernel_8h_a9bd73e11b6d2b66703cd822d0c2ecd32}{init\-Process\-Name} \mbox{[}$\,$\mbox{]} = \char`\"{}main.\-trace\char`\"{}
+\begin{DoxyCompactList}\small\item\em \-Name of the first program to run on the system. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{\-Detailed \-Description}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{kernel_8h_a0756f011ef667460d583017366823244}{\index{kernel.\-h@{kernel.\-h}!\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y@{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}}
+\index{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y@{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}!kernel.h@{kernel.\-h}}
+\subsubsection[{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}~5}}\label{d0/daa/kernel_8h_a0756f011ef667460d583017366823244}
+\-Only used if no other priority is provided. \hypertarget{kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}{\index{kernel.\-h@{kernel.\-h}!\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R@{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}}
+\index{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R@{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}!kernel.h@{kernel.\-h}}
+\subsubsection[{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}~1000}}\label{d0/daa/kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}
+\-Measured in microseconds. 
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{kernel_8h_a9bd73e11b6d2b66703cd822d0c2ecd32}{\index{kernel.\-h@{kernel.\-h}!init\-Process\-Name@{init\-Process\-Name}}
+\index{init\-Process\-Name@{init\-Process\-Name}!kernel.h@{kernel.\-h}}
+\subsubsection[{init\-Process\-Name}]{\setlength{\rightskip}{0pt plus 5cm}static const char {\bf init\-Process\-Name}\mbox{[}$\,$\mbox{]} = \char`\"{}main.\-trace\char`\"{}\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{d0/daa/kernel_8h_a9bd73e11b6d2b66703cd822d0c2ecd32}
+\-When the kernel object is created, this program is loaded. \-It is run once \hyperlink{classcKernel_a0ce9a2721bb1ea4d7f999198634f702d}{c\-Kernel\-::boot} is called. 

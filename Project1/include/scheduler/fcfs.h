@@ -14,6 +14,8 @@ class cFCFS: public cScheduler {
 		queue<ProcessInfo*> readyQueue;
 		queue<ProcessInfo*> blockedQueue;
 
+		ProcessInfo* runningProc;
+
 	public:
 		cFCFS();
 		~cFCFS();

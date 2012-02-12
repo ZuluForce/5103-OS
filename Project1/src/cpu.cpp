@@ -1,6 +1,11 @@
 #include "cpu.h"
 
 cCPU::cCPU() {
+	PC = maxPC = VC = 0;
+	PSW = 0;
+
+	execText = NULL;
+	Opcode = '\0';
 
 	return;
 }
@@ -22,22 +27,22 @@ int cCPU::tokenizeLine() {
 
 	while ( count < MAX_PARAMS && bufferIndex < MAX_PARAM_SIZE ) {
 		if ( c == ' ' ) {
-			//This only happens in poorly formated lines ie. 'C <priority> <filename>   '
-			count = bufferIndex > 0 ? count + 1 : count;
-			tokenBuffer[count][bufferIndex] = '\0';
+			//Space encountered. Could be between parameters or trailing after the last one
+			tokenBuffer[count][bufferIndex] = '\0'; //Terminate string
+			count = bufferIndex > 0 ? count + 1 : count; //Increment the counter if anything was read in
 			bufferIndex = 0;
-			c = execText[++PC];
+			c = execText[++PC]; //Skip to next character
 			continue;
 		} else if ( c == '\n' ) {
 			//End of the line
-			count = bufferIndex > 0 ? count + 1 : count;
 			tokenBuffer[count][bufferIndex] = '\0';
+			count = bufferIndex > 0 ? count + 1 : count;
 			++PC; //Bring it around to the next line
 			break;
 		} else if ( c == '\0' ) {
 			//End of the program
-			count = bufferIndex > 0 ? count + 1 : count;
 			tokenBuffer[count][bufferIndex] = '\0';
+			count = bufferIndex > 0 ? count + 1 : count;
 			break;
 		}
 		tokenBuffer[count][bufferIndex++] = c;
@@ -67,6 +72,12 @@ int cCPU::getSetVC(int newVC) {
 	return newVC;
 }
 
+uint16_t cCPU::getSetPSW(uint16_t newPSW) {
+	uint16_t oldPSW = PSW;
+	PSW = newPSW;
+	return oldPSW;
+}
+
 uint16_t cCPU::getPSW() {
 	return PSW;
 }
@@ -78,18 +89,33 @@ char* cCPU::getParam(int num) {
 	return NULL;
 }
 
+char cCPU::getOpcode() {
+	return Opcode;
+}
+
 void cCPU::run() {
+	assert(execText != NULL);
+	//assert(PC <= maxPC);'
 	int arg; //Used for storing opcode parameters
 
 	while (true) {
 		/* Get the Opcode */
 		Opcode = execText[PC];
+		printf("PC = %d	Opcode: %c\n", PC, Opcode);
 
 		switch (Opcode) {
 			case 'S':
 				/* 'S x': Store x to VC */
-				if ( tokenizeLine() != 1 ) {
+				printf("Opcode: S\n");
+				++PC; //For the tokenizer to work
+				if ( (arg = tokenizeLine()) != 1 ) {
 					/* Invalid arguments. Notify the OS. */
+					printf("Invalid number of arguments for S operation: %d\n", arg);
+					for ( int i = 0; i < arg; ++i)
+						printf("Arg %d = %s\n", arg, tokenBuffer[i]);
+
+					PSW |= PS_EXCEPTION;
+					return;
 				}
 
 				arg = atoi(tokenBuffer[0]);
@@ -100,8 +126,12 @@ void cCPU::run() {
 
 			case 'A':
 				/* 'A x': Add x to VC */
+				printf("Opcode: A\n");
+				++PC;
 				if ( tokenizeLine() != 1 ) {
 					/* Invalid arguments. Notify the OS. */
+					PSW |= PS_EXCEPTION;
+					return;
 				}
 
 				arg = atoi(tokenBuffer[0]);
@@ -112,8 +142,12 @@ void cCPU::run() {
 
 			case 'D':
 				/* 'D x': Decrement x from VC */
+				++PC;
+				printf("Opcode: D\n");
 				if ( tokenizeLine() != 1 ) {
 					/* Invalid arguments. Notify the OS. */
+					PSW |= PS_EXCEPTION;
+					return;
 				}
 
 				arg = atoi(tokenBuffer[0]);
@@ -124,36 +158,60 @@ void cCPU::run() {
 
 			case 'C':
 				/* Call the OS to start new process: 'C <priority> <filename>'*/
+				printf("Opcode: C\n");
+				++PC;
 				if ( tokenizeLine() != 2 ) {
 					/* Invalid arguments. Notify the OS. */
+					PSW |= PS_EXCEPTION;
+					return;
 				}
 
-				break;
+				PSW |= PS_SYSCALL;
+
+				return;
 
 			case 'I':
 				/* IO syscall to device class: 'I <dev-class> (B/C) */
+				printf("Opcode: I\n");
+				if ( tokenizeLine() != 1) {
+					PSW |= PS_EXCEPTION;
+					return;
+				}
 
-				break;
+				++PC;
+
+				PSW |= PS_SYSCALL;
+
+				return;
 
 			case 'P':
 				/* Priveleged instruction */
+				printf("Opcode: P\n");
 				if ( !KMode ) {
 					/* Exception!, notify the OS */
-					;
+					printf("Process tried privleged operation in user mode\n");
+					PSW |= PS_EXCEPTION;
+
+					return;
 				}
 				/* Else it is a NoOp */
 				continue;
-				break;
 
 			case 'E':
 				/* Terminate the process. Notify the OS */
+				printf("Opcode: E");
 
-				break;
+				PSW |= PS_TERMINATE;
+				return;
 
 			default:
 				/* Invalid Instruction, Notify the OS */
+				//#ifdef DEBUG
+				printf("Invalid instruction %c\n", Opcode);
+				//#endif
+				PSW |= PS_EXCEPTION;
 
-				break;
+				return;
 		}
 
 

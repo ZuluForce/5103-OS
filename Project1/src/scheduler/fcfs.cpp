@@ -1,6 +1,7 @@
 #include "scheduler/fcfs.h"
 
 cFCFS::cFCFS() {
+	runningProc = NULL;
 
 	return;
 }
@@ -48,6 +49,7 @@ ProcessInfo* cFCFS::getNextToRun() {
 	/* Find ready process which came first */
 	ProcessInfo* toRun = readyQueue.front();
 	readyQueue.pop();
+	runningProc = toRun;
 
 	return toRun;
 }
@@ -56,6 +58,8 @@ pidType cFCFS::numProcesses() {
 	pidType total = 0;
 	total += readyQueue.size();
 	total += blockedQueue.size();
+
+	total += (runningProc == NULL) ? 0 : 1;
 
 	return total;
 }

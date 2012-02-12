@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['processinfo',['ProcessInfo',['../dd/dc8/structProcessInfo.html',1,'']]]
+  ['processinfo',['ProcessInfo',['../dd/dc8/structProcessInfo.xhtml',1,'']]]
 ];

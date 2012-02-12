@@ -3,30 +3,68 @@
 }
 
 
+\-A class for emulating a simple cpu.  
+
+
+
+
 {\ttfamily \#include $<$cpu.\-h$>$}
 
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
 void \hyperlink{classcCPU_acd957640be8abb7c0d8a24010ed0e737}{set\-Text} (char $\ast$text)
-\item 
+\begin{DoxyCompactList}\small\item\em \-Set the program text. \end{DoxyCompactList}\item 
 unsigned int \hyperlink{classcCPU_ab04938ac939d530e521181db6a52944f}{get\-Set\-P\-C} (unsigned int new\-P\-C)
-\item 
+\begin{DoxyCompactList}\small\item\em \-Get/\-Set the program counter. \end{DoxyCompactList}\item 
 int \hyperlink{classcCPU_a2d593a0d3d66e532826db4754d5fc4d2}{get\-Set\-V\-C} (int new\-V\-C)
-\item 
+\begin{DoxyCompactList}\small\item\em \-Get/\-Set the \-V\-C. \end{DoxyCompactList}\item 
+uint16\-\_\-t \hyperlink{classcCPU_a0b13774a76c6b04d760b8ff072c37a85}{get\-Set\-P\-S\-W} (uint16\-\_\-t new\-P\-S\-W)
+\begin{DoxyCompactList}\small\item\em \-Get/\-Set the \-P\-S\-W. \end{DoxyCompactList}\item 
 uint16\-\_\-t \hyperlink{classcCPU_ad485374a709476e2dfb847046d3d5215}{get\-P\-S\-W} ()
-\item 
+\begin{DoxyCompactList}\small\item\em \-Get the \-Program \-Status \-Word. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{classcCPU_a891d9b77e1818ca247e9d76f4db99415}{get\-Param} (int num)
-\item 
+\begin{DoxyCompactList}\small\item\em \-Get execution parameters from the cpu. \end{DoxyCompactList}\item 
 char \hyperlink{classcCPU_a987e1ab511c71dcde48411f5bb16f9d8}{get\-Opcode} ()
-\item 
+\begin{DoxyCompactList}\small\item\em \-Get the current \-Opcode. \end{DoxyCompactList}\item 
 void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
+\begin{DoxyCompactList}\small\item\em \-Start execution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Private \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcCPU_a62812ecc1a65c296fb4795b24b451f4e}{int {\bfseries tokenize\-Line} ()}\label{d2/dc6/classcCPU_a62812ecc1a65c296fb4795b24b451f4e}
+
 \end{DoxyCompactItemize}
+\subsection*{\-Private \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcCPU_af1d6fd5349bde1621595f6c1422792b4}{bool {\bfseries \-K\-Mode}}\label{d2/dc6/classcCPU_af1d6fd5349bde1621595f6c1422792b4}
+
+\item 
+\hypertarget{classcCPU_a982f4af913ec39928e62129200c21e58}{unsigned int {\bfseries \-P\-C}}\label{d2/dc6/classcCPU_a982f4af913ec39928e62129200c21e58}
+
+\item 
+\hypertarget{classcCPU_af6d922807d65a8a39722dde518febc52}{unsigned int {\bfseries max\-P\-C}}\label{d2/dc6/classcCPU_af6d922807d65a8a39722dde518febc52}
+
+\item 
+\hypertarget{classcCPU_aae9fc88ce939489754ac776b6447607b}{int {\bfseries \-V\-C}}\label{d2/dc6/classcCPU_aae9fc88ce939489754ac776b6447607b}
+
+\item 
+\hypertarget{classcCPU_a52457b3189761c2f07c9fb12169dad50}{uint16\-\_\-t \hyperlink{classcCPU_a52457b3189761c2f07c9fb12169dad50}{\-P\-S\-W}}\label{d2/dc6/classcCPU_a52457b3189761c2f07c9fb12169dad50}
+
+\begin{DoxyCompactList}\small\item\em \-Program \-Status \-Word. \end{DoxyCompactList}\item 
+\hypertarget{classcCPU_ad50800fe39f7f8d51dc7095e441db94a}{char $\ast$ \hyperlink{classcCPU_ad50800fe39f7f8d51dc7095e441db94a}{exec\-Text}}\label{d2/dc6/classcCPU_ad50800fe39f7f8d51dc7095e441db94a}
+
+\begin{DoxyCompactList}\small\item\em \-Text data for currently executing process. \end{DoxyCompactList}\item 
+\hypertarget{classcCPU_a06d3e3497a2636740db81fa00641fd88}{char \hyperlink{classcCPU_a06d3e3497a2636740db81fa00641fd88}{token\-Buffer} \mbox{[}2\mbox{]}\mbox{[}\hyperlink{cpu_8h_a9e34e5196b1f8e4c96f229d062c73fe0}{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E}\mbox{]}}\label{d2/dc6/classcCPU_a06d3e3497a2636740db81fa00641fd88}
+
+\begin{DoxyCompactList}\small\item\em \-Holds the tokenized execution parameters. \end{DoxyCompactList}\item 
+\hypertarget{classcCPU_a897ce4ac1712c81e8c1a7e13733be8fc}{char \hyperlink{classcCPU_a897ce4ac1712c81e8c1a7e13733be8fc}{\-Opcode}}\label{d2/dc6/classcCPU_a897ce4ac1712c81e8c1a7e13733be8fc}
+
+\begin{DoxyCompactList}\small\item\em \-Holds the current \-Opcode. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{\-Detailed \-Description}
-\-A class for emulating a simple cpu.
-
 \-This class emulates the internals of a very simple cpu with two main registers, \-P\-C and \-V\-C. \-In addition, it has other state for handling system calls and program exceptions. 
 
 \subsection{\-Member \-Function \-Documentation}
@@ -37,8 +75,6 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 {}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_a987e1ab511c71dcde48411f5bb16f9d8}
-\-Get the current \-Opcode
-
 \-Get the current \-Opcode in the cpu. \-This is used by the kernel to determine which system call as being made. \-Used in conjunciton with \hyperlink{classcCPU_a891d9b77e1818ca247e9d76f4db99415}{c\-C\-P\-U\-::get\-Param} the kernel can process system calls. \hypertarget{classcCPU_a891d9b77e1818ca247e9d76f4db99415}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Param@{get\-Param}}
 \index{get\-Param@{get\-Param}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{get\-Param}]{\setlength{\rightskip}{0pt plus 5cm}char $\ast$ {\bf c\-C\-P\-U\-::get\-Param} (
@@ -46,8 +82,6 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 \item[{int}]{num}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_a891d9b77e1818ca247e9d76f4db99415}
-\-Get execution parameters from the cpu
-
 \-Fetch the given execution paramter from the cpu's internal buffer. \-When an instruction is encountered that has parameters associated with it, the cpu tokenizes them and places it in an internal buffer. \-This function is mainly used by the kernel in handling system calls.
 
 
@@ -65,8 +99,6 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 {}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_ad485374a709476e2dfb847046d3d5215}
-\-Get the \-Program \-Status \-Word
-
 \-Returns the program status word which is a unsigned 16-\/bit integer type with flags from \hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9}{e\-P\-S\-W} set. \-These are used by the kernel to make action decisions. \hypertarget{classcCPU_ab04938ac939d530e521181db6a52944f}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Set\-P\-C@{get\-Set\-P\-C}}
 \index{get\-Set\-P\-C@{get\-Set\-P\-C}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{get\-Set\-P\-C}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int {\bf c\-C\-P\-U\-::get\-Set\-P\-C} (
@@ -74,17 +106,20 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 \item[{unsigned int}]{new\-P\-C}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_ab04938ac939d530e521181db6a52944f}
-\-Get/\-Set the program counter
-
-\-Get the current value for the program counter and then set its value to the given parameter. \-This is useful for swapping out process values. \hypertarget{classcCPU_a2d593a0d3d66e532826db4754d5fc4d2}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Set\-V\-C@{get\-Set\-V\-C}}
+\-Get the current value for the program counter and then set its value to the given parameter. \-This is useful for swapping out process values. \hypertarget{classcCPU_a0b13774a76c6b04d760b8ff072c37a85}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Set\-P\-S\-W@{get\-Set\-P\-S\-W}}
+\index{get\-Set\-P\-S\-W@{get\-Set\-P\-S\-W}!cCPU@{c\-C\-P\-U}}
+\subsubsection[{get\-Set\-P\-S\-W}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t {\bf c\-C\-P\-U\-::get\-Set\-P\-S\-W} (
+\begin{DoxyParamCaption}
+\item[{uint16\-\_\-t}]{new\-P\-S\-W}
+\end{DoxyParamCaption}
+)}}\label{d2/dc6/classcCPU_a0b13774a76c6b04d760b8ff072c37a85}
+\-Get the current value for the \-P\-S\-W and set its value to the given parameter. \hypertarget{classcCPU_a2d593a0d3d66e532826db4754d5fc4d2}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Set\-V\-C@{get\-Set\-V\-C}}
 \index{get\-Set\-V\-C@{get\-Set\-V\-C}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{get\-Set\-V\-C}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf c\-C\-P\-U\-::get\-Set\-V\-C} (
 \begin{DoxyParamCaption}
 \item[{int}]{new\-V\-C}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_a2d593a0d3d66e532826db4754d5fc4d2}
-\-Get/\-Set the \-V\-C
-
 \-Get the current value for \-V\-C and set its value to the given paramter. \-This is useful for swapping out process values. \hypertarget{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{\index{c\-C\-P\-U@{c\-C\-P\-U}!run@{run}}
 \index{run@{run}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-C\-P\-U\-::run} (
@@ -92,8 +127,6 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 {}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_aee300d68026ba9f13d5434ff82f0372a}
-\-Start execution
-
 \-Once all appropriate process data is entered by the kernel this function is called to start execution. \-Any time control needs to be returned to the kernel this function will return with the appropriate \-P\-S\-W flags set for the kernel to act on. \hypertarget{classcCPU_acd957640be8abb7c0d8a24010ed0e737}{\index{c\-C\-P\-U@{c\-C\-P\-U}!set\-Text@{set\-Text}}
 \index{set\-Text@{set\-Text}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{set\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-C\-P\-U\-::set\-Text} (
@@ -101,8 +134,6 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 \item[{char $\ast$}]{text}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_acd957640be8abb7c0d8a24010ed0e737}
-\-Set the program text
-
 \-Point the cpu to the text data for the running process. \-This text is indexed using the program counter (\-P\-C).
 
 

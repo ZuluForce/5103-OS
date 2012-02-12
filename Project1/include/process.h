@@ -3,6 +3,8 @@
 
 /** @file */
 
+#include <inttypes.h>
+
 typedef unsigned int pidType;
 
 /** Enumeration for process states
@@ -29,6 +31,7 @@ struct ProcessInfo {
     unsigned int startCPU, totalCPU;
 
 	eProcState state; /**< #eProcState */
+	uint16_t PSW;
 	int priority;
 
 	/* Saved Sate */

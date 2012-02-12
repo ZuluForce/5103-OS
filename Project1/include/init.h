@@ -5,7 +5,6 @@
 #include <iostream>
 
 #include "kernel.h"
-#include "scheduler/fcfs.h"
 
 using namespace std;
 

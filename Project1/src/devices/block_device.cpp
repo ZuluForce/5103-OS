@@ -15,3 +15,8 @@ void BlockDevice::setTimer(int usec) {
 
 	return;
 }
+
+void BlockDevice::disarm() {
+
+	return;
+}

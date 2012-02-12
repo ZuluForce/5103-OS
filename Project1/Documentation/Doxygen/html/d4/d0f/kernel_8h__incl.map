@@ -1,11 +1,11 @@
 <map id="G" name="G">
-<area shape="rect" id="node11" href="$dc/da7/cpu_8h.html" title="cpu.h" alt="" coords="633,80,687,107"/>
-<area shape="rect" id="node21" href="$d7/d59/char__device_8h_source.html" title="devices/char_device.h" alt="" coords="712,80,864,107"/>
-<area shape="rect" id="node25" href="$db/d9a/block__device_8h_source.html" title="devices/block_device.h" alt="" coords="889,80,1047,107"/>
-<area shape="rect" id="node28" href="$df/d8f/clock__device_8h_source.html" title="devices/clock_device.h" alt="" coords="1071,80,1229,107"/>
-<area shape="rect" id="node31" href="$df/db9/id_8h_source.html" title="utility/id.h" alt="" coords="390,80,468,107"/>
-<area shape="rect" id="node40" href="$db/d41/fcfs_8h_source.html" title="scheduler/fcfs.h" alt="" coords="493,80,608,107"/>
-<area shape="rect" id="node23" href="$d0/d8f/abstract__device_8h_source.html" title="devices/abstract_device.h" alt="" coords="950,155,1124,181"/>
-<area shape="rect" id="node44" href="$d2/dd8/scheduler_8h_source.html" title="scheduler/scheduler.h" alt="" coords="413,155,561,181"/>
-<area shape="rect" id="node46" href="$da/d42/process_8h.html" title="process.h" alt="" coords="449,229,527,256"/>
+<area shape="rect" id="node11" href="$dc/da7/cpu_8h.xhtml" title="cpu.h" alt="" coords="1258,80,1312,107"/>
+<area shape="rect" id="node21" href="$d7/d59/char__device_8h.xhtml" title="devices/char_device.h" alt="" coords="573,80,725,107"/>
+<area shape="rect" id="node29" href="$db/d9a/block__device_8h.xhtml" title="devices/block_device.h" alt="" coords="750,80,908,107"/>
+<area shape="rect" id="node32" href="$df/d8f/clock__device_8h.xhtml" title="devices/clock_device.h" alt="" coords="390,80,548,107"/>
+<area shape="rect" id="node41" href="$df/db9/id_8h_source.xhtml" title="utility/id.h" alt="" coords="933,80,1011,107"/>
+<area shape="rect" id="node49" href="$db/d41/fcfs_8h_source.xhtml" title="scheduler/fcfs.h" alt="" coords="1051,80,1165,107"/>
+<area shape="rect" id="node23" href="$d0/d8f/abstract__device_8h_source.xhtml" title="devices/abstract_device.h" alt="" coords="553,155,727,181"/>
+<area shape="rect" id="node53" href="$d2/dd8/scheduler_8h_source.xhtml" title="scheduler/scheduler.h" alt="" coords="1077,155,1225,181"/>
+<area shape="rect" id="node55" href="$da/d42/process_8h.xhtml" title="process.h" alt="" coords="1219,229,1297,256"/>
 </map>

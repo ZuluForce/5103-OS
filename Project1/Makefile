@@ -5,12 +5,12 @@ INCDIR=include
 OBJDIR=obj
 BINDIR=bin
 
-CFLAGS=-O3 -I$(INCDIR)
-OBJCFLAGS=-O3 -c -I$(INCDIR)
-##LFLAGS=
+CFLAGS=-O3 -I$(INCDIR) -DD_REENTRANT
+OBJCFLAGS=-O3 -c -I$(INCDIR) -DD_REENTRANT
+LFLAGS=-lrt
 
 DEPS=clock_device.o char_device.o block_device.o id.o cpu.o scheduler.o fcfs.o\
-		kernel.o
+		kernel.o abstract_device.o
 ##Dependencies with obj directory appended
 _DEPS=$(patsubst %,$(OBJDIR)/%,$(DEPS))
 
@@ -36,7 +36,7 @@ all: init
 
 
 init: init.cpp init.h $(DEPS)
-	$(CC) $(CFLAGS) $(_DEPS) $(SRCDIR)/$@.cpp -o $(BINDIR)/$@ 
+	$(CC) $(CFLAGS) $(LFLAGS) $(_DEPS) $(SRCDIR)/$@.cpp -o $(BINDIR)/$@ 
 
 %.o: %.cpp %.h
 	$(CC) $< $(OBJCFLAGS) -o $(OBJDIR)/$@

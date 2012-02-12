@@ -1,6 +1,6 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$db/d0e/classAbstractDevice.html" title="AbstractDevice" alt="" coords="5,56,117,83"/>
-<area shape="rect" id="node3" href="$db/d6d/classBlockDevice.html" title="BlockDevice" alt="" coords="167,5,263,32"/>
-<area shape="rect" id="node5" href="$d8/d4f/classCharDevice.html" title="CharDevice" alt="" coords="169,56,260,83"/>
-<area shape="rect" id="node7" href="$dc/d14/classClockDevice.html" title="ClockDevice" alt="" coords="166,107,263,133"/>
+<area shape="rect" id="node1" href="$db/d0e/classAbstractDevice.xhtml" title="AbstractDevice" alt="" coords="5,56,117,83"/>
+<area shape="rect" id="node3" href="$db/d6d/classBlockDevice.xhtml" title="BlockDevice" alt="" coords="167,5,263,32"/>
+<area shape="rect" id="node5" href="$d8/d4f/classCharDevice.xhtml" title="CharDevice" alt="" coords="169,56,260,83"/>
+<area shape="rect" id="node7" href="$dc/d14/classClockDevice.xhtml" title="ClockDevice" alt="" coords="166,107,263,133"/>
 </map>

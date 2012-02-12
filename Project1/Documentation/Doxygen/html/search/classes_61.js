@@ -1,4 +1,4 @@
 var searchData=
 [
-  ['abstractdevice',['AbstractDevice',['../db/d0e/classAbstractDevice.html',1,'']]]
+  ['abstractdevice',['AbstractDevice',['../db/d0e/classAbstractDevice.xhtml',1,'']]]
 ];

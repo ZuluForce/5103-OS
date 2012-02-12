@@ -3,6 +3,11 @@
 }
 
 
+\-Structure for containing process state and data.  
+
+
+
+
 {\ttfamily \#include $<$process.\-h$>$}
 
 \subsection*{\-Public \-Attributes}
@@ -20,7 +25,11 @@
 \hypertarget{structProcessInfo_a8a6eda10132e07b1596c09822724b0c7}{unsigned int {\bfseries total\-C\-P\-U}}\label{dd/dc8/structProcessInfo_a8a6eda10132e07b1596c09822724b0c7}
 
 \item 
-\hyperlink{process_8h_a2c72cb00af5be695c1f898162350821f}{e\-Proc\-State} \hyperlink{structProcessInfo_a748790bb8c3ef5d2dff552f35b81298e}{state}
+\hypertarget{structProcessInfo_a748790bb8c3ef5d2dff552f35b81298e}{\hyperlink{process_8h_a2c72cb00af5be695c1f898162350821f}{e\-Proc\-State} \hyperlink{structProcessInfo_a748790bb8c3ef5d2dff552f35b81298e}{state}}\label{dd/dc8/structProcessInfo_a748790bb8c3ef5d2dff552f35b81298e}
+
+\begin{DoxyCompactList}\small\item\em \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821f}{e\-Proc\-State} \end{DoxyCompactList}\item 
+\hypertarget{structProcessInfo_af818acf9075de7c0100858908bcc2867}{uint16\-\_\-t {\bfseries \-P\-S\-W}}\label{dd/dc8/structProcessInfo_af818acf9075de7c0100858908bcc2867}
+
 \item 
 \hypertarget{structProcessInfo_a2f9f55dc3548d0bed66e06db8f47d958}{int {\bfseries priority}}\label{dd/dc8/structProcessInfo_a2f9f55dc3548d0bed66e06db8f47d958}
 
@@ -43,15 +52,7 @@
 
 
 \subsection{\-Detailed \-Description}
-\-Structure for containing process state and data
-
 \-This struture is created in the kernel when a process is initialized. \-It contains all process data needed for execution and for the kernel/scheduler to make desciions on it. 
-
-\subsection{\-Member \-Data \-Documentation}
-\hypertarget{structProcessInfo_a748790bb8c3ef5d2dff552f35b81298e}{\index{\-Process\-Info@{\-Process\-Info}!state@{state}}
-\index{state@{state}!ProcessInfo@{\-Process\-Info}}
-\subsubsection[{state}]{\setlength{\rightskip}{0pt plus 5cm}{\bf e\-Proc\-State} {\bf \-Process\-Info\-::state}}}\label{dd/dc8/structProcessInfo_a748790bb8c3ef5d2dff552f35b81298e}
-\hyperlink{process_8h_a2c72cb00af5be695c1f898162350821f}{e\-Proc\-State} 
 
 \-The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
 \item 

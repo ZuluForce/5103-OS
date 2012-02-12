@@ -15,7 +15,7 @@
 #include "utility/id.h"
 
 #define DEFAULT_TIMER 1000 //Not sure on this one, need to read Specs
-#define DEFAULT_PRIORITY 0
+#define DEFAULT_PRIORITY 5
 
 /* ============ Modify this section to change scheduler used ============== */
 //Also have to change dependency in Makefile
@@ -25,7 +25,9 @@ typedef cFCFS schedulerType;
 /* ======================================================================== */
 
 #ifndef PROCESS_H_INCLUDED
+/** @cond */
 __attribute__((error("process.h not included by scheduler")));
+/** @endcond */
 #endif
 
 using namespace std;
@@ -34,7 +36,7 @@ static const char initProcessName[] = "main.trace";
 
 class cKernel {
 	private:
-        cCPU CPUref;
+        cCPU cpu;
 		int clockTick;
 
 		//Devices:
@@ -45,10 +47,6 @@ class cKernel {
 		ProcessInfo *runningProc; /**< #ProcessInfo */
 
 		cIDManager idGenerator;
-		/* Need to formalize process storage datastructures
-		 * to write this one.
-		 */
-		//void swapProcess(...);
 
 		/* Process Scheduler */
 		schedulerType scheduler;
@@ -59,6 +57,19 @@ class cKernel {
 		 *	one currently running in the cpu.
 		 */
 		void swapProcesses(ProcessInfo*);
+
+		/* ------------ For Signal Handling ------------ */
+		static cKernel *kernel_instance;
+		static void sig_catch(int signum, siginfo_t *info, void *context);
+
+		void sigHandler(int signum, siginfo_t *info);
+
+		/** @cond */
+		int charSigValue;
+		int blockSigValue;
+		int clockSigValue;
+		/** @endcond */
+		/* --------------------------------------------- */
 
 	public:
 		/** Default cKernel constructor
@@ -74,6 +85,8 @@ class cKernel {
 		 *
 		 *	Starts the main kernel loop. The initial program is loaded and
 		 * execution follows from there.
+		 *
+		 * \exception kernelError
 		 */
 		void boot(); //Starts the kernel loop
 
@@ -94,5 +107,43 @@ class cKernel {
 
         void _sysCall(const char call);
 };
+
+/** Struct containing kernel crash information
+ *
+ *	When the kernel crashes, important information is
+ *	placed in here and then handled by the main function
+ *	 in init.cpp.
+ */
+struct kernelError {
+	string message;
+
+	/* Add process and scheduler info */
+};
+
+/** \fn void cKernel::sigHandler(int signum, siginfo_t *info)
+ *	Handler for all signals.
+ *
+ *	Each device uses a timer from SIGRTMIN -> SIGRTMAX. Because these are
+ *	not required to be compile time constants, a switch statement cannot be
+ *	used. When a signal is received by the kernel, careful consideration must
+ *	be made to the current state. Below is each signal and how it is handled:
+ *
+ */
+
+/** \def DEFAULT_TIMER
+ *	Default timer value for devices. Measured in microseconds.
+ */
+
+/** \def DEFAULT_PRIORITY
+ *	Default priority assigned to newly created processes. Only
+ *	used if no other priority is provided.
+ */
+
+/** \var static const char initProcessName[]
+ *	Name of the first program to run on the system.
+ *
+ *	When the kernel object is created, this program
+ *	is loaded. It is run once cKernel::boot is called.
+ */
 
 #endif // KERNEL_H_INCLUDED

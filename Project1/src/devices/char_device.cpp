@@ -15,3 +15,7 @@ void CharDevice::setTimer(int usec) {
 
 	return;
 }
+
+void CharDevice::disarm() {
+
+}

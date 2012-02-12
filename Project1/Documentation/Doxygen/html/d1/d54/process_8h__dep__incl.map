@@ -1,6 +1,7 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$d2/dd8/scheduler_8h_source.html" title="include/scheduler/scheduler.h" alt="" coords="11,80,205,107"/>
-<area shape="rect" id="node5" href="$db/d41/fcfs_8h_source.html" title="include/scheduler/fcfs.h" alt="" coords="28,155,187,181"/>
-<area shape="rect" id="node7" href="$d0/daa/kernel_8h.html" title="include/kernel.h" alt="" coords="5,229,117,256"/>
-<area shape="rect" id="node9" href="$d8/dc0/init_8h_source.html" title="include/init.h" alt="" coords="61,304,155,331"/>
+<area shape="rect" id="node3" href="$d2/dd8/scheduler_8h_source.xhtml" title="include/scheduler/scheduler.h" alt="" coords="59,80,253,107"/>
+<area shape="rect" id="node5" href="$db/d41/fcfs_8h_source.xhtml" title="include/scheduler/fcfs.h" alt="" coords="76,155,235,181"/>
+<area shape="rect" id="node7" href="$d0/daa/kernel_8h.xhtml" title="include/kernel.h" alt="" coords="5,229,117,256"/>
+<area shape="rect" id="node11" href="$d5/d8b/allSchedulers_8h_source.xhtml" title="include/scheduler/allSchedulers.h" alt="" coords="143,229,359,256"/>
+<area shape="rect" id="node9" href="$d8/dc0/init_8h_source.xhtml" title="include/init.h" alt="" coords="14,304,108,331"/>
 </map>

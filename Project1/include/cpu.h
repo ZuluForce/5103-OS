@@ -79,6 +79,13 @@ class cCPU {
          */
         int getSetVC(int newVC);
 
+		/** Get/Set the PSW
+		 *
+		 *	Get the current value for the PSW and set its value
+		 *	to the given parameter.
+		 */
+        uint16_t getSetPSW(uint16_t newPSW);
+
         /** Get the Program Status Word
          *
          * Returns the program status word which is a unsigned
