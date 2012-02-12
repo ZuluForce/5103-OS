@@ -25,7 +25,9 @@ ClockDevice::~ClockDevice() {
 
 void ClockDevice::setTimer(int usec) {
 	/* Setup an interrupt timer */
+	iTime.it_value.tv_sec = 0;
 	iTime.it_value.tv_nsec = usec * 1000;
+	iTime.it_interval.tv_sec = 0;
 	iTime.it_interval.tv_nsec = usec * 1000;
 
 	if ( timer_settime(timerid, 0, &iTime, NULL) == -1 )

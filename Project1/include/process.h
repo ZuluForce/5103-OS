@@ -30,7 +30,7 @@ struct ProcessInfo {
     unsigned int parent, pid;
     unsigned int startCPU, totalCPU;
 
-	eProcState state; /**< #eProcState */
+	eProcState state;
 	uint16_t PSW;
 	int priority;
 
@@ -41,12 +41,14 @@ struct ProcessInfo {
 	/* Program Content */
     char *processText;
 
-    /* Pointer to Scheduler information:
-     * If the scheduler needs information that is not provided in
-     * the standard process struct, it can be allocated elsewhere
-	 * and assigned to this pointer. The scheduling algorithm should
-	 * cast it to the correct type.
-     */
+	/** Scheduler specific data
+	 *
+	 *	Check specific scheduler docs for the contents of this
+	 *	pointer. Since the process struct remains static,
+	 *	this gives the ability for schedulers to store their
+	 *	own state without the kernel having to know ahead
+	 *	of time.
+	 */
     void *scheduleData;
 
 	/* Total memory being used by the process */
@@ -66,6 +68,13 @@ struct ProcessInfo {
 
 /** \var eProcState running
  *	Process is currently running
+ *
+ *	A running process should implicilty be considered
+ *	ready. The kernel may not notify the scheduler to
+ *	transition the process to ready before asking for a
+ *	a scheduling decision. It is acceptable for the scheduler
+ *	to make a process ready without the kernel's consent when
+ *	it is being asked for a scheduling decision.
  *
  *	Invariant State:
  *	\li Process is on the cpu

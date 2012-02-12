@@ -69,7 +69,7 @@ unsigned int cCPU::getSetPC(unsigned int newPC) {
 int cCPU::getSetVC(int newVC) {
 	int oldVC = VC;
 	VC = newVC;
-	return newVC;
+	return oldVC;
 }
 
 uint16_t cCPU::getSetPSW(uint16_t newPSW) {
@@ -80,6 +80,10 @@ uint16_t cCPU::getSetPSW(uint16_t newPSW) {
 
 uint16_t cCPU::getPSW() {
 	return PSW;
+}
+
+void cCPU::setPSW(uint16_t newPSW) {
+	PSW = newPSW;
 }
 
 char* cCPU::getParam(int num) {
@@ -173,12 +177,11 @@ void cCPU::run() {
 			case 'I':
 				/* IO syscall to device class: 'I <dev-class> (B/C) */
 				printf("Opcode: I\n");
+				++PC;
 				if ( tokenizeLine() != 1) {
 					PSW |= PS_EXCEPTION;
 					return;
 				}
-
-				++PC;
 
 				PSW |= PS_SYSCALL;
 
@@ -199,9 +202,10 @@ void cCPU::run() {
 
 			case 'E':
 				/* Terminate the process. Notify the OS */
-				printf("Opcode: E");
+				printf("Opcode: E\n");
 
 				PSW |= PS_TERMINATE;
+
 				return;
 
 			default:

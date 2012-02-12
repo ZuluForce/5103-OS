@@ -12,6 +12,7 @@ class cIDManager {
 	private:
 		queue<unsigned int> freeID;
 
+		unsigned int baseID;
 		unsigned int currentID;
 
 		bool consumeQueue;
@@ -44,6 +45,8 @@ class cIDManager {
 		 *	consuming from the queue and return this newly availabe ID.
 		 */
 		void returnID(unsigned int id);
+
+		unsigned int reservedIDs();
 };
 
 #endif // ID_H_INCLUDED

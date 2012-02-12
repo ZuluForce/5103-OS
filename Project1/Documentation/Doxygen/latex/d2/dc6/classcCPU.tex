@@ -23,6 +23,8 @@ uint16\-\_\-t \hyperlink{classcCPU_a0b13774a76c6b04d760b8ff072c37a85}{get\-Set\-
 \begin{DoxyCompactList}\small\item\em \-Get/\-Set the \-P\-S\-W. \end{DoxyCompactList}\item 
 uint16\-\_\-t \hyperlink{classcCPU_ad485374a709476e2dfb847046d3d5215}{get\-P\-S\-W} ()
 \begin{DoxyCompactList}\small\item\em \-Get the \-Program \-Status \-Word. \end{DoxyCompactList}\item 
+void \hyperlink{classcCPU_adb6ad793398d28b5615dd1377a619084}{set\-P\-S\-W} (uint16\-\_\-t new\-P\-S\-W)
+\begin{DoxyCompactList}\small\item\em \-Set a new value for the \-P\-S\-W. \end{DoxyCompactList}\item 
 char $\ast$ \hyperlink{classcCPU_a891d9b77e1818ca247e9d76f4db99415}{get\-Param} (int num)
 \begin{DoxyCompactList}\small\item\em \-Get execution parameters from the cpu. \end{DoxyCompactList}\item 
 char \hyperlink{classcCPU_a987e1ab511c71dcde48411f5bb16f9d8}{get\-Opcode} ()
@@ -127,7 +129,14 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 {}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_aee300d68026ba9f13d5434ff82f0372a}
-\-Once all appropriate process data is entered by the kernel this function is called to start execution. \-Any time control needs to be returned to the kernel this function will return with the appropriate \-P\-S\-W flags set for the kernel to act on. \hypertarget{classcCPU_acd957640be8abb7c0d8a24010ed0e737}{\index{c\-C\-P\-U@{c\-C\-P\-U}!set\-Text@{set\-Text}}
+\-Once all appropriate process data is entered by the kernel this function is called to start execution. \-Any time control needs to be returned to the kernel this function will return with the appropriate \-P\-S\-W flags set for the kernel to act on. \hypertarget{classcCPU_adb6ad793398d28b5615dd1377a619084}{\index{c\-C\-P\-U@{c\-C\-P\-U}!set\-P\-S\-W@{set\-P\-S\-W}}
+\index{set\-P\-S\-W@{set\-P\-S\-W}!cCPU@{c\-C\-P\-U}}
+\subsubsection[{set\-P\-S\-W}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-C\-P\-U\-::set\-P\-S\-W} (
+\begin{DoxyParamCaption}
+\item[{uint16\-\_\-t}]{new\-P\-S\-W}
+\end{DoxyParamCaption}
+)}}\label{d2/dc6/classcCPU_adb6ad793398d28b5615dd1377a619084}
+\-Used by the kernel to reset the \-P\-S\-W after a system call. \-Any process execution which returns to the kernel but does not terminate the process should reset the \-P\-S\-W so subsequent exceptions/terminations are not lost by stray \-P\-S\-W values. \hypertarget{classcCPU_acd957640be8abb7c0d8a24010ed0e737}{\index{c\-C\-P\-U@{c\-C\-P\-U}!set\-Text@{set\-Text}}
 \index{set\-Text@{set\-Text}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{set\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-C\-P\-U\-::set\-Text} (
 \begin{DoxyParamCaption}

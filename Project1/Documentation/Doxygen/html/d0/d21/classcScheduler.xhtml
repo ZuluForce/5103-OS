@@ -95,19 +95,119 @@ Inheritance diagram for cScheduler:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abb86834353cf48c1b2b851232ce8615b"></a><!-- doxytag: member="cScheduler::initProcScheduleInfo" ref="abb86834353cf48c1b2b851232ce8615b" args="(ProcessInfo *)=0" -->
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>initProcScheduleInfo</b> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)=0</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5a73902cf4b49b4ec39d46edfe8d8806"></a><!-- doxytag: member="cScheduler::addProcess" ref="a5a73902cf4b49b4ec39d46edfe8d8806" args="(ProcessInfo *)=0" -->
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>addProcess</b> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d21/classcScheduler.xhtml#aeae779c5c160a441e725dfc72656e6dc">addProcess</a> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer control of process state and scheduling.  <a href="#aeae779c5c160a441e725dfc72656e6dc"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab82ffc2909aae9047dd66c28c609abe7"></a><!-- doxytag: member="cScheduler::setBlocked" ref="ab82ffc2909aae9047dd66c28c609abe7" args="(ProcessInfo *)=0" -->
 virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>setBlocked</b> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)=0</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa6e5255fc377bf27707b5958a9252eaf"></a><!-- doxytag: member="cScheduler::unblockProcess" ref="aa6e5255fc377bf27707b5958a9252eaf" args="(ProcessInfo *)=0" -->
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>unblockProcess</b> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)=0</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a16978dd9cebeba3e6d37f0a28a246f96"></a><!-- doxytag: member="cScheduler::removeProcess" ref="a16978dd9cebeba3e6d37f0a28a246f96" args="(ProcessInfo *)=0" -->
-virtual void&#160;</td><td class="memItemRight" valign="bottom"><b>removeProcess</b> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)=0</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a34d6d4e823b8b1731638f0de9e084a17"></a><!-- doxytag: member="cScheduler::getNextToRun" ref="a34d6d4e823b8b1731638f0de9e084a17" args="()=0" -->
-virtual <a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>getNextToRun</b> ()=0</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d21/classcScheduler.xhtml#a81fe2e5e5e2334e36db1cbf491e3fa57">unblockProcess</a> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unblock a process and make it ready.  <a href="#a81fe2e5e5e2334e36db1cbf491e3fa57"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d21/classcScheduler.xhtml#a5632ffa597e9567d475c808070c4e3bb">removeProcess</a> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a process from the control of the scheduler.  <a href="#a5632ffa597e9567d475c808070c4e3bb"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d21/classcScheduler.xhtml#a350ad7c55ddcdd17005778b0da241956">getNextToRun</a> ()=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query the scheduler for next process to run.  <a href="#a350ad7c55ddcdd17005778b0da241956"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a64106a7e965d14f7183960cf7f35200d"></a><!-- doxytag: member="cScheduler::numProcesses" ref="a64106a7e965d14f7183960cf7f35200d" args="()=0" -->
 virtual pidType&#160;</td><td class="memItemRight" valign="bottom"><b>numProcesses</b> ()=0</td></tr>
 </table>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="aeae779c5c160a441e725dfc72656e6dc"></a><!-- doxytag: member="cScheduler::addProcess" ref="aeae779c5c160a441e725dfc72656e6dc" args="(ProcessInfo *)=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d0/d21/classcScheduler.xhtml#aeae779c5c160a441e725dfc72656e6dc">cScheduler::addProcess</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>After this is called, the kernel core no longer keeps track of the given process. Once the process is created and deemed ready by the kernel it is handed off here. The scheduler is then in charge of state transitions when the kernel gives it appropriate notifications.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ProcessInfo*</td><td>Process to add under scheduler's control </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a25d4bf440041f5294f3b9c5aff20b411">cFCFS</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a350ad7c55ddcdd17005778b0da241956"></a><!-- doxytag: member="cScheduler::getNextToRun" ref="a350ad7c55ddcdd17005778b0da241956" args="()=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> * <a class="el" href="../../d0/d21/classcScheduler.xhtml#a350ad7c55ddcdd17005778b0da241956">cScheduler::getNextToRun</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>After this function is called, it should be assumed by any scheduler implementation that the kernel will run the given process (unless otherwise notified). The currently running process should implicitly be considered for running next (again).</p>
+<p>If there are processes left but all are blocked. This function should block until it receives a signal that a process is unblocked.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>ProcessInfo* Ready process to run next. May be the same as the currenlty running one. </dd></dl>
+
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#aa2b92a8a992078e499aab455c9d78faf">cFCFS</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a5632ffa597e9567d475c808070c4e3bb"></a><!-- doxytag: member="cScheduler::removeProcess" ref="a5632ffa597e9567d475c808070c4e3bb" args="(ProcessInfo *)=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d0/d21/classcScheduler.xhtml#a5632ffa597e9567d475c808070c4e3bb">cScheduler::removeProcess</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>When a process terminates, either through normal means or an exception, the kernel will call this function to release a process from the scheduler's control. The scheduler should clean up any internal state for the process. Deallocation of process resources is left to the kernel.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ProcessInfo*</td><td>Process to remove from scheduler </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#aeeac757885108ae510b728600ebba248">cFCFS</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a81fe2e5e5e2334e36db1cbf491e3fa57"></a><!-- doxytag: member="cScheduler::unblockProcess" ref="a81fe2e5e5e2334e36db1cbf491e3fa57" args="(ProcessInfo *)=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d0/d21/classcScheduler.xhtml#a81fe2e5e5e2334e36db1cbf491e3fa57">cScheduler::unblockProcess</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>When a process has completed a blocking call the kernel will notify the scheduler that it should be unblocked. This operation should be very fast since it will likely be called from a signal handler.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">ProcessInfo*</td><td>Process to unblock </td></tr>
+  </table>
+  </dd>
+</dl>
+
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a793da0298f9b36ab8505a0e3daaf41ec">cFCFS</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following file:<ul>
 <li>include/scheduler/<a class="el" href="../../d2/dd8/scheduler_8h_source.xhtml">scheduler.h</a></li>
 </ul>
@@ -129,7 +229,7 @@ virtual pidType&#160;</td><td class="memItemRight" valign="bottom"><b>numProcess
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 11 2012 21:46:24 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 12 2012 14:01:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

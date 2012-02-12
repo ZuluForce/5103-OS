@@ -7,7 +7,15 @@ int main(int argc, char **argv) {
 	/* Initialize the Kernel */
     cKernel kernel = cKernel();
 
-	kernel.boot();
+	try {
+		kernel.boot();
+	} catch (const std::string& emsg) {
+		cerr << "Error Caught: " << emsg << endl;
+		exit(-1);
+	} catch (const kernelError& kerr) {
+		cerr << "Kernel Exception: " << kerr.message << endl;
+		exit(-1);
+	}
 
 	return 0;
 }

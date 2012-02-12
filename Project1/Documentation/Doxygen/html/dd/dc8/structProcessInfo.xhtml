@@ -102,8 +102,7 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>startCPU</b><
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8a6eda10132e07b1596c09822724b0c7"></a><!-- doxytag: member="ProcessInfo::totalCPU" ref="a8a6eda10132e07b1596c09822724b0c7" args="" -->
 unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>totalCPU</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a748790bb8c3ef5d2dff552f35b81298e"></a><!-- doxytag: member="ProcessInfo::state" ref="a748790bb8c3ef5d2dff552f35b81298e" args="" -->
-<a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821f">eProcState</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/dc8/structProcessInfo.xhtml#a748790bb8c3ef5d2dff552f35b81298e">state</a></td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight"><a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821f" title="Enumeration for process states.">eProcState</a> <br/></td></tr>
+<a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821f">eProcState</a>&#160;</td><td class="memItemRight" valign="bottom"><b>state</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af818acf9075de7c0100858908bcc2867"></a><!-- doxytag: member="ProcessInfo::PSW" ref="af818acf9075de7c0100858908bcc2867" args="" -->
 uint16_t&#160;</td><td class="memItemRight" valign="bottom"><b>PSW</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2f9f55dc3548d0bed66e06db8f47d958"></a><!-- doxytag: member="ProcessInfo::priority" ref="a2f9f55dc3548d0bed66e06db8f47d958" args="" -->
@@ -114,14 +113,29 @@ unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>PC</b></td></
 int&#160;</td><td class="memItemRight" valign="bottom"><b>VC</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae99b529cb79a446c0ff0d1a851b67fc5"></a><!-- doxytag: member="ProcessInfo::processText" ref="ae99b529cb79a446c0ff0d1a851b67fc5" args="" -->
 char *&#160;</td><td class="memItemRight" valign="bottom"><b>processText</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aea1c50ae92f6421ae5c94ac674c1877a"></a><!-- doxytag: member="ProcessInfo::scheduleData" ref="aea1c50ae92f6421ae5c94ac674c1877a" args="" -->
-void *&#160;</td><td class="memItemRight" valign="bottom"><b>scheduleData</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dd/dc8/structProcessInfo.xhtml#aea1c50ae92f6421ae5c94ac674c1877a">scheduleData</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Scheduler specific data.  <a href="#aea1c50ae92f6421ae5c94ac674c1877a"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa65ed051998c0493b68feeea5ae4955f"></a><!-- doxytag: member="ProcessInfo::memory" ref="aa65ed051998c0493b68feeea5ae4955f" args="" -->
 unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>memory</b></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This struture is created in the kernel when a process is initialized. It contains all process data needed for execution and for the kernel/scheduler to make desciions on it. </p>
-</div><hr/>The documentation for this struct was generated from the following file:<ul>
+</div><hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="aea1c50ae92f6421ae5c94ac674c1877a"></a><!-- doxytag: member="ProcessInfo::scheduleData" ref="aea1c50ae92f6421ae5c94ac674c1877a" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void* <a class="el" href="../../dd/dc8/structProcessInfo.xhtml#aea1c50ae92f6421ae5c94ac674c1877a">ProcessInfo::scheduleData</a></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Check specific scheduler docs for the contents of this pointer. Since the process struct remains static, this gives the ability for schedulers to store their own state without the kernel having to know ahead of time. </p>
+
+</div>
+</div>
+<hr/>The documentation for this struct was generated from the following file:<ul>
 <li>include/<a class="el" href="../../da/d42/process_8h_source.xhtml">process.h</a></li>
 </ul>
 </div><!-- contents -->
@@ -142,7 +156,7 @@ unsigned long&#160;</td><td class="memItemRight" valign="bottom"><b>memory</b></
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 11 2012 21:46:24 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 12 2012 14:01:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

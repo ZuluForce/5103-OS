@@ -58,6 +58,8 @@ class cKernel {
 		 */
 		void swapProcesses(ProcessInfo*);
 
+		void cleanupProcess(ProcessInfo*);
+
 		/* ------------ For Signal Handling ------------ */
 		static cKernel *kernel_instance;
 		static void sig_catch(int signum, siginfo_t *info, void *context);

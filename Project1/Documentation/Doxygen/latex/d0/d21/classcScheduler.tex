@@ -16,24 +16,95 @@
 \hypertarget{classcScheduler_abb86834353cf48c1b2b851232ce8615b}{virtual void {\bfseries init\-Proc\-Schedule\-Info} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)=0}\label{d0/d21/classcScheduler_abb86834353cf48c1b2b851232ce8615b}
 
 \item 
-\hypertarget{classcScheduler_a5a73902cf4b49b4ec39d46edfe8d8806}{virtual void {\bfseries add\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)=0}\label{d0/d21/classcScheduler_a5a73902cf4b49b4ec39d46edfe8d8806}
-
-\item 
+virtual void \hyperlink{classcScheduler_aeae779c5c160a441e725dfc72656e6dc}{add\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)=0
+\begin{DoxyCompactList}\small\item\em \-Transfer control of process state and scheduling. \end{DoxyCompactList}\item 
 \hypertarget{classcScheduler_ab82ffc2909aae9047dd66c28c609abe7}{virtual void {\bfseries set\-Blocked} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)=0}\label{d0/d21/classcScheduler_ab82ffc2909aae9047dd66c28c609abe7}
 
 \item 
-\hypertarget{classcScheduler_aa6e5255fc377bf27707b5958a9252eaf}{virtual void {\bfseries unblock\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)=0}\label{d0/d21/classcScheduler_aa6e5255fc377bf27707b5958a9252eaf}
-
-\item 
-\hypertarget{classcScheduler_a16978dd9cebeba3e6d37f0a28a246f96}{virtual void {\bfseries remove\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)=0}\label{d0/d21/classcScheduler_a16978dd9cebeba3e6d37f0a28a246f96}
-
-\item 
-\hypertarget{classcScheduler_a34d6d4e823b8b1731638f0de9e084a17}{virtual \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ {\bfseries get\-Next\-To\-Run} ()=0}\label{d0/d21/classcScheduler_a34d6d4e823b8b1731638f0de9e084a17}
-
-\item 
+virtual void \hyperlink{classcScheduler_a81fe2e5e5e2334e36db1cbf491e3fa57}{unblock\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)=0
+\begin{DoxyCompactList}\small\item\em \-Unblock a process and make it ready. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcScheduler_a5632ffa597e9567d475c808070c4e3bb}{remove\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)=0
+\begin{DoxyCompactList}\small\item\em \-Remove a process from the control of the scheduler. \end{DoxyCompactList}\item 
+virtual \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ \hyperlink{classcScheduler_a350ad7c55ddcdd17005778b0da241956}{get\-Next\-To\-Run} ()=0
+\begin{DoxyCompactList}\small\item\em \-Query the scheduler for next process to run. \end{DoxyCompactList}\item 
 \hypertarget{classcScheduler_a64106a7e965d14f7183960cf7f35200d}{virtual pid\-Type {\bfseries num\-Processes} ()=0}\label{d0/d21/classcScheduler_a64106a7e965d14f7183960cf7f35200d}
 
 \end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcScheduler_aeae779c5c160a441e725dfc72656e6dc}{\index{c\-Scheduler@{c\-Scheduler}!add\-Process@{add\-Process}}
+\index{add\-Process@{add\-Process}!cScheduler@{c\-Scheduler}}
+\subsubsection[{add\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Scheduler\-::add\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{d0/d21/classcScheduler_aeae779c5c160a441e725dfc72656e6dc}
+\-After this is called, the kernel core no longer keeps track of the given process. \-Once the process is created and deemed ready by the kernel it is handed off here. \-The scheduler is then in charge of state transitions when the kernel gives it appropriate notifications.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Process\-Info$\ast$} & \-Process to add under scheduler's control \\
+\hline
+\end{DoxyParams}
+
+
+\-Implemented in \hyperlink{classcFCFS_a25d4bf440041f5294f3b9c5aff20b411}{c\-F\-C\-F\-S}.
+
+\hypertarget{classcScheduler_a350ad7c55ddcdd17005778b0da241956}{\index{c\-Scheduler@{c\-Scheduler}!get\-Next\-To\-Run@{get\-Next\-To\-Run}}
+\index{get\-Next\-To\-Run@{get\-Next\-To\-Run}!cScheduler@{c\-Scheduler}}
+\subsubsection[{get\-Next\-To\-Run}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Process\-Info} $\ast$ {\bf c\-Scheduler\-::get\-Next\-To\-Run} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{d0/d21/classcScheduler_a350ad7c55ddcdd17005778b0da241956}
+\-After this function is called, it should be assumed by any scheduler implementation that the kernel will run the given process (unless otherwise notified). \-The currently running process should implicitly be considered for running next (again).
+
+\-If there are processes left but all are blocked. \-This function should block until it receives a signal that a process is unblocked.
+
+\begin{DoxyReturn}{\-Returns}
+\-Process\-Info$\ast$ \-Ready process to run next. \-May be the same as the currenlty running one. 
+\end{DoxyReturn}
+
+
+\-Implemented in \hyperlink{classcFCFS_aa2b92a8a992078e499aab455c9d78faf}{c\-F\-C\-F\-S}.
+
+\hypertarget{classcScheduler_a5632ffa597e9567d475c808070c4e3bb}{\index{c\-Scheduler@{c\-Scheduler}!remove\-Process@{remove\-Process}}
+\index{remove\-Process@{remove\-Process}!cScheduler@{c\-Scheduler}}
+\subsubsection[{remove\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Scheduler\-::remove\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{d0/d21/classcScheduler_a5632ffa597e9567d475c808070c4e3bb}
+\-When a process terminates, either through normal means or an exception, the kernel will call this function to release a process from the scheduler's control. \-The scheduler should clean up any internal state for the process. \-Deallocation of process resources is left to the kernel.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Process\-Info$\ast$} & \-Process to remove from scheduler \\
+\hline
+\end{DoxyParams}
+
+
+\-Implemented in \hyperlink{classcFCFS_aeeac757885108ae510b728600ebba248}{c\-F\-C\-F\-S}.
+
+\hypertarget{classcScheduler_a81fe2e5e5e2334e36db1cbf491e3fa57}{\index{c\-Scheduler@{c\-Scheduler}!unblock\-Process@{unblock\-Process}}
+\index{unblock\-Process@{unblock\-Process}!cScheduler@{c\-Scheduler}}
+\subsubsection[{unblock\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Scheduler\-::unblock\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{d0/d21/classcScheduler_a81fe2e5e5e2334e36db1cbf491e3fa57}
+\-When a process has completed a blocking call the kernel will notify the scheduler that it should be unblocked. \-This operation should be very fast since it will likely be called from a signal handler.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Process\-Info$\ast$} & \-Process to unblock \\
+\hline
+\end{DoxyParams}
+
+
+\-Implemented in \hyperlink{classcFCFS_a793da0298f9b36ab8505a0e3daaf41ec}{c\-F\-C\-F\-S}.
+
 
 
 \-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}

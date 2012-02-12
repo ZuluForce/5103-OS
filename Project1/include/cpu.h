@@ -94,6 +94,16 @@ class cCPU {
          */
         uint16_t getPSW();
 
+        /** Set a new value for the PSW
+         *
+         *	Used by the kernel to reset the PSW after a system
+         *	call. Any process execution which returns to the
+         *	kernel but does not terminate the process should
+         *	reset the PSW so subsequent exceptions/terminations
+         *	are not lost by stray PSW values.
+         */
+        void setPSW(uint16_t newPSW);
+
         /** Get execution parameters from the cpu
          *
          *	Fetch the given execution paramter from the cpu's internal

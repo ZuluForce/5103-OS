@@ -102,6 +102,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the timer to go off.  <a href="#a780eebde86fb6a6400894128ac37fa37"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d14/classClockDevice.xhtml#a0a0c99ba88b7d0cfaccd09d774c726fe">disarm</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Disarm the timer.  <a href="#a0a0c99ba88b7d0cfaccd09d774c726fe"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d14/classClockDevice.xhtml#a6dd7b50cf793e37514890eff3e7adf95">getTime</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get how much time is remaining.  <a href="#a6dd7b50cf793e37514890eff3e7adf95"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
 <a class="anchor" id="a0a0c99ba88b7d0cfaccd09d774c726fe"></a><!-- doxytag: member="ClockDevice::disarm" ref="a0a0c99ba88b7d0cfaccd09d774c726fe" args="()" -->
@@ -126,6 +128,24 @@ Public Member Functions</h2></td></tr>
 </dl>
 
 <p>Implements <a class="el" href="../../db/d0e/classAbstractDevice.xhtml">AbstractDevice</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a6dd7b50cf793e37514890eff3e7adf95"></a><!-- doxytag: member="ClockDevice::getTime" ref="a6dd7b50cf793e37514890eff3e7adf95" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">int <a class="el" href="../../dc/d14/classClockDevice.xhtml#a6dd7b50cf793e37514890eff3e7adf95">ClockDevice::getTime</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Returns the remaining time until a signal is produced.</p>
+<dl class="return"><dt><b>Returns:</b></dt><dd>int Time left in microseconds </dd></dl>
 
 </div>
 </div>
@@ -183,7 +203,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 11 2012 21:46:24 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 12 2012 14:01:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

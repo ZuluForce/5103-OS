@@ -25,9 +25,9 @@
 \hypertarget{structProcessInfo_a8a6eda10132e07b1596c09822724b0c7}{unsigned int {\bfseries total\-C\-P\-U}}\label{dd/dc8/structProcessInfo_a8a6eda10132e07b1596c09822724b0c7}
 
 \item 
-\hypertarget{structProcessInfo_a748790bb8c3ef5d2dff552f35b81298e}{\hyperlink{process_8h_a2c72cb00af5be695c1f898162350821f}{e\-Proc\-State} \hyperlink{structProcessInfo_a748790bb8c3ef5d2dff552f35b81298e}{state}}\label{dd/dc8/structProcessInfo_a748790bb8c3ef5d2dff552f35b81298e}
+\hypertarget{structProcessInfo_a748790bb8c3ef5d2dff552f35b81298e}{\hyperlink{process_8h_a2c72cb00af5be695c1f898162350821f}{e\-Proc\-State} {\bfseries state}}\label{dd/dc8/structProcessInfo_a748790bb8c3ef5d2dff552f35b81298e}
 
-\begin{DoxyCompactList}\small\item\em \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821f}{e\-Proc\-State} \end{DoxyCompactList}\item 
+\item 
 \hypertarget{structProcessInfo_af818acf9075de7c0100858908bcc2867}{uint16\-\_\-t {\bfseries \-P\-S\-W}}\label{dd/dc8/structProcessInfo_af818acf9075de7c0100858908bcc2867}
 
 \item 
@@ -43,9 +43,8 @@
 \hypertarget{structProcessInfo_ae99b529cb79a446c0ff0d1a851b67fc5}{char $\ast$ {\bfseries process\-Text}}\label{dd/dc8/structProcessInfo_ae99b529cb79a446c0ff0d1a851b67fc5}
 
 \item 
-\hypertarget{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{void $\ast$ {\bfseries schedule\-Data}}\label{dd/dc8/structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}
-
-\item 
+void $\ast$ \hyperlink{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{schedule\-Data}
+\begin{DoxyCompactList}\small\item\em \-Scheduler specific data. \end{DoxyCompactList}\item 
 \hypertarget{structProcessInfo_aa65ed051998c0493b68feeea5ae4955f}{unsigned long {\bfseries memory}}\label{dd/dc8/structProcessInfo_aa65ed051998c0493b68feeea5ae4955f}
 
 \end{DoxyCompactItemize}
@@ -53,6 +52,12 @@
 
 \subsection{\-Detailed \-Description}
 \-This struture is created in the kernel when a process is initialized. \-It contains all process data needed for execution and for the kernel/scheduler to make desciions on it. 
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{\index{\-Process\-Info@{\-Process\-Info}!schedule\-Data@{schedule\-Data}}
+\index{schedule\-Data@{schedule\-Data}!ProcessInfo@{\-Process\-Info}}
+\subsubsection[{schedule\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ {\bf \-Process\-Info\-::schedule\-Data}}}\label{dd/dc8/structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}
+\-Check specific scheduler docs for the contents of this pointer. \-Since the process struct remains static, this gives the ability for schedulers to store their own state without the kernel having to know ahead of time. 
 
 \-The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
 \item 

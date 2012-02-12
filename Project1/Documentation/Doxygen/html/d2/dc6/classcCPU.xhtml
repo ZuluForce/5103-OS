@@ -105,6 +105,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get/Set the PSW.  <a href="#a0b13774a76c6b04d760b8ff072c37a85"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">uint16_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#ad485374a709476e2dfb847046d3d5215">getPSW</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Program Status Word.  <a href="#ad485374a709476e2dfb847046d3d5215"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#adb6ad793398d28b5615dd1377a619084">setPSW</a> (uint16_t newPSW)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a new value for the PSW.  <a href="#adb6ad793398d28b5615dd1377a619084"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">char *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#a891d9b77e1818ca247e9d76f4db99415">getParam</a> (int num)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get execution parameters from the cpu.  <a href="#a891d9b77e1818ca247e9d76f4db99415"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#a987e1ab511c71dcde48411f5bb16f9d8">getOpcode</a> ()</td></tr>
@@ -271,6 +273,24 @@ char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 
 </div>
 </div>
+<a class="anchor" id="adb6ad793398d28b5615dd1377a619084"></a><!-- doxytag: member="cCPU::setPSW" ref="adb6ad793398d28b5615dd1377a619084" args="(uint16_t newPSW)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d2/dc6/classcCPU.xhtml#adb6ad793398d28b5615dd1377a619084">cCPU::setPSW</a> </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>newPSW</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Used by the kernel to reset the PSW after a system call. Any process execution which returns to the kernel but does not terminate the process should reset the PSW so subsequent exceptions/terminations are not lost by stray PSW values. </p>
+
+</div>
+</div>
 <a class="anchor" id="acd957640be8abb7c0d8a24010ed0e737"></a><!-- doxytag: member="cCPU::setText" ref="acd957640be8abb7c0d8a24010ed0e737" args="(char *text)" -->
 <div class="memitem">
 <div class="memproto">
@@ -317,7 +337,7 @@ char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 11 2012 21:46:24 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 12 2012 14:01:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

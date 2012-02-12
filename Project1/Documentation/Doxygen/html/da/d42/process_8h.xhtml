@@ -92,7 +92,7 @@ Include dependency graph for process.h:</div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="../../d1/d54/process_8h__dep__incl.svg" width="364" height="336"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="../../d1/d54/process_8h__dep__incl.svg" width="471" height="336"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div>
 <p><a href="../../da/d42/process_8h_source.xhtml">Go to the source code of this file.</a></p>
@@ -143,6 +143,7 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243"></a><!-- doxytag: member="running" ref="a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243" args="" -->running</em>&nbsp;</td><td>
 <p>Process is currently running. </p>
+<p>A running process should implicilty be considered ready. The kernel may not notify the scheduler to transition the process to ready before asking for a a scheduling decision. It is acceptable for the scheduler to make a process ready without the kernel's consent when it is being asked for a scheduling decision.</p>
 <p>Invariant State: </p>
 <ul>
 <li>Process is on the cpu</li>
@@ -201,7 +202,7 @@ Enumerations</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 11 2012 21:46:24 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 12 2012 14:01:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

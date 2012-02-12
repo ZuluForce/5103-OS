@@ -51,14 +51,16 @@ cKernel::~cKernel() {
 
 /* Signal Handler */
 void cKernel::sigHandler(int signum, siginfo_t *info) {
-	printf("A signal was received\n");
-
 	if ( signum == clockSigValue /* && info->si_code == SI_TIMER */) {
-		printf("Received clock signal\n");
+		//printf("Received clock signal\n");
+		++clockTick; //Increment cpu time
+
 	} else if (signum == blockSigValue ) {
 		printf("Received block signal\n");
 	} else if ( signum == charSigValue ) {
 		printf("Received char signal\n");
+	} else {
+		printf("Unknown signal received\n");
 	}
 
 	return;
@@ -74,7 +76,6 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
     }
 
     ProcessInfo *newProc = (ProcessInfo*) malloc( sizeof(ProcessInfo) );
-    newProc->memory = sizeof(ProcessInfo);
     newProc->memory += fileinfo.st_size;
 
     newProc->processText = (char*) malloc( fileinfo.st_size );
@@ -86,6 +87,7 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
     	perror("Error creating new process");
     	free(newProc->processText);
     	free(newProc);
+    	close(processFile);
 
     	return;
     }
@@ -103,9 +105,9 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
 
 	/* Place in storage datastructure */
 	scheduler.initProcScheduleInfo(newProc);
-	scheduler.addProcess(newProc);
+	newProc->state = ready;
 
-    newProc->state = ready;
+	scheduler.addProcess(newProc);
 
 	//#ifdef DEBUG
     printf("Created new process: %s\n", filename);
@@ -121,7 +123,9 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
     return;
 }
 
-void cKernel::cleanupProcess(pidType pid) {
+void cKernel::cleanupProcess(ProcessInfo* proc) {
+	free(proc->processText);
+	idGenerator.returnID(proc->pid);
 
 	return;
 }
@@ -178,7 +182,6 @@ void cKernel::boot() {
 
 		printf("Running Process %d\n", runningProc->pid);
 		cpu.run();
-		printf("Time until signal: %d\n", clockInterrupt.getTime());
 
 		localPSW = cpu.getPSW();
 
@@ -187,6 +190,9 @@ void cKernel::boot() {
 			//#ifdef DEBUG
 			printf("Process raised an exception\n");
 			//#endif
+			scheduler.removeProcess(runningProc);
+			cleanupProcess(runningProc);
+			runningProc = NULL;
 
 		} else if ( localPSW & PS_SYSCALL ) {
 			printf("Process made a system call\n");
@@ -198,6 +204,7 @@ void cKernel::boot() {
 					printf("\tProcess Priority = %d\n", atoi(cpu.getParam(0)));
 
 					initProcess(cpu.getParam(1), runningProc->pid, atoi(cpu.getParam(0)));
+					/* Check that the process was created. If not, terminate the creating process */
 					break;
 
 				case 'I':
@@ -216,10 +223,24 @@ void cKernel::boot() {
 					error.message = "Invalid system call";
 					throw ((kernelError) error);
 			}
+
+			localPSW ^= PS_SYSCALL;
+			cpu.setPSW(localPSW);
+
+		} else if ( localPSW & PS_TERMINATE ) {
+			printf("Process %d has terminated\n", runningProc->pid);
+
+			scheduler.removeProcess(runningProc);
+			cleanupProcess(runningProc);
+			runningProc = NULL;
 		}
 
-		pause(); //Have this here temporarily to check for signals
+		printf("Time until signal: %d\n", clockInterrupt.getTime());
+		printf("Asking for scheduler decision\n");
+		nextToRun = scheduler.getNextToRun();
 	}
+
+	printf("All processes have finished\n");
 
 	return;
 }

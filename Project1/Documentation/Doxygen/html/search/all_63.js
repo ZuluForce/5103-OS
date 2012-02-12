@@ -12,5 +12,6 @@ var searchData=
   ['clockdevice',['ClockDevice',['../dc/d14/classClockDevice.xhtml',1,'']]],
   ['clocksig',['CLOCKSIG',['../df/d8f/clock__device_8h.xhtml#af6318deadd0687fb8ffb5437eaa1870d',1,'clock_device.h']]],
   ['cpu_2eh',['cpu.h',['../dc/da7/cpu_8h.xhtml',1,'']]],
+  ['croundrobin',['cRoundRobin',['../dc/dcc/classcRoundRobin.xhtml',1,'']]],
   ['cscheduler',['cScheduler',['../d0/d21/classcScheduler.xhtml',1,'']]]
 ];

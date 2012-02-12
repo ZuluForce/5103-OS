@@ -29,12 +29,15 @@ void \hyperlink{classcKernel_a1e7cb5c6d9e6140e197f9b18dc8bd1b1}{cleanup\-Process
 \item 
 void \hyperlink{classcKernel_a1a0cb2a56afb1e4adfd3bb05156aec81}{swap\-Processes} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
 \begin{DoxyCompactList}\small\item\em \-Swap a process on the cpu. \end{DoxyCompactList}\item 
+\hypertarget{classcKernel_abcc0464e62a5fb82ddf4a3f8ba5ec461}{void {\bfseries cleanup\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)}\label{db/da5/classcKernel_abcc0464e62a5fb82ddf4a3f8ba5ec461}
+
+\item 
 void \hyperlink{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{sig\-Handler} (int signum, siginfo\-\_\-t $\ast$info)
 \begin{DoxyCompactList}\small\item\em \-Handler for all signals. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Static \-Private \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classcKernel_a09997c6f9e9c6d7059b4a2292c3b7b09}{static void {\bfseries sig\-\_\-catch} (int signum, siginfo\-\_\-t $\ast$info, void $\ast$context)}\label{db/da5/classcKernel_a09997c6f9e9c6d7059b4a2292c3b7b09}
+\hypertarget{classcKernel_a571bb344ba50970d9c4a1cb5b500bbcd}{static void {\bfseries sig\-\_\-catch} (int signum, siginfo\-\_\-t $\ast$info, void $\ast$context)}\label{db/da5/classcKernel_a571bb344ba50970d9c4a1cb5b500bbcd}
 
 \end{DoxyCompactItemize}
 \subsection*{\-Private \-Attributes}
@@ -67,7 +70,7 @@ void \hyperlink{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{sig\-Handler} (i
 \subsection*{\-Static \-Private \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classcKernel_a5b1f65486c8d4ea487761db960f6ef6a}{static \hyperlink{classcKernel}{c\-Kernel} $\ast$ {\bfseries kernel\-\_\-instance}}\label{db/da5/classcKernel_a5b1f65486c8d4ea487761db960f6ef6a}
+\hypertarget{classcKernel_ae757ff0479ba7ce5154aff58f493cfa9}{static \hyperlink{classcKernel}{c\-Kernel} $\ast$ {\bfseries kernel\-\_\-instance}}\label{db/da5/classcKernel_ae757ff0479ba7ce5154aff58f493cfa9}
 
 \end{DoxyCompactItemize}
 
@@ -90,9 +93,16 @@ void \hyperlink{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{sig\-Handler} (i
 {}
 \end{DoxyParamCaption}
 )}}\label{db/da5/classcKernel_a0ce9a2721bb1ea4d7f999198634f702d}
-\-Starts the main kernel loop. \-The initial program is loaded and execution follows from there. \hypertarget{classcKernel_a1e7cb5c6d9e6140e197f9b18dc8bd1b1}{\index{c\-Kernel@{c\-Kernel}!cleanup\-Process@{cleanup\-Process}}
+\-Starts the main kernel loop. \-The initial program is loaded and execution follows from there.
+
+
+\begin{DoxyExceptions}{\-Exceptions}
+{\em \hyperlink{structkernelError}{kernel\-Error}} & \\
+\hline
+\end{DoxyExceptions}
+\hypertarget{classcKernel_a1e7cb5c6d9e6140e197f9b18dc8bd1b1}{\index{c\-Kernel@{c\-Kernel}!cleanup\-Process@{cleanup\-Process}}
 \index{cleanup\-Process@{cleanup\-Process}!cKernel@{c\-Kernel}}
-\subsubsection[{cleanup\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Kernel\-::cleanup\-Process} (
+\subsubsection[{cleanup\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void c\-Kernel\-::cleanup\-Process (
 \begin{DoxyParamCaption}
 \item[{pid\-Type}]{pid}
 \end{DoxyParamCaption}

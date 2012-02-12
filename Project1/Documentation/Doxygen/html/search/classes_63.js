@@ -6,5 +6,6 @@ var searchData=
   ['cidmanager',['cIDManager',['../de/dd4/classcIDManager.xhtml',1,'']]],
   ['ckernel',['cKernel',['../db/da5/classcKernel.xhtml',1,'']]],
   ['clockdevice',['ClockDevice',['../dc/d14/classClockDevice.xhtml',1,'']]],
+  ['croundrobin',['cRoundRobin',['../dc/dcc/classcRoundRobin.xhtml',1,'']]],
   ['cscheduler',['cScheduler',['../d0/d21/classcScheduler.xhtml',1,'']]]
 ];

@@ -25,7 +25,9 @@
 void \hyperlink{classClockDevice_a780eebde86fb6a6400894128ac37fa37}{set\-Timer} (int usec)
 \begin{DoxyCompactList}\small\item\em \-Set the timer to go off. \end{DoxyCompactList}\item 
 void \hyperlink{classClockDevice_a0a0c99ba88b7d0cfaccd09d774c726fe}{disarm} ()
-\begin{DoxyCompactList}\small\item\em \-Disarm the timer. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Disarm the timer. \end{DoxyCompactList}\item 
+int \hyperlink{classClockDevice_a6dd7b50cf793e37514890eff3e7adf95}{get\-Time} ()
+\begin{DoxyCompactList}\small\item\em \-Get how much time is remaining. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{\-Member \-Function \-Documentation}
@@ -47,6 +49,18 @@ void \hyperlink{classClockDevice_a0a0c99ba88b7d0cfaccd09d774c726fe}{disarm} ()
 
 \-Implements \hyperlink{classAbstractDevice}{\-Abstract\-Device}.
 
+\hypertarget{classClockDevice_a6dd7b50cf793e37514890eff3e7adf95}{\index{\-Clock\-Device@{\-Clock\-Device}!get\-Time@{get\-Time}}
+\index{get\-Time@{get\-Time}!ClockDevice@{\-Clock\-Device}}
+\subsubsection[{get\-Time}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf \-Clock\-Device\-::get\-Time} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{dc/d14/classClockDevice_a6dd7b50cf793e37514890eff3e7adf95}
+\-Returns the remaining time until a signal is produced.
+
+\begin{DoxyReturn}{\-Returns}
+int \-Time left in microseconds 
+\end{DoxyReturn}
 \hypertarget{classClockDevice_a780eebde86fb6a6400894128ac37fa37}{\index{\-Clock\-Device@{\-Clock\-Device}!set\-Timer@{set\-Timer}}
 \index{set\-Timer@{set\-Timer}!ClockDevice@{\-Clock\-Device}}
 \subsubsection[{set\-Timer}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Clock\-Device\-::set\-Timer} (

@@ -1,4 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node2" href="$d0/d21/classcScheduler.xhtml" title="cScheduler" alt="" coords="5,96,91,123"/>
-<area shape="rect" id="node6" href="$dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data." alt="" coords="163,5,255,32"/>
+<area shape="rect" id="node2" href="$d0/d21/classcScheduler.xhtml" title="cScheduler" alt="" coords="341,5,427,32"/>
+<area shape="rect" id="node4" href="$dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data." alt="" coords="49,119,141,145"/>
+<area shape="rect" id="node9" href="$de/dd4/classcIDManager.xhtml" title="cIDManager" alt="" coords="337,220,431,247"/>
 </map>

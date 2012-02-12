@@ -90,7 +90,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <!-- doxytag: class="cKernel" --><div class="dynheader">
 Collaboration diagram for cKernel:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="../../d4/d6f/classcKernel__coll__graph.svg" width="100%" height="282"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="../../d4/d6f/classcKernel__coll__graph.svg" width="100%" height="272"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 <center><span class="legend">[<a href="../../graph_legend.xhtml">legend</a>]</span></center></div>
 
 <p><a href="../../d3/d57/classcKernel-members.xhtml">List of all members.</a></p>
@@ -111,11 +111,13 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>_sysCall</b> (const c
 Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/da5/classcKernel.xhtml#a1a0cb2a56afb1e4adfd3bb05156aec81">swapProcesses</a> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap a process on the cpu.  <a href="#a1a0cb2a56afb1e4adfd3bb05156aec81"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abcc0464e62a5fb82ddf4a3f8ba5ec461"></a><!-- doxytag: member="cKernel::cleanupProcess" ref="abcc0464e62a5fb82ddf4a3f8ba5ec461" args="(ProcessInfo *)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanupProcess</b> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/da5/classcKernel.xhtml#a60ccaffeee3cfcfdfb4aa7b9e33b19f4">sigHandler</a> (int signum, siginfo_t *info)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Handler for all signals.  <a href="#a60ccaffeee3cfcfdfb4aa7b9e33b19f4"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-static-methods"></a>
 Static Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a09997c6f9e9c6d7059b4a2292c3b7b09"></a><!-- doxytag: member="cKernel::sig_catch" ref="a09997c6f9e9c6d7059b4a2292c3b7b09" args="(int signum, siginfo_t *info, void *context)" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a571bb344ba50970d9c4a1cb5b500bbcd"></a><!-- doxytag: member="cKernel::sig_catch" ref="a571bb344ba50970d9c4a1cb5b500bbcd" args="(int signum, siginfo_t *info, void *context)" -->
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>sig_catch</b> (int signum, siginfo_t *info, void *context)</td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
@@ -138,7 +140,7 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>clockTick</b></td></tr
 <a class="el" href="../../d6/dc3/classcFCFS.xhtml">schedulerType</a>&#160;</td><td class="memItemRight" valign="bottom"><b>scheduler</b></td></tr>
 <tr><td colspan="2"><h2><a name="pri-static-attribs"></a>
 Static Private Attributes</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5b1f65486c8d4ea487761db960f6ef6a"></a><!-- doxytag: member="cKernel::kernel_instance" ref="a5b1f65486c8d4ea487761db960f6ef6a" args="" -->
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ae757ff0479ba7ce5154aff58f493cfa9"></a><!-- doxytag: member="cKernel::kernel_instance" ref="ae757ff0479ba7ce5154aff58f493cfa9" args="" -->
 static <a class="el" href="../../db/da5/classcKernel.xhtml">cKernel</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>kernel_instance</b></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
@@ -173,7 +175,13 @@ static <a class="el" href="../../db/da5/classcKernel.xhtml">cKernel</a> *&#160;<
       </table>
 </div>
 <div class="memdoc">
-<p>Starts the main kernel loop. The initial program is loaded and execution follows from there. </p>
+<p>Starts the main kernel loop. The initial program is loaded and execution follows from there.</p>
+<dl class="exception"><dt><b>Exceptions:</b></dt><dd>
+  <table class="exception">
+    <tr><td class="paramname"><a class="el" href="../../dc/d4b/structkernelError.xhtml" title="Struct containing kernel crash information.">kernelError</a></td><td></td></tr>
+  </table>
+  </dd>
+</dl>
 
 </div>
 </div>
@@ -182,7 +190,7 @@ static <a class="el" href="../../db/da5/classcKernel.xhtml">cKernel</a> *&#160;<
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../db/da5/classcKernel.xhtml#a1e7cb5c6d9e6140e197f9b18dc8bd1b1">cKernel::cleanupProcess</a> </td>
+          <td class="memname">void cKernel::cleanupProcess </td>
           <td>(</td>
           <td class="paramtype">pidType&#160;</td>
           <td class="paramname"><em>pid</em></td><td>)</td>
@@ -297,7 +305,7 @@ static <a class="el" href="../../db/da5/classcKernel.xhtml">cKernel</a> *&#160;<
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sat Feb 11 2012 21:46:24 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 12 2012 14:01:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
