@@ -46,7 +46,7 @@ class cScheduler {
  *	as ready given its location but the datastructures and organization
  *	are implementation specific.
  *
- *	@param ::ProcessInfo* Process to add under scheduler's control
+ *	@param ProcessInfo* Process to add under scheduler's control
  */
 
  /** @fn virtual void cScheduler::setBlocked(ProcessInfo*) = 0
@@ -60,7 +60,7 @@ class cScheduler {
   *	be changed accordingly.
   *	\li After this call a process should not be considered for a scheduling decision
   *
-  *	@warn Must be thread safe. Signal handler/s may block during schedule decision.
+  *	@warning Must be thread safe. Signal handler/s may block during schedule decision.
   */
 
 /** @fn virtual void cScheduler::unblockProcess(ProcessInfo*) = 0
@@ -75,9 +75,9 @@ class cScheduler {
  *	\li The process must be unblocked and marked ::ready. It must be
  *	available for scheduling with the next call to ::getNextToRun
  *
- *	@param ::ProcessInfo* Process to unblock
+ *	@param ProcessInfo* Process to unblock
  *
- *	@warn Must be thread safe. Signal handler/s may unblock during schedule decision.
+ *	@warning Must be thread safe. Signal handler/s may unblock during schedule decision.
  */
 
 /** @fn virtual void cScheduler::removeProcess(ProcessInfo*) = 0
@@ -98,7 +98,7 @@ class cScheduler {
  *	above. This is handled by the kernel.
  *	\li Implementations should mark the process as ::terminated.
  *
- *	@param ::ProcessInfo* Process to remove from scheduler
+ *	@param ProcessInfo* Process to remove from scheduler
  */
 
 /** @fn virtual ProcessInfo* cScheduler::getNextToRun() = 0
@@ -123,7 +123,7 @@ class cScheduler {
  *
  *	@return ::ProcessInfo* Ready process to run next. May be the same as the currenlty running one.
  *
- *	@w Must be thread safe with block and unblock methods.
+ *	@warning Must be thread safe with block and unblock methods.
  */
 
 /** @fn virtual pidType cScheduler::numProcesses() = 0

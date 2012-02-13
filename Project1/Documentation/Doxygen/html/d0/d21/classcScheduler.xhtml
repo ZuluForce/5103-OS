@@ -130,7 +130,7 @@ Public Member Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">::ProcessInfo*</td><td>Process to add under scheduler's control </td></tr>
+    <tr><td class="paramname">ProcessInfo*</td><td>Process to add under scheduler's control </td></tr>
   </table>
   </dd>
 </dl>
@@ -162,7 +162,7 @@ Public Member Functions</h2></td></tr>
 <li>If there are no more remaining processes this should return NULL.</li>
 </ul>
 <dl class="return"><dt><b>Returns:</b></dt><dd><a class="el" href="../../dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data.">ProcessInfo</a>* Ready process to run next. May be the same as the currenlty running one.</dd></dl>
-<p>Must be thread safe with block and unblock methods. </p>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>Must be thread safe with block and unblock methods. </dd></dl>
 
 <p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#aa2b92a8a992078e499aab455c9d78faf">cFCFS</a>.</p>
 
@@ -240,7 +240,7 @@ Public Member Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">::ProcessInfo*</td><td>Process to remove from scheduler </td></tr>
+    <tr><td class="paramname">ProcessInfo*</td><td>Process to remove from scheduler </td></tr>
   </table>
   </dd>
 </dl>
@@ -269,7 +269,7 @@ Public Member Functions</h2></td></tr>
 <li>Process must be marked <a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01" title="Process is blocked and cannot run.">blocked</a> and scheduler state should be changed accordingly. </li>
 <li>After this call a process should not be considered for a scheduling decision</li>
 </ul>
-<p>Must be thread safe. Signal handler/s may block during schedule decision. </p>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>Must be thread safe. Signal handler/s may block during schedule decision. </dd></dl>
 
 <p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a1b8ee3a759a31032ec7c1cd7b15ed5df">cFCFS</a>.</p>
 
@@ -296,11 +296,11 @@ Public Member Functions</h2></td></tr>
 </ul>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">::ProcessInfo*</td><td>Process to unblock</td></tr>
+    <tr><td class="paramname">ProcessInfo*</td><td>Process to unblock</td></tr>
   </table>
   </dd>
 </dl>
-<p>Must be thread safe. Signal handler/s may unblock during schedule decision. </p>
+<dl class="warning"><dt><b>Warning:</b></dt><dd>Must be thread safe. Signal handler/s may unblock during schedule decision. </dd></dl>
 
 <p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a793da0298f9b36ab8505a0e3daaf41ec">cFCFS</a>.</p>
 
@@ -327,7 +327,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 13 2012 12:39:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 13 2012 14:40:55 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

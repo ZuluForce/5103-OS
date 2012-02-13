@@ -73,7 +73,7 @@ pid\-Type \hyperlink{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{num\-Processe
 \item \-Store the process in some location. \-It should be recognized as ready given its location but the datastructures and organization are implementation specific.\end{DoxyItemize}
 
 \begin{DoxyParams}{\-Parameters}
-{\em \-::\-Process\-Info$\ast$} & \-Process to add under scheduler's control \\
+{\em \-Process\-Info$\ast$} & \-Process to add under scheduler's control \\
 \hline
 \end{DoxyParams}
 
@@ -96,7 +96,10 @@ pid\-Type \hyperlink{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{num\-Processe
 \begin{DoxyReturn}{\-Returns}
 \hyperlink{structProcessInfo}{\-Process\-Info}$\ast$ \-Ready process to run next. \-May be the same as the currenlty running one.
 \end{DoxyReturn}
+\begin{DoxyWarning}{\-Warning}
 \-Must be thread safe with block and unblock methods. 
+\end{DoxyWarning}
+
 
 \-Implements \hyperlink{classcScheduler_a350ad7c55ddcdd17005778b0da241956}{c\-Scheduler}.
 
@@ -146,7 +149,7 @@ pid\-Type
 \item \-Scheduler should deallocate any resources it assigned to the process within the \hyperlink{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{\-Process\-Info\-::schedule\-Data} member. \item \-The \-Scheduler should remove any pointers to the give process to avoid dereferncing a dead pointer. \item \-Implementations must not deallocate any memory except that mentioned above. \-This is handled by the kernel. \item \-Implementations should mark the process as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd}{terminated}.\end{DoxyItemize}
 
 \begin{DoxyParams}{\-Parameters}
-{\em \-::\-Process\-Info$\ast$} & \-Process to remove from scheduler \\
+{\em \-Process\-Info$\ast$} & \-Process to remove from scheduler \\
 \hline
 \end{DoxyParams}
 
@@ -164,7 +167,10 @@ pid\-Type
 
 \-Implementation \-Requirements\-: \begin{DoxyItemize}
 \item \-Process must be marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}{blocked} and scheduler state should be changed accordingly. \item \-After this call a process should not be considered for a scheduling decision\end{DoxyItemize}
+\begin{DoxyWarning}{\-Warning}
 \-Must be thread safe. \-Signal handler/s may block during schedule decision. 
+\end{DoxyWarning}
+
 
 \-Implements \hyperlink{classcScheduler_ae6119e940a3bf58a00e7dbcea04b5b6a}{c\-Scheduler}.
 
@@ -181,10 +187,13 @@ pid\-Type
 \item \-The process must be unblocked and marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready}. \-It must be available for scheduling with the next call to \-::get\-Next\-To\-Run\end{DoxyItemize}
 
 \begin{DoxyParams}{\-Parameters}
-{\em \-::\-Process\-Info$\ast$} & \-Process to unblock\\
+{\em \-Process\-Info$\ast$} & \-Process to unblock\\
 \hline
 \end{DoxyParams}
+\begin{DoxyWarning}{\-Warning}
 \-Must be thread safe. \-Signal handler/s may unblock during schedule decision. 
+\end{DoxyWarning}
+
 
 \-Implements \hyperlink{classcScheduler_a81fe2e5e5e2334e36db1cbf491e3fa57}{c\-Scheduler}.
 
