@@ -105,8 +105,6 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize a Process.  <a href="#a5440eace2647ffd5279de55600947b84"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/da5/classcKernel.xhtml#a1e7cb5c6d9e6140e197f9b18dc8bd1b1">cleanupProcess</a> (pidType pid)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Cleans up a terminated process.  <a href="#a1e7cb5c6d9e6140e197f9b18dc8bd1b1"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="acdaa8be94f13fcb1f11b3bf90bc316fa"></a><!-- doxytag: member="cKernel::_sysCall" ref="acdaa8be94f13fcb1f11b3bf90bc316fa" args="(const char call)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>_sysCall</b> (const char call)</td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/da5/classcKernel.xhtml#a1b8e06f240c1bb7d0c4d0d30bcc55e18">swapProcesses</a> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *proc, bool switchMode=true)</td></tr>
@@ -127,8 +125,10 @@ FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>traceStream</b></td
 <a class="el" href="../../d2/dc6/classcCPU.xhtml">cCPU</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cpu</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1de4acdb706016573445b3c497e3b508"></a><!-- doxytag: member="cKernel::clockTick" ref="a1de4acdb706016573445b3c497e3b508" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>clockTick</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b669b48db537f392164b9fcf3109e87"></a><!-- doxytag: member="cKernel::tickBarrier" ref="a6b669b48db537f392164b9fcf3109e87" args="" -->
-pthread_barrier_t&#160;</td><td class="memItemRight" valign="bottom"><b>tickBarrier</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a61c0f8a08a605a92c564056bb34f6957"></a><!-- doxytag: member="cKernel::intLock" ref="a61c0f8a08a605a92c564056bb34f6957" args="" -->
+pthread_mutex_t&#160;</td><td class="memItemRight" valign="bottom"><b>intLock</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a81cad8017ccbb1768ee0aa9aa2fcf056"></a><!-- doxytag: member="cKernel::intCond" ref="a81cad8017ccbb1768ee0aa9aa2fcf056" args="" -->
+pthread_cond_t&#160;</td><td class="memItemRight" valign="bottom"><b>intCond</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d05550b96d1a4c4b02d523574fa94b3"></a><!-- doxytag: member="cKernel::bDevice" ref="a2d05550b96d1a4c4b02d523574fa94b3" args="" -->
 <a class="el" href="../../db/d6d/classBlockDevice.xhtml">BlockDevice</a>&#160;</td><td class="memItemRight" valign="bottom"><b>bDevice</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe168524c497a731b708eeeffa810a4b"></a><!-- doxytag: member="cKernel::cDevice" ref="abe168524c497a731b708eeeffa810a4b" args="" -->
@@ -319,7 +319,7 @@ static <a class="el" href="../../db/da5/classcKernel.xhtml">cKernel</a> *&#160;<
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 13 2012 14:40:55 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 13 2012 15:25:25 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

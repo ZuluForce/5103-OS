@@ -21,7 +21,8 @@
 enum ePSW {
 	PS_EXCEPTION = 0x1, 				/**< Executing process has created an exception */
 	PS_TERMINATE = PS_EXCEPTION << 1, 	/**< Executing process has finished. */
-	PS_SYSCALL = PS_TERMINATE << 1 		/**< Executing process has made a system call */
+	PS_SYSCALL = PS_TERMINATE << 1,		/**< Executing process has made a system call */
+	PS_FINISHED = PS_SYSCALL << 1		/**< Executing process finished an instruction. No problems */
 };
 
 class cCPU {

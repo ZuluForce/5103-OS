@@ -14,7 +14,8 @@ cKernel::cKernel()
 	initLog(traceLogFile);
 	traceStream = getStream();
 
-	pthread_barrier_init(&tickBarrier, NULL, 2);
+	pthread_mutex_init(&intLock, NULL);
+	pthread_cond_init(&intCond, NULL);
 
 
 	/* Load "main.trace" with parent 0 */
@@ -58,8 +59,7 @@ cKernel::~cKernel() {
 /* Signal Handler */
 void cKernel::sigHandler(int signum, siginfo_t *info) {
 	if ( signum == clockSigValue /* && info->si_code == SI_TIMER */) {
-		//pthread_barrier_wait(&tickBarrier); //Wait for cpu to finish, if not already
-		++clockTick; //Increment cpu time
+		pthread_cond_signal(&intCond);
 
 	} else if (signum == blockSigValue ) {
 		printf("Received block signal\n");
@@ -138,25 +138,10 @@ void cKernel::cleanupProcess(ProcessInfo* proc) {
 	return;
 }
 
-void cKernel::_sysCall(char call) {
-	switch ( call ) {
-		case 'C':
-			break;
-
-		case 'P':
-			/* Called when a user process tries to execute a priveleged instr */
-			/* Kill the user process */
-			break;
-
-		default:
-			/* Invalid Sys Call, Abort process? */
-			break;
-	}
-
-	return;
-}
-
 void cKernel::swapProcesses(ProcessInfo *proc, bool switchMode) {
+	if ( switchMode )
+		cpu.setUserMode();
+
 	if ( runningProc == proc )
 		return;
 
@@ -172,8 +157,6 @@ void cKernel::swapProcesses(ProcessInfo *proc, bool switchMode) {
 	}
 
 	cpu.setText(proc->processText);
-	if ( switchMode )
-		cpu.setUserMode();
 
 	runningProc = proc;
 
@@ -185,25 +168,37 @@ void cKernel::boot() {
 
 	clockInterrupt.setTimer(DEFAULT_TIMER); //Setup clock interrupt
 
-	ProcessInfo *nextToRun = scheduler.getNextToRun();
+	//Make sure the lock is aquired or there is no point continuing
+	assert( pthread_mutex_lock(&intLock) == 0);
 
-	while ( scheduler.numProcesses() > 0 ) {
+	ProcessInfo* nextToRun;
+
+	do {
+		//Wait to receive signal from interrupt handler
+		pthread_cond_wait(&intCond, &intLock);
+		fprintf(traceStream, "ClockTick: %d\n", clockTick);
+
+		nextToRun = scheduler.getNextToRun();
+
+		//Swap out the previous process on the cpu
 		swapProcesses(nextToRun);
 
-		printf("Running Process %d\n", runningProc->pid);
+		//Execute the new process
 		cpu.run();
 
 		localPSW = cpu.getPSW();
 
-		if ( localPSW & PS_EXCEPTION ) {
-			/* Terminate the currently running process */
-			//#ifdef DEBUG
+		if ( localPSW & PS_FINISHED) {
+			localPSW ^= PS_FINISHED;
+			cpu.setPSW(localPSW);
+
+		} else if ( localPSW & PS_EXCEPTION ) {
+			/* Terminate the process */
 			printf("Process raised an exception\n");
-			//#endif
+
 			scheduler.removeProcess(runningProc);
 			cleanupProcess(runningProc);
 			runningProc = NULL;
-
 		} else if ( localPSW & PS_SYSCALL ) {
 			printf("Process made a system call\n");
 
@@ -214,24 +209,21 @@ void cKernel::boot() {
 					printf("\tProcess Priority = %d\n", atoi(cpu.getParam(0)));
 
 					initProcess(cpu.getParam(1), runningProc->pid, atoi(cpu.getParam(0)));
-					/* Check that the process was created. If not, terminate the creating process */
 					break;
 
 				case 'I':
 					printf("System call is for device I/O\n");
+
 					break;
 
 				default:
-					/* In this emulated implementation, the cpu is aware
-					 * of what is a system call so if it returns saying
-					 * there is s syscall but the kernel doesn't recognize
-					 * it then there is a major problem
-					 */
 					printf("Invalid system call\n");
+					/* Kill the process */
+					scheduler.removeProcess(runningProc);
+					cleanupProcess(runningProc);
+					runningProc = NULL;
 
-					kernelError error;
-					error.message = "Invalid system call";
-					throw ((kernelError) error);
+					break;
 			}
 
 			localPSW ^= PS_SYSCALL;
@@ -245,13 +237,10 @@ void cKernel::boot() {
 			runningProc = NULL;
 		}
 
-		printf("Time until signal: %d\n", clockInterrupt.getTime());
-		printf("Asking for scheduler decision\n");
-		pthread_barrier_wait(&tickBarrier);
-		nextToRun = scheduler.getNextToRun();
-	}
+		++clockTick;
+	} while( scheduler.numProcesses() > 0 );
 
-	printf("All processes have finished\n");
+	printf("All processes have finished executing. Exiting kernel.\n");
 
 	return;
 }

@@ -130,7 +130,8 @@ void cCPU::run() {
 				printf("Storing %d to VC\n", arg);
 				VC = arg;
 
-				break;
+				PSW |= PS_FINISHED;
+				return;
 
 			case 'A':
 				/* 'A x': Add x to VC */
@@ -146,7 +147,8 @@ void cCPU::run() {
 				printf("Adding %d to VC\n", arg);
 				VC += arg;
 
-				break;
+				PSW |= PS_FINISHED;
+				return;
 
 			case 'D':
 				/* 'D x': Decrement x from VC */
@@ -162,7 +164,8 @@ void cCPU::run() {
 				printf("Decrementing %d from VC\n", arg);
 				VC -= arg;
 
-				break;
+				PSW |= PS_FINISHED;
+				return;
 
 			case 'C':
 				/* Call the OS to start new process: 'C <priority> <filename>'*/
@@ -204,7 +207,9 @@ void cCPU::run() {
 					return;
 				}
 				/* Else it is a NoOp */
-				continue;
+
+				PSW |= PS_FINISHED;
+				return;
 
 			case 'E':
 				/* Terminate the process. Notify the OS */

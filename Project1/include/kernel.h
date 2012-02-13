@@ -46,7 +46,9 @@ class cKernel {
         cCPU cpu;
 		int clockTick;
 
-		pthread_barrier_t tickBarrier;
+		//For the signal handler to notify of a clock pulse
+		pthread_mutex_t intLock;
+		pthread_cond_t intCond;
 		/* ------------------------ */
 
 		/* -------- Devices: -------- */
@@ -117,8 +119,6 @@ class cKernel {
 		 *	process. Also removes the process from the scheduler.
 		 */
         void cleanupProcess(pidType pid);
-
-        void _sysCall(const char call);
 };
 
 /** Struct containing kernel crash information

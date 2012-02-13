@@ -115,7 +115,8 @@ Defines</h2></td></tr>
 Enumerations</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9">ePSW</a> { <a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9a5f0829985f41a81da1a46db3501075f1">PS_EXCEPTION</a> =  0x1, 
 <a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9a45657e0129f354aef59ae454ef5443fd">PS_TERMINATE</a> =  PS_EXCEPTION &lt;&lt; 1, 
-<a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee">PS_SYSCALL</a> =  PS_TERMINATE &lt;&lt; 1
+<a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee">PS_SYSCALL</a> =  PS_TERMINATE &lt;&lt; 1, 
+<a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9ac4bd92270ab58449a1752f67ec9e7090">PS_FINISHED</a> =  PS_SYSCALL &lt;&lt; 1
  }</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of Program Status Word Flags.  <a href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9">More...</a><br/></td></tr>
 </table>
@@ -157,6 +158,10 @@ Enumerations</h2></td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee"></a><!-- doxytag: member="PS_SYSCALL" ref="ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee" args="" -->PS_SYSCALL</em>&nbsp;</td><td>
 <p>Executing process has made a system call. </p>
 </td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ade10811b11f1c647313bf0a60797a9f9ac4bd92270ab58449a1752f67ec9e7090"></a><!-- doxytag: member="PS_FINISHED" ref="ade10811b11f1c647313bf0a60797a9f9ac4bd92270ab58449a1752f67ec9e7090" args="" -->PS_FINISHED</em>&nbsp;</td><td>
+<p>Executing process finished an instruction. </p>
+<p>No problems </p>
+</td></tr>
 </table>
 </dd>
 </dl>
@@ -181,7 +186,7 @@ Enumerations</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 13 2012 14:40:55 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 13 2012 15:25:25 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
