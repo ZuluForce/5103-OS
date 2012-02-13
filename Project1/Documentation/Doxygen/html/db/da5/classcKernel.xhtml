@@ -109,8 +109,8 @@ Public Member Functions</h2></td></tr>
 void&#160;</td><td class="memItemRight" valign="bottom"><b>_sysCall</b> (const char call)</td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/da5/classcKernel.xhtml#a1a0cb2a56afb1e4adfd3bb05156aec81">swapProcesses</a> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap a process on the cpu.  <a href="#a1a0cb2a56afb1e4adfd3bb05156aec81"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/da5/classcKernel.xhtml#a1b8e06f240c1bb7d0c4d0d30bcc55e18">swapProcesses</a> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *proc, bool switchMode=true)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Swap a process on the cpu.  <a href="#a1b8e06f240c1bb7d0c4d0d30bcc55e18"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abcc0464e62a5fb82ddf4a3f8ba5ec461"></a><!-- doxytag: member="cKernel::cleanupProcess" ref="abcc0464e62a5fb82ddf4a3f8ba5ec461" args="(ProcessInfo *)" -->
 void&#160;</td><td class="memItemRight" valign="bottom"><b>cleanupProcess</b> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/da5/classcKernel.xhtml#a60ccaffeee3cfcfdfb4aa7b9e33b19f4">sigHandler</a> (int signum, siginfo_t *info)</td></tr>
@@ -121,10 +121,14 @@ Static Private Member Functions</h2></td></tr>
 static void&#160;</td><td class="memItemRight" valign="bottom"><b>sig_catch</b> (int signum, siginfo_t *info, void *context)</td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7b4ac330752179e72a5e440d30c64e91"></a><!-- doxytag: member="cKernel::traceStream" ref="a7b4ac330752179e72a5e440d30c64e91" args="" -->
+FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>traceStream</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1fb233fa1c51650ccf2c872d856329ff"></a><!-- doxytag: member="cKernel::cpu" ref="a1fb233fa1c51650ccf2c872d856329ff" args="" -->
 <a class="el" href="../../d2/dc6/classcCPU.xhtml">cCPU</a>&#160;</td><td class="memItemRight" valign="bottom"><b>cpu</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1de4acdb706016573445b3c497e3b508"></a><!-- doxytag: member="cKernel::clockTick" ref="a1de4acdb706016573445b3c497e3b508" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>clockTick</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6b669b48db537f392164b9fcf3109e87"></a><!-- doxytag: member="cKernel::tickBarrier" ref="a6b669b48db537f392164b9fcf3109e87" args="" -->
+pthread_barrier_t&#160;</td><td class="memItemRight" valign="bottom"><b>tickBarrier</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2d05550b96d1a4c4b02d523574fa94b3"></a><!-- doxytag: member="cKernel::bDevice" ref="a2d05550b96d1a4c4b02d523574fa94b3" args="" -->
 <a class="el" href="../../db/d6d/classBlockDevice.xhtml">BlockDevice</a>&#160;</td><td class="memItemRight" valign="bottom"><b>bDevice</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abe168524c497a731b708eeeffa810a4b"></a><!-- doxytag: member="cKernel::cDevice" ref="abe168524c497a731b708eeeffa810a4b" args="" -->
@@ -265,16 +269,26 @@ static <a class="el" href="../../db/da5/classcKernel.xhtml">cKernel</a> *&#160;<
 
 </div>
 </div>
-<a class="anchor" id="a1a0cb2a56afb1e4adfd3bb05156aec81"></a><!-- doxytag: member="cKernel::swapProcesses" ref="a1a0cb2a56afb1e4adfd3bb05156aec81" args="(ProcessInfo *)" -->
+<a class="anchor" id="a1b8e06f240c1bb7d0c4d0d30bcc55e18"></a><!-- doxytag: member="cKernel::swapProcesses" ref="a1b8e06f240c1bb7d0c4d0d30bcc55e18" args="(ProcessInfo *proc, bool switchMode=true)" -->
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">void <a class="el" href="../../db/da5/classcKernel.xhtml#a1a0cb2a56afb1e4adfd3bb05156aec81">cKernel::swapProcesses</a> </td>
+          <td class="memname">void <a class="el" href="../../db/da5/classcKernel.xhtml#a1b8e06f240c1bb7d0c4d0d30bcc55e18">cKernel::swapProcesses</a> </td>
           <td>(</td>
           <td class="paramtype"><a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *&#160;</td>
-          <td class="paramname"><em>proc</em></td><td>)</td>
-          <td><code> [private]</code></td>
+          <td class="paramname"><em>proc</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>switchMode</em> = <code>true</code>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td><code> [private]</code></td>
         </tr>
       </table>
 </div>
@@ -305,7 +319,7 @@ static <a class="el" href="../../db/da5/classcKernel.xhtml">cKernel</a> *&#160;<
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Feb 12 2012 14:01:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 13 2012 12:39:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

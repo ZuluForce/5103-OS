@@ -15,6 +15,8 @@
 \item 
 void \hyperlink{classcCPU_acd957640be8abb7c0d8a24010ed0e737}{set\-Text} (char $\ast$text)
 \begin{DoxyCompactList}\small\item\em \-Set the program text. \end{DoxyCompactList}\item 
+void \hyperlink{classcCPU_a176eb207069b99c47ddec6b466d1a92b}{set\-User\-Mode} ()
+\begin{DoxyCompactList}\small\item\em \-Set the cpu back into user mode. \end{DoxyCompactList}\item 
 unsigned int \hyperlink{classcCPU_ab04938ac939d530e521181db6a52944f}{get\-Set\-P\-C} (unsigned int new\-P\-C)
 \begin{DoxyCompactList}\small\item\em \-Get/\-Set the program counter. \end{DoxyCompactList}\item 
 int \hyperlink{classcCPU_a2d593a0d3d66e532826db4754d5fc4d2}{get\-Set\-V\-C} (int new\-V\-C)
@@ -150,7 +152,14 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 {\em text} & \-Program text pointer. assert( text != \-N\-U\-L\-L) \\
 \hline
 \end{DoxyParams}
-
+\hypertarget{classcCPU_a176eb207069b99c47ddec6b466d1a92b}{\index{c\-C\-P\-U@{c\-C\-P\-U}!set\-User\-Mode@{set\-User\-Mode}}
+\index{set\-User\-Mode@{set\-User\-Mode}!cCPU@{c\-C\-P\-U}}
+\subsubsection[{set\-User\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-C\-P\-U\-::set\-User\-Mode} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{d2/dc6/classcCPU_a176eb207069b99c47ddec6b466d1a92b}
+\-This is used by the kernel after the kernel has finished servicing a process' kernel mode request (syscall). 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 

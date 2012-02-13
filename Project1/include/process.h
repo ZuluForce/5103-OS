@@ -74,12 +74,14 @@ struct ProcessInfo {
  *	transition the process to ready before asking for a
  *	a scheduling decision. It is acceptable for the scheduler
  *	to make a process ready without the kernel's consent when
- *	it is being asked for a scheduling decision.
+ *	it is being asked for a scheduling decision, assuming it was
+ *	previously running.
  *
  *	Invariant State:
  *	\li Process is on the cpu
  *
  *	Potential Transitions:
+ *	\li ::ready - Scheduler picks someone else to run
  *	\li ::blocked - Makes blocking system call
  *	\li ::terminated - Causes exception in cpu or finished normally
  */

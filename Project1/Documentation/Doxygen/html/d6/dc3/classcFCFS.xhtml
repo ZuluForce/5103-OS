@@ -99,20 +99,20 @@ Collaboration diagram for cFCFS:</div>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aff34f18c6f4c3f38029d904cd2ec55de"></a><!-- doxytag: member="cFCFS::initProcScheduleInfo" ref="aff34f18c6f4c3f38029d904cd2ec55de" args="(ProcessInfo *)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>initProcScheduleInfo</b> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/classcFCFS.xhtml#aff34f18c6f4c3f38029d904cd2ec55de">initProcScheduleInfo</a> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialize scheduler specific information within the <a class="el" href="../../dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data.">ProcessInfo</a> struct.  <a href="#aff34f18c6f4c3f38029d904cd2ec55de"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a25d4bf440041f5294f3b9c5aff20b411">addProcess</a> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Transfer control of process state and scheduling.  <a href="#a25d4bf440041f5294f3b9c5aff20b411"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1b8ee3a759a31032ec7c1cd7b15ed5df"></a><!-- doxytag: member="cFCFS::setBlocked" ref="a1b8ee3a759a31032ec7c1cd7b15ed5df" args="(ProcessInfo *)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setBlocked</b> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a1b8ee3a759a31032ec7c1cd7b15ed5df">setBlocked</a> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set a process into a <a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01" title="Process is blocked and cannot run.">blocked</a> state.  <a href="#a1b8ee3a759a31032ec7c1cd7b15ed5df"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a793da0298f9b36ab8505a0e3daaf41ec">unblockProcess</a> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Unblock a process and make it ready.  <a href="#a793da0298f9b36ab8505a0e3daaf41ec"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/classcFCFS.xhtml#aeeac757885108ae510b728600ebba248">removeProcess</a> (<a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Remove a process from the control of the scheduler.  <a href="#aeeac757885108ae510b728600ebba248"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/classcFCFS.xhtml#aa2b92a8a992078e499aab455c9d78faf">getNextToRun</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query the scheduler for next process to run.  <a href="#aa2b92a8a992078e499aab455c9d78faf"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0a72de791436a84120a534dd2fa0485d"></a><!-- doxytag: member="cFCFS::numProcesses" ref="a0a72de791436a84120a534dd2fa0485d" args="()" -->
-pidType&#160;</td><td class="memItemRight" valign="bottom"><b>numProcesses</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">pidType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a0a72de791436a84120a534dd2fa0485d">numProcesses</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">How many processes are in the scheduler.  <a href="#a0a72de791436a84120a534dd2fa0485d"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afebe08e2ae6dc564b5aad24e3b30f842"></a><!-- doxytag: member="cFCFS::readyQueue" ref="afebe08e2ae6dc564b5aad24e3b30f842" args="" -->
@@ -143,10 +143,14 @@ pthread_cond_t&#160;</td><td class="memItemRight" valign="bottom"><b>allBlocked<
       </table>
 </div>
 <div class="memdoc">
-<p>After this is called, the kernel core no longer keeps track of the given process. Once the process is created and deemed ready by the kernel it is handed off here. The scheduler is then in charge of state transitions when the kernel gives it appropriate notifications.</p>
+<p>After this is called, the kernel core no longer keeps track of the given process. Once the process is created and deemed <a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76" title="Process is ready to be run.">ready</a> by the kernel it is handed off here. The scheduler is then in charge of state transitions when the kernel gives it appropriate notifications.</p>
+<p>Implementation Requirements: </p>
+<ul>
+<li>Store the process in some location. It should be recognized as ready given its location but the datastructures and organization are implementation specific.</li>
+</ul>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">ProcessInfo*</td><td>Process to add under scheduler's control </td></tr>
+    <tr><td class="paramname">::ProcessInfo*</td><td>Process to add under scheduler's control </td></tr>
   </table>
   </dd>
 </dl>
@@ -170,9 +174,65 @@ pthread_cond_t&#160;</td><td class="memItemRight" valign="bottom"><b>allBlocked<
 <div class="memdoc">
 <p>After this function is called, it should be assumed by any scheduler implementation that the kernel will run the given process (unless otherwise notified). The currently running process should implicitly be considered for running next (again).</p>
 <p>If there are processes left but all are blocked. This function should block until it receives a signal that a process is unblocked.</p>
-<dl class="return"><dt><b>Returns:</b></dt><dd>ProcessInfo* Ready process to run next. May be the same as the currenlty running one. </dd></dl>
+<p>Implementation Requirements: </p>
+<ul>
+<li>Block if there are &gt; 0 processes but none can run. </li>
+<li>A process listed as <a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243" title="Process is currently running.">running</a> within the scheduler should be treated as ready when this method is called. </li>
+<li>A process returned as the 'next to run' should be marked as being in a <a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243" title="Process is currently running.">running</a> state before returning. </li>
+<li>If there are no more remaining processes this should return NULL.</li>
+</ul>
+<dl class="return"><dt><b>Returns:</b></dt><dd><a class="el" href="../../dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data.">ProcessInfo</a>* Ready process to run next. May be the same as the currenlty running one.</dd></dl>
+<p>Must be thread safe with block and unblock methods. </p>
 
 <p>Implements <a class="el" href="../../d0/d21/classcScheduler.xhtml#a350ad7c55ddcdd17005778b0da241956">cScheduler</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="aff34f18c6f4c3f38029d904cd2ec55de"></a><!-- doxytag: member="cFCFS::initProcScheduleInfo" ref="aff34f18c6f4c3f38029d904cd2ec55de" args="(ProcessInfo *)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d6/dc3/classcFCFS.xhtml#aff34f18c6f4c3f38029d904cd2ec55de">cFCFS::initProcScheduleInfo</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>This method is called after the kernel has initialized all process data but before it is marked <a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76" title="Process is ready to be run.">ready</a>. This gives the scheduler an oportunity to initialize any scheduler specific data and assign it to the <a class="el" href="../../dd/dc8/structProcessInfo.xhtml#aea1c50ae92f6421ae5c94ac674c1877a" title="Scheduler specific data.">ProcessInfo::scheduleData</a> member.</p>
+<p>Implementation Requirements: </p>
+<ul>
+<li>No required actions. </li>
+</ul>
+
+<p>Implements <a class="el" href="../../d0/d21/classcScheduler.xhtml#a8782803287dce0352623142643eee01a">cScheduler</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0a72de791436a84120a534dd2fa0485d"></a><!-- doxytag: member="cFCFS::numProcesses" ref="a0a72de791436a84120a534dd2fa0485d" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">pidType <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a0a72de791436a84120a534dd2fa0485d">cFCFS::numProcesses</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>This returns how many processes, both running and blocked, are being handled by the scheduler.</p>
+<p>Implementation Requirements: </p>
+<ul>
+<li>Return how many processes, running and blocked, are in the scheduler.</li>
+</ul>
+<dl class="return"><dt><b>Returns:</b></dt><dd>pidType </dd></dl>
+
+<p>Implements <a class="el" href="../../d0/d21/classcScheduler.xhtml#a025532a943093ae7e8d6dc0cdaf60f12">cScheduler</a>.</p>
 
 </div>
 </div>
@@ -191,14 +251,47 @@ pthread_cond_t&#160;</td><td class="memItemRight" valign="bottom"><b>allBlocked<
 </div>
 <div class="memdoc">
 <p>When a process terminates, either through normal means or an exception, the kernel will call this function to release a process from the scheduler's control. The scheduler should clean up any internal state for the process. Deallocation of process resources is left to the kernel.</p>
+<p>Implementation Requirements: </p>
+<ul>
+<li>Scheduler should deallocate any resources it assigned to the process within the <a class="el" href="../../dd/dc8/structProcessInfo.xhtml#aea1c50ae92f6421ae5c94ac674c1877a" title="Scheduler specific data.">ProcessInfo::scheduleData</a> member. </li>
+<li>The Scheduler should remove any pointers to the give process to avoid dereferncing a dead pointer. </li>
+<li>Implementations must not deallocate any memory except that mentioned above. This is handled by the kernel. </li>
+<li>Implementations should mark the process as <a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd" title="Process has been terminated.">terminated</a>.</li>
+</ul>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">ProcessInfo*</td><td>Process to remove from scheduler </td></tr>
+    <tr><td class="paramname">::ProcessInfo*</td><td>Process to remove from scheduler </td></tr>
   </table>
   </dd>
 </dl>
 
 <p>Implements <a class="el" href="../../d0/d21/classcScheduler.xhtml#a5632ffa597e9567d475c808070c4e3bb">cScheduler</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1b8ee3a759a31032ec7c1cd7b15ed5df"></a><!-- doxytag: member="cFCFS::setBlocked" ref="a1b8ee3a759a31032ec7c1cd7b15ed5df" args="(ProcessInfo *)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a1b8ee3a759a31032ec7c1cd7b15ed5df">cFCFS::setBlocked</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>The kernel will call the scheduler with this function when the process has done an operation which causes it to block (I).</p>
+<p>Implementation Requirements: </p>
+<ul>
+<li>Process must be marked <a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01" title="Process is blocked and cannot run.">blocked</a> and scheduler state should be changed accordingly. </li>
+<li>After this call a process should not be considered for a scheduling decision</li>
+</ul>
+<p>Must be thread safe. Signal handler/s may block during schedule decision. </p>
+
+<p>Implements <a class="el" href="../../d0/d21/classcScheduler.xhtml#ae6119e940a3bf58a00e7dbcea04b5b6a">cScheduler</a>.</p>
 
 </div>
 </div>
@@ -217,12 +310,17 @@ pthread_cond_t&#160;</td><td class="memItemRight" valign="bottom"><b>allBlocked<
 </div>
 <div class="memdoc">
 <p>When a process has completed a blocking call the kernel will notify the scheduler that it should be unblocked. This operation should be very fast since it will likely be called from a signal handler.</p>
+<p>Implementation Requirements: </p>
+<ul>
+<li>The process must be unblocked and marked <a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76" title="Process is ready to be run.">ready</a>. It must be available for scheduling with the next call to ::getNextToRun</li>
+</ul>
 <dl class="params"><dt><b>Parameters:</b></dt><dd>
   <table class="params">
-    <tr><td class="paramname">ProcessInfo*</td><td>Process to unblock </td></tr>
+    <tr><td class="paramname">::ProcessInfo*</td><td>Process to unblock</td></tr>
   </table>
   </dd>
 </dl>
+<p>Must be thread safe. Signal handler/s may unblock during schedule decision. </p>
 
 <p>Implements <a class="el" href="../../d0/d21/classcScheduler.xhtml#a81fe2e5e5e2334e36db1cbf491e3fa57">cScheduler</a>.</p>
 
@@ -250,7 +348,7 @@ pthread_cond_t&#160;</td><td class="memItemRight" valign="bottom"><b>allBlocked<
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Feb 12 2012 14:01:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 13 2012 12:39:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

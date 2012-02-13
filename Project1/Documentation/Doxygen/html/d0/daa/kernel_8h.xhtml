@@ -93,6 +93,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <code>#include &quot;<a class="el" href="../../db/d9a/block__device_8h_source.xhtml">devices/block_device.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="../../df/d8f/clock__device_8h_source.xhtml">devices/clock_device.h</a>&quot;</code><br/>
 <code>#include &quot;utility/id.h&quot;</code><br/>
+<code>#include &quot;utility/logger.h&quot;</code><br/>
 <code>#include &quot;scheduler/fcfs.h&quot;</code><br/>
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for kernel.h:</div>
@@ -114,7 +115,7 @@ Classes</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct containing kernel crash information.  <a href="../../dc/d4b/structkernelError.xhtml#details">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="define-members"></a>
 Defines</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#ac91bd56eef3f2b82894a058b7f136a21">DEFAULT_TIMER</a>&#160;&#160;&#160;1000</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#ac91bd56eef3f2b82894a058b7f136a21">DEFAULT_TIMER</a>&#160;&#160;&#160;5000</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default timer value for devices.  <a href="#ac91bd56eef3f2b82894a058b7f136a21"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#a0756f011ef667460d583017366823244">DEFAULT_PRIORITY</a>&#160;&#160;&#160;5</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default priority assigned to newly created processes.  <a href="#a0756f011ef667460d583017366823244"></a><br/></td></tr>
@@ -126,6 +127,8 @@ typedef <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>&#160;</td><
 Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#a9bd73e11b6d2b66703cd822d0c2ecd32">initProcessName</a> [] = &quot;main.trace&quot;</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the first program to run on the system.  <a href="#a9bd73e11b6d2b66703cd822d0c2ecd32"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9137377ee1ea033ea5bc9f65f22d7b6e"></a><!-- doxytag: member="kernel.h::traceLogFile" ref="a9137377ee1ea033ea5bc9f65f22d7b6e" args="[]" -->
+static const char&#160;</td><td class="memItemRight" valign="bottom"><b>traceLogFile</b> [] = &quot;trace.log&quot;</td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"></div><hr/><h2>Define Documentation</h2>
@@ -148,7 +151,7 @@ Variables</h2></td></tr>
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define <a class="el" href="../../d0/daa/kernel_8h.xhtml#ac91bd56eef3f2b82894a058b7f136a21">DEFAULT_TIMER</a>&#160;&#160;&#160;1000</td>
+          <td class="memname">#define <a class="el" href="../../d0/daa/kernel_8h.xhtml#ac91bd56eef3f2b82894a058b7f136a21">DEFAULT_TIMER</a>&#160;&#160;&#160;5000</td>
         </tr>
       </table>
 </div>
@@ -190,7 +193,7 @@ Variables</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Feb 12 2012 14:01:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 13 2012 12:39:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

@@ -10,6 +10,12 @@ cKernel* cKernel::kernel_instance;
 
 cKernel::cKernel()
 :clockTick(0), idGenerator(1), runningProc(NULL) {
+	/* Initialize trace output */
+	initLog(traceLogFile);
+	traceStream = getStream();
+
+	pthread_barrier_init(&tickBarrier, NULL, 2);
+
 
 	/* Load "main.trace" with parent 0 */
 	initProcess(initProcessName, 0);
@@ -52,7 +58,7 @@ cKernel::~cKernel() {
 /* Signal Handler */
 void cKernel::sigHandler(int signum, siginfo_t *info) {
 	if ( signum == clockSigValue /* && info->si_code == SI_TIMER */) {
-		//printf("Received clock signal\n");
+		//pthread_barrier_wait(&tickBarrier); //Wait for cpu to finish, if not already
 		++clockTick; //Increment cpu time
 
 	} else if (signum == blockSigValue ) {
@@ -241,6 +247,7 @@ void cKernel::boot() {
 
 		printf("Time until signal: %d\n", clockInterrupt.getTime());
 		printf("Asking for scheduler decision\n");
+		pthread_barrier_wait(&tickBarrier);
 		nextToRun = scheduler.getNextToRun();
 	}
 

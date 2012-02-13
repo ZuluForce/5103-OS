@@ -22,23 +22,20 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classcFCFS_aff34f18c6f4c3f38029d904cd2ec55de}{void {\bfseries init\-Proc\-Schedule\-Info} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)}\label{d6/dc3/classcFCFS_aff34f18c6f4c3f38029d904cd2ec55de}
-
-\item 
+void \hyperlink{classcFCFS_aff34f18c6f4c3f38029d904cd2ec55de}{init\-Proc\-Schedule\-Info} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Initialize scheduler specific information within the \hyperlink{structProcessInfo}{\-Process\-Info} struct. \end{DoxyCompactList}\item 
 void \hyperlink{classcFCFS_a25d4bf440041f5294f3b9c5aff20b411}{add\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
 \begin{DoxyCompactList}\small\item\em \-Transfer control of process state and scheduling. \end{DoxyCompactList}\item 
-\hypertarget{classcFCFS_a1b8ee3a759a31032ec7c1cd7b15ed5df}{void {\bfseries set\-Blocked} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)}\label{d6/dc3/classcFCFS_a1b8ee3a759a31032ec7c1cd7b15ed5df}
-
-\item 
+void \hyperlink{classcFCFS_a1b8ee3a759a31032ec7c1cd7b15ed5df}{set\-Blocked} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Set a process into a \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}{blocked} state. \end{DoxyCompactList}\item 
 void \hyperlink{classcFCFS_a793da0298f9b36ab8505a0e3daaf41ec}{unblock\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
 \begin{DoxyCompactList}\small\item\em \-Unblock a process and make it ready. \end{DoxyCompactList}\item 
 void \hyperlink{classcFCFS_aeeac757885108ae510b728600ebba248}{remove\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
 \begin{DoxyCompactList}\small\item\em \-Remove a process from the control of the scheduler. \end{DoxyCompactList}\item 
 \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ \hyperlink{classcFCFS_aa2b92a8a992078e499aab455c9d78faf}{get\-Next\-To\-Run} ()
 \begin{DoxyCompactList}\small\item\em \-Query the scheduler for next process to run. \end{DoxyCompactList}\item 
-\hypertarget{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{pid\-Type {\bfseries num\-Processes} ()}\label{d6/dc3/classcFCFS_a0a72de791436a84120a534dd2fa0485d}
-
-\end{DoxyCompactItemize}
+pid\-Type \hyperlink{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{num\-Processes} ()
+\begin{DoxyCompactList}\small\item\em \-How many processes are in the scheduler. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Private \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -70,11 +67,13 @@ void \hyperlink{classcFCFS_aeeac757885108ae510b728600ebba248}{remove\-Process} (
 \item[{{\bf \-Process\-Info} $\ast$}]{}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d6/dc3/classcFCFS_a25d4bf440041f5294f3b9c5aff20b411}
-\-After this is called, the kernel core no longer keeps track of the given process. \-Once the process is created and deemed ready by the kernel it is handed off here. \-The scheduler is then in charge of state transitions when the kernel gives it appropriate notifications.
+\-After this is called, the kernel core no longer keeps track of the given process. \-Once the process is created and deemed \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready} by the kernel it is handed off here. \-The scheduler is then in charge of state transitions when the kernel gives it appropriate notifications.
 
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Store the process in some location. \-It should be recognized as ready given its location but the datastructures and organization are implementation specific.\end{DoxyItemize}
 
 \begin{DoxyParams}{\-Parameters}
-{\em \-Process\-Info$\ast$} & \-Process to add under scheduler's control \\
+{\em \-::\-Process\-Info$\ast$} & \-Process to add under scheduler's control \\
 \hline
 \end{DoxyParams}
 
@@ -92,12 +91,47 @@ void \hyperlink{classcFCFS_aeeac757885108ae510b728600ebba248}{remove\-Process} (
 
 \-If there are processes left but all are blocked. \-This function should block until it receives a signal that a process is unblocked.
 
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Block if there are $>$ 0 processes but none can run. \item \-A process listed as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} within the scheduler should be treated as ready when this method is called. \item \-A process returned as the 'next to run' should be marked as being in a \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} state before returning. \item \-If there are no more remaining processes this should return \-N\-U\-L\-L.\end{DoxyItemize}
 \begin{DoxyReturn}{\-Returns}
-\-Process\-Info$\ast$ \-Ready process to run next. \-May be the same as the currenlty running one. 
+\hyperlink{structProcessInfo}{\-Process\-Info}$\ast$ \-Ready process to run next. \-May be the same as the currenlty running one.
+\end{DoxyReturn}
+\-Must be thread safe with block and unblock methods. 
+
+\-Implements \hyperlink{classcScheduler_a350ad7c55ddcdd17005778b0da241956}{c\-Scheduler}.
+
+\hypertarget{classcFCFS_aff34f18c6f4c3f38029d904cd2ec55de}{\index{c\-F\-C\-F\-S@{c\-F\-C\-F\-S}!init\-Proc\-Schedule\-Info@{init\-Proc\-Schedule\-Info}}
+\index{init\-Proc\-Schedule\-Info@{init\-Proc\-Schedule\-Info}!cFCFS@{c\-F\-C\-F\-S}}
+\subsubsection[{init\-Proc\-Schedule\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-F\-C\-F\-S\-::init\-Proc\-Schedule\-Info} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d6/dc3/classcFCFS_aff34f18c6f4c3f38029d904cd2ec55de}
+\-This method is called after the kernel has initialized all process data but before it is marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready}. \-This gives the scheduler an oportunity to initialize any scheduler specific data and assign it to the \hyperlink{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{\-Process\-Info\-::schedule\-Data} member.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-No required actions. \end{DoxyItemize}
+
+
+\-Implements \hyperlink{classcScheduler_a8782803287dce0352623142643eee01a}{c\-Scheduler}.
+
+\hypertarget{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{\index{c\-F\-C\-F\-S@{c\-F\-C\-F\-S}!num\-Processes@{num\-Processes}}
+\index{num\-Processes@{num\-Processes}!cFCFS@{c\-F\-C\-F\-S}}
+\subsubsection[{num\-Processes}]{\setlength{\rightskip}{0pt plus 5cm}pid\-Type {\bf c\-F\-C\-F\-S\-::num\-Processes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d6/dc3/classcFCFS_a0a72de791436a84120a534dd2fa0485d}
+\-This returns how many processes, both running and blocked, are being handled by the scheduler.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Return how many processes, running and blocked, are in the scheduler.\end{DoxyItemize}
+\begin{DoxyReturn}{\-Returns}
+pid\-Type 
 \end{DoxyReturn}
 
 
-\-Implements \hyperlink{classcScheduler_a350ad7c55ddcdd17005778b0da241956}{c\-Scheduler}.
+\-Implements \hyperlink{classcScheduler_a025532a943093ae7e8d6dc0cdaf60f12}{c\-Scheduler}.
 
 \hypertarget{classcFCFS_aeeac757885108ae510b728600ebba248}{\index{c\-F\-C\-F\-S@{c\-F\-C\-F\-S}!remove\-Process@{remove\-Process}}
 \index{remove\-Process@{remove\-Process}!cFCFS@{c\-F\-C\-F\-S}}
@@ -108,14 +142,31 @@ void \hyperlink{classcFCFS_aeeac757885108ae510b728600ebba248}{remove\-Process} (
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d6/dc3/classcFCFS_aeeac757885108ae510b728600ebba248}
 \-When a process terminates, either through normal means or an exception, the kernel will call this function to release a process from the scheduler's control. \-The scheduler should clean up any internal state for the process. \-Deallocation of process resources is left to the kernel.
 
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Scheduler should deallocate any resources it assigned to the process within the \hyperlink{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{\-Process\-Info\-::schedule\-Data} member. \item \-The \-Scheduler should remove any pointers to the give process to avoid dereferncing a dead pointer. \item \-Implementations must not deallocate any memory except that mentioned above. \-This is handled by the kernel. \item \-Implementations should mark the process as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd}{terminated}.\end{DoxyItemize}
 
 \begin{DoxyParams}{\-Parameters}
-{\em \-Process\-Info$\ast$} & \-Process to remove from scheduler \\
+{\em \-::\-Process\-Info$\ast$} & \-Process to remove from scheduler \\
 \hline
 \end{DoxyParams}
 
 
 \-Implements \hyperlink{classcScheduler_a5632ffa597e9567d475c808070c4e3bb}{c\-Scheduler}.
+
+\hypertarget{classcFCFS_a1b8ee3a759a31032ec7c1cd7b15ed5df}{\index{c\-F\-C\-F\-S@{c\-F\-C\-F\-S}!set\-Blocked@{set\-Blocked}}
+\index{set\-Blocked@{set\-Blocked}!cFCFS@{c\-F\-C\-F\-S}}
+\subsubsection[{set\-Blocked}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-F\-C\-F\-S\-::set\-Blocked} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d6/dc3/classcFCFS_a1b8ee3a759a31032ec7c1cd7b15ed5df}
+\-The kernel will call the scheduler with this function when the process has done an operation which causes it to block (\-I).
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Process must be marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}{blocked} and scheduler state should be changed accordingly. \item \-After this call a process should not be considered for a scheduling decision\end{DoxyItemize}
+\-Must be thread safe. \-Signal handler/s may block during schedule decision. 
+
+\-Implements \hyperlink{classcScheduler_ae6119e940a3bf58a00e7dbcea04b5b6a}{c\-Scheduler}.
 
 \hypertarget{classcFCFS_a793da0298f9b36ab8505a0e3daaf41ec}{\index{c\-F\-C\-F\-S@{c\-F\-C\-F\-S}!unblock\-Process@{unblock\-Process}}
 \index{unblock\-Process@{unblock\-Process}!cFCFS@{c\-F\-C\-F\-S}}
@@ -126,12 +177,14 @@ void \hyperlink{classcFCFS_aeeac757885108ae510b728600ebba248}{remove\-Process} (
 )\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d6/dc3/classcFCFS_a793da0298f9b36ab8505a0e3daaf41ec}
 \-When a process has completed a blocking call the kernel will notify the scheduler that it should be unblocked. \-This operation should be very fast since it will likely be called from a signal handler.
 
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-The process must be unblocked and marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready}. \-It must be available for scheduling with the next call to \-::get\-Next\-To\-Run\end{DoxyItemize}
 
 \begin{DoxyParams}{\-Parameters}
-{\em \-Process\-Info$\ast$} & \-Process to unblock \\
+{\em \-::\-Process\-Info$\ast$} & \-Process to unblock\\
 \hline
 \end{DoxyParams}
-
+\-Must be thread safe. \-Signal handler/s may unblock during schedule decision. 
 
 \-Implements \hyperlink{classcScheduler_a81fe2e5e5e2334e36db1cbf491e3fa57}{c\-Scheduler}.
 

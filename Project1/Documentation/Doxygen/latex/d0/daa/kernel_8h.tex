@@ -10,6 +10,7 @@
 {\ttfamily \#include \char`\"{}devices/block\-\_\-device.\-h\char`\"{}}\*
 {\ttfamily \#include \char`\"{}devices/clock\-\_\-device.\-h\char`\"{}}\*
 {\ttfamily \#include \char`\"{}utility/id.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}utility/logger.\-h\char`\"{}}\*
 {\ttfamily \#include \char`\"{}scheduler/fcfs.\-h\char`\"{}}\*
 \-Include dependency graph for kernel.\-h\-:\nopagebreak
 \begin{figure}[H]
@@ -35,7 +36,7 @@ struct \hyperlink{structkernelError}{kernel\-Error}
 \subsection*{\-Defines}
 \begin{DoxyCompactItemize}
 \item 
-\#define \hyperlink{kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}~1000
+\#define \hyperlink{kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}~5000
 \begin{DoxyCompactList}\small\item\em \-Default timer value for devices. \end{DoxyCompactList}\item 
 \#define \hyperlink{kernel_8h_a0756f011ef667460d583017366823244}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}~5
 \begin{DoxyCompactList}\small\item\em \-Default priority assigned to newly created processes. \end{DoxyCompactList}\end{DoxyCompactItemize}
@@ -49,7 +50,10 @@ struct \hyperlink{structkernelError}{kernel\-Error}
 \begin{DoxyCompactItemize}
 \item 
 static const char \hyperlink{kernel_8h_a9bd73e11b6d2b66703cd822d0c2ecd32}{init\-Process\-Name} \mbox{[}$\,$\mbox{]} = \char`\"{}main.\-trace\char`\"{}
-\begin{DoxyCompactList}\small\item\em \-Name of the first program to run on the system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Name of the first program to run on the system. \end{DoxyCompactList}\item 
+\hypertarget{kernel_8h_a9137377ee1ea033ea5bc9f65f22d7b6e}{static const char {\bfseries trace\-Log\-File} \mbox{[}$\,$\mbox{]} = \char`\"{}trace.\-log\char`\"{}}\label{d0/daa/kernel_8h_a9137377ee1ea033ea5bc9f65f22d7b6e}
+
+\end{DoxyCompactItemize}
 
 
 \subsection{\-Detailed \-Description}
@@ -61,7 +65,7 @@ static const char \hyperlink{kernel_8h_a9bd73e11b6d2b66703cd822d0c2ecd32}{init\-
 \subsubsection[{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}~5}}\label{d0/daa/kernel_8h_a0756f011ef667460d583017366823244}
 \-Only used if no other priority is provided. \hypertarget{kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}{\index{kernel.\-h@{kernel.\-h}!\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R@{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}}
 \index{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R@{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}!kernel.h@{kernel.\-h}}
-\subsubsection[{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}~1000}}\label{d0/daa/kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}
+\subsubsection[{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}~5000}}\label{d0/daa/kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}
 \-Measured in microseconds. 
 
 \subsection{\-Variable \-Documentation}

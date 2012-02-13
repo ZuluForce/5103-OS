@@ -27,7 +27,7 @@ void \hyperlink{classcKernel_a1e7cb5c6d9e6140e197f9b18dc8bd1b1}{cleanup\-Process
 \subsection*{\-Private \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-void \hyperlink{classcKernel_a1a0cb2a56afb1e4adfd3bb05156aec81}{swap\-Processes} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+void \hyperlink{classcKernel_a1b8e06f240c1bb7d0c4d0d30bcc55e18}{swap\-Processes} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$proc, bool switch\-Mode=true)
 \begin{DoxyCompactList}\small\item\em \-Swap a process on the cpu. \end{DoxyCompactList}\item 
 \hypertarget{classcKernel_abcc0464e62a5fb82ddf4a3f8ba5ec461}{void {\bfseries cleanup\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)}\label{db/da5/classcKernel_abcc0464e62a5fb82ddf4a3f8ba5ec461}
 
@@ -43,10 +43,16 @@ void \hyperlink{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{sig\-Handler} (i
 \subsection*{\-Private \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
+\hypertarget{classcKernel_a7b4ac330752179e72a5e440d30c64e91}{\-F\-I\-L\-E $\ast$ {\bfseries trace\-Stream}}\label{db/da5/classcKernel_a7b4ac330752179e72a5e440d30c64e91}
+
+\item 
 \hypertarget{classcKernel_a1fb233fa1c51650ccf2c872d856329ff}{\hyperlink{classcCPU}{c\-C\-P\-U} {\bfseries cpu}}\label{db/da5/classcKernel_a1fb233fa1c51650ccf2c872d856329ff}
 
 \item 
 \hypertarget{classcKernel_a1de4acdb706016573445b3c497e3b508}{int {\bfseries clock\-Tick}}\label{db/da5/classcKernel_a1de4acdb706016573445b3c497e3b508}
+
+\item 
+\hypertarget{classcKernel_a6b669b48db537f392164b9fcf3109e87}{pthread\-\_\-barrier\-\_\-t {\bfseries tick\-Barrier}}\label{db/da5/classcKernel_a6b669b48db537f392164b9fcf3109e87}
 
 \item 
 \hypertarget{classcKernel_a2d05550b96d1a4c4b02d523574fa94b3}{\hyperlink{classBlockDevice}{\-Block\-Device} {\bfseries b\-Device}}\label{db/da5/classcKernel_a2d05550b96d1a4c4b02d523574fa94b3}
@@ -124,13 +130,14 @@ void \hyperlink{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{sig\-Handler} (i
 \item[{siginfo\-\_\-t $\ast$}]{info}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{db/da5/classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}
-\-Each device uses a timer from \-S\-I\-G\-R\-T\-M\-I\-N -\/$>$ \-S\-I\-G\-R\-T\-M\-A\-X. \-Because these are not required to be compile time constants, a switch statement cannot be used. \-When a signal is received by the kernel, careful consideration must be made to the current state. \-Below is each signal and how it is handled\-: \hypertarget{classcKernel_a1a0cb2a56afb1e4adfd3bb05156aec81}{\index{c\-Kernel@{c\-Kernel}!swap\-Processes@{swap\-Processes}}
+\-Each device uses a timer from \-S\-I\-G\-R\-T\-M\-I\-N -\/$>$ \-S\-I\-G\-R\-T\-M\-A\-X. \-Because these are not required to be compile time constants, a switch statement cannot be used. \-When a signal is received by the kernel, careful consideration must be made to the current state. \-Below is each signal and how it is handled\-: \hypertarget{classcKernel_a1b8e06f240c1bb7d0c4d0d30bcc55e18}{\index{c\-Kernel@{c\-Kernel}!swap\-Processes@{swap\-Processes}}
 \index{swap\-Processes@{swap\-Processes}!cKernel@{c\-Kernel}}
 \subsubsection[{swap\-Processes}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Kernel\-::swap\-Processes} (
 \begin{DoxyParamCaption}
-\item[{{\bf \-Process\-Info} $\ast$}]{proc}
+\item[{{\bf \-Process\-Info} $\ast$}]{proc, }
+\item[{bool}]{switch\-Mode = {\ttfamily true}}
 \end{DoxyParamCaption}
-)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{db/da5/classcKernel_a1a0cb2a56afb1e4adfd3bb05156aec81}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{db/da5/classcKernel_a1b8e06f240c1bb7d0c4d0d30bcc55e18}
 \-Takes the process in its parameter and swaps it with the one currently running in the cpu. 
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}

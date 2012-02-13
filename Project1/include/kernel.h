@@ -13,8 +13,9 @@
 #include "devices/block_device.h"
 #include "devices/clock_device.h"
 #include "utility/id.h"
+#include "utility/logger.h"
 
-#define DEFAULT_TIMER 1000 //Not sure on this one, need to read Specs
+#define DEFAULT_TIMER 5000 //ClockTick every 5ms
 #define DEFAULT_PRIORITY 5
 
 /* ============ Modify this section to change scheduler used ============== */
@@ -33,16 +34,26 @@ __attribute__((error("process.h not included by scheduler")));
 using namespace std;
 
 static const char initProcessName[] = "main.trace";
+static const char traceLogFile[] = "trace.log";
 
 class cKernel {
 	private:
+		/* ---- Log Information ---- */
+		FILE* traceStream;
+		/* ------------------------- */
+
+		/* CPU specific information */
         cCPU cpu;
 		int clockTick;
 
-		//Devices:
+		pthread_barrier_t tickBarrier;
+		/* ------------------------ */
+
+		/* -------- Devices: -------- */
 		BlockDevice bDevice;
 		CharDevice cDevice;
 		ClockDevice clockInterrupt;
+		/* -------------------------- */
 
 		ProcessInfo *runningProc; /**< #ProcessInfo */
 

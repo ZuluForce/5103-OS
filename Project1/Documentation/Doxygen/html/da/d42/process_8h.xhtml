@@ -143,13 +143,14 @@ Enumerations</h2></td></tr>
 </td></tr>
 <tr><td valign="top"><em><a class="anchor" id="a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243"></a><!-- doxytag: member="running" ref="a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243" args="" -->running</em>&nbsp;</td><td>
 <p>Process is currently running. </p>
-<p>A running process should implicilty be considered ready. The kernel may not notify the scheduler to transition the process to ready before asking for a a scheduling decision. It is acceptable for the scheduler to make a process ready without the kernel's consent when it is being asked for a scheduling decision.</p>
+<p>A running process should implicilty be considered ready. The kernel may not notify the scheduler to transition the process to ready before asking for a a scheduling decision. It is acceptable for the scheduler to make a process ready without the kernel's consent when it is being asked for a scheduling decision, assuming it was previously running.</p>
 <p>Invariant State: </p>
 <ul>
 <li>Process is on the cpu</li>
 </ul>
 <p>Potential Transitions: </p>
 <ul>
+<li><a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76" title="Process is ready to be run.">ready</a> - Scheduler picks someone else to run </li>
 <li><a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01" title="Process is blocked and cannot run.">blocked</a> - Makes blocking system call </li>
 <li><a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd" title="Process has been terminated.">terminated</a> - Causes exception in cpu or finished normally </li>
 </ul>
@@ -202,7 +203,7 @@ Enumerations</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Feb 12 2012 14:01:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 13 2012 12:39:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

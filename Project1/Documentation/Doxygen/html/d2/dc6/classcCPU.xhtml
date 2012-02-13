@@ -97,6 +97,8 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#acd957640be8abb7c0d8a24010ed0e737">setText</a> (char *text)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the program text.  <a href="#acd957640be8abb7c0d8a24010ed0e737"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#a176eb207069b99c47ddec6b466d1a92b">setUserMode</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cpu back into user mode.  <a href="#a176eb207069b99c47ddec6b466d1a92b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#ab04938ac939d530e521181db6a52944f">getSetPC</a> (unsigned int newPC)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get/Set the program counter.  <a href="#ab04938ac939d530e521181db6a52944f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#a2d593a0d3d66e532826db4754d5fc4d2">getSetVC</a> (int newVC)</td></tr>
@@ -315,6 +317,23 @@ char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 
 </div>
 </div>
+<a class="anchor" id="a176eb207069b99c47ddec6b466d1a92b"></a><!-- doxytag: member="cCPU::setUserMode" ref="a176eb207069b99c47ddec6b466d1a92b" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d2/dc6/classcCPU.xhtml#a176eb207069b99c47ddec6b466d1a92b">cCPU::setUserMode</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>This is used by the kernel after the kernel has finished servicing a process' kernel mode request (syscall). </p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="../../dc/da7/cpu_8h_source.xhtml">cpu.h</a></li>
 <li>src/cpu.cpp</li>
@@ -337,7 +356,7 @@ char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Feb 12 2012 14:01:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 13 2012 12:39:16 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
