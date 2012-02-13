@@ -56,7 +56,7 @@ class cKernel {
 		 *	Takes the process in its parameter and swaps it with the
 		 *	one currently running in the cpu.
 		 */
-		void swapProcesses(ProcessInfo*);
+		void swapProcesses(ProcessInfo* proc, bool switchMode = true);
 
 		void cleanupProcess(ProcessInfo*);
 

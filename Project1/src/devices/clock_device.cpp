@@ -18,6 +18,7 @@ ClockDevice::ClockDevice() {
 
 
 ClockDevice::~ClockDevice() {
+	timer_delete(timerid);
 
 	return;
 }

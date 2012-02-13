@@ -60,6 +60,10 @@ void cCPU::setText(char *text) {
 	return;
 }
 
+void cCPU::setUserMode() {
+	KMode = false;
+}
+
 unsigned int cCPU::getSetPC(unsigned int newPC) {
 	unsigned int oldPC = PC;
 	PC = newPC;
@@ -171,6 +175,7 @@ void cCPU::run() {
 				}
 
 				PSW |= PS_SYSCALL;
+				KMode = true; //Enter kernel mode
 
 				return;
 
@@ -184,6 +189,7 @@ void cCPU::run() {
 				}
 
 				PSW |= PS_SYSCALL;
+				KMode = true; //Enter kernel mode
 
 				return;
 

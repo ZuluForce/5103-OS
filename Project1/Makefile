@@ -1,4 +1,5 @@
 CC=g++
+TARGET=init
 
 SRCDIR=src
 INCDIR=include
@@ -32,10 +33,10 @@ vpath %.h $(INCDIR)/scheduler
 
 vpath %.o $(OBJDIR)
 
-all: init
+all: $(TARGET)
 
 
-init: init.cpp init.h $(DEPS)
+$(TARGET): init.cpp init.h $(DEPS)
 	$(CC) $(CFLAGS) $(LFLAGS) $(_DEPS) $(SRCDIR)/$@.cpp -o $(BINDIR)/$@ 
 
 %.o: %.cpp %.h
@@ -43,6 +44,9 @@ init: init.cpp init.h $(DEPS)
 	
 run: all
 	cd $(BINDIR) && ./init
+	
+valgrind: all
+	cd $(BINDIR) && valgrind --tool=memcheck --track-origins=yes --leak-check=full ./$(TARGET)
 	
 update_docs:
 	doxygen Doxyfile

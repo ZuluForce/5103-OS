@@ -63,6 +63,13 @@ class cCPU {
 		 */
         void setText(char* text);
 
+		/** Set the cpu back into user mode
+		 *
+		 *	This is used by the kernel after the kernel has finished
+		 *	servicing a process' kernel mode request (syscall).
+		 */
+        void setUserMode();
+
 		/** Get/Set the program counter
 		 *
 		 *	Get the current value for the program counter

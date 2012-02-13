@@ -10,6 +10,12 @@
 #endif
 
 class BlockDevice: public AbstractDevice {
+	private:
+		/// @cond
+		timer_t timerid;
+		struct sigevent sev;
+		struct itimerspec iTime, iDisarm, iProbe;
+		/// @endcond
 
 	public:
 		BlockDevice();

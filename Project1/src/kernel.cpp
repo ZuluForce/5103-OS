@@ -70,13 +70,13 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
     struct stat fileinfo;
     if ( stat(filename, &fileinfo) < 0 ) {
     	/* File likely doesn't exist */
-    	fprintf(stderr, "Program %s does not exist\n", filename);
+    	fprintf(stderr, "Program %s does not exist \n", filename);
 
     	return;
     }
 
     ProcessInfo *newProc = (ProcessInfo*) malloc( sizeof(ProcessInfo) );
-    newProc->memory += fileinfo.st_size;
+    newProc->memory = fileinfo.st_size;
 
     newProc->processText = (char*) malloc( fileinfo.st_size );
 
@@ -109,13 +109,13 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
 
 	scheduler.addProcess(newProc);
 
-	//#ifdef DEBUG
-    printf("Created new process: %s\n", filename);
-    printf("Process ID: %d\n", newProc->pid);
-    printf("Parent ID: %d\n", newProc->parent);
-    printf("Memory Usage: %lu bytes\n", newProc->memory);
-    printf("Program Contents:\n%s\n", newProc->processText);
-    //#endif
+	#ifdef DEBUG
+    printf("Created new process: %s \n", filename);
+    printf("Process ID: %d \n", newProc->pid);
+    printf("Parent ID: %d \n", newProc->parent);
+    printf("Memory Usage: %lu bytes \n", newProc->memory);
+    printf("Program Contents:\n%s \n", newProc->processText);
+    #endif
 
     /* Cleanup */
     close(processFile);
@@ -124,8 +124,10 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
 }
 
 void cKernel::cleanupProcess(ProcessInfo* proc) {
-	free(proc->processText);
 	idGenerator.returnID(proc->pid);
+
+	free(proc->processText);
+	free(proc);
 
 	return;
 }
@@ -148,7 +150,7 @@ void cKernel::_sysCall(char call) {
 	return;
 }
 
-void cKernel::swapProcesses(ProcessInfo *proc) {
+void cKernel::swapProcesses(ProcessInfo *proc, bool switchMode) {
 	if ( runningProc == proc )
 		return;
 
@@ -164,6 +166,8 @@ void cKernel::swapProcesses(ProcessInfo *proc) {
 	}
 
 	cpu.setText(proc->processText);
+	if ( switchMode )
+		cpu.setUserMode();
 
 	runningProc = proc;
 
