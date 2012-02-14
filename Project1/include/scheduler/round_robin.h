@@ -3,7 +3,7 @@
 
 #include "scheduler/scheduler.h"
 
-class cRoundRobin: pulbic cScheduler {
+class cRoundRobin: public cScheduler {
 	private:
 
 	public:
@@ -19,7 +19,7 @@ class cRoundRobin: pulbic cScheduler {
 		ProcessInfo* getNextToRun();
 		pidType numProcesses();
 
-}
+};
 
 
 #endif // ROUND_ROBIN_H_INCLUDED
