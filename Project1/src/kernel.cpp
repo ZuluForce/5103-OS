@@ -11,8 +11,10 @@ cKernel* cKernel::kernel_instance;
 cKernel::cKernel()
 :clockTick(0), idGenerator(1), runningProc(NULL) {
 	/* Initialize trace output */
-	initLog(traceLogFile);
-	traceStream = getStream();
+	traceStream = initLog(traceLogFile);
+	assert(traceStream != NULL);
+	cpu.initTraceLog();
+	/* ----------------------- */
 
 	pthread_mutex_init(&intLock, NULL);
 	pthread_cond_init(&intCond, NULL);
@@ -157,6 +159,7 @@ void cKernel::swapProcesses(ProcessInfo *proc, bool switchMode) {
 	}
 
 	cpu.setText(proc->processText);
+	cpu.pid = proc->pid;
 
 	runningProc = proc;
 
@@ -179,6 +182,7 @@ void cKernel::boot() {
 		fprintf(traceStream, "ClockTick: %d\n", clockTick);
 
 		nextToRun = scheduler.getNextToRun();
+		++nextToRun->totalCPU;
 
 		//Swap out the previous process on the cpu
 		swapProcesses(nextToRun);
@@ -238,6 +242,7 @@ void cKernel::boot() {
 		}
 
 		++clockTick;
+		fprintf(traceStream, "\n");
 	} while( scheduler.numProcesses() > 0 );
 
 	printf("All processes have finished executing. Exiting kernel.\n");

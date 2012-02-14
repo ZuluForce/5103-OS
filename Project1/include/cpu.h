@@ -8,6 +8,8 @@
 #include <assert.h>
 #include <inttypes.h>
 
+#include "utility/logger.h"
+
 #define MAX_PARAMS 2		/**< Max number of execution parameters for any Opcode */
 #define MAX_PARAM_SIZE 256 	/**< Maximum size in bytes for an execution parameter. Creates exception if exceeded. */
 
@@ -24,6 +26,8 @@ enum ePSW {
 	PS_SYSCALL = PS_TERMINATE << 1,		/**< Executing process has made a system call */
 	PS_FINISHED = PS_SYSCALL << 1		/**< Executing process finished an instruction. No problems */
 };
+
+typedef unsigned int pidType;
 
 class cCPU {
 	private:
@@ -47,10 +51,15 @@ class cCPU {
 		char Opcode; 							/**< Holds the current Opcode */
         int tokenizeLine();
 
+		/* Logging */
+		FILE* traceStream;
 	public:
+		pidType pid; //Only necessary for printint trace file
+
 		cCPU();
 		~cCPU();
 
+		void initTraceLog();
 
 		/* -------- Used by the kernel -------- */
 		/** Set the program text

@@ -79,6 +79,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="header">
   <div class="summary">
 <a href="#pub-methods">Public Member Functions</a> &#124;
+<a href="#pub-attribs">Public Attributes</a> &#124;
 <a href="#pri-methods">Private Member Functions</a> &#124;
 <a href="#pri-attribs">Private Attributes</a>  </div>
   <div class="headertitle">
@@ -95,6 +96,8 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8ed9b15ed0e8ae225eb821ac0974ced0"></a><!-- doxytag: member="cCPU::initTraceLog" ref="a8ed9b15ed0e8ae225eb821ac0974ced0" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>initTraceLog</b> ()</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#acd957640be8abb7c0d8a24010ed0e737">setText</a> (char *text)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the program text.  <a href="#acd957640be8abb7c0d8a24010ed0e737"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#a176eb207069b99c47ddec6b466d1a92b">setUserMode</a> ()</td></tr>
@@ -115,6 +118,10 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the current Opcode.  <a href="#a987e1ab511c71dcde48411f5bb16f9d8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#aee300d68026ba9f13d5434ff82f0372a">run</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Start execution.  <a href="#aee300d68026ba9f13d5434ff82f0372a"></a><br/></td></tr>
+<tr><td colspan="2"><h2><a name="pub-attribs"></a>
+Public Attributes</h2></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="abf8b9f3c8e99b0ea03d3051084f57dff"></a><!-- doxytag: member="cCPU::pid" ref="abf8b9f3c8e99b0ea03d3051084f57dff" args="" -->
+pidType&#160;</td><td class="memItemRight" valign="bottom"><b>pid</b></td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a62812ecc1a65c296fb4795b24b451f4e"></a><!-- doxytag: member="cCPU::tokenizeLine" ref="a62812ecc1a65c296fb4795b24b451f4e" args="()" -->
@@ -141,6 +148,8 @@ char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a897ce4ac1712c81e8c1a7e13733be8fc"></a><!-- doxytag: member="cCPU::Opcode" ref="a897ce4ac1712c81e8c1a7e13733be8fc" args="" -->
 char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#a897ce4ac1712c81e8c1a7e13733be8fc">Opcode</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Holds the current Opcode. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f4c42c44a803d6bd2c47103c3cec164"></a><!-- doxytag: member="cCPU::traceStream" ref="a5f4c42c44a803d6bd2c47103c3cec164" args="" -->
+FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>traceStream</b></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This class emulates the internals of a very simple cpu with two main registers, PC and VC. In addition, it has other state for handling system calls and program exceptions. </p>
@@ -356,7 +365,7 @@ char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 13 2012 15:25:25 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Mon Feb 13 2012 18:34:30 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

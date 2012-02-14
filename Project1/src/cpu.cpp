@@ -15,6 +15,10 @@ cCPU::~cCPU() {
 	return;
 }
 
+void cCPU::initTraceLog() {
+	traceStream = getStream();
+}
+
 int cCPU::tokenizeLine() {
 	char c = execText[PC];
 
@@ -114,7 +118,6 @@ void cCPU::run() {
 		switch (Opcode) {
 			case 'S':
 				/* 'S x': Store x to VC */
-				printf("Opcode: S\n");
 				++PC; //For the tokenizer to work
 				if ( (arg = tokenizeLine()) != 1 ) {
 					/* Invalid arguments. Notify the OS. */
@@ -126,6 +129,7 @@ void cCPU::run() {
 					return;
 				}
 
+				fprintf(traceStream, "Executing: %c %s for pid = %d\n", Opcode, tokenBuffer[0], pid);
 				arg = atoi(tokenBuffer[0]);
 				printf("Storing %d to VC\n", arg);
 				VC = arg;
@@ -135,7 +139,6 @@ void cCPU::run() {
 
 			case 'A':
 				/* 'A x': Add x to VC */
-				printf("Opcode: A\n");
 				++PC;
 				if ( tokenizeLine() != 1 ) {
 					/* Invalid arguments. Notify the OS. */
@@ -143,6 +146,7 @@ void cCPU::run() {
 					return;
 				}
 
+				fprintf(traceStream, "Executing: %c %s for pid = %d\n", Opcode, tokenBuffer[0], pid);
 				arg = atoi(tokenBuffer[0]);
 				printf("Adding %d to VC\n", arg);
 				VC += arg;
@@ -153,13 +157,13 @@ void cCPU::run() {
 			case 'D':
 				/* 'D x': Decrement x from VC */
 				++PC;
-				printf("Opcode: D\n");
 				if ( tokenizeLine() != 1 ) {
 					/* Invalid arguments. Notify the OS. */
 					PSW |= PS_EXCEPTION;
 					return;
 				}
 
+				fprintf(traceStream, "Executing: %c %s for pid = %d\n", Opcode, tokenBuffer[0], pid);
 				arg = atoi(tokenBuffer[0]);
 				printf("Decrementing %d from VC\n", arg);
 				VC -= arg;
@@ -169,7 +173,6 @@ void cCPU::run() {
 
 			case 'C':
 				/* Call the OS to start new process: 'C <priority> <filename>'*/
-				printf("Opcode: C\n");
 				++PC;
 				if ( tokenizeLine() != 2 ) {
 					/* Invalid arguments. Notify the OS. */
@@ -177,6 +180,8 @@ void cCPU::run() {
 					return;
 				}
 
+				fprintf(traceStream, "Executing: %c %s %s for pid = %d\n",
+							Opcode, tokenBuffer[0], tokenBuffer[1], pid);
 				PSW |= PS_SYSCALL;
 				KMode = true; //Enter kernel mode
 
@@ -184,13 +189,13 @@ void cCPU::run() {
 
 			case 'I':
 				/* IO syscall to device class: 'I <dev-class> (B/C) */
-				printf("Opcode: I\n");
 				++PC;
 				if ( tokenizeLine() != 1) {
 					PSW |= PS_EXCEPTION;
 					return;
 				}
 
+				fprintf(traceStream, "Executing: %c %s for pid = %d\n", Opcode, tokenBuffer[0], pid);
 				PSW |= PS_SYSCALL;
 				KMode = true; //Enter kernel mode
 
@@ -198,22 +203,24 @@ void cCPU::run() {
 
 			case 'P':
 				/* Priveleged instruction */
-				printf("Opcode: P\n");
 				if ( !KMode ) {
 					/* Exception!, notify the OS */
-					printf("Process tried privleged operation in user mode\n");
+					printf("Process tried privileged operation in user mode\n");
 					PSW |= PS_EXCEPTION;
+
+					fprintf(traceStream, "Invalid privileged instruction in user mode pid = %d\n", pid);
 
 					return;
 				}
 				/* Else it is a NoOp */
 
+				fprintf(traceStream, "Executing: P for kernel\n");
 				PSW |= PS_FINISHED;
 				return;
 
 			case 'E':
 				/* Terminate the process. Notify the OS */
-				printf("Opcode: E\n");
+				fprintf(traceStream, "Executing: %c for pid = %d\n", Opcode, pid);
 
 				PSW |= PS_TERMINATE;
 

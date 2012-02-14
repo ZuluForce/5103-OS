@@ -14,7 +14,7 @@ static FILE* logStream;
 
 static bool logInitialized;
 
-int initLog(const char* filename);
+FILE* initLog(const char* filename);
 void closeLog();
 
 FILE* getStream();

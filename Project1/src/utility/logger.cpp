@@ -1,6 +1,6 @@
 #include "utility/logger.h"
 
-int initLog(const char* filename) {
+FILE* initLog(const char* filename) {
 	assert(filename != NULL);
 
 	logStream = fopen(filename, "w");
@@ -8,13 +8,13 @@ int initLog(const char* filename) {
 	if ( logStream == NULL ) {
 		perror("Failed to open log file");
 
-		return -1;
+		return NULL;
 	}
 
 
 	logInitialized = true;
 
-	return 0;
+	return logStream;
 }
 
 void closeLog() {
