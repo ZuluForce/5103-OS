@@ -6,6 +6,11 @@ cFCFS::cFCFS(): blockedID(0) {
 	pthread_mutex_init(&blockedLock, NULL);
 	pthread_cond_init(&allBlocked, NULL);
 
+	logStream = NULL;
+	procLogger = NULL;
+
+	blockedVector.resize(DEF_BLOCK_VEC_SIZE);
+	totalBlocked = 0;
 
 	return;
 }
@@ -51,7 +56,12 @@ void cFCFS::setBlocked(ProcessInfo* proc) {
 
 	blockedVector[newID] = proc;
 
+	++totalBlocked;
+	runningProc = NULL;
 	pthread_mutex_unlock(&blockedLock);
+
+	/* Update Process info for Top */
+	procLogger->writeProcessInfo(proc);
 
 	return;
 }
@@ -59,6 +69,7 @@ void cFCFS::setBlocked(ProcessInfo* proc) {
 void cFCFS::unblockProcess(ProcessInfo* proc) {
 	assert( proc != NULL );
 	assert( proc->state == blocked );
+	assert( totalBlocked > 0 );
 
 	pthread_mutex_lock(&blockedLock);
 	proc->state = ready;
@@ -69,8 +80,12 @@ void cFCFS::unblockProcess(ProcessInfo* proc) {
 	readyQueue.push(blockedVector[info->blockedIndex]);
 	blockedID.returnID(info->blockedIndex);
 
+	--totalBlocked;
+
 	pthread_mutex_unlock(&blockedLock);
 	pthread_cond_signal(&allBlocked);
+
+	procLogger->writeProcessInfo(proc);
 
 	return;
 }
@@ -84,18 +99,24 @@ void cFCFS::removeProcess(ProcessInfo* proc) {
 
 	runningProc = NULL;
 
+	/* Remove process from log */
+
 	return;
 }
 
 ProcessInfo* cFCFS::getNextToRun() {
 	/* Find ready process which came first */
-	if ( runningProc != NULL)
-		readyQueue.push(runningProc);
+
+	//This makes it non-preemptive
+	if ( runningProc != NULL) {
+		procLogger->writeProcessInfo(runningProc);
+		return runningProc;
+	}
 
 	pthread_mutex_lock(&blockedLock);
 	if ( readyQueue.size() == 0 ) {
-		if ( blockedID.reservedIDs() > 0) { //Don't check vector size
-			while ( readyQueue.size() && blockedID.reservedIDs() > 0)
+		if ( totalBlocked > 0) {
+			while ( readyQueue.size() == 0)
 				pthread_cond_wait(&allBlocked, &blockedLock);
 
 		} else {
@@ -108,10 +129,16 @@ ProcessInfo* cFCFS::getNextToRun() {
 	ProcessInfo* toRun = readyQueue.front();
 	readyQueue.pop();
 
+	assert(toRun != NULL);
+
 	runningProc = toRun;
 	runningProc->state = running;
 
+
+	procLogger->writeProcessInfo(runningProc);
+
 	pthread_mutex_unlock(&blockedLock);
+
 
 	return toRun;
 }
@@ -119,9 +146,25 @@ ProcessInfo* cFCFS::getNextToRun() {
 pidType cFCFS::numProcesses() {
 	pidType total = 0;
 	total += readyQueue.size();
-	total += blockedVector.size();
+	total += totalBlocked;
 
 	total += (runningProc == NULL) ? 0 : 1;
 
 	return total;
+}
+
+void cFCFS::addLogger(FILE* _logStream) {
+	assert(logStream == NULL);
+	assert(_logStream != NULL);
+
+	logStream = _logStream;
+	return;
+}
+
+void cFCFS::addProcLogger(cProcessLogger* _procLogger) {
+	assert(procLogger == NULL);
+	assert(_procLogger != NULL);
+
+	procLogger = _procLogger;
+	return;
 }

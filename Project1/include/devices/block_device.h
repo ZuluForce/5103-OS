@@ -3,26 +3,36 @@
 
 /** @file */
 
-#include "devices/abstract_device.h"
+#include <queue>
+#include "devices/queued_device.h"
 
 #ifndef BLOCKSIG
 #define BLOCKSIG SIGRTMIN + 1
 #endif
 
-class BlockDevice: public AbstractDevice {
+using namespace std;
+
+class cBlockDevice: public cAbsQueuedDevice {
 	private:
 		/// @cond
 		timer_t timerid;
 		struct sigevent sev;
-		struct itimerspec iTime, iDisarm, iProbe;
+		struct itimerspec iTime;
 		/// @endcond
 
-	public:
-		BlockDevice();
-		~BlockDevice();
+		queue<ProcessInfo*> waitQueue;
+		pthread_mutex_t deviceLock;
 
-		void setTimer(int usec);
-		void disarm();
+	public:
+		cBlockDevice(int usec);
+		~cBlockDevice();
+
+		void setDefaultTime(int usec);
+		void scheduleDevice(ProcessInfo*);
+
+		ProcessInfo* timerFinished();
+
+		int queueLength();
 };
 
 /** \def BLOCKSIG
