@@ -1,6 +1,8 @@
 #include "cpu.h"
 
 cCPU::cCPU() {
+	clockTick = 0;
+
 	PC = maxPC = VC = 0;
 	PSW = 0;
 
@@ -17,6 +19,11 @@ cCPU::~cCPU() {
 
 void cCPU::initTraceLog() {
 	traceStream = getStream();
+}
+
+void cCPU::initClockPulse(pthread_mutex_t* _pulseLock, pthread_cond_t* _pulseCond) {
+	pulseLock = _pulseLock;
+	pulseCond = _pulseCond;
 }
 
 int cCPU::tokenizeLine() {
@@ -238,4 +245,23 @@ void cCPU::run() {
 
 
 	}
+}
+
+void cCPU::executePrivSet(int num, int& clockTick) {
+	while ( num > 0 ) {
+		pthread_cond_wait(pulseCond, pulseLock);
+
+		if ( KMode ) {
+			++clockTick;
+			fprintf(traceStream, "\nClocktick: %d\n", clockTick);
+			fprintf(traceStream, "Executing privleged instruction for kernel on behalf of pid = %d\n", pid);
+			--num;
+		} else {
+			PSW |= PS_EXCEPTION;
+			return;
+		}
+
+	}
+
+	return;
 }

@@ -22,10 +22,7 @@ enum eProcState {ready, running, blocked, terminated};
  *	on it.
  */
 struct ProcessInfo {
-	/* I was thinking we could save the name so the output of
-	 * Top would look nice later.
-	 */
-	//string name;
+	pidType procFileLine; //Index into process file
 
     unsigned int parent, pid;
     unsigned int startCPU, totalCPU;

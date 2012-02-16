@@ -47,6 +47,16 @@ unsigned int cIDManager::getID() {
 	}
 }
 
+unsigned int cIDManager::getLowID() {
+	if ( !freeID.empty() ) {
+		unsigned int newID = freeID.front();
+		freeID.pop();
+		return newID;
+	}
+
+	return getID();
+}
+
 void cIDManager::returnID(unsigned int id) {
 	if ( consumeQueue ) {
 		if ( id == currentID )

@@ -31,6 +31,8 @@ typedef unsigned int pidType;
 
 class cCPU {
 	private:
+		int clockTick;
+
 		/* 0 = User   1 = Kernel */
 		bool KMode;
 
@@ -53,6 +55,11 @@ class cCPU {
 
 		/* Logging */
 		FILE* traceStream;
+
+		/* Clock pulse synchronization */
+		pthread_mutex_t* pulseLock;
+		pthread_cond_t* pulseCond;
+
 	public:
 		pidType pid; //Only necessary for printint trace file
 
@@ -60,6 +67,8 @@ class cCPU {
 		~cCPU();
 
 		void initTraceLog();
+		void initClockPulse(pthread_mutex_t* _pulseLock,
+							pthread_cond_t* _pulseCond);
 
 		/* -------- Used by the kernel -------- */
 		/** Set the program text
@@ -153,6 +162,20 @@ class cCPU {
 		 *	appropriate PSW flags set for the kernel to act on.
 		 */
         void run();
+
+        /** Execute set number of privleged instructions
+         *
+         *	When the kernel receives a syscall for device
+         *	I/O it will call this function to "simulate"
+         *	executing kernel mode ops.
+         *
+         *	@param int num Number of privleged instructios
+         *	to execute.
+         *
+         *	@param int& clockTick Reference to the clockTick
+         *	counter in the kenel.
+         */
+        void executePrivSet(int num, int& clockTick);
         /* ------------------------------------ */
 };
 

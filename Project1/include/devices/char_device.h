@@ -3,19 +3,37 @@
 
 /** @file */
 
-#include "devices/abstract_device.h"
+#include <queue>
+#include "devices/queued_device.h"
 
 #ifndef CHARSIG
 #define CHARSIG SIGRTMIN + 2
 #endif
 
-class CharDevice: public AbstractDevice {
-	public:
-		CharDevice();
-		~CharDevice();
+using namespace std;
 
-		void setTimer(int usec);
-		void disarm();
+class cCharDevice: public cAbsQueuedDevice {
+	private:
+		/// @cond
+		timer_t timerid;
+		struct sigevent sev;
+		struct itimerspec iTime;
+		/// @endcond
+
+		queue<ProcessInfo*> waitQueue;
+
+		pthread_mutex_t deviceLock;
+
+	public:
+		cCharDevice(int usec);
+		~cCharDevice();
+
+		void setDefaultTime(int usec);
+		void scheduleDevice(ProcessInfo*);
+
+		ProcessInfo* timerFinished();
+
+		int queueLength();
 };
 
 /** \def CHARSIG

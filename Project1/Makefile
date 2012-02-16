@@ -11,7 +11,7 @@ OBJCFLAGS=-O3 -c -I$(INCDIR) -DD_REENTRANT
 LFLAGS=-lrt -lpthread
 
 DEPS=clock_device.o char_device.o block_device.o id.o cpu.o scheduler.o fcfs.o\
-		kernel.o abstract_device.o logger.o
+		kernel.o abstract_device.o logger.o process_logger.o
 ##Dependencies with obj directory appended
 _DEPS=$(patsubst %,$(OBJDIR)/%,$(DEPS))
 
@@ -36,14 +36,17 @@ vpath %.o $(OBJDIR)
 all: $(TARGET)
 
 
-$(TARGET): init.cpp init.h $(DEPS)
+$(TARGET): $(TARGET).cpp $(TARGET).h $(DEPS)
 	$(CC) $(CFLAGS) $(LFLAGS) $(_DEPS) $(SRCDIR)/$@.cpp -o $(BINDIR)/$@ 
 
 %.o: %.cpp %.h
 	$(CC) $< $(OBJCFLAGS) -o $(OBJDIR)/$@
 	
 run: all
-	cd $(BINDIR) && ./init
+	cd $(BINDIR) && ./$(TARGET)
+	
+run_gdb: all
+	gdb --cd=$(BINDIR) --command=gdb_batch --return-child-result -exec=$(TARGET)
 	
 valgrind: all
 	cd $(BINDIR) && valgrind --tool=memcheck --track-origins=yes --leak-check=full ./$(TARGET)
@@ -53,7 +56,7 @@ update_docs:
 	
 clean:
 	rm -f $(OBJDIR)/*.o
-	rm -f $(BINDIR)/init
+	rm -f $(BINDIR)/$(TARGET)
 	
 clean_docs:
 	rm -rf $(DOCDIR)/Doxygen/*

@@ -9,15 +9,25 @@ cKernel* cKernel::kernel_instance;
 /* =========================================== */
 
 cKernel::cKernel()
-:clockTick(0), idGenerator(1), runningProc(NULL) {
-	/* Initialize trace output */
+:clockTick(0), idGenerator(1), runningProc(NULL), procLogger(procLogFile),
+bDevice(DEFAULT_DTIMER), cDevice(DEFAULT_DTIMER) {
+	/* ---- Initialize trace output ----*/
 	traceStream = initLog(traceLogFile);
 	assert(traceStream != NULL);
-	cpu.initTraceLog();
-	/* ----------------------- */
+	/* -------------------------------- */
+
+	/* Send logging info to scheduler */
+	scheduler.addLogger(traceStream);
+	scheduler.addProcLogger(&procLogger);
+	/* -------------------------------- */
 
 	pthread_mutex_init(&intLock, NULL);
 	pthread_cond_init(&intCond, NULL);
+
+	/* -------- Initialize cpu data --------*/
+	cpu.initTraceLog();
+	cpu.initClockPulse(&intLock, &intCond);
+	/* ----------------------------------- */
 
 
 	/* Load "main.trace" with parent 0 */
@@ -65,8 +75,16 @@ void cKernel::sigHandler(int signum, siginfo_t *info) {
 
 	} else if (signum == blockSigValue ) {
 		printf("Received block signal\n");
+		ProcessInfo* toUnblock = bDevice.timerFinished();
+		assert( toUnblock != NULL );
+		scheduler.unblockProcess(toUnblock);
+
 	} else if ( signum == charSigValue ) {
 		printf("Received char signal\n");
+		ProcessInfo* toUnblock = cDevice.timerFinished();
+		assert( toUnblock != NULL );
+		scheduler.unblockProcess(toUnblock);
+
 	} else {
 		printf("Unknown signal received\n");
 	}
@@ -75,6 +93,12 @@ void cKernel::sigHandler(int signum, siginfo_t *info) {
 }
 
 void cKernel::initProcess(const char *filename, pidType parent, int priority) {
+	assert( traceStream != NULL);
+	assert( filename != NULL );
+
+	fprintf(traceStream, "Creating process: %s with parent = %d  priority = %d\n",
+			filename, parent, priority);
+
     struct stat fileinfo;
     if ( stat(filename, &fileinfo) < 0 ) {
     	/* File likely doesn't exist */
@@ -116,6 +140,9 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
 	newProc->state = ready;
 
 	scheduler.addProcess(newProc);
+	procLogger.addProcess(newProc);
+
+	fprintf(traceStream, "\t New Process created with pid = %d\n", newProc->pid);
 
 	#ifdef DEBUG
     printf("Created new process: %s \n", filename);
@@ -132,6 +159,8 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
 }
 
 void cKernel::cleanupProcess(ProcessInfo* proc) {
+	scheduler.removeProcess(proc);
+
 	idGenerator.returnID(proc->pid);
 
 	free(proc->processText);
@@ -182,7 +211,8 @@ void cKernel::boot() {
 		fprintf(traceStream, "ClockTick: %d\n", clockTick);
 
 		nextToRun = scheduler.getNextToRun();
-		++nextToRun->totalCPU;
+		assert(nextToRun != NULL);
+		++(nextToRun->totalCPU); //It is being allocated a CPU cycle
 
 		//Swap out the previous process on the cpu
 		swapProcesses(nextToRun);
@@ -199,31 +229,72 @@ void cKernel::boot() {
 		} else if ( localPSW & PS_EXCEPTION ) {
 			/* Terminate the process */
 			printf("Process raised an exception\n");
+			fprintf(traceStream, "Process %d raised an exception. Terminating process.\n", runningProc->pid);
 
-			scheduler.removeProcess(runningProc);
 			cleanupProcess(runningProc);
 			runningProc = NULL;
 		} else if ( localPSW & PS_SYSCALL ) {
-			printf("Process made a system call\n");
 
 			switch ( cpu.getOpcode() ) {
 				case 'C':
-					printf("System call is for a new process\n");
+					printf("System call for a new process\n");
 					printf("\tProcess Name = %s\n", cpu.getParam(1));
 					printf("\tProcess Priority = %d\n", atoi(cpu.getParam(0)));
 
 					initProcess(cpu.getParam(1), runningProc->pid, atoi(cpu.getParam(0)));
 					break;
 
-				case 'I':
-					printf("System call is for device I/O\n");
+				case 'I': {
+					printf("System call for device I/O\n");
+					cpu.executePrivSet(3, clockTick);
+					localPSW = cpu.getPSW();
+
+					//Check to make sure everything is ok
+					if ( localPSW & PS_EXCEPTION ) {
+						printf("Process %d raised an exception during device I/O\n", runningProc->pid);
+						fprintf(traceStream, "Process %d raised an exception during device I/O\n", runningProc->pid);
+
+						cleanupProcess(runningProc);
+						runningProc = NULL;
+					}
+
+					//Put in request for device I/O
+					char* devClassStr = cpu.getParam(0);
+					assert( strlen(devClassStr) > 0 );
+					char devClass = devClassStr[0];
+
+					switch ( devClass ) {
+						case 'B': {
+							printf("Scheduling pid = %d for I/O on block device\n", runningProc->pid);
+							fprintf(traceStream, "Scheduling pid = %d for I/O on block device\n", runningProc->pid);
+							bDevice.scheduleDevice(runningProc);
+							printf("Blocking device in scheduler\n");
+							scheduler.setBlocked(runningProc);
+							break;
+						}
+
+						case 'C': {
+							printf("Scheduling pid = %d for I/O on character device\n", runningProc->pid);
+							fprintf(traceStream, "Scheduling pid = %d for I/O on character device\n", runningProc->pid);
+							cDevice.scheduleDevice(runningProc);
+							scheduler.setBlocked(runningProc);
+							break;
+						}
+
+						default: {
+							fprintf(traceStream, "Invalid Device Class %c: Terminating Process\n", devClass);
+							cleanupProcess(runningProc);
+							runningProc = NULL;
+							break;
+						}
+					}
 
 					break;
+				} //End Device I/O syscall
 
 				default:
 					printf("Invalid system call\n");
 					/* Kill the process */
-					scheduler.removeProcess(runningProc);
 					cleanupProcess(runningProc);
 					runningProc = NULL;
 
@@ -235,8 +306,8 @@ void cKernel::boot() {
 
 		} else if ( localPSW & PS_TERMINATE ) {
 			printf("Process %d has terminated\n", runningProc->pid);
+			fprintf(traceStream, "Process %d has termintated\n", runningProc->pid);
 
-			scheduler.removeProcess(runningProc);
 			cleanupProcess(runningProc);
 			runningProc = NULL;
 		}

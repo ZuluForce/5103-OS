@@ -14,8 +14,11 @@
 #include "devices/clock_device.h"
 #include "utility/id.h"
 #include "utility/logger.h"
+#include "utility/process_logger.h"
 
 #define DEFAULT_TIMER 5000 //ClockTick every 5ms
+#define DEVICE_TIMER_SCALE 100 //Devices take 10 clock cycles to complete
+#define DEFAULT_DTIMER (DEFAULT_TIMER * DEVICE_TIMER_SCALE)
 #define DEFAULT_PRIORITY 5
 
 /* ============ Modify this section to change scheduler used ============== */
@@ -35,11 +38,13 @@ using namespace std;
 
 static const char initProcessName[] = "main.trace";
 static const char traceLogFile[] = "trace.log";
+static const char procLogFile[] = "proc.log";
 
 class cKernel {
 	private:
 		/* ---- Log Information ---- */
 		FILE* traceStream;
+		cProcessLogger procLogger;
 		/* ------------------------- */
 
 		/* CPU specific information */
@@ -52,8 +57,8 @@ class cKernel {
 		/* ------------------------ */
 
 		/* -------- Devices: -------- */
-		BlockDevice bDevice;
-		CharDevice cDevice;
+		cBlockDevice bDevice;
+		cCharDevice cDevice;
 		ClockDevice clockInterrupt;
 		/* -------------------------- */
 

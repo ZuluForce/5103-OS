@@ -1,10 +1,12 @@
 S 1
 A 1
 A 1
-C 5 main.trace
+C 5 proc1.trace
 D 1
 I B
 D 1
 C 5 proc1.trace
 D 1
+I C
+I B
 E

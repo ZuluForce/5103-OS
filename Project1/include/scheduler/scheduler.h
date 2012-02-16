@@ -2,6 +2,8 @@
 #define SCHEDULER_H_INCLUDED
 
 #include "process.h"
+#include "utility/logger.h"
+#include "utility/process_logger.h"
 
 /* Abstract Interface for Schedulers */
 class cScheduler {
@@ -18,6 +20,10 @@ class cScheduler {
 
 		/* Meta Information */
 		virtual pidType numProcesses() = 0;
+
+		/* Logging */
+		virtual void addLogger(FILE*) = 0;
+		virtual void addProcLogger(cProcessLogger*) = 0;
 };
 
 /** @fn virtual void cScheduler::initProcScheduleInfo(ProcessInfo*) = 0

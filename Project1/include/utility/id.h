@@ -35,6 +35,7 @@ class cIDManager {
 		 *	queue is empty then an exception is thrown.
 		 */
 		unsigned int getID();
+		unsigned int getLowID();
 
 		/** Returns an ID to the manager
 		 *
