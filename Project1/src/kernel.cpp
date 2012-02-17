@@ -140,7 +140,7 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
 	newProc->state = ready;
 
 	scheduler.addProcess(newProc);
-	procLogger.addProcess(newProc);
+	procLogger.addProcess(newProc, filename);
 
 	fprintf(traceStream, "\t New Process created with pid = %d\n", newProc->pid);
 

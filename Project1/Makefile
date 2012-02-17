@@ -48,6 +48,9 @@ run: all
 run_gdb: all
 	gdb --cd=$(BINDIR) --command=gdb_batch --return-child-result -exec=$(TARGET)
 	
+top: top.cpp top.h
+	$(CC) -Iinclude $(SRCDIR)/top.cpp -o $(BINDIR)/$@
+	
 valgrind: all
 	cd $(BINDIR) && valgrind --tool=memcheck --track-origins=yes --leak-check=full ./$(TARGET)
 	

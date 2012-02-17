@@ -13,6 +13,7 @@
 
 using namespace std;
 
+#define MAX_NAME_LENGTH 20
 #define MAX_LINE_LENGTH 30
 
 /** Class specifically for logging process state information
@@ -32,20 +33,29 @@ class cProcessLogger {
 	private:
 		cIDManager lineIDs;
 
+		string nameFile;
+
 		int procLogFD;
+		int procNameFD;
 		FILE* procLogStream;
+		FILE* procNameStream;
 		int lineSize;
 
 		void addToVector(FILE*);
 
 		char outputBuffer[MAX_LINE_LENGTH];
+		char emptyBuffer[MAX_LINE_LENGTH];
+
+		int previousID;
 
 	public:
 		cProcessLogger(const char *file);
 		~cProcessLogger();
 
-		void addProcess(ProcessInfo*);
+		void addProcess(ProcessInfo*, const char*);
+		void rmProcess(ProcessInfo*);
 
+		void writeProcessName(int, const char*);
 		void writeProcessInfo(ProcessInfo*);
 
 };
