@@ -66,7 +66,9 @@ bDevice(DEFAULT_BTIMER), cDevice(DEFAULT_CTIMER) {
 }
 
 cKernel::~cKernel() {
-	pthread_kill(deviceThread, SIGINT);
+	pthread_cancel(deviceThread);
+
+	closeLog();
 
 	return;
 }
@@ -156,12 +158,17 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
 }
 
 void cKernel::cleanupProcess(ProcessInfo* proc) {
+	if ( proc == runningProc )
+		runningProc = NULL;
+
 	scheduler.removeProcess(proc);
 
 	idGenerator.returnID(proc->pid);
 
 	free(proc->processText);
 	free(proc);
+
+	//procLogger.rmProcess(proc);
 
 	return;
 }
@@ -184,6 +191,7 @@ void cKernel::swapProcesses(ProcessInfo *proc, bool switchMode) {
 		cpu.getSetPSW(proc->PSW);
 	}
 
+	cpu.setMaxPC(proc->memory);
 	cpu.setText(proc->processText);
 	cpu.pid = proc->pid;
 
@@ -270,9 +278,13 @@ void cKernel::boot() {
 			cpu.setPSW(localPSW);
 
 		} else if ( localPSW & PS_EXCEPTION ) {
-			/* Terminate the process */
 			printf("Process raised an exception\n");
-			fprintf(traceStream, "Process %d raised an exception. Terminating process.\n", runningProc->pid);
+			fprintf(traceStream, "localPSW & PS_ABNORMAL = %d\n", localPSW & PS_ABNORMAL);
+			if ( localPSW & PS_ABNORMAL ) {
+				fprintf(traceStream, "Process %d raised an abnormal termination exception. Cleaning up soon.\n", runningProc->pid);
+			} else {
+				fprintf(traceStream, "Process %d raised an exception. Terminating process.\n", runningProc->pid);
+			}
 
 			cleanupProcess(runningProc);
 			runningProc = NULL;
@@ -349,7 +361,7 @@ void cKernel::boot() {
 
 		} else if ( localPSW & PS_TERMINATE ) {
 			printf("Process %d has terminated\n", runningProc->pid);
-			fprintf(traceStream, "Process %d has termintated\n", runningProc->pid);
+			fprintf(traceStream, "Process %d has termintated: VC = %d\n", runningProc->pid, cpu.getSetVC(0));
 
 			cleanupProcess(runningProc);
 			runningProc = NULL;
@@ -357,6 +369,7 @@ void cKernel::boot() {
 
 		++clockTick;
 		fprintf(traceStream, "\n");
+		fflush(traceStream);
 	} while( scheduler.numProcesses() > 0 );
 
 	printf("All processes have finished executing. Exiting kernel.\n");

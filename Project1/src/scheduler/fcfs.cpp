@@ -82,6 +82,7 @@ void cFCFS::unblockProcess(ProcessInfo* proc) {
 	blockedID.returnID(info->blockedIndex);
 
 	--totalBlocked;
+	traceUnblocked.push(proc->pid);
 
 	pthread_mutex_unlock(&blockedLock);
 	pthread_cond_signal(&allBlocked);
@@ -105,8 +106,21 @@ void cFCFS::removeProcess(ProcessInfo* proc) {
 	return;
 }
 
+void cFCFS::printUnblocked() {
+	pidType tempID;
+
+	while ( traceUnblocked.size() > 0 ) {
+		tempID = traceUnblocked.front();
+		traceUnblocked.pop();
+		fprintf(logStream, "Process %d unblocked\n", tempID);
+
+	}
+	return;
+}
+
 ProcessInfo* cFCFS::getNextToRun() {
 	/* Find ready process which came first */
+	printUnblocked();
 
 	//This makes it non-preemptive
 	if ( runningProc != NULL) {
@@ -121,6 +135,8 @@ ProcessInfo* cFCFS::getNextToRun() {
 
 			while ( readyQueue.size() == 0)
 				pthread_cond_wait(&allBlocked, &blockedLock);
+
+			printUnblocked();
 
 		} else {
 			/* Nothing is left to run */

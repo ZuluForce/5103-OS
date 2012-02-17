@@ -23,7 +23,8 @@
 enum ePSW {
 	PS_EXCEPTION = 0x1, 				/**< Executing process has created an exception */
 	PS_TERMINATE = PS_EXCEPTION << 1, 	/**< Executing process has finished. */
-	PS_SYSCALL = PS_TERMINATE << 1,		/**< Executing process has made a system call */
+	PS_ABNORMAL = PS_TERMINATE << 1,	/**< Process raised an exception by exiting abnormally. No 'E' instruction. */
+	PS_SYSCALL = PS_ABNORMAL << 1,		/**< Executing process has made a system call */
 	PS_FINISHED = PS_SYSCALL << 1		/**< Executing process finished an instruction. No problems */
 };
 
@@ -81,6 +82,8 @@ class cCPU {
 		 *		Program text pointer. assert( text != NULL)
 		 */
         void setText(char* text);
+
+        void setMaxPC(unsigned int newMax);
 
 		/** Set the cpu back into user mode
 		 *

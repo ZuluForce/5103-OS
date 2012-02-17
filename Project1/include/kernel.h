@@ -147,7 +147,7 @@ class cKernel {
 struct kernelError {
 	string message;
 
-	/* Add process and scheduler info */
+	/* Add process and scheduler error info */
 };
 
 /** \fn void cKernel::sigHandler(int signum, siginfo_t *info)

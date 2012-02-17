@@ -19,6 +19,14 @@ class cFCFS: public cScheduler {
 		queue<ProcessInfo*> readyQueue;
 		vector<ProcessInfo*> blockedVector;
 
+		/* This is just for remembering what processes
+		 * have been unblocked so the next call to
+		 * getNextToRun can print them to the trace file.
+		 * This is because getNextToRun is called
+		 * synchronously with other trace output.
+		 */
+		queue<pidType> traceUnblocked;
+
 		int totalBlocked;
 
 		ProcessInfo* runningProc;
@@ -51,6 +59,8 @@ class cFCFS: public cScheduler {
 
 		void addLogger(FILE* _logStream);
 		void addProcLogger(cProcessLogger* _procLogger);
+
+		void printUnblocked();
 };
 
 struct fcfsInfo {

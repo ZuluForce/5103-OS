@@ -5,4 +5,6 @@ D 53
 A 55
 C 5 proc1.trace
 C 10 proc2.trace
+C 5 io_heavy.trace
+C 5 abnormal.trace
 E

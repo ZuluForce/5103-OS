@@ -71,6 +71,10 @@ void cCPU::setText(char *text) {
 	return;
 }
 
+void cCPU::setMaxPC(unsigned int _maxPC) {
+	this->maxPC = _maxPC;
+}
+
 void cCPU::setUserMode() {
 	KMode = false;
 }
@@ -115,6 +119,14 @@ char cCPU::getOpcode() {
 void cCPU::run() {
 	assert(execText != NULL);
 	//assert(PC <= maxPC);'
+	if ( PC >= (maxPC - 1)) {
+		//Abnormal termination
+		PSW |= PS_EXCEPTION;
+		PSW |= PS_ABNORMAL;
+
+		return;
+	}
+
 	int arg; //Used for storing opcode parameters
 
 	while (true) {

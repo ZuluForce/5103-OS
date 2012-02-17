@@ -38,6 +38,10 @@
 		<Compiler>
 			<Add option="-Wall" />
 		</Compiler>
+		<Unit filename="bin/main.trace" />
+		<Unit filename="bin/proc1.trace" />
+		<Unit filename="bin/proc2.trace" />
+		<Unit filename="bin/proc3.trace" />
 		<Unit filename="include/cpu.h">
 			<Option target="Debug" />
 			<Option target="Release" />
