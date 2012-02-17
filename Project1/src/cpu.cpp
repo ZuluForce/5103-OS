@@ -120,7 +120,7 @@ void cCPU::run() {
 	while (true) {
 		/* Get the Opcode */
 		Opcode = execText[PC];
-		printf("PC = %d	Opcode: %c\n", PC, Opcode);
+		printf("PC = %d	Opcode: %c  Pid = %u\n", PC, Opcode, pid);
 
 		switch (Opcode) {
 			case 'S':
@@ -138,7 +138,6 @@ void cCPU::run() {
 
 				fprintf(traceStream, "Executing: %c %s for pid = %d\n", Opcode, tokenBuffer[0], pid);
 				arg = atoi(tokenBuffer[0]);
-				printf("Storing %d to VC\n", arg);
 				VC = arg;
 
 				PSW |= PS_FINISHED;
@@ -155,7 +154,6 @@ void cCPU::run() {
 
 				fprintf(traceStream, "Executing: %c %s for pid = %d\n", Opcode, tokenBuffer[0], pid);
 				arg = atoi(tokenBuffer[0]);
-				printf("Adding %d to VC\n", arg);
 				VC += arg;
 
 				PSW |= PS_FINISHED;
@@ -172,7 +170,6 @@ void cCPU::run() {
 
 				fprintf(traceStream, "Executing: %c %s for pid = %d\n", Opcode, tokenBuffer[0], pid);
 				arg = atoi(tokenBuffer[0]);
-				printf("Decrementing %d from VC\n", arg);
 				VC -= arg;
 
 				PSW |= PS_FINISHED;
@@ -212,7 +209,7 @@ void cCPU::run() {
 				/* Priveleged instruction */
 				if ( !KMode ) {
 					/* Exception!, notify the OS */
-					printf("Process tried privileged operation in user mode\n");
+					printf("Process pid = %d tried privileged operation in user mode\n", pid);
 					PSW |= PS_EXCEPTION;
 
 					fprintf(traceStream, "Invalid privileged instruction in user mode pid = %d\n", pid);

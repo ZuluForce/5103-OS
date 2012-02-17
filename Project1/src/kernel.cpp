@@ -10,7 +10,7 @@ cKernel* cKernel::kernel_instance;
 
 cKernel::cKernel()
 :clockTick(0), idGenerator(1), runningProc(NULL), procLogger(procLogFile),
-bDevice(DEFAULT_DTIMER), cDevice(DEFAULT_DTIMER) {
+bDevice(DEFAULT_BTIMER), cDevice(DEFAULT_CTIMER) {
 	/* ---- Initialize trace output ----*/
 	traceStream = initLog(traceLogFile);
 	assert(traceStream != NULL);
@@ -23,6 +23,10 @@ bDevice(DEFAULT_DTIMER), cDevice(DEFAULT_DTIMER) {
 
 	pthread_mutex_init(&intLock, NULL);
 	pthread_cond_init(&intCond, NULL);
+
+	sem_init(&DevSigSem, 0, 0); //Notifies that some device has finished
+	sem_init(&BSigSem, 0, 0);
+	sem_init(&CSigSem, 0, 0);
 
 	/* -------- Initialize cpu data --------*/
 	cpu.initTraceLog();
@@ -44,16 +48,14 @@ bDevice(DEFAULT_DTIMER), cDevice(DEFAULT_DTIMER) {
 
 	sigset_t sa_set;
 	sigfillset( &sa_set );
+	sigdelset(&sa_set, SIGINT); //To easily kill the process
 
 	sa.sa_sigaction = cKernel::sig_catch;
 	sa.sa_mask = sa_set; //Block all signals while in the handler
 	sa.sa_flags = SA_SIGINFO;
 
-	sigdelset(&sa_set, SIGINT);
+	//Allow main thread o receive clock interrupts
 	sigdelset(&sa_set, clockSigValue);
-	sigdelset(&sa_set, blockSigValue);
-	sigdelset(&sa_set, charSigValue);
-
 	sigprocmask(SIG_SETMASK, &sa_set, NULL);
 
 	sigaction(clockSigValue, &sa, NULL);
@@ -64,6 +66,7 @@ bDevice(DEFAULT_DTIMER), cDevice(DEFAULT_DTIMER) {
 }
 
 cKernel::~cKernel() {
+	pthread_kill(deviceThread, SIGINT);
 
 	return;
 }
@@ -74,17 +77,11 @@ void cKernel::sigHandler(int signum, siginfo_t *info) {
 		pthread_cond_signal(&intCond);
 
 	} else if (signum == blockSigValue ) {
-		printf("Received block signal\n");
-		ProcessInfo* toUnblock = bDevice.timerFinished();
-		assert( toUnblock != NULL );
-		scheduler.unblockProcess(toUnblock);
-
+		sem_post(&DevSigSem);
+		sem_post(&BSigSem);
 	} else if ( signum == charSigValue ) {
-		printf("Received char signal\n");
-		ProcessInfo* toUnblock = cDevice.timerFinished();
-		assert( toUnblock != NULL );
-		scheduler.unblockProcess(toUnblock);
-
+		sem_post(&DevSigSem);
+		sem_post(&CSigSem);
 	} else {
 		printf("Unknown signal received\n");
 	}
@@ -195,6 +192,46 @@ void cKernel::swapProcesses(ProcessInfo *proc, bool switchMode) {
 	return;
 }
 
+void* deviceHandle(void* args) {
+	cKernel* kernel = (cKernel*) args;
+
+	sigset_t sa;
+	sigfillset(&sa);
+	sigdelset(&sa, kernel->blockSigValue);
+	sigdelset(&sa, kernel->charSigValue);
+	sigdelset(&sa, SIGINT);
+
+	sigprocmask(SIG_SETMASK, &sa, NULL);
+
+	int error;
+
+	while ( true ) {
+		while ( (error = sem_wait(&kernel->DevSigSem)) && error == EINTR ) {
+			perror("Problem with device handler");
+			exit(-1);
+		}
+
+		if ( sem_trywait(&kernel->BSigSem) == 0) {
+			printf("Received block signal\n");
+			ProcessInfo* toUnblock = kernel->bDevice.timerFinished();
+			assert( toUnblock != NULL );
+			printf("Unblocking process\n");
+			kernel->scheduler.unblockProcess(toUnblock);
+		}
+
+		if ( sem_trywait(&kernel->CSigSem) == 0) {
+			printf("Received char signal\n");
+			ProcessInfo* toUnblock = kernel->cDevice.timerFinished();
+			assert( toUnblock != NULL );
+			printf("Unblocking process\n");
+			kernel->scheduler.unblockProcess(toUnblock);
+		}
+
+	}
+
+	return NULL;
+}
+
 void cKernel::boot() {
 	uint16_t localPSW;
 
@@ -205,13 +242,19 @@ void cKernel::boot() {
 
 	ProcessInfo* nextToRun;
 
+	assert( pthread_create(&deviceThread, NULL, deviceHandle, this) == 0);
+
+
 	do {
-		//Wait to receive signal from interrupt handler
-		pthread_cond_wait(&intCond, &intLock);
-		fprintf(traceStream, "ClockTick: %d\n", clockTick);
 
 		nextToRun = scheduler.getNextToRun();
 		assert(nextToRun != NULL);
+
+		//Wait to receive signal from interrupt handler
+		pthread_cond_wait(&intCond, &intLock);
+		printf("ClockTick: %d\n", clockTick);
+		fprintf(traceStream, "ClockTick: %d\n", clockTick);
+
 		++(nextToRun->totalCPU); //It is being allocated a CPU cycle
 
 		//Swap out the previous process on the cpu
@@ -268,7 +311,7 @@ void cKernel::boot() {
 							printf("Scheduling pid = %d for I/O on block device\n", runningProc->pid);
 							fprintf(traceStream, "Scheduling pid = %d for I/O on block device\n", runningProc->pid);
 							bDevice.scheduleDevice(runningProc);
-							printf("Blocking device in scheduler\n");
+							printf("Blocking process in scheduler\n");
 							scheduler.setBlocked(runningProc);
 							break;
 						}

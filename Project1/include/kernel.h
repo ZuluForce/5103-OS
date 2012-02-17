@@ -7,6 +7,7 @@
 #include <fcntl.h>
 #include <sys/types.h>
 #include <sys/stat.h>
+#include <semaphore.h>
 
 #include "cpu.h"
 #include "devices/char_device.h"
@@ -16,9 +17,11 @@
 #include "utility/logger.h"
 #include "utility/process_logger.h"
 
-#define DEFAULT_TIMER 5000 //ClockTick every 5ms
-#define DEVICE_TIMER_SCALE 100 //Devices take 10 clock cycles to complete
-#define DEFAULT_DTIMER (DEFAULT_TIMER * DEVICE_TIMER_SCALE)
+#define DEFAULT_TIMER 250000 	//ClockTick every .25 seconds
+#define CDEVICE_SCALE 4 		//Character device: 1 second
+#define BDEVICE_SCALE 8 		//Block Device: 2 seconds
+#define DEFAULT_CTIMER (DEFAULT_TIMER * CDEVICE_SCALE)
+#define DEFAULT_BTIMER (DEFAULT_TIMER * BDEVICE_SCALE)
 #define DEFAULT_PRIORITY 5
 
 /* ============ Modify this section to change scheduler used ============== */
@@ -60,6 +63,12 @@ class cKernel {
 		cBlockDevice bDevice;
 		cCharDevice cDevice;
 		ClockDevice clockInterrupt;
+
+		pthread_t deviceThread;
+
+		sem_t DevSigSem;
+		sem_t BSigSem;
+		sem_t CSigSem;
 		/* -------------------------- */
 
 		ProcessInfo *runningProc; /**< #ProcessInfo */
@@ -124,6 +133,9 @@ class cKernel {
 		 *	process. Also removes the process from the scheduler.
 		 */
         void cleanupProcess(pidType pid);
+
+		//Function to create class just for handling devices
+        friend void* deviceHandle(void*);
 };
 
 /** Struct containing kernel crash information

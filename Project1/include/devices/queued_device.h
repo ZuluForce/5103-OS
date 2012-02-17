@@ -12,7 +12,8 @@
 #include <pthread.h>
 #include "process.h"
 
-#define QD_CLOCKID CLOCK_MONOTONIC
+#define QD_CLOCKID CLOCK_REALTIME
+#define USEC_IN_SEC 1000000
 
 class cAbsQueuedDevice {
 	public:

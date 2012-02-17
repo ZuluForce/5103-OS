@@ -3,6 +3,7 @@
 
 /** @file */
 
+#include <cstdio>
 #include <queue>
 #include "devices/queued_device.h"
 

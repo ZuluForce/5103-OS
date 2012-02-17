@@ -10,8 +10,15 @@ cBlockDevice::cBlockDevice(int usec) {
 	if ( timer_create(QD_CLOCKID, &sev, &timerid) == -1 )
 		throw ((string) "Failed to create timer: " + strerror(errno));
 
-	iTime.it_value.tv_nsec = usec * 1000;
-	iTime.it_value.tv_sec = 0;
+
+	if ( usec >= USEC_IN_SEC ) {
+		iTime.it_value.tv_sec = usec / USEC_IN_SEC;
+		iTime.it_value.tv_nsec = (usec % USEC_IN_SEC) * 1000;
+	} else {
+		iTime.it_value.tv_nsec = usec * 1000;
+		iTime.it_value.tv_sec = 0;
+	}
+
 	iTime.it_interval.tv_nsec = 0;
 	iTime.it_interval.tv_sec = 0;
 
@@ -19,13 +26,19 @@ cBlockDevice::cBlockDevice(int usec) {
 }
 
 cBlockDevice::~cBlockDevice() {
+	timer_delete(timerid);
 
 	return;
 }
 
 void cBlockDevice::setDefaultTime(int usec) {
-	iTime.it_value.tv_nsec = usec * 1000;
-	iTime.it_value.tv_sec = 0;
+	if ( usec >= USEC_IN_SEC ) {
+		iTime.it_value.tv_sec = usec / USEC_IN_SEC;
+		iTime.it_value.tv_nsec = (usec % USEC_IN_SEC) * 1000;
+	} else {
+		iTime.it_value.tv_nsec = usec * 1000;
+		iTime.it_value.tv_sec = 0;
+	}
 }
 
 void cBlockDevice::scheduleDevice(ProcessInfo* proc) {

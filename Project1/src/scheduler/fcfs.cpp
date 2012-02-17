@@ -72,6 +72,7 @@ void cFCFS::unblockProcess(ProcessInfo* proc) {
 	assert( totalBlocked > 0 );
 
 	pthread_mutex_lock(&blockedLock);
+
 	proc->state = ready;
 
 	fcfsInfo* info = (fcfsInfo*) proc->scheduleData;
@@ -114,8 +115,10 @@ ProcessInfo* cFCFS::getNextToRun() {
 	}
 
 	pthread_mutex_lock(&blockedLock);
+
 	if ( readyQueue.size() == 0 ) {
 		if ( totalBlocked > 0) {
+
 			while ( readyQueue.size() == 0)
 				pthread_cond_wait(&allBlocked, &blockedLock);
 
@@ -138,7 +141,6 @@ ProcessInfo* cFCFS::getNextToRun() {
 	procLogger->writeProcessInfo(runningProc);
 
 	pthread_mutex_unlock(&blockedLock);
-
 
 	return toRun;
 }
