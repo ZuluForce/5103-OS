@@ -58,6 +58,7 @@ void cFCFS::setBlocked(ProcessInfo* proc) {
 
 	++totalBlocked;
 	runningProc = NULL;
+	fprintf(logStream, "Process %d has been blocked\n", proc->pid);
 	pthread_mutex_unlock(&blockedLock);
 
 	/* Update Process info for Top */

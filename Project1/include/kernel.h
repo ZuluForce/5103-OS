@@ -17,19 +17,14 @@
 #include "utility/logger.h"
 #include "utility/process_logger.h"
 
+#include "scheduler/allSchedulers.h"
+
 #define DEFAULT_TIMER 250000 	//ClockTick every .25 seconds
 #define CDEVICE_SCALE 4 		//Character device: 1 second
 #define BDEVICE_SCALE 8 		//Block Device: 2 seconds
 #define DEFAULT_CTIMER (DEFAULT_TIMER * CDEVICE_SCALE)
 #define DEFAULT_BTIMER (DEFAULT_TIMER * BDEVICE_SCALE)
 #define DEFAULT_PRIORITY 5
-
-/* ============ Modify this section to change scheduler used ============== */
-//Also have to change dependency in Makefile
-#include "scheduler/fcfs.h"
-//#define SCHEDULER_TYPE cFCFS
-typedef cFCFS schedulerType;
-/* ======================================================================== */
 
 #ifndef PROCESS_H_INCLUDED
 /** @cond */
@@ -76,7 +71,8 @@ class cKernel {
 		cIDManager idGenerator;
 
 		/* Process Scheduler */
-		schedulerType scheduler;
+		//schedulerType scheduler;
+		cScheduler& scheduler;
 
 		/** Swap a process on the cpu
 		 *
@@ -107,7 +103,7 @@ class cKernel {
 		 *	and loads the initial program (default: 'main.trace') but does
 		 *	not run it.
 		 */
-		cKernel();
+		cKernel(cScheduler&);
 		~cKernel();
 
 		/** Start the 'OS' Kernel

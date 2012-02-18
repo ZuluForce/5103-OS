@@ -8,9 +8,9 @@ void cKernel::sig_catch(int signum, siginfo_t *info, void *context) {
 cKernel* cKernel::kernel_instance;
 /* =========================================== */
 
-cKernel::cKernel()
+cKernel::cKernel(cScheduler& s)
 :clockTick(0), idGenerator(1), runningProc(NULL), procLogger(procLogFile),
-bDevice(DEFAULT_BTIMER), cDevice(DEFAULT_CTIMER) {
+bDevice(DEFAULT_BTIMER), cDevice(DEFAULT_CTIMER), scheduler(s) {
 	/* ---- Initialize trace output ----*/
 	traceStream = initLog(traceLogFile);
 	assert(traceStream != NULL);
@@ -98,6 +98,12 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
 	fprintf(traceStream, "Creating process: %s with parent = %d  priority = %d\n",
 			filename, parent, priority);
 
+	if ( priority < 0 ) {
+		printf("Invalid process priority: %d\n", priority);
+		fprintf(traceStream, "Invalid process priority: %d\n", priority);
+		return;
+	}
+
     struct stat fileinfo;
     if ( stat(filename, &fileinfo) < 0 ) {
     	/* File likely doesn't exist */
@@ -142,14 +148,6 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
 	procLogger.addProcess(newProc, filename);
 
 	fprintf(traceStream, "\t New Process created with pid = %d\n", newProc->pid);
-
-	#ifdef DEBUG
-    printf("Created new process: %s \n", filename);
-    printf("Process ID: %d \n", newProc->pid);
-    printf("Parent ID: %d \n", newProc->parent);
-    printf("Memory Usage: %lu bytes \n", newProc->memory);
-    printf("Program Contents:\n%s \n", newProc->processText);
-    #endif
 
     /* Cleanup */
     close(processFile);

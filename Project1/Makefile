@@ -45,6 +45,15 @@ $(TARGET): $(TARGET).cpp $(TARGET).h $(DEPS)
 run: all
 	cd $(BINDIR) && ./$(TARGET)
 	
+run_fcfs: all
+	cd $(BINDIR) && ./$(TARGET) -scheduler fcfs
+
+run_rr: all
+	cd $(BINDIR) && ./$(TARGET) -scheduler round-robin
+	
+run_lottery: all
+	cd $(BINDIR) && ./$(TARGET) -scheduler lottery
+	
 run_gdb: all
 	gdb --cd=$(BINDIR) --command=gdb_batch --return-child-result -exec=$(TARGET)
 	
