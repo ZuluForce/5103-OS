@@ -10,7 +10,7 @@ CFLAGS=-O3 -I$(INCDIR) -DD_REENTRANT
 OBJCFLAGS=-O3 -c -I$(INCDIR) -DD_REENTRANT
 LFLAGS=-lrt -lpthread
 
-DEPS=clock_device.o char_device.o block_device.o id.o cpu.o scheduler.o fcfs.o\
+DEPS=clock_device.o char_device.o block_device.o id.o cpu.o scheduler.o fcfs.o round_robin.o\
 		kernel.o abstract_device.o logger.o process_logger.o
 ##Dependencies with obj directory appended
 _DEPS=$(patsubst %,$(OBJDIR)/%,$(DEPS))

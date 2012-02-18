@@ -20,7 +20,7 @@ int main(int argc, char **argv) {
 
 	} else if ( strcmp(scheduler, "round-robin") == 0) {
 		cout << "Using Round-Robin scheduler" << endl;
-		exit(1);
+		schedulerInstance = new cRoundRobin();
 
 	} else if ( strcmp(scheduler, "lottery") == 0) {
 		cout << "Using Lottery scheduler" << endl;
