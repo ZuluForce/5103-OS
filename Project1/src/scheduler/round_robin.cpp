@@ -59,6 +59,7 @@ void cRoundRobin::setBlocked(ProcessInfo* proc) {
 
 	++totalBlocked;
 	runningProc = NULL;
+	clockTicksUsed = 0;
 	pthread_mutex_unlock(&blockedLock);
 
 	/* Update Process info for Top */
@@ -99,6 +100,7 @@ void cRoundRobin::removeProcess(ProcessInfo* proc) {
 	free( proc->scheduleData );
 
 	runningProc = NULL;
+	clockTicksUsed = 0;
 
 	/* Remove process from log */
 
@@ -106,13 +108,11 @@ void cRoundRobin::removeProcess(ProcessInfo* proc) {
 }
 
 ProcessInfo* cRoundRobin::getNextToRun() {
-	/* Find ready process which came first */
-
-	//This makes it non-preemptive
 	if ( runningProc != NULL) {
 	    if ((clockTicksUsed) > QUANTUM){
 	        runningProc->state == ready;
 	        readyQueue.push(runningProc);
+	        clockTicksUsed = 0;
 	    } else{
 	        clockTicksUsed++;
             procLogger->writeProcessInfo(runningProc);
