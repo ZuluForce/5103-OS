@@ -86,11 +86,20 @@ int main(int argc, char** argv) {
 		waitUpdate();
 	}
 
-	printf("PID  MEMORY  CPUSTART  CPUTIME  STATE\n");
+    boost::format fmter("%1% %|40t|%2% %|52t|%3% %|64t|%4% %|76t|%5% %|88t|%6%\n");
+
+    fmter % "NAME" % "PID" % "MEMORY" % "CPUSTART" % "CPUTIME" % "STATE";
+
+
+    cout << fmter;
+	//printf("PID  MEMORY  CPUSTART  CPUTIME  STATE\n");
     int fileSize = fileinfo.st_size;
     int numLines = fileSize / MAX_LINE_LENGTH;
     int pid, memory, cpustart, cputime, state;
 
+
+
+    char pname[] = "Process-name";
     // Read from the file
     ifstream file;
     file.open(procLogFile);
@@ -98,9 +107,12 @@ int main(int argc, char** argv) {
         for (int i = 0; i < numLines; i++){
             file.seekg(i * MAX_LINE_LENGTH);
             file >> pid >> memory >> cpustart >> cputime >> state;
-            printf("%d %d %d %d %s\n", pid, memory, cpustart, cputime, getStatString((eProcState) state));
+            fmter % pname % pid % memory % cpustart % cputime % getStatString((eProcState) state);
+            cout << fmter;
+            //printf("%d %d %d %d %s\n", pid, memory, cpustart, cputime, getStatString((eProcState) state));
         }
     }
+    file.close();
 
     printf("\n\n\n\n");
 
@@ -112,8 +124,19 @@ int main(int argc, char** argv) {
 	int wf;
 	wf = inotify_add_watch(inotify_fd, procLogFile, IN_MODIFY);
 
+    int length;
+    char buffer[EVENT_BUF_SIZE];
+    while(1){
+        printf("Wating on inotify read\n");
+        length = read(inotify_fd, buffer, EVENT_BUF_SIZE);
+        struct inotify_event *event = (struct inotify_event *) &buffer[0];
+        printf("got an event\n");
+        printf("name: %s\n", event->name);
+        if (event->mask & IN_MODIFY){
+            printf("%s file was modified.\n", procLogFile);
+            break;
+        }
+    }
 
-
-	cout << boost::format("%1% %2% %3% %1%\n") % "This" % "is" % "a";
 	return 0;
 }
