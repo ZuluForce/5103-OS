@@ -57,6 +57,9 @@ run_lottery: all
 gdb_%: all
 	gdb --cd=$(BINDIR) --command=gdb_batch_$* --return-child-result -exec=$(TARGET)
 	
+run_top: top
+	./$(BINDIR)/$^ $(BINDIR)
+	
 top: top.cpp top.h
 	$(CC) -Iinclude $(SRCDIR)/top.cpp -o $(BINDIR)/$@
 	
