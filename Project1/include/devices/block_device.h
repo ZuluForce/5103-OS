@@ -4,7 +4,6 @@
 /** @file */
 
 #include <cstdio>
-#include <queue>
 #include "devices/queued_device.h"
 
 #ifndef BLOCKSIG
@@ -13,6 +12,7 @@
 
 using namespace std;
 
+/** Queued block device */
 class cBlockDevice: public cAbsQueuedDevice {
 	private:
 		/// @cond

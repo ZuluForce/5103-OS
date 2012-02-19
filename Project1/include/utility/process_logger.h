@@ -1,6 +1,8 @@
 #ifndef PROCESS_LOGGER_H_INCLUDED
 #define PROCESS_LOGGER_H_INCLUDED
 
+/** @file */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
@@ -19,8 +21,40 @@
 
 using namespace std;
 
-#define MAX_LINE_LENGTH 45
+#define MAX_LINE_LENGTH 45 /**< Max line length for a process entry in the log file */
 
+/* Format: pid memory cpustart cputime state */
+static const char procNameReq[] = "proc.log.req";
+static const char outputFormat[] = "%u %d %d %d %d";
+static const char requestError[] = "INVALID_ID";
+
+/** @var static const char procNameReq[]
+ *	Name of unix socket file for processes like top to
+ *	request process names.
+ *
+ *	Since process trace names are variable, their names
+ *	are stored in a string objects and then served upon
+ *	request to this socket. While filenames do have a max
+ *	size, it is more efficient to do it this way when you
+ *	consider that most trace file names will not be near
+ *	the max.
+ */
+
+/** @var static const char outputFormat[]
+ *	Format for process info in the log file
+ *
+ *	Scanf is used to print the information in this
+ *	format to a buffer. Then this buffer is padded
+ *	to fill #MAX_LINE_LENGTH and then it is written
+ *	out to the appropriate line in the file.
+ */
+
+/** @var static const char requestError[]
+ *	Return value when a invalid process ID was requested.
+ *
+ *	If another process requests an invalid ID on the request
+ *	socket, this is the corresponding message.
+ */
 
 /** Class specifically for logging process state information
  *
@@ -28,15 +62,10 @@ using namespace std;
  *	the kernel and its associated modules must export process
  *	information. This class logs information for each process
  *	to a file named by its pid. This is inspired by the unix
- *	/proc filesystem. This allows the kernel to easily update
- *	only those processes which have changed.
+ *	/proc filesystem (although memory mapped files aren't being used).
+ *	This allows the kernel to easily update only those processes
+ *	which have changed.
  */
-
-/* Format: pid memory cpustart cputime state */
-static const char procNameReq[] = "proc.log.req";
-static const char outputFormat[] = "%u %d %d %d %d";
-static const char requestError[] = "INVALID_ID";
-
 class cProcessLogger {
 	private:
 		cIDManager lineIDs;

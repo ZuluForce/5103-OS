@@ -82,7 +82,9 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 </div><!--header-->
 <div class="contents">
 This is the complete list of members for <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>, including all inherited members.<table>
+  <tr class="memlist"><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml#accb887eae7016719ce770d7b0284adea">addLogger</a>(FILE *_logStream)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a25d4bf440041f5294f3b9c5aff20b411">addProcess</a>(ProcessInfo *)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [virtual]</code></td></tr>
+  <tr class="memlist"><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a4da9f2fa83516ac5859772ae09169343">addProcLogger</a>(cProcessLogger *_procLogger)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [virtual]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>allBlocked</b> (defined in <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [private]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>blockedID</b> (defined in <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [private]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>blockedLock</b> (defined in <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [private]</code></td></tr>
@@ -90,11 +92,16 @@ This is the complete list of members for <a class="el" href="../../d6/dc3/classc
   <tr bgcolor="#f0f0f0"><td><b>cFCFS</b>() (defined in <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td></td></tr>
   <tr class="memlist"><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml#aa2b92a8a992078e499aab455c9d78faf">getNextToRun</a>()</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [virtual]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml#aff34f18c6f4c3f38029d904cd2ec55de">initProcScheduleInfo</a>(ProcessInfo *)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [virtual]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>logStream</b> (defined in <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [private]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a0a72de791436a84120a534dd2fa0485d">numProcesses</a>()</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [virtual]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>printUnblocked</b>() (defined in <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>procLogger</b> (defined in <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [private]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>readyQueue</b> (defined in <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [private]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml#aeeac757885108ae510b728600ebba248">removeProcess</a>(ProcessInfo *)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [virtual]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>runningProc</b> (defined in <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [private]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a1b8ee3a759a31032ec7c1cd7b15ed5df">setBlocked</a>(ProcessInfo *)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [virtual]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>totalBlocked</b> (defined in <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [private]</code></td></tr>
+  <tr bgcolor="#f0f0f0"><td><b>traceUnblocked</b> (defined in <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [private]</code></td></tr>
   <tr class="memlist"><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a793da0298f9b36ab8505a0e3daaf41ec">unblockProcess</a>(ProcessInfo *)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td><code> [virtual]</code></td></tr>
   <tr bgcolor="#f0f0f0"><td><b>~cFCFS</b>() (defined in <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>)</td><td><a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a></td><td></td></tr>
 </table></div><!-- contents -->
@@ -103,7 +110,7 @@ This is the complete list of members for <a class="el" href="../../d6/dc3/classc
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -115,7 +122,7 @@ This is the complete list of members for <a class="el" href="../../d6/dc3/classc
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 13 2012 18:34:30 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

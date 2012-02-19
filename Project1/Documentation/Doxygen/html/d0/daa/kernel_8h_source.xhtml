@@ -83,105 +83,122 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define KERNEL_H_INCLUDED</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span>
 <a name="l00006"></a>00006 <span class="preprocessor">#include &lt;vector&gt;</span>
-<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;fcntl.h&gt;</span>
-<a name="l00008"></a>00008 <span class="preprocessor">#include &lt;sys/types.h&gt;</span>
+<a name="l00007"></a>00007 <span class="comment">//#include &lt;fcntl.h&gt;</span>
+<a name="l00008"></a>00008 <span class="comment">//#include &lt;sys/types.h&gt;</span>
 <a name="l00009"></a>00009 <span class="preprocessor">#include &lt;sys/stat.h&gt;</span>
-<a name="l00010"></a>00010 
-<a name="l00011"></a>00011 <span class="preprocessor">#include &quot;<a class="code" href="../../dc/da7/cpu_8h.xhtml">cpu.h</a>&quot;</span>
-<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;<a class="code" href="../../d7/d59/char__device_8h.xhtml">devices/char_device.h</a>&quot;</span>
-<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;<a class="code" href="../../db/d9a/block__device_8h.xhtml">devices/block_device.h</a>&quot;</span>
-<a name="l00014"></a>00014 <span class="preprocessor">#include &quot;<a class="code" href="../../df/d8f/clock__device_8h.xhtml">devices/clock_device.h</a>&quot;</span>
-<a name="l00015"></a>00015 <span class="preprocessor">#include &quot;utility/id.h&quot;</span>
-<a name="l00016"></a>00016 <span class="preprocessor">#include &quot;utility/logger.h&quot;</span>
-<a name="l00017"></a>00017 
-<a name="l00018"></a>00018 <span class="preprocessor">#define DEFAULT_TIMER 5000 //ClockTick every 5ms</span>
-<a name="l00019"></a>00019 <span class="preprocessor"></span><span class="preprocessor">#define DEFAULT_PRIORITY 5</span>
-<a name="l00020"></a>00020 <span class="preprocessor"></span>
-<a name="l00021"></a>00021 <span class="comment">/* ============ Modify this section to change scheduler used ============== */</span>
-<a name="l00022"></a>00022 <span class="comment">//Also have to change dependency in Makefile</span>
-<a name="l00023"></a>00023 <span class="preprocessor">#include &quot;scheduler/fcfs.h&quot;</span>
-<a name="l00024"></a>00024 <span class="comment">//#define SCHEDULER_TYPE cFCFS</span>
-<a name="l00025"></a>00025 <span class="keyword">typedef</span> <a class="code" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a> <a class="code" href="../../d6/dc3/classcFCFS.xhtml">schedulerType</a>;
-<a name="l00026"></a>00026 <span class="comment">/* ======================================================================== */</span>
-<a name="l00027"></a>00027 
-<a name="l00028"></a>00028 <span class="preprocessor">#ifndef PROCESS_H_INCLUDED</span>
-<a name="l00029"></a>00029 <span class="preprocessor"></span>
-<a name="l00030"></a>00030 __attribute__((error(<span class="stringliteral">&quot;process.h not included by scheduler&quot;</span>)));
-<a name="l00032"></a>00032 <span class="preprocessor">#endif</span>
-<a name="l00033"></a>00033 <span class="preprocessor"></span>
-<a name="l00034"></a>00034 <span class="keyword">using namespace </span>std;
-<a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="../../d0/daa/kernel_8h.xhtml#a9bd73e11b6d2b66703cd822d0c2ecd32">00036</a> <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="../../d0/daa/kernel_8h.xhtml#a9bd73e11b6d2b66703cd822d0c2ecd32" title="Name of the first program to run on the system.">initProcessName</a>[] = <span class="stringliteral">&quot;main.trace&quot;</span>;
-<a name="l00037"></a>00037 <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> traceLogFile[] = <span class="stringliteral">&quot;trace.log&quot;</span>;
-<a name="l00038"></a>00038 
-<a name="l00039"></a><a class="code" href="../../db/da5/classcKernel.xhtml">00039</a> <span class="keyword">class </span><a class="code" href="../../db/da5/classcKernel.xhtml">cKernel</a> {
-<a name="l00040"></a>00040     <span class="keyword">private</span>:
-<a name="l00041"></a>00041         <span class="comment">/* ---- Log Information ---- */</span>
-<a name="l00042"></a>00042         FILE* traceStream;
-<a name="l00043"></a>00043         <span class="comment">/* ------------------------- */</span>
-<a name="l00044"></a>00044 
-<a name="l00045"></a>00045         <span class="comment">/* CPU specific information */</span>
-<a name="l00046"></a>00046         <a class="code" href="../../d2/dc6/classcCPU.xhtml" title="A class for emulating a simple cpu.">cCPU</a> cpu;
-<a name="l00047"></a>00047         <span class="keywordtype">int</span> clockTick;
+<a name="l00010"></a>00010 <span class="preprocessor">#include &lt;semaphore.h&gt;</span>
+<a name="l00011"></a>00011 
+<a name="l00012"></a>00012 <span class="preprocessor">#include &quot;<a class="code" href="../../dc/da7/cpu_8h.xhtml">cpu.h</a>&quot;</span>
+<a name="l00013"></a>00013 <span class="preprocessor">#include &quot;<a class="code" href="../../d7/d59/char__device_8h.xhtml">devices/char_device.h</a>&quot;</span>
+<a name="l00014"></a>00014 <span class="preprocessor">#include &quot;<a class="code" href="../../db/d9a/block__device_8h.xhtml">devices/block_device.h</a>&quot;</span>
+<a name="l00015"></a>00015 <span class="preprocessor">#include &quot;<a class="code" href="../../df/d8f/clock__device_8h.xhtml">devices/clock_device.h</a>&quot;</span>
+<a name="l00016"></a>00016 <span class="comment">//#include &quot;utility/id.h&quot;</span>
+<a name="l00017"></a>00017 <span class="comment">//#include &quot;utility/logger.h&quot;</span>
+<a name="l00018"></a>00018 <span class="comment">//#include &quot;utility/process_logger.h&quot;</span>
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020 <span class="preprocessor">#include &quot;scheduler/allSchedulers.h&quot;</span>
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022 <span class="preprocessor">#define DEFAULT_TIMER 250000    //ClockTick every .25 seconds</span>
+<a name="l00023"></a>00023 <span class="preprocessor"></span><span class="preprocessor">#define CDEVICE_SCALE 4         //Character device: 1 second</span>
+<a name="l00024"></a>00024 <span class="preprocessor"></span><span class="preprocessor">#define BDEVICE_SCALE 8         //Block Device: 2 seconds</span>
+<a name="l00025"></a>00025 <span class="preprocessor"></span><span class="preprocessor">#define DEFAULT_CTIMER (DEFAULT_TIMER * CDEVICE_SCALE)</span>
+<a name="l00026"></a>00026 <span class="preprocessor"></span><span class="preprocessor">#define DEFAULT_BTIMER (DEFAULT_TIMER * BDEVICE_SCALE)</span>
+<a name="l00027"></a>00027 <span class="preprocessor"></span><span class="preprocessor">#define DEFAULT_PRIORITY 5</span>
+<a name="l00028"></a>00028 <span class="preprocessor"></span>
+<a name="l00029"></a>00029 <span class="preprocessor">#ifndef PROCESS_H_INCLUDED</span>
+<a name="l00030"></a>00030 <span class="preprocessor"></span>
+<a name="l00031"></a>00031 __attribute__((error(<span class="stringliteral">&quot;process.h not included by scheduler&quot;</span>)));
+<a name="l00033"></a>00033 <span class="preprocessor">#endif</span>
+<a name="l00034"></a>00034 <span class="preprocessor"></span>
+<a name="l00035"></a>00035 <span class="keyword">using namespace </span>std;
+<a name="l00036"></a>00036 
+<a name="l00037"></a><a class="code" href="../../d0/daa/kernel_8h.xhtml#a9bd73e11b6d2b66703cd822d0c2ecd32">00037</a> <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="../../d0/daa/kernel_8h.xhtml#a9bd73e11b6d2b66703cd822d0c2ecd32" title="Name of the first program to run on the system.">initProcessName</a>[] = <span class="stringliteral">&quot;main.trace&quot;</span>;
+<a name="l00038"></a><a class="code" href="../../d0/daa/kernel_8h.xhtml#a3240a1d31589eda6a931467978d543ff">00038</a> <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="../../d0/daa/kernel_8h.xhtml#a3240a1d31589eda6a931467978d543ff" title="Name of trace log file.">traceLogFile</a>[] = <span class="stringliteral">&quot;trace.log&quot;</span>;
+<a name="l00039"></a><a class="code" href="../../d0/daa/kernel_8h.xhtml#a0f6aaca759010c72cd7fce9456136e91">00039</a> <span class="keyword">static</span> <span class="keyword">const</span> <span class="keywordtype">char</span> <a class="code" href="../../d0/daa/kernel_8h.xhtml#a0f6aaca759010c72cd7fce9456136e91" title="Name of log file for process info.">procLogFile</a>[] = <span class="stringliteral">&quot;proc.log&quot;</span>;
+<a name="l00040"></a>00040 
+<a name="l00042"></a><a class="code" href="../../db/da5/classcKernel.xhtml">00042</a> <span class="keyword">class </span><a class="code" href="../../db/da5/classcKernel.xhtml" title="Core managing class for this simulated OS.">cKernel</a> {
+<a name="l00043"></a>00043     <span class="keyword">private</span>:
+<a name="l00044"></a>00044         <span class="comment">/* ---- Log Information ---- */</span>
+<a name="l00045"></a>00045         FILE* traceStream;
+<a name="l00046"></a>00046         <a class="code" href="../../db/d63/classcProcessLogger.xhtml" title="Class specifically for logging process state information.">cProcessLogger</a> procLogger;
+<a name="l00047"></a>00047         <span class="comment">/* ------------------------- */</span>
 <a name="l00048"></a>00048 
-<a name="l00049"></a>00049         <span class="comment">//For the signal handler to notify of a clock pulse</span>
-<a name="l00050"></a>00050         pthread_mutex_t intLock;
-<a name="l00051"></a>00051         pthread_cond_t intCond;
-<a name="l00052"></a>00052         <span class="comment">/* ------------------------ */</span>
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054         <span class="comment">/* -------- Devices: -------- */</span>
-<a name="l00055"></a>00055         <a class="code" href="../../db/d6d/classBlockDevice.xhtml">BlockDevice</a> bDevice;
-<a name="l00056"></a>00056         <a class="code" href="../../d8/d4f/classCharDevice.xhtml">CharDevice</a> cDevice;
-<a name="l00057"></a>00057         <a class="code" href="../../dc/d14/classClockDevice.xhtml">ClockDevice</a> clockInterrupt;
-<a name="l00058"></a>00058         <span class="comment">/* -------------------------- */</span>
-<a name="l00059"></a>00059 
-<a name="l00060"></a><a class="code" href="../../db/da5/classcKernel.xhtml#a6e33ce858b1839bbeb6503515bf11475">00060</a>         <a class="code" href="../../dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data.">ProcessInfo</a> *<a class="code" href="../../db/da5/classcKernel.xhtml#a6e33ce858b1839bbeb6503515bf11475" title="ProcessInfo">runningProc</a>; 
-<a name="l00062"></a>00062         <a class="code" href="../../de/dd4/classcIDManager.xhtml">cIDManager</a> idGenerator;
-<a name="l00063"></a>00063 
-<a name="l00064"></a>00064         <span class="comment">/* Process Scheduler */</span>
-<a name="l00065"></a>00065         <a class="code" href="../../d6/dc3/classcFCFS.xhtml">schedulerType</a> scheduler;
-<a name="l00066"></a>00066 
-<a name="l00072"></a>00072         <span class="keywordtype">void</span> swapProcesses(<a class="code" href="../../dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data.">ProcessInfo</a>* proc, <span class="keywordtype">bool</span> switchMode = <span class="keyword">true</span>);
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074         <span class="keywordtype">void</span> cleanupProcess(<a class="code" href="../../dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data.">ProcessInfo</a>*);
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076         <span class="comment">/* ------------ For Signal Handling ------------ */</span>
-<a name="l00077"></a>00077         <span class="keyword">static</span> <a class="code" href="../../db/da5/classcKernel.xhtml">cKernel</a> *kernel_instance;
-<a name="l00078"></a>00078         <span class="keyword">static</span> <span class="keywordtype">void</span> sig_catch(<span class="keywordtype">int</span> signum, siginfo_t *info, <span class="keywordtype">void</span> *context);
-<a name="l00079"></a>00079 
-<a name="l00080"></a>00080         <span class="keywordtype">void</span> sigHandler(<span class="keywordtype">int</span> signum, siginfo_t *info);
+<a name="l00049"></a>00049         <span class="comment">/* CPU specific information */</span>
+<a name="l00050"></a>00050         <a class="code" href="../../d2/dc6/classcCPU.xhtml" title="A class for emulating a simple cpu.">cCPU</a> cpu;
+<a name="l00051"></a>00051         <span class="keywordtype">int</span> clockTick;
+<a name="l00052"></a>00052 
+<a name="l00053"></a>00053         <span class="comment">//For the signal handler to notify of a clock pulse</span>
+<a name="l00054"></a>00054         <span class="comment">/* Here I didn&#39;t use a semaphore because it is possible that</span>
+<a name="l00055"></a>00055 <span class="comment">         * more than multiple clockticks could come before the kernel</span>
+<a name="l00056"></a>00056 <span class="comment">         * next checked which then would result in the rapid execution</span>
+<a name="l00057"></a>00057 <span class="comment">         * of the following clock cycles.</span>
+<a name="l00058"></a>00058 <span class="comment">         */</span>
+<a name="l00059"></a><a class="code" href="../../db/da5/classcKernel.xhtml#a61c0f8a08a605a92c564056bb34f6957">00059</a>         pthread_mutex_t <a class="code" href="../../db/da5/classcKernel.xhtml#a61c0f8a08a605a92c564056bb34f6957" title="Lock for condition variable.">intLock</a>; 
+<a name="l00060"></a><a class="code" href="../../db/da5/classcKernel.xhtml#a81cad8017ccbb1768ee0aa9aa2fcf056">00060</a>         pthread_cond_t <a class="code" href="../../db/da5/classcKernel.xhtml#a81cad8017ccbb1768ee0aa9aa2fcf056" title="For synchronization with clocktick.">intCond</a>; 
+<a name="l00061"></a>00061         <span class="comment">/* ------------------------ */</span>
+<a name="l00062"></a>00062 
+<a name="l00063"></a>00063         <span class="comment">/* -------- Devices: -------- */</span>
+<a name="l00064"></a>00064         <a class="code" href="../../dd/d36/classcBlockDevice.xhtml" title="Queued block device.">cBlockDevice</a> bDevice;
+<a name="l00065"></a>00065         <a class="code" href="../../d9/de9/classcCharDevice.xhtml" title="Queued char device.">cCharDevice</a> cDevice;
+<a name="l00066"></a>00066         <a class="code" href="../../dc/d14/classClockDevice.xhtml" title="Device for generating repeated clock interrupts.">ClockDevice</a> clockInterrupt;
+<a name="l00067"></a>00067 
+<a name="l00068"></a>00068         pthread_t deviceThread;
+<a name="l00069"></a>00069 
+<a name="l00070"></a><a class="code" href="../../db/da5/classcKernel.xhtml#ab928a0890424b001375a518afa6a91d7">00070</a>         sem_t <a class="code" href="../../db/da5/classcKernel.xhtml#ab928a0890424b001375a518afa6a91d7" title="A device interrupt has been received.">DevSigSem</a>; 
+<a name="l00071"></a><a class="code" href="../../db/da5/classcKernel.xhtml#a0ba7a1fd75f4b109d3e8cb1a3ed28868">00071</a>         sem_t <a class="code" href="../../db/da5/classcKernel.xhtml#a0ba7a1fd75f4b109d3e8cb1a3ed28868" title="A block device interrupt has been received.">BSigSem</a>;  
+<a name="l00072"></a><a class="code" href="../../db/da5/classcKernel.xhtml#a603e89ab3f91bbbea51685810fe51afa">00072</a>         sem_t <a class="code" href="../../db/da5/classcKernel.xhtml#a603e89ab3f91bbbea51685810fe51afa" title="A char device interrupt has been received.">CSigSem</a>;  
+<a name="l00073"></a>00073         <span class="comment">/* -------------------------- */</span>
+<a name="l00074"></a>00074 
+<a name="l00075"></a><a class="code" href="../../db/da5/classcKernel.xhtml#a6e33ce858b1839bbeb6503515bf11475">00075</a>         <a class="code" href="../../dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data.">ProcessInfo</a> *<a class="code" href="../../db/da5/classcKernel.xhtml#a6e33ce858b1839bbeb6503515bf11475" title="Process currently on the cpu.">runningProc</a>; 
+<a name="l00077"></a><a class="code" href="../../db/da5/classcKernel.xhtml#a03d2c6943661797e86c030864890183e">00077</a>         <a class="code" href="../../de/dd4/classcIDManager.xhtml" title="A class for managing unique IDs.">cIDManager</a> <a class="code" href="../../db/da5/classcKernel.xhtml#a03d2c6943661797e86c030864890183e" title="For generating new process PID&#39;s.">idGenerator</a>; 
+<a name="l00079"></a>00079         <span class="comment">/* Process Scheduler */</span>
+<a name="l00080"></a>00080         <a class="code" href="../../d0/d21/classcScheduler.xhtml" title="Abstract Interface for Schedulers.">cScheduler</a>&amp; scheduler;
 <a name="l00081"></a>00081 
-<a name="l00083"></a>00083         <span class="keywordtype">int</span> charSigValue;
-<a name="l00084"></a>00084         <span class="keywordtype">int</span> blockSigValue;
-<a name="l00085"></a>00085         <span class="keywordtype">int</span> clockSigValue;
-<a name="l00087"></a>00087         <span class="comment">/* --------------------------------------------- */</span>
+<a name="l00087"></a>00087         <span class="keywordtype">void</span> swapProcesses(<a class="code" href="../../dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data.">ProcessInfo</a>* proc, <span class="keywordtype">bool</span> switchMode = <span class="keyword">true</span>);
 <a name="l00088"></a>00088 
-<a name="l00089"></a>00089     <span class="keyword">public</span>:
-<a name="l00096"></a>00096         <a class="code" href="../../db/da5/classcKernel.xhtml">cKernel</a>();
-<a name="l00097"></a>00097         ~<a class="code" href="../../db/da5/classcKernel.xhtml">cKernel</a>();
-<a name="l00098"></a>00098 
-<a name="l00106"></a>00106         <span class="keywordtype">void</span> boot(); <span class="comment">//Starts the kernel loop</span>
-<a name="l00107"></a>00107 
-<a name="l00108"></a>00108 
-<a name="l00114"></a>00114         <span class="keywordtype">void</span> initProcess(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename, pidType parent, <span class="keywordtype">int</span> priority = <a class="code" href="../../d0/daa/kernel_8h.xhtml#a0756f011ef667460d583017366823244" title="Default priority assigned to newly created processes.">DEFAULT_PRIORITY</a>);
-<a name="l00115"></a>00115 
-<a name="l00121"></a>00121         <span class="keywordtype">void</span> cleanupProcess(pidType pid);
-<a name="l00122"></a>00122 };
-<a name="l00123"></a>00123 
-<a name="l00130"></a><a class="code" href="../../dc/d4b/structkernelError.xhtml">00130</a> <span class="keyword">struct </span><a class="code" href="../../dc/d4b/structkernelError.xhtml" title="Struct containing kernel crash information.">kernelError</a> {
-<a name="l00131"></a>00131     <span class="keywordtype">string</span> message;
-<a name="l00132"></a>00132 
-<a name="l00133"></a>00133     <span class="comment">/* Add process and scheduler info */</span>
-<a name="l00134"></a>00134 };
-<a name="l00135"></a>00135 
-<a name="l00162"></a>00162 <span class="preprocessor">#endif // KERNEL_H_INCLUDED</span>
+<a name="l00095"></a>00095         <span class="keywordtype">void</span> cleanupProcess(<a class="code" href="../../dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data.">ProcessInfo</a>*);
+<a name="l00096"></a>00096 
+<a name="l00097"></a>00097         <span class="comment">/* ------------ For Signal Handling ------------ */</span>
+<a name="l00098"></a>00098         <span class="keyword">static</span> <a class="code" href="../../db/da5/classcKernel.xhtml" title="Core managing class for this simulated OS.">cKernel</a> *kernel_instance;
+<a name="l00099"></a>00099 
+<a name="l00101"></a>00101         <span class="keyword">static</span> <span class="keywordtype">void</span> sig_catch(<span class="keywordtype">int</span> signum, siginfo_t *info, <span class="keywordtype">void</span> *context);
+<a name="l00102"></a>00102 
+<a name="l00103"></a>00103         <span class="keywordtype">void</span> sigHandler(<span class="keywordtype">int</span> signum, siginfo_t *info);
+<a name="l00104"></a>00104 
+<a name="l00106"></a>00106         <span class="keywordtype">int</span> charSigValue;
+<a name="l00107"></a>00107         <span class="keywordtype">int</span> blockSigValue;
+<a name="l00108"></a>00108         <span class="keywordtype">int</span> clockSigValue;
+<a name="l00110"></a>00110         <span class="comment">/* --------------------------------------------- */</span>
+<a name="l00111"></a>00111 
+<a name="l00112"></a>00112     <span class="keyword">public</span>:
+<a name="l00119"></a>00119         <a class="code" href="../../db/da5/classcKernel.xhtml" title="Core managing class for this simulated OS.">cKernel</a>(<a class="code" href="../../d0/d21/classcScheduler.xhtml" title="Abstract Interface for Schedulers.">cScheduler</a>&amp;);
+<a name="l00120"></a>00120         ~<a class="code" href="../../db/da5/classcKernel.xhtml" title="Core managing class for this simulated OS.">cKernel</a>();
+<a name="l00121"></a>00121 
+<a name="l00129"></a>00129         <span class="keywordtype">void</span> boot(); <span class="comment">//Starts the kernel loop</span>
+<a name="l00130"></a>00130 
+<a name="l00131"></a>00131 
+<a name="l00137"></a>00137         <span class="keywordtype">void</span> initProcess(<span class="keyword">const</span> <span class="keywordtype">char</span> *filename, pidType parent, <span class="keywordtype">int</span> priority = <a class="code" href="../../d0/daa/kernel_8h.xhtml#a0756f011ef667460d583017366823244" title="Default priority assigned to newly created processes.">DEFAULT_PRIORITY</a>);
+<a name="l00138"></a>00138 
+<a name="l00144"></a>00144         <span class="keywordtype">void</span> cleanupProcess(pidType pid);
+<a name="l00145"></a>00145 
+<a name="l00146"></a>00146         <span class="comment">//Function to create class just for handling devices</span>
+<a name="l00159"></a>00159 <span class="comment"></span>        <span class="keyword">friend</span> <span class="keywordtype">void</span>* deviceHandle(<span class="keywordtype">void</span>*);
+<a name="l00160"></a>00160 };
+<a name="l00161"></a>00161 
+<a name="l00168"></a><a class="code" href="../../dc/d4b/structkernelError.xhtml">00168</a> <span class="keyword">struct </span><a class="code" href="../../dc/d4b/structkernelError.xhtml" title="Struct containing kernel crash information.">kernelError</a> {
+<a name="l00169"></a>00169     <span class="keywordtype">string</span> message;
+<a name="l00170"></a>00170 
+<a name="l00171"></a>00171     <span class="comment">/* Add process and scheduler error info */</span>
+<a name="l00172"></a>00172 };
+<a name="l00173"></a>00173 
+<a name="l00242"></a>00242 <span class="preprocessor">#endif // KERNEL_H_INCLUDED</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -193,7 +210,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 13 2012 18:34:30 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

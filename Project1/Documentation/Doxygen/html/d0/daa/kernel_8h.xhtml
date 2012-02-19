@@ -78,28 +78,23 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
   <div class="summary">
 <a href="#nested-classes">Classes</a> &#124;
 <a href="#define-members">Defines</a> &#124;
-<a href="#typedef-members">Typedefs</a> &#124;
 <a href="#var-members">Variables</a>  </div>
   <div class="headertitle">
 <div class="title">include/kernel.h File Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><code>#include &lt;vector&gt;</code><br/>
-<code>#include &lt;fcntl.h&gt;</code><br/>
-<code>#include &lt;sys/types.h&gt;</code><br/>
 <code>#include &lt;sys/stat.h&gt;</code><br/>
+<code>#include &lt;semaphore.h&gt;</code><br/>
 <code>#include &quot;<a class="el" href="../../dc/da7/cpu_8h_source.xhtml">cpu.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="../../d7/d59/char__device_8h_source.xhtml">devices/char_device.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="../../db/d9a/block__device_8h_source.xhtml">devices/block_device.h</a>&quot;</code><br/>
 <code>#include &quot;<a class="el" href="../../df/d8f/clock__device_8h_source.xhtml">devices/clock_device.h</a>&quot;</code><br/>
-<code>#include &quot;utility/id.h&quot;</code><br/>
-<code>#include &quot;utility/logger.h&quot;</code><br/>
-<code>#include &quot;scheduler/fcfs.h&quot;</code><br/>
+<code>#include &quot;scheduler/allSchedulers.h&quot;</code><br/>
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for kernel.h:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="../../d4/d0f/kernel_8h__incl.svg" width="100%" height="292"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
-</div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="../../d4/d0f/kernel_8h__incl.svg" width="100%" height="404"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
@@ -112,24 +107,36 @@ This graph shows which files directly or indirectly include this file:</div>
 <tr><td colspan="2"><h2><a name="nested-classes"></a>
 Classes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">class &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../db/da5/classcKernel.xhtml">cKernel</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Core managing class for this simulated OS.  <a href="../../db/da5/classcKernel.xhtml#details">More...</a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/d4b/structkernelError.xhtml">kernelError</a></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Struct containing kernel crash information.  <a href="../../dc/d4b/structkernelError.xhtml#details">More...</a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="define-members"></a>
 Defines</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#ac91bd56eef3f2b82894a058b7f136a21">DEFAULT_TIMER</a>&#160;&#160;&#160;5000</td></tr>
-<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default timer value for devices.  <a href="#ac91bd56eef3f2b82894a058b7f136a21"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac91bd56eef3f2b82894a058b7f136a21"></a><!-- doxytag: member="kernel.h::DEFAULT_TIMER" ref="ac91bd56eef3f2b82894a058b7f136a21" args="" -->
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#ac91bd56eef3f2b82894a058b7f136a21">DEFAULT_TIMER</a>&#160;&#160;&#160;250000</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default timer for clock interrupt. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a86bf0ae1dfeb0e17630ff1db96b6f529"></a><!-- doxytag: member="kernel.h::CDEVICE_SCALE" ref="a86bf0ae1dfeb0e17630ff1db96b6f529" args="" -->
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#a86bf0ae1dfeb0e17630ff1db96b6f529">CDEVICE_SCALE</a>&#160;&#160;&#160;4</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Time scale for character devices relative to default clock. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a49545b4c5ba74e199513066a27c60384"></a><!-- doxytag: member="kernel.h::BDEVICE_SCALE" ref="a49545b4c5ba74e199513066a27c60384" args="" -->
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#a49545b4c5ba74e199513066a27c60384">BDEVICE_SCALE</a>&#160;&#160;&#160;8</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Time scale for block devices relative to default clock. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a147011735466a162c94a8e8c4a2b5b80"></a><!-- doxytag: member="kernel.h::DEFAULT_CTIMER" ref="a147011735466a162c94a8e8c4a2b5b80" args="" -->
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#a147011735466a162c94a8e8c4a2b5b80">DEFAULT_CTIMER</a>&#160;&#160;&#160;(<a class="el" href="../../d0/daa/kernel_8h.xhtml#ac91bd56eef3f2b82894a058b7f136a21">DEFAULT_TIMER</a> * <a class="el" href="../../d0/daa/kernel_8h.xhtml#a86bf0ae1dfeb0e17630ff1db96b6f529">CDEVICE_SCALE</a>)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete time for C Devices after scaling. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab56a54ded3376551a1595734b74f799c"></a><!-- doxytag: member="kernel.h::DEFAULT_BTIMER" ref="ab56a54ded3376551a1595734b74f799c" args="" -->
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#ab56a54ded3376551a1595734b74f799c">DEFAULT_BTIMER</a>&#160;&#160;&#160;(<a class="el" href="../../d0/daa/kernel_8h.xhtml#ac91bd56eef3f2b82894a058b7f136a21">DEFAULT_TIMER</a> * <a class="el" href="../../d0/daa/kernel_8h.xhtml#a49545b4c5ba74e199513066a27c60384">BDEVICE_SCALE</a>)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Complete time for B Devices after scaling. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#a0756f011ef667460d583017366823244">DEFAULT_PRIORITY</a>&#160;&#160;&#160;5</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Default priority assigned to newly created processes.  <a href="#a0756f011ef667460d583017366823244"></a><br/></td></tr>
-<tr><td colspan="2"><h2><a name="typedef-members"></a>
-Typedefs</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a87e7ee09eb9354187e1877a668567104"></a><!-- doxytag: member="kernel.h::schedulerType" ref="a87e7ee09eb9354187e1877a668567104" args="" -->
-typedef <a class="el" href="../../d6/dc3/classcFCFS.xhtml">cFCFS</a>&#160;</td><td class="memItemRight" valign="bottom"><b>schedulerType</b></td></tr>
 <tr><td colspan="2"><h2><a name="var-members"></a>
 Variables</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#a9bd73e11b6d2b66703cd822d0c2ecd32">initProcessName</a> [] = &quot;main.trace&quot;</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of the first program to run on the system.  <a href="#a9bd73e11b6d2b66703cd822d0c2ecd32"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9137377ee1ea033ea5bc9f65f22d7b6e"></a><!-- doxytag: member="kernel.h::traceLogFile" ref="a9137377ee1ea033ea5bc9f65f22d7b6e" args="[]" -->
-static const char&#160;</td><td class="memItemRight" valign="bottom"><b>traceLogFile</b> [] = &quot;trace.log&quot;</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#a3240a1d31589eda6a931467978d543ff">traceLogFile</a> [] = &quot;trace.log&quot;</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of trace log file.  <a href="#a3240a1d31589eda6a931467978d543ff"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">static const char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/daa/kernel_8h.xhtml#a0f6aaca759010c72cd7fce9456136e91">procLogFile</a> [] = &quot;proc.log&quot;</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Name of log file for process info.  <a href="#a0f6aaca759010c72cd7fce9456136e91"></a><br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"></div><hr/><h2>Define Documentation</h2>
@@ -147,20 +154,6 @@ static const char&#160;</td><td class="memItemRight" valign="bottom"><b>traceLog
 
 </div>
 </div>
-<a class="anchor" id="ac91bd56eef3f2b82894a058b7f136a21"></a><!-- doxytag: member="kernel.h::DEFAULT_TIMER" ref="ac91bd56eef3f2b82894a058b7f136a21" args="" -->
-<div class="memitem">
-<div class="memproto">
-      <table class="memname">
-        <tr>
-          <td class="memname">#define <a class="el" href="../../d0/daa/kernel_8h.xhtml#ac91bd56eef3f2b82894a058b7f136a21">DEFAULT_TIMER</a>&#160;&#160;&#160;5000</td>
-        </tr>
-      </table>
-</div>
-<div class="memdoc">
-<p>Measured in microseconds. </p>
-
-</div>
-</div>
 <hr/><h2>Variable Documentation</h2>
 <a class="anchor" id="a9bd73e11b6d2b66703cd822d0c2ecd32"></a><!-- doxytag: member="kernel.h::initProcessName" ref="a9bd73e11b6d2b66703cd822d0c2ecd32" args="[]" -->
 <div class="memitem">
@@ -174,6 +167,40 @@ static const char&#160;</td><td class="memItemRight" valign="bottom"><b>traceLog
 <div class="memdoc">
 <p>When the kernel object is created, this program is loaded. It is run once <a class="el" href="../../db/da5/classcKernel.xhtml#a0ce9a2721bb1ea4d7f999198634f702d" title="Start the &#39;OS&#39; Kernel.">cKernel::boot</a> is called. </p>
 
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#ab14dbe0cc2a6e4a346a38e24566fbdd1">cKernel::cKernel()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a0f6aaca759010c72cd7fce9456136e91"></a><!-- doxytag: member="kernel.h::procLogFile" ref="a0f6aaca759010c72cd7fce9456136e91" args="[]" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const char <a class="el" href="../../d0/daa/kernel_8h.xhtml#a0f6aaca759010c72cd7fce9456136e91">procLogFile</a>[] = &quot;proc.log&quot;<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>This file is created by the process logger and it is where top gathers most of its process info.</p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="../../db/d63/classcProcessLogger.xhtml" title="Class specifically for logging process state information.">cProcessLogger</a> </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="a3240a1d31589eda6a931467978d543ff"></a><!-- doxytag: member="kernel.h::traceLogFile" ref="a3240a1d31589eda6a931467978d543ff" args="[]" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">static const char <a class="el" href="../../d0/daa/kernel_8h.xhtml#a3240a1d31589eda6a931467978d543ff">traceLogFile</a>[] = &quot;trace.log&quot;<code> [static]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Per clocktick informatino is logged here.</p>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="../../d1/d8c/logger_8h.xhtml#acf2f61176acdfe03ac9f73ec56fb3bd6" title="Initialize a trace log at filename.">initLog(const char* filename)</a> </dd></dl>
+
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#ab14dbe0cc2a6e4a346a38e24566fbdd1">cKernel::cKernel()</a>.</p>
+
 </div>
 </div>
 </div><!-- contents -->
@@ -182,7 +209,7 @@ static const char&#160;</td><td class="memItemRight" valign="bottom"><b>traceLog
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -194,7 +221,7 @@ static const char&#160;</td><td class="memItemRight" valign="bottom"><b>traceLog
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 13 2012 18:34:30 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

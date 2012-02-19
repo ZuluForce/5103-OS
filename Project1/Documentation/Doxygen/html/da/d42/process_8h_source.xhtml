@@ -89,39 +89,36 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <a name="l00015"></a><a class="code" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd">00015</a> <span class="keyword">enum</span> <a class="code" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821f" title="Enumeration for process states.">eProcState</a> {<a class="code" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76" title="Process is ready to be run.">ready</a>, <a class="code" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243" title="Process is currently running.">running</a>, <a class="code" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01" title="Process is blocked and cannot run.">blocked</a>, <a class="code" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd" title="Process has been terminated.">terminated</a>};
 <a name="l00016"></a>00016 
 <a name="l00024"></a><a class="code" href="../../dd/dc8/structProcessInfo.xhtml">00024</a> <span class="keyword">struct </span><a class="code" href="../../dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data.">ProcessInfo</a> {
-<a name="l00025"></a>00025     <span class="comment">/* I was thinking we could save the name so the output of</span>
-<a name="l00026"></a>00026 <span class="comment">     * Top would look nice later.</span>
-<a name="l00027"></a>00027 <span class="comment">     */</span>
-<a name="l00028"></a>00028     <span class="comment">//string name;</span>
+<a name="l00025"></a>00025     pidType procFileLine; <span class="comment">//Index into process file</span>
+<a name="l00026"></a>00026 
+<a name="l00027"></a>00027     <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> parent, pid;
+<a name="l00028"></a>00028     <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> startCPU, totalCPU;
 <a name="l00029"></a>00029 
-<a name="l00030"></a>00030     <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> parent, pid;
-<a name="l00031"></a>00031     <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> startCPU, totalCPU;
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033     <a class="code" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821f" title="Enumeration for process states.">eProcState</a> state;
-<a name="l00034"></a>00034     uint16_t PSW;
-<a name="l00035"></a>00035     <span class="keywordtype">int</span> priority;
-<a name="l00036"></a>00036 
-<a name="l00037"></a>00037     <span class="comment">/* Saved Sate */</span>
-<a name="l00038"></a>00038     <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> PC;
-<a name="l00039"></a>00039     <span class="keywordtype">int</span> VC;
+<a name="l00030"></a>00030     <a class="code" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821f" title="Enumeration for process states.">eProcState</a> state;
+<a name="l00031"></a>00031     uint16_t PSW;
+<a name="l00032"></a>00032     <span class="keywordtype">int</span> priority;
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034     <span class="comment">/* Saved Sate */</span>
+<a name="l00035"></a>00035     <span class="keywordtype">unsigned</span> <span class="keywordtype">int</span> PC;
+<a name="l00036"></a>00036     <span class="keywordtype">int</span> VC;
+<a name="l00037"></a>00037 
+<a name="l00038"></a>00038     <span class="comment">/* Program Content */</span>
+<a name="l00039"></a>00039     <span class="keywordtype">char</span> *processText;
 <a name="l00040"></a>00040 
-<a name="l00041"></a>00041     <span class="comment">/* Program Content */</span>
-<a name="l00042"></a>00042     <span class="keywordtype">char</span> *processText;
-<a name="l00043"></a>00043 
-<a name="l00052"></a><a class="code" href="../../dd/dc8/structProcessInfo.xhtml#aea1c50ae92f6421ae5c94ac674c1877a">00052</a>     <span class="keywordtype">void</span> *<a class="code" href="../../dd/dc8/structProcessInfo.xhtml#aea1c50ae92f6421ae5c94ac674c1877a" title="Scheduler specific data.">scheduleData</a>;
-<a name="l00053"></a>00053 
-<a name="l00054"></a>00054     <span class="comment">/* Total memory being used by the process */</span>
-<a name="l00055"></a>00055     <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> memory;
-<a name="l00056"></a>00056 };
-<a name="l00057"></a>00057 
-<a name="l00110"></a>00110 <span class="preprocessor">#endif // PROCESS_H_INCLUDED</span>
+<a name="l00049"></a><a class="code" href="../../dd/dc8/structProcessInfo.xhtml#aea1c50ae92f6421ae5c94ac674c1877a">00049</a>     <span class="keywordtype">void</span> *<a class="code" href="../../dd/dc8/structProcessInfo.xhtml#aea1c50ae92f6421ae5c94ac674c1877a" title="Scheduler specific data.">scheduleData</a>;
+<a name="l00050"></a>00050 
+<a name="l00051"></a>00051     <span class="comment">/* Total memory being used by the process */</span>
+<a name="l00052"></a>00052     <span class="keywordtype">unsigned</span> <span class="keywordtype">long</span> memory;
+<a name="l00053"></a>00053 };
+<a name="l00054"></a>00054 
+<a name="l00107"></a>00107 <span class="preprocessor">#endif // PROCESS_H_INCLUDED</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -133,7 +130,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 13 2012 18:34:30 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

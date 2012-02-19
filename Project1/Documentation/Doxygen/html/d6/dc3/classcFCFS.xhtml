@@ -84,7 +84,12 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="title">cFCFS Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="cFCFS" --><!-- doxytag: inherits="cScheduler" --><div class="dynheader">
+<!-- doxytag: class="cFCFS" --><!-- doxytag: inherits="cScheduler" -->
+<p>First-Come-First-Serve Scheduler.  
+</p>
+
+<p><code>#include &lt;<a class="el" href="../../db/d41/fcfs_8h_source.xhtml">fcfs.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for cFCFS:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" frameborder="0" src="../../d2/d94/classcFCFS__inherit__graph.svg" width="96" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
@@ -92,7 +97,7 @@ Inheritance diagram for cFCFS:</div>
 <div class="dynheader">
 Collaboration diagram for cFCFS:</div>
 <div class="dyncontent">
-<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="../../d4/d8d/classcFCFS__coll__graph.svg" width="100%" height="229"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
+<div class="center"><div class="zoom"><iframe scrolling="no" frameborder="0" src="../../d4/d8d/classcFCFS__coll__graph.svg" width="100%" height="320"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div></div>
 <center><span class="legend">[<a href="../../graph_legend.xhtml">legend</a>]</span></center></div>
 
 <p><a href="../../d9/dbe/classcFCFS-members.xhtml">List of all members.</a></p>
@@ -113,12 +118,22 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query the scheduler for next process to run.  <a href="#aa2b92a8a992078e499aab455c9d78faf"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">pidType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a0a72de791436a84120a534dd2fa0485d">numProcesses</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">How many processes are in the scheduler.  <a href="#a0a72de791436a84120a534dd2fa0485d"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/classcFCFS.xhtml#accb887eae7016719ce770d7b0284adea">addLogger</a> (FILE *_logStream)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an instance of the trace logger to the scheduler.  <a href="#accb887eae7016719ce770d7b0284adea"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a4da9f2fa83516ac5859772ae09169343">addProcLogger</a> (<a class="el" href="../../db/d63/classcProcessLogger.xhtml">cProcessLogger</a> *_procLogger)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add instance of process logger to the scheduler.  <a href="#a4da9f2fa83516ac5859772ae09169343"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37af1bbb7393f800a24ff22ee443f876"></a><!-- doxytag: member="cFCFS::printUnblocked" ref="a37af1bbb7393f800a24ff22ee443f876" args="()" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><b>printUnblocked</b> ()</td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afebe08e2ae6dc564b5aad24e3b30f842"></a><!-- doxytag: member="cFCFS::readyQueue" ref="afebe08e2ae6dc564b5aad24e3b30f842" args="" -->
 queue&lt; <a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>readyQueue</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1353ba13053c744e539b72ae06f0bf31"></a><!-- doxytag: member="cFCFS::blockedVector" ref="a1353ba13053c744e539b72ae06f0bf31" args="" -->
 vector&lt; <a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> * &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>blockedVector</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a94e258d1237eaf14679bb557b22a4cbd"></a><!-- doxytag: member="cFCFS::traceUnblocked" ref="a94e258d1237eaf14679bb557b22a4cbd" args="" -->
+queue&lt; pidType &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>traceUnblocked</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a71011b9c0dc2c005356ff183c057e538"></a><!-- doxytag: member="cFCFS::totalBlocked" ref="a71011b9c0dc2c005356ff183c057e538" args="" -->
+int&#160;</td><td class="memItemRight" valign="bottom"><b>totalBlocked</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a6ba522300c166895a7db48d7ab918b4e"></a><!-- doxytag: member="cFCFS::runningProc" ref="a6ba522300c166895a7db48d7ab918b4e" args="" -->
 <a class="el" href="../../dd/dc8/structProcessInfo.xhtml">ProcessInfo</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>runningProc</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac5c0a078ed1168066d8f82c03c65d4ed"></a><!-- doxytag: member="cFCFS::blockedLock" ref="ac5c0a078ed1168066d8f82c03c65d4ed" args="" -->
@@ -127,8 +142,41 @@ pthread_mutex_t&#160;</td><td class="memItemRight" valign="bottom"><b>blockedLoc
 pthread_cond_t&#160;</td><td class="memItemRight" valign="bottom"><b>allBlocked</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1cc5fa525a8adb5826dd1dedebd2ff6b"></a><!-- doxytag: member="cFCFS::blockedID" ref="a1cc5fa525a8adb5826dd1dedebd2ff6b" args="" -->
 <a class="el" href="../../de/dd4/classcIDManager.xhtml">cIDManager</a>&#160;</td><td class="memItemRight" valign="bottom"><b>blockedID</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a220459254463daf9a8ff8d017740fc79"></a><!-- doxytag: member="cFCFS::logStream" ref="a220459254463daf9a8ff8d017740fc79" args="" -->
+FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>logStream</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aa65684700e81cfa01808cbfdbe62e3d6"></a><!-- doxytag: member="cFCFS::procLogger" ref="aa65684700e81cfa01808cbfdbe62e3d6" args="" -->
+<a class="el" href="../../db/d63/classcProcessLogger.xhtml">cProcessLogger</a> *&#160;</td><td class="memItemRight" valign="bottom"><b>procLogger</b></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="accb887eae7016719ce770d7b0284adea"></a><!-- doxytag: member="cFCFS::addLogger" ref="accb887eae7016719ce770d7b0284adea" args="(FILE *_logStream)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d6/dc3/classcFCFS.xhtml#accb887eae7016719ce770d7b0284adea">cFCFS::addLogger</a> </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>The kernel passes a file stream pointer for the scheduler to print trace info such as blocking/unblocking events.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">FILE*</td><td>File stream for trace log </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="../../d1/d8c/logger_8h.xhtml#acf2f61176acdfe03ac9f73ec56fb3bd6" title="Initialize a trace log at filename.">initLog(const char* filename)</a> </dd>
+<dd>
+<a class="el" href="../../d1/d8c/logger_8h.xhtml#af756a6a1097f12014f446b298d8a266f" title="Get the file stream to write to.">getStream()</a> </dd></dl>
+
+<p>Implements <a class="el" href="../../d0/d21/classcScheduler.xhtml#a7b29af7eab1a9cbe383d98a44693be69">cScheduler</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a25d4bf440041f5294f3b9c5aff20b411"></a><!-- doxytag: member="cFCFS::addProcess" ref="a25d4bf440041f5294f3b9c5aff20b411" args="(ProcessInfo *)" -->
 <div class="memitem">
 <div class="memproto">
@@ -156,6 +204,33 @@ pthread_cond_t&#160;</td><td class="memItemRight" valign="bottom"><b>allBlocked<
 </dl>
 
 <p>Implements <a class="el" href="../../d0/d21/classcScheduler.xhtml#aeae779c5c160a441e725dfc72656e6dc">cScheduler</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a4da9f2fa83516ac5859772ae09169343"></a><!-- doxytag: member="cFCFS::addProcLogger" ref="a4da9f2fa83516ac5859772ae09169343" args="(cProcessLogger *_procLogger)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a4da9f2fa83516ac5859772ae09169343">cFCFS::addProcLogger</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../db/d63/classcProcessLogger.xhtml">cProcessLogger</a> *&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>The kernel passes this pointer so the scheduler can update process info upon process addition, state change and termination. This updates the information presented to the top process.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cProcessLogger*</td><td>Process logger class </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="../../db/d63/classcProcessLogger.xhtml" title="Class specifically for logging process state information.">cProcessLogger</a> </dd></dl>
+
+<p>Implements <a class="el" href="../../d0/d21/classcScheduler.xhtml#a3e7865112718057fcdc277db0a85c21c">cScheduler</a>.</p>
 
 </div>
 </div>
@@ -336,7 +411,7 @@ pthread_cond_t&#160;</td><td class="memItemRight" valign="bottom"><b>allBlocked<
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -348,7 +423,7 @@ pthread_cond_t&#160;</td><td class="memItemRight" valign="bottom"><b>allBlocked<
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 13 2012 18:34:30 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
