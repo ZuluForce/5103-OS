@@ -168,6 +168,7 @@
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
+		<Unit filename="src/utility/test_name_socket.cpp" />
 		<Extensions>
 			<code_completion />
 			<envvars />

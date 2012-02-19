@@ -10,10 +10,6 @@
 
 using namespace std;
 
-static FILE* logStream;
-
-static bool logInitialized;
-
 FILE* initLog(const char* filename);
 void closeLog();
 

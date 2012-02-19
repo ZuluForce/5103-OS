@@ -61,6 +61,8 @@ class cProcessLogger {
 		vector<string> procNames;
 		/* ---------------------------------- */
 
+		pthread_mutex_t logWriteLock;
+
 
 	public:
 		cProcessLogger(const char *file);
@@ -73,9 +75,6 @@ class cProcessLogger {
 
 		friend void* nameSockFn(void*);
 };
-
-//For the threads to access internal state
-static cProcessLogger* log_ptr;
 
 enum pivotType {
 	pivotMiddle,

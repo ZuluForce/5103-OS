@@ -13,6 +13,10 @@ cIDManager::cIDManager(unsigned int startID) {
 }
 
 cIDManager::~cIDManager() {
+	/* While this isn't necessary I just want valgrind
+	 * to show no lost memory */
+	while ( !freeID.empty() )
+		freeID.pop();
 
 	return;
 }

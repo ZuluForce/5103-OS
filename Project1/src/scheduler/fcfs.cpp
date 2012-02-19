@@ -16,6 +16,14 @@ cFCFS::cFCFS(): blockedID(0) {
 }
 
 cFCFS::~cFCFS() {
+	blockedVector.clear();
+
+	/* Shouldn't be anything here */
+	while ( !readyQueue.empty() )
+		readyQueue.pop();
+
+	while ( !traceUnblocked.empty() )
+		traceUnblocked.pop();
 
 	return;
 }
@@ -99,6 +107,7 @@ void cFCFS::removeProcess(ProcessInfo* proc) {
 
 	proc->state = terminated;
 	free( proc->scheduleData );
+	procLogger->writeProcessInfo(proc);
 
 	runningProc = NULL;
 
