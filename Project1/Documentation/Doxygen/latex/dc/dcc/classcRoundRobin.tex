@@ -1,32 +1,274 @@
 \hypertarget{classcRoundRobin}{\section{c\-Round\-Robin \-Class \-Reference}
 \label{dc/dcc/classcRoundRobin}\index{c\-Round\-Robin@{c\-Round\-Robin}}
 }
+
+
+\-Round \-Robin \-Scheduler.  
+
+
+
+
+{\ttfamily \#include $<$round\-\_\-robin.\-h$>$}
+
+
+
+\-Inheritance diagram for c\-Round\-Robin\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=156pt]{d7/de9/classcRoundRobin__inherit__graph}
+\end{center}
+\end{figure}
+
+
+\-Collaboration diagram for c\-Round\-Robin\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{de/d42/classcRoundRobin__coll__graph}
+\end{center}
+\end{figure}
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classcRoundRobin_aadb221df9b12f61c3151996ea5c09741}{void {\bfseries init\-Proc\-Schedule\-Info} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)}\label{dc/dcc/classcRoundRobin_aadb221df9b12f61c3151996ea5c09741}
+void \hyperlink{classcRoundRobin_aadb221df9b12f61c3151996ea5c09741}{init\-Proc\-Schedule\-Info} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Initialize scheduler specific information within the \hyperlink{structProcessInfo}{\-Process\-Info} struct. \end{DoxyCompactList}\item 
+void \hyperlink{classcRoundRobin_a3571d05a8daebccb758d63b8327f8a22}{add\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Transfer control of process state and scheduling. \end{DoxyCompactList}\item 
+void \hyperlink{classcRoundRobin_a13609de0f36c81a780072f9c0730f963}{set\-Blocked} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Set a process into a \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}{blocked} state. \end{DoxyCompactList}\item 
+void \hyperlink{classcRoundRobin_a278d541c78f034020f6921b22a7d37af}{unblock\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Unblock a process and make it ready. \end{DoxyCompactList}\item 
+void \hyperlink{classcRoundRobin_a1bc7bfc4c36bdbe3f3938810817d885e}{remove\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Remove a process from the control of the scheduler. \end{DoxyCompactList}\item 
+\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ \hyperlink{classcRoundRobin_a1979ff71bb2320bdb00eae5feb2b2688}{get\-Next\-To\-Run} ()
+\begin{DoxyCompactList}\small\item\em \-Query the scheduler for next process to run. \end{DoxyCompactList}\item 
+pid\-Type \hyperlink{classcRoundRobin_afa0cdfcfc0b8222d39ad5e9c23db1f25}{num\-Processes} ()
+\begin{DoxyCompactList}\small\item\em \-How many processes are in the scheduler. \end{DoxyCompactList}\item 
+void \hyperlink{classcRoundRobin_a6e0d0ec272a4f7ffe03166b1ff08276b}{add\-Logger} (\-F\-I\-L\-E $\ast$\-\_\-log\-Stream)
+\begin{DoxyCompactList}\small\item\em \-Add an instance of the trace logger to the scheduler. \end{DoxyCompactList}\item 
+void \hyperlink{classcRoundRobin_a728fa415647d6c71b32ee8d4a04580e1}{add\-Proc\-Logger} (\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$\-\_\-proc\-Logger)
+\begin{DoxyCompactList}\small\item\em \-Add instance of process logger to the scheduler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Private \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcRoundRobin_af8667fa086a7562c2523d5b5cd783d75}{queue$<$ \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ $>$ {\bfseries ready\-Queue}}\label{dc/dcc/classcRoundRobin_af8667fa086a7562c2523d5b5cd783d75}
 
 \item 
-\hypertarget{classcRoundRobin_a3571d05a8daebccb758d63b8327f8a22}{void {\bfseries add\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)}\label{dc/dcc/classcRoundRobin_a3571d05a8daebccb758d63b8327f8a22}
+\hypertarget{classcRoundRobin_a2816611cab817668edbeceff1a17ccca}{vector$<$ \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ $>$ {\bfseries blocked\-Vector}}\label{dc/dcc/classcRoundRobin_a2816611cab817668edbeceff1a17ccca}
 
 \item 
-\hypertarget{classcRoundRobin_a13609de0f36c81a780072f9c0730f963}{void {\bfseries set\-Blocked} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)}\label{dc/dcc/classcRoundRobin_a13609de0f36c81a780072f9c0730f963}
+\hypertarget{classcRoundRobin_a2068152f0b3d1592dc031ecf7b0d7d5f}{int {\bfseries total\-Blocked}}\label{dc/dcc/classcRoundRobin_a2068152f0b3d1592dc031ecf7b0d7d5f}
 
 \item 
-\hypertarget{classcRoundRobin_a81d0cd6050ebff3c72ca1e829f2d4991}{void {\bfseries unblocked\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)}\label{dc/dcc/classcRoundRobin_a81d0cd6050ebff3c72ca1e829f2d4991}
+\hypertarget{classcRoundRobin_a8779f8cb28be168316b485c77d09b210}{int {\bfseries clock\-Ticks\-Used}}\label{dc/dcc/classcRoundRobin_a8779f8cb28be168316b485c77d09b210}
 
 \item 
-\hypertarget{classcRoundRobin_a1bc7bfc4c36bdbe3f3938810817d885e}{void {\bfseries remove\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)}\label{dc/dcc/classcRoundRobin_a1bc7bfc4c36bdbe3f3938810817d885e}
+\hypertarget{classcRoundRobin_a58ea813b29ddc7ca0da1428a1fcb7693}{\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ {\bfseries running\-Proc}}\label{dc/dcc/classcRoundRobin_a58ea813b29ddc7ca0da1428a1fcb7693}
 
 \item 
-\hypertarget{classcRoundRobin_ac26b32260ffb68bfa3c084ca5ca7ff87}{\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ {\bfseries get\-Next\-To\-Run} ()}\label{dc/dcc/classcRoundRobin_ac26b32260ffb68bfa3c084ca5ca7ff87}
+\hypertarget{classcRoundRobin_a3b5a8047d5522b85a486f1caeeaca9f6}{pthread\-\_\-mutex\-\_\-t {\bfseries blocked\-Lock}}\label{dc/dcc/classcRoundRobin_a3b5a8047d5522b85a486f1caeeaca9f6}
 
 \item 
-\hypertarget{classcRoundRobin_afa0cdfcfc0b8222d39ad5e9c23db1f25}{pid\-Type {\bfseries num\-Processes} ()}\label{dc/dcc/classcRoundRobin_afa0cdfcfc0b8222d39ad5e9c23db1f25}
+\hypertarget{classcRoundRobin_ac9f22c160b4e3cb118723a1e780575ad}{pthread\-\_\-cond\-\_\-t {\bfseries all\-Blocked}}\label{dc/dcc/classcRoundRobin_ac9f22c160b4e3cb118723a1e780575ad}
+
+\item 
+\hypertarget{classcRoundRobin_a15ca5ec15a4ae935706b55ac71d6bee2}{\hyperlink{classcIDManager}{c\-I\-D\-Manager} {\bfseries blocked\-I\-D}}\label{dc/dcc/classcRoundRobin_a15ca5ec15a4ae935706b55ac71d6bee2}
+
+\item 
+\hypertarget{classcRoundRobin_a2a2f87f637cb0cbfd9d2bfe69bc91de2}{\-F\-I\-L\-E $\ast$ {\bfseries log\-Stream}}\label{dc/dcc/classcRoundRobin_a2a2f87f637cb0cbfd9d2bfe69bc91de2}
+
+\item 
+\hypertarget{classcRoundRobin_aa740c249a96cdc04f04a93ae039a6551}{\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$ {\bfseries proc\-Logger}}\label{dc/dcc/classcRoundRobin_aa740c249a96cdc04f04a93ae039a6551}
 
 \end{DoxyCompactItemize}
 
 
-\-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcRoundRobin_a6e0d0ec272a4f7ffe03166b1ff08276b}{\index{c\-Round\-Robin@{c\-Round\-Robin}!add\-Logger@{add\-Logger}}
+\index{add\-Logger@{add\-Logger}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{add\-Logger}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Round\-Robin\-::add\-Logger} (
+\begin{DoxyParamCaption}
+\item[{\-F\-I\-L\-E $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_a6e0d0ec272a4f7ffe03166b1ff08276b}
+\-The kernel passes a file stream pointer for the scheduler to print trace info such as blocking/unblocking events.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-F\-I\-L\-E$\ast$} & \-File stream for trace log \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{logger_8h_acf2f61176acdfe03ac9f73ec56fb3bd6}{init\-Log(const char$\ast$ filename)} 
+
+\hyperlink{logger_8h_af756a6a1097f12014f446b298d8a266f}{get\-Stream()} 
+\end{DoxySeeAlso}
+
+
+\-Implements \hyperlink{classcScheduler_a7b29af7eab1a9cbe383d98a44693be69}{c\-Scheduler}.
+
+\hypertarget{classcRoundRobin_a3571d05a8daebccb758d63b8327f8a22}{\index{c\-Round\-Robin@{c\-Round\-Robin}!add\-Process@{add\-Process}}
+\index{add\-Process@{add\-Process}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{add\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Round\-Robin\-::add\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_a3571d05a8daebccb758d63b8327f8a22}
+\-After this is called, the kernel core no longer keeps track of the given process. \-Once the process is created and deemed \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready} by the kernel it is handed off here. \-The scheduler is then in charge of state transitions when the kernel gives it appropriate notifications.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Store the process in some location. \-It should be recognized as ready given its location but the datastructures and organization are implementation specific.\end{DoxyItemize}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Process\-Info$\ast$} & \-Process to add under scheduler's control \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classcScheduler_aeae779c5c160a441e725dfc72656e6dc}{c\-Scheduler}.
+
+\hypertarget{classcRoundRobin_a728fa415647d6c71b32ee8d4a04580e1}{\index{c\-Round\-Robin@{c\-Round\-Robin}!add\-Proc\-Logger@{add\-Proc\-Logger}}
+\index{add\-Proc\-Logger@{add\-Proc\-Logger}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{add\-Proc\-Logger}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Round\-Robin\-::add\-Proc\-Logger} (
+\begin{DoxyParamCaption}
+\item[{{\bf c\-Process\-Logger} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_a728fa415647d6c71b32ee8d4a04580e1}
+\-The kernel passes this pointer so the scheduler can update process info upon process addition, state change and termination. \-This updates the information presented to the top process.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em c\-Process\-Logger$\ast$} & \-Process logger class \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classcProcessLogger}{c\-Process\-Logger} 
+\end{DoxySeeAlso}
+
+
+\-Implements \hyperlink{classcScheduler_a3e7865112718057fcdc277db0a85c21c}{c\-Scheduler}.
+
+\hypertarget{classcRoundRobin_a1979ff71bb2320bdb00eae5feb2b2688}{\index{c\-Round\-Robin@{c\-Round\-Robin}!get\-Next\-To\-Run@{get\-Next\-To\-Run}}
+\index{get\-Next\-To\-Run@{get\-Next\-To\-Run}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{get\-Next\-To\-Run}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Process\-Info} $\ast$ {\bf c\-Round\-Robin\-::get\-Next\-To\-Run} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_a1979ff71bb2320bdb00eae5feb2b2688}
+\-After this function is called, it should be assumed by any scheduler implementation that the kernel will run the given process (unless otherwise notified). \-The currently running process should implicitly be considered for running next (again).
+
+\-If there are processes left but all are blocked. \-This function should block until it receives a signal that a process is unblocked.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Block if there are $>$ 0 processes but none can run. \item \-A process listed as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} within the scheduler should be treated as ready when this method is called. \item \-A process returned as the 'next to run' should be marked as being in a \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} state before returning. \item \-If there are no more remaining processes this should return \-N\-U\-L\-L.\end{DoxyItemize}
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{structProcessInfo}{\-Process\-Info}$\ast$ \-Ready process to run next. \-May be the same as the currenlty running one.
+\end{DoxyReturn}
+\begin{DoxyWarning}{\-Warning}
+\-Must be thread safe with block and unblock methods. 
+\end{DoxyWarning}
+
+
+\-Implements \hyperlink{classcScheduler_a350ad7c55ddcdd17005778b0da241956}{c\-Scheduler}.
+
+\hypertarget{classcRoundRobin_aadb221df9b12f61c3151996ea5c09741}{\index{c\-Round\-Robin@{c\-Round\-Robin}!init\-Proc\-Schedule\-Info@{init\-Proc\-Schedule\-Info}}
+\index{init\-Proc\-Schedule\-Info@{init\-Proc\-Schedule\-Info}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{init\-Proc\-Schedule\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Round\-Robin\-::init\-Proc\-Schedule\-Info} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_aadb221df9b12f61c3151996ea5c09741}
+\-This method is called after the kernel has initialized all process data but before it is marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready}. \-This gives the scheduler an oportunity to initialize any scheduler specific data and assign it to the \hyperlink{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{\-Process\-Info\-::schedule\-Data} member.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-No required actions. \end{DoxyItemize}
+
+
+\-Implements \hyperlink{classcScheduler_a8782803287dce0352623142643eee01a}{c\-Scheduler}.
+
+\hypertarget{classcRoundRobin_afa0cdfcfc0b8222d39ad5e9c23db1f25}{\index{c\-Round\-Robin@{c\-Round\-Robin}!num\-Processes@{num\-Processes}}
+\index{num\-Processes@{num\-Processes}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{num\-Processes}]{\setlength{\rightskip}{0pt plus 5cm}pid\-Type {\bf c\-Round\-Robin\-::num\-Processes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_afa0cdfcfc0b8222d39ad5e9c23db1f25}
+\-This returns how many processes, both running and blocked, are being handled by the scheduler.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Return how many processes, running and blocked, are in the scheduler.\end{DoxyItemize}
+\begin{DoxyReturn}{\-Returns}
+pid\-Type 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{classcScheduler_a025532a943093ae7e8d6dc0cdaf60f12}{c\-Scheduler}.
+
+\hypertarget{classcRoundRobin_a1bc7bfc4c36bdbe3f3938810817d885e}{\index{c\-Round\-Robin@{c\-Round\-Robin}!remove\-Process@{remove\-Process}}
+\index{remove\-Process@{remove\-Process}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{remove\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Round\-Robin\-::remove\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_a1bc7bfc4c36bdbe3f3938810817d885e}
+\-When a process terminates, either through normal means or an exception, the kernel will call this function to release a process from the scheduler's control. \-The scheduler should clean up any internal state for the process. \-Deallocation of process resources is left to the kernel.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Scheduler should deallocate any resources it assigned to the process within the \hyperlink{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{\-Process\-Info\-::schedule\-Data} member. \item \-The \-Scheduler should remove any pointers to the give process to avoid dereferncing a dead pointer. \item \-Implementations must not deallocate any memory except that mentioned above. \-This is handled by the kernel. \item \-Implementations should mark the process as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd}{terminated}.\end{DoxyItemize}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Process\-Info$\ast$} & \-Process to remove from scheduler \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classcScheduler_a5632ffa597e9567d475c808070c4e3bb}{c\-Scheduler}.
+
+\hypertarget{classcRoundRobin_a13609de0f36c81a780072f9c0730f963}{\index{c\-Round\-Robin@{c\-Round\-Robin}!set\-Blocked@{set\-Blocked}}
+\index{set\-Blocked@{set\-Blocked}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{set\-Blocked}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Round\-Robin\-::set\-Blocked} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_a13609de0f36c81a780072f9c0730f963}
+\-The kernel will call the scheduler with this function when the process has done an operation which causes it to block (\-I).
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Process must be marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}{blocked} and scheduler state should be changed accordingly. \item \-After this call a process should not be considered for a scheduling decision\end{DoxyItemize}
+\begin{DoxyWarning}{\-Warning}
+\-Must be thread safe. \-Signal handler/s may block during schedule decision. 
+\end{DoxyWarning}
+
+
+\-Implements \hyperlink{classcScheduler_ae6119e940a3bf58a00e7dbcea04b5b6a}{c\-Scheduler}.
+
+\hypertarget{classcRoundRobin_a278d541c78f034020f6921b22a7d37af}{\index{c\-Round\-Robin@{c\-Round\-Robin}!unblock\-Process@{unblock\-Process}}
+\index{unblock\-Process@{unblock\-Process}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{unblock\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Round\-Robin\-::unblock\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_a278d541c78f034020f6921b22a7d37af}
+\-When a process has completed a blocking call the kernel will notify the scheduler that it should be unblocked. \-This operation should be very fast since it will likely be called from a signal handler.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-The process must be unblocked and marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready}. \-It must be available for scheduling with the next call to \-::get\-Next\-To\-Run\end{DoxyItemize}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Process\-Info$\ast$} & \-Process to unblock\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{\-Warning}
+\-Must be thread safe. \-Signal handler/s may unblock during schedule decision. 
+\end{DoxyWarning}
+
+
+\-Implements \hyperlink{classcScheduler_a81fe2e5e5e2334e36db1cbf491e3fa57}{c\-Scheduler}.
+
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-include/scheduler/round\-\_\-robin.\-h\end{DoxyCompactItemize}
+include/scheduler/round\-\_\-robin.\-h\item 
+src/scheduler/round\-\_\-robin.\-cpp\end{DoxyCompactItemize}

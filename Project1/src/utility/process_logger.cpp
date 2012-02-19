@@ -1,14 +1,61 @@
 #include "utility/process_logger.h"
 
+//For the threads to access internal state
+static cProcessLogger* log_ptr;
+
+void* nameSockFn(void* args) {
+	log_ptr->listenSock = socket(AF_UNIX, SOCK_DGRAM, 0);
+
+	struct sockaddr_un local, remote;
+
+	local.sun_family = AF_UNIX;
+	strcpy(local.sun_path, procNameReq);
+
+	unlink(procNameReq); //Incase there is a socket left in the directory
+	if ( bind(log_ptr->listenSock, (struct sockaddr*) &local, sizeof(struct sockaddr_un)) ) {
+		perror("Error binding socket");
+		exit(-1);
+	}
+
+	pidType reqID;
+	const char* pName;
+	size_t nameLen;
+	size_t sSize = sizeof(remote);
+
+	while ( true ) {
+		if ( recvfrom(log_ptr->listenSock, &reqID, sizeof(pidType), 0,
+						(struct sockaddr*) &remote, (socklen_t*) &sSize) < 0) {
+			if ( errno == EINTR )
+				continue;
+			perror("Error reading from socket");
+			exit(-1);
+		}
+
+		printf("Received request for prcess name %d\n", reqID);
+		if ( reqID > log_ptr->procNames.size() ) {
+			/* Return Error Messages */
+			printf("Invalid request for precess name (pid %d)\n", reqID);
+			sendto(log_ptr->listenSock, requestError, strlen(requestError), 0,
+					(struct sockaddr*) &remote, sizeof(struct sockaddr_un));
+
+			continue;
+		}
+
+		pName = log_ptr->procNames.at(reqID).c_str();
+		nameLen = log_ptr->procNames.at(reqID).length();
+		printf("Process name: %s\n", pName);
+
+		sendto(log_ptr->listenSock, pName, nameLen, 0, (struct sockaddr*) &remote, sizeof(struct sockaddr_un));
+	}
+
+	return NULL;
+}
+
+
 cProcessLogger::cProcessLogger(const char *file) {
 	assert(file != NULL);
 
 	procLogStream = fopen(file, "w");
-
-	nameFile = file;
-	nameFile += ".names";
-
-	procNameStream = fopen(nameFile.c_str(), "w");
 
 	if ( procLogStream == NULL ) {
 		perror("Failed to open process log file");
@@ -16,7 +63,6 @@ cProcessLogger::cProcessLogger(const char *file) {
 	}
 
 	procLogFD = fileno(procLogStream);
-	procNameFD = fileno(procNameStream);
 
 	lineSize = MAX_LINE_LENGTH;
 
@@ -26,12 +72,20 @@ cProcessLogger::cProcessLogger(const char *file) {
 		emptyBuffer[i] = ' ';
 	}
 
+	procNames.resize( 4 );
+	log_ptr = this;
+
+	pthread_mutex_init(&logWriteLock, NULL);
+	pthread_create(&nameReqListener, NULL, nameSockFn, this);
 	return;
 }
 
 cProcessLogger::~cProcessLogger() {
-	fclose(procNameStream);
-	//remove(nameFile.c_str());
+	pthread_cancel(nameReqListener);
+	pthread_join(nameReqListener, NULL);
+	close(listenSock);
+
+	procNames.clear();
 
 	fclose(procLogStream);
 	//remove(nameFile.substr())
@@ -47,74 +101,53 @@ void cProcessLogger::addProcess(ProcessInfo* proc, const char* name) {
 
 	proc->procFileLine = newID;
 
-	writeProcessName(newID, name);
+	if ( newID >= procNames.size() )
+		procNames.resize( procNames.size() * 2 );
+
+	procNames.at(newID) = name;
+
 	writeProcessInfo(proc);
 
 	previousID = newID;
 }
 
 void cProcessLogger::rmProcess(ProcessInfo* proc) {
-	if ( lseek(procLogFD, proc->procFileLine * lineSize, SEEK_SET) == -1 ||
-		lseek(procNameFD, proc->procFileLine * lineSize, SEEK_SET) == -1) {
+	pthread_mutex_lock(&logWriteLock);
+
+	if ( lseek(procLogFD, proc->procFileLine * lineSize, SEEK_SET) == -1 ) {
 		perror("lseek cProcessLogger::rmProcess");
+		pthread_mutex_unlock(&logWriteLock);
 		return;
 	}
 
 	int written;
 	written = write(procLogFD, emptyBuffer, MAX_LINE_LENGTH - 1);
 	if ( written != MAX_LINE_LENGTH - 1) fprintf(stderr, "Process line not properly cleared\n");
-	written = write(procNameFD, emptyBuffer, MAX_NAME_LENGTH - 1);
-	if ( written != MAX_NAME_LENGTH - 1) fprintf(stderr, "Process name line not properly cleared\n");
-
-	fprintf(procLogStream, "\n");
-	fprintf(procNameStream, "\n");
 
 	lineIDs.returnID(proc->procFileLine);
 
+	procNames.at(proc->procFileLine).clear();
+
+	pthread_mutex_unlock(&logWriteLock);
 	return;
 }
 
-void cProcessLogger::writeProcessName(int line, const char* name) {
-	if ( lseek(procNameFD, line * MAX_NAME_LENGTH, SEEK_SET) == -1 ) {
-		perror("writeProcessName failed to seek");
-		return;
-	}
-
-	int size;
-
-	size = snprintf(outputBuffer, MAX_LINE_LENGTH, "%s", name);
-
-	if ( size >= MAX_NAME_LENGTH ) {
-		fprintf(stderr, "Process name too long to write to log");
-		return;
-	}
-
-	//Pad it to the correct length
-	for (int i = 0; i < MAX_NAME_LENGTH - size; ++i) {
-		outputBuffer[size + i] = ' ';
-	}
-
-	outputBuffer[MAX_NAME_LENGTH - 1] = '\n';
-
-	if ( write(procNameFD, outputBuffer, MAX_NAME_LENGTH) < MAX_NAME_LENGTH)
-		perror("Failed writing entry to process table. Non fatal error.");
-
-	return;
-}
 
 void cProcessLogger::writeProcessInfo(ProcessInfo* proc) {
 	assert(proc != NULL);
 
+	pthread_mutex_lock(&logWriteLock);
 	/* Seek to the correct file location */
 	if ( lseek(procLogFD, proc->procFileLine * lineSize, SEEK_SET) == -1) {
 		perror("Failed to seek within process file");
+		pthread_mutex_unlock(&logWriteLock);
 		return;
 	}
 
 	int size;
 
 	size = snprintf(outputBuffer, MAX_LINE_LENGTH, outputFormat,
-					proc->pid, proc->memory, proc->totalCPU, proc->state);
+					proc->pid, proc->memory, proc->startCPU, proc->totalCPU, proc->state);
 
 	assert(size < MAX_LINE_LENGTH);
 
@@ -128,5 +161,6 @@ void cProcessLogger::writeProcessInfo(ProcessInfo* proc) {
 	if ( write(procLogFD, outputBuffer, MAX_LINE_LENGTH) < MAX_LINE_LENGTH)
 		perror("Failed writing entry to process table. Non fatal error.");
 
+	pthread_mutex_unlock(&logWriteLock);
 	return;
 }

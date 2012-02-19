@@ -1,11 +1,15 @@
 #ifndef SCHEDULER_H_INCLUDED
 #define SCHEDULER_H_INCLUDED
 
+#include <cstdlib>
+#include <pthread.h>
+
 #include "process.h"
 #include "utility/logger.h"
 #include "utility/process_logger.h"
+#include "utility/id.h"
 
-/* Abstract Interface for Schedulers */
+/** Abstract Interface for Schedulers */
 class cScheduler {
 	public:
 		/* Notification to scheduler so it can update its datastructures */
@@ -142,5 +146,28 @@ class cScheduler {
  *	\li Return how many processes, running and blocked, are in the scheduler.
  *
  *	\return pidType
+ */
+
+/** @fn virtual void cScheduler::addLogger(FILE*) = 0
+ *	Add an instance of the trace logger to the scheduler
+ *
+ *	The kernel passes a file stream pointer for the scheduler
+ *	to print trace info such as blocking/unblocking events.
+ *
+ *	@param FILE* File stream for trace log
+ *	@see initLog(const char* filename)
+ *	@see getStream()
+ */
+
+/**	@fn virtual void cScheduler::addProcLogger(cProcessLogger*) = 0
+ *	Add instance of process logger to the scheduler
+ *
+ *	The kernel passes this pointer so the scheduler can
+ *	update process info upon process addition, state change
+ *	and termination. This updates the information presented to
+ *	the top process.
+ *
+ *	@param cProcessLogger* Process logger class
+ *	@see cProcessLogger
  */
 #endif // SCHEDULER_H_INCLUDED

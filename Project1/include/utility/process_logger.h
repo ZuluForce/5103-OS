@@ -1,20 +1,60 @@
 #ifndef PROCESS_LOGGER_H_INCLUDED
 #define PROCESS_LOGGER_H_INCLUDED
 
+/** @file */
+
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
 #include <fcntl.h>
 #include <assert.h>
 #include <errno.h>
+#include <string.h>
+#include <pthread.h>
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/un.h>
 
 #include "process.h"
 #include "utility/id.h"
 
 using namespace std;
 
-#define MAX_NAME_LENGTH 20
-#define MAX_LINE_LENGTH 30
+#define MAX_LINE_LENGTH 45 /**< Max line length for a process entry in the log file */
+
+/* Format: pid memory cpustart cputime state */
+static const char procNameReq[] = "proc.log.req";
+static const char outputFormat[] = "%u %d %d %d %d";
+static const char requestError[] = "INVALID_ID";
+
+/** @var static const char procNameReq[]
+ *	Name of unix socket file for processes like top to
+ *	request process names.
+ *
+ *	Since process trace names are variable, their names
+ *	are stored in a string objects and then served upon
+ *	request to this socket. While filenames do have a max
+ *	size, it is more efficient to do it this way when you
+ *	consider that most trace file names will not be near
+ *	the max.
+ */
+
+/** @var static const char outputFormat[]
+ *	Format for process info in the log file
+ *
+ *	Scanf is used to print the information in this
+ *	format to a buffer. Then this buffer is padded
+ *	to fill #MAX_LINE_LENGTH and then it is written
+ *	out to the appropriate line in the file.
+ */
+
+/** @var static const char requestError[]
+ *	Return value when a invalid process ID was requested.
+ *
+ *	If another process requests an invalid ID on the request
+ *	socket, this is the corresponding message.
+ */
 
 /** Class specifically for logging process state information
  *
@@ -22,13 +62,10 @@ using namespace std;
  *	the kernel and its associated modules must export process
  *	information. This class logs information for each process
  *	to a file named by its pid. This is inspired by the unix
- *	/proc filesystem. This allows the kernel to easily update
- *	only those processes which have changed.
+ *	/proc filesystem (although memory mapped files aren't being used).
+ *	This allows the kernel to easily update only those processes
+ *	which have changed.
  */
-
-/* Format: pid memory cputime state */
-static const char outputFormat[] = "%u %d %d %d";
-
 class cProcessLogger {
 	private:
 		cIDManager lineIDs;
@@ -36,9 +73,7 @@ class cProcessLogger {
 		string nameFile;
 
 		int procLogFD;
-		int procNameFD;
 		FILE* procLogStream;
-		FILE* procNameStream;
 		int lineSize;
 
 		void addToVector(FILE*);
@@ -48,6 +83,16 @@ class cProcessLogger {
 
 		int previousID;
 
+		/* Socket for requesting process name */
+		int listenSock;
+		pthread_t nameReqListener;
+
+		vector<string> procNames;
+		/* ---------------------------------- */
+
+		pthread_mutex_t logWriteLock;
+
+
 	public:
 		cProcessLogger(const char *file);
 		~cProcessLogger();
@@ -55,11 +100,10 @@ class cProcessLogger {
 		void addProcess(ProcessInfo*, const char*);
 		void rmProcess(ProcessInfo*);
 
-		void writeProcessName(int, const char*);
 		void writeProcessInfo(ProcessInfo*);
 
+		friend void* nameSockFn(void*);
 };
-
 
 enum pivotType {
 	pivotMiddle,

@@ -1,3 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node1" href="$d2/dc6/classcCPU.xhtml" title="A class for emulating a simple cpu." alt="" coords="5,5,64,32"/>
+<area shape="rect" id="node1" href="$d7/d38/classcAbsQueuedDevice.xhtml" title="Abstract class for a device which queues requests." alt="" coords="5,31,144,57"/>
+<area shape="rect" id="node3" href="$dd/d36/classcBlockDevice.xhtml" title="Queued block device." alt="" coords="193,5,295,32"/>
+<area shape="rect" id="node5" href="$d9/de9/classcCharDevice.xhtml" title="Queued char device." alt="" coords="195,56,293,83"/>
 </map>

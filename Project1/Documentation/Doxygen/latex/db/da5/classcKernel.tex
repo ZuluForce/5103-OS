@@ -3,6 +3,15 @@
 }
 
 
+\-Core managing class for this simulated \-O\-S.  
+
+
+
+
+{\ttfamily \#include $<$kernel.\-h$>$}
+
+
+
 \-Collaboration diagram for c\-Kernel\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -13,7 +22,7 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hyperlink{classcKernel_a64d105a595a4d14a47bb65426b331159}{c\-Kernel} ()
+\hyperlink{classcKernel_ab14dbe0cc2a6e4a346a38e24566fbdd1}{c\-Kernel} (\hyperlink{classcScheduler}{c\-Scheduler} \&)
 \begin{DoxyCompactList}\small\item\em \-Default \hyperlink{classcKernel}{c\-Kernel} constructor. \end{DoxyCompactList}\item 
 void \hyperlink{classcKernel_a0ce9a2721bb1ea4d7f999198634f702d}{boot} ()
 \begin{DoxyCompactList}\small\item\em \-Start the '\-O\-S' \-Kernel. \end{DoxyCompactList}\item 
@@ -26,21 +35,23 @@ void \hyperlink{classcKernel_a1e7cb5c6d9e6140e197f9b18dc8bd1b1}{cleanup\-Process
 \item 
 void \hyperlink{classcKernel_a1b8e06f240c1bb7d0c4d0d30bcc55e18}{swap\-Processes} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$proc, bool switch\-Mode=true)
 \begin{DoxyCompactList}\small\item\em \-Swap a process on the cpu. \end{DoxyCompactList}\item 
-\hypertarget{classcKernel_abcc0464e62a5fb82ddf4a3f8ba5ec461}{void {\bfseries cleanup\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)}\label{db/da5/classcKernel_abcc0464e62a5fb82ddf4a3f8ba5ec461}
-
-\item 
+void \hyperlink{classcKernel_abcc0464e62a5fb82ddf4a3f8ba5ec461}{cleanup\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Cleanup process memory and state. \end{DoxyCompactList}\item 
 void \hyperlink{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{sig\-Handler} (int signum, siginfo\-\_\-t $\ast$info)
 \begin{DoxyCompactList}\small\item\em \-Handler for all signals. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Static \-Private \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classcKernel_a571bb344ba50970d9c4a1cb5b500bbcd}{static void {\bfseries sig\-\_\-catch} (int signum, siginfo\-\_\-t $\ast$info, void $\ast$context)}\label{db/da5/classcKernel_a571bb344ba50970d9c4a1cb5b500bbcd}
+\hypertarget{classcKernel_a571bb344ba50970d9c4a1cb5b500bbcd}{static void \hyperlink{classcKernel_a571bb344ba50970d9c4a1cb5b500bbcd}{sig\-\_\-catch} (int signum, siginfo\-\_\-t $\ast$info, void $\ast$context)}\label{db/da5/classcKernel_a571bb344ba50970d9c4a1cb5b500bbcd}
 
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Static function just for capturing signals. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Private \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
 \hypertarget{classcKernel_a7b4ac330752179e72a5e440d30c64e91}{\-F\-I\-L\-E $\ast$ {\bfseries trace\-Stream}}\label{db/da5/classcKernel_a7b4ac330752179e72a5e440d30c64e91}
+
+\item 
+\hypertarget{classcKernel_a3b311fdca8f041c935a61ca5b829adf5}{\hyperlink{classcProcessLogger}{c\-Process\-Logger} {\bfseries proc\-Logger}}\label{db/da5/classcKernel_a3b311fdca8f041c935a61ca5b829adf5}
 
 \item 
 \hypertarget{classcKernel_a1fb233fa1c51650ccf2c872d856329ff}{\hyperlink{classcCPU}{c\-C\-P\-U} {\bfseries cpu}}\label{db/da5/classcKernel_a1fb233fa1c51650ccf2c872d856329ff}
@@ -49,28 +60,40 @@ void \hyperlink{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{sig\-Handler} (i
 \hypertarget{classcKernel_a1de4acdb706016573445b3c497e3b508}{int {\bfseries clock\-Tick}}\label{db/da5/classcKernel_a1de4acdb706016573445b3c497e3b508}
 
 \item 
-\hypertarget{classcKernel_a61c0f8a08a605a92c564056bb34f6957}{pthread\-\_\-mutex\-\_\-t {\bfseries int\-Lock}}\label{db/da5/classcKernel_a61c0f8a08a605a92c564056bb34f6957}
+\hypertarget{classcKernel_a61c0f8a08a605a92c564056bb34f6957}{pthread\-\_\-mutex\-\_\-t \hyperlink{classcKernel_a61c0f8a08a605a92c564056bb34f6957}{int\-Lock}}\label{db/da5/classcKernel_a61c0f8a08a605a92c564056bb34f6957}
+
+\begin{DoxyCompactList}\small\item\em \-Lock for condition variable. \end{DoxyCompactList}\item 
+\hypertarget{classcKernel_a81cad8017ccbb1768ee0aa9aa2fcf056}{pthread\-\_\-cond\-\_\-t \hyperlink{classcKernel_a81cad8017ccbb1768ee0aa9aa2fcf056}{int\-Cond}}\label{db/da5/classcKernel_a81cad8017ccbb1768ee0aa9aa2fcf056}
+
+\begin{DoxyCompactList}\small\item\em \-For synchronization with clocktick. \end{DoxyCompactList}\item 
+\hypertarget{classcKernel_a39d83e4f0a712b0339120ac418608744}{\hyperlink{classcBlockDevice}{c\-Block\-Device} {\bfseries b\-Device}}\label{db/da5/classcKernel_a39d83e4f0a712b0339120ac418608744}
 
 \item 
-\hypertarget{classcKernel_a81cad8017ccbb1768ee0aa9aa2fcf056}{pthread\-\_\-cond\-\_\-t {\bfseries int\-Cond}}\label{db/da5/classcKernel_a81cad8017ccbb1768ee0aa9aa2fcf056}
-
-\item 
-\hypertarget{classcKernel_a2d05550b96d1a4c4b02d523574fa94b3}{\hyperlink{classBlockDevice}{\-Block\-Device} {\bfseries b\-Device}}\label{db/da5/classcKernel_a2d05550b96d1a4c4b02d523574fa94b3}
-
-\item 
-\hypertarget{classcKernel_abe168524c497a731b708eeeffa810a4b}{\hyperlink{classCharDevice}{\-Char\-Device} {\bfseries c\-Device}}\label{db/da5/classcKernel_abe168524c497a731b708eeeffa810a4b}
+\hypertarget{classcKernel_ad65b547cee086705689e2fd991518bfe}{\hyperlink{classcCharDevice}{c\-Char\-Device} {\bfseries c\-Device}}\label{db/da5/classcKernel_ad65b547cee086705689e2fd991518bfe}
 
 \item 
 \hypertarget{classcKernel_a1e82363115819c11c74ac261d82d11b5}{\hyperlink{classClockDevice}{\-Clock\-Device} {\bfseries clock\-Interrupt}}\label{db/da5/classcKernel_a1e82363115819c11c74ac261d82d11b5}
 
 \item 
-\hypertarget{classcKernel_a6e33ce858b1839bbeb6503515bf11475}{\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ \hyperlink{classcKernel_a6e33ce858b1839bbeb6503515bf11475}{running\-Proc}}\label{db/da5/classcKernel_a6e33ce858b1839bbeb6503515bf11475}
-
-\begin{DoxyCompactList}\small\item\em \hyperlink{structProcessInfo}{\-Process\-Info} \end{DoxyCompactList}\item 
-\hypertarget{classcKernel_a03d2c6943661797e86c030864890183e}{\hyperlink{classcIDManager}{c\-I\-D\-Manager} {\bfseries id\-Generator}}\label{db/da5/classcKernel_a03d2c6943661797e86c030864890183e}
+\hypertarget{classcKernel_a0c3334878b944a69896982222dff8b36}{pthread\-\_\-t {\bfseries device\-Thread}}\label{db/da5/classcKernel_a0c3334878b944a69896982222dff8b36}
 
 \item 
-\hypertarget{classcKernel_a739c2652aee254fc800e8fe05452db8c}{\hyperlink{classcFCFS}{scheduler\-Type} {\bfseries scheduler}}\label{db/da5/classcKernel_a739c2652aee254fc800e8fe05452db8c}
+\hypertarget{classcKernel_ab928a0890424b001375a518afa6a91d7}{sem\-\_\-t \hyperlink{classcKernel_ab928a0890424b001375a518afa6a91d7}{\-Dev\-Sig\-Sem}}\label{db/da5/classcKernel_ab928a0890424b001375a518afa6a91d7}
+
+\begin{DoxyCompactList}\small\item\em \-A device interrupt has been received. \end{DoxyCompactList}\item 
+\hypertarget{classcKernel_a0ba7a1fd75f4b109d3e8cb1a3ed28868}{sem\-\_\-t \hyperlink{classcKernel_a0ba7a1fd75f4b109d3e8cb1a3ed28868}{\-B\-Sig\-Sem}}\label{db/da5/classcKernel_a0ba7a1fd75f4b109d3e8cb1a3ed28868}
+
+\begin{DoxyCompactList}\small\item\em \-A block device interrupt has been received. \end{DoxyCompactList}\item 
+\hypertarget{classcKernel_a603e89ab3f91bbbea51685810fe51afa}{sem\-\_\-t \hyperlink{classcKernel_a603e89ab3f91bbbea51685810fe51afa}{\-C\-Sig\-Sem}}\label{db/da5/classcKernel_a603e89ab3f91bbbea51685810fe51afa}
+
+\begin{DoxyCompactList}\small\item\em \-A char device interrupt has been received. \end{DoxyCompactList}\item 
+\hypertarget{classcKernel_a6e33ce858b1839bbeb6503515bf11475}{\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ \hyperlink{classcKernel_a6e33ce858b1839bbeb6503515bf11475}{running\-Proc}}\label{db/da5/classcKernel_a6e33ce858b1839bbeb6503515bf11475}
+
+\begin{DoxyCompactList}\small\item\em \-Process currently on the cpu. \end{DoxyCompactList}\item 
+\hypertarget{classcKernel_a03d2c6943661797e86c030864890183e}{\hyperlink{classcIDManager}{c\-I\-D\-Manager} \hyperlink{classcKernel_a03d2c6943661797e86c030864890183e}{id\-Generator}}\label{db/da5/classcKernel_a03d2c6943661797e86c030864890183e}
+
+\begin{DoxyCompactList}\small\item\em \-For generating new process \-P\-I\-D's. \end{DoxyCompactList}\item 
+\hypertarget{classcKernel_a2187347881ef22432f28f82ad73a9bc5}{\hyperlink{classcScheduler}{c\-Scheduler} \& {\bfseries scheduler}}\label{db/da5/classcKernel_a2187347881ef22432f28f82ad73a9bc5}
 
 \end{DoxyCompactItemize}
 \subsection*{\-Static \-Private \-Attributes}
@@ -79,16 +102,21 @@ void \hyperlink{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{sig\-Handler} (i
 \hypertarget{classcKernel_ae757ff0479ba7ce5154aff58f493cfa9}{static \hyperlink{classcKernel}{c\-Kernel} $\ast$ {\bfseries kernel\-\_\-instance}}\label{db/da5/classcKernel_ae757ff0479ba7ce5154aff58f493cfa9}
 
 \end{DoxyCompactItemize}
+\subsection*{\-Friends}
+\begin{DoxyCompactItemize}
+\item 
+void $\ast$ \hyperlink{classcKernel_af9d3f90a4d65f73fab17cccabb1350bd}{device\-Handle} (void $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Thread function for handline device interrupts. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{\-Constructor \& \-Destructor \-Documentation}
-\hypertarget{classcKernel_a64d105a595a4d14a47bb65426b331159}{\index{c\-Kernel@{c\-Kernel}!c\-Kernel@{c\-Kernel}}
+\hypertarget{classcKernel_ab14dbe0cc2a6e4a346a38e24566fbdd1}{\index{c\-Kernel@{c\-Kernel}!c\-Kernel@{c\-Kernel}}
 \index{c\-Kernel@{c\-Kernel}!cKernel@{c\-Kernel}}
 \subsubsection[{c\-Kernel}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-Kernel\-::c\-Kernel} (
 \begin{DoxyParamCaption}
-{}
+\item[{{\bf c\-Scheduler} \&}]{s}
 \end{DoxyParamCaption}
-)}}\label{db/da5/classcKernel_a64d105a595a4d14a47bb65426b331159}
+)}}\label{db/da5/classcKernel_ab14dbe0cc2a6e4a346a38e24566fbdd1}
 \-The default constructor initializes all internal datastructures and loads the initial program (default\-: 'main.\-trace') but does not run it. 
 
 \subsection{\-Member \-Function \-Documentation}
@@ -106,9 +134,20 @@ void \hyperlink{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{sig\-Handler} (i
 {\em \hyperlink{structkernelError}{kernel\-Error}} & \\
 \hline
 \end{DoxyExceptions}
+\hypertarget{classcKernel_abcc0464e62a5fb82ddf4a3f8ba5ec461}{\index{c\-Kernel@{c\-Kernel}!cleanup\-Process@{cleanup\-Process}}
+\index{cleanup\-Process@{cleanup\-Process}!cKernel@{c\-Kernel}}
+\subsubsection[{cleanup\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Kernel\-::cleanup\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{proc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{db/da5/classcKernel_abcc0464e62a5fb82ddf4a3f8ba5ec461}
+\-This is called when a process is being removed from the system and its memory and any remaining state information needs to be cleaned up. 
+
+\-Referenced by boot().
+
 \hypertarget{classcKernel_a1e7cb5c6d9e6140e197f9b18dc8bd1b1}{\index{c\-Kernel@{c\-Kernel}!cleanup\-Process@{cleanup\-Process}}
 \index{cleanup\-Process@{cleanup\-Process}!cKernel@{c\-Kernel}}
-\subsubsection[{cleanup\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void c\-Kernel\-::cleanup\-Process (
+\subsubsection[{cleanup\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Kernel\-::cleanup\-Process} (
 \begin{DoxyParamCaption}
 \item[{pid\-Type}]{pid}
 \end{DoxyParamCaption}
@@ -122,7 +161,11 @@ void \hyperlink{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{sig\-Handler} (i
 \item[{int}]{priority = {\ttfamily {\bf \-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}}}
 \end{DoxyParamCaption}
 )}}\label{db/da5/classcKernel_a5440eace2647ffd5279de55600947b84}
-\-Initializes a process by loading program file contents, setting default process values and adding it in a ready state to the scheduler. \hypertarget{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{\index{c\-Kernel@{c\-Kernel}!sig\-Handler@{sig\-Handler}}
+\-Initializes a process by loading program file contents, setting default process values and adding it in a ready state to the scheduler. 
+
+\-Referenced by boot(), and c\-Kernel().
+
+\hypertarget{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{\index{c\-Kernel@{c\-Kernel}!sig\-Handler@{sig\-Handler}}
 \index{sig\-Handler@{sig\-Handler}!cKernel@{c\-Kernel}}
 \subsubsection[{sig\-Handler}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Kernel\-::sig\-Handler} (
 \begin{DoxyParamCaption}
@@ -130,7 +173,26 @@ void \hyperlink{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{sig\-Handler} (i
 \item[{siginfo\-\_\-t $\ast$}]{info}
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{db/da5/classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}
-\-Each device uses a timer from \-S\-I\-G\-R\-T\-M\-I\-N -\/$>$ \-S\-I\-G\-R\-T\-M\-A\-X. \-Because these are not required to be compile time constants, a switch statement cannot be used. \-When a signal is received by the kernel, careful consideration must be made to the current state. \-Below is each signal and how it is handled\-: \hypertarget{classcKernel_a1b8e06f240c1bb7d0c4d0d30bcc55e18}{\index{c\-Kernel@{c\-Kernel}!swap\-Processes@{swap\-Processes}}
+\-For clock interrupt signals, the handler signals on a condition variable which the main thread will be waiting on.
+
+\-For block and character devices, the appropriate semaphores are incremented which will unblock the waiting thread to act on them.
+
+\-This function is called by \hyperlink{classcKernel_a571bb344ba50970d9c4a1cb5b500bbcd}{c\-Kernel\-::sig\-\_\-catch} \begin{DoxySeeAlso}{\-See also}
+\hyperlink{classcKernel_af9d3f90a4d65f73fab17cccabb1350bd}{device\-Handle(void$\ast$)} 
+
+\hyperlink{classcKernel_a81cad8017ccbb1768ee0aa9aa2fcf056}{c\-Kernel\-::int\-Cond} 
+
+\hyperlink{classcKernel_ab928a0890424b001375a518afa6a91d7}{\-Dev\-Sig\-Sem} 
+
+\hyperlink{classcKernel_a603e89ab3f91bbbea51685810fe51afa}{\-C\-Sig\-Sem} 
+
+\hyperlink{classcKernel_a0ba7a1fd75f4b109d3e8cb1a3ed28868}{\-B\-Sig\-Sem} 
+\end{DoxySeeAlso}
+
+
+\-Referenced by sig\-\_\-catch().
+
+\hypertarget{classcKernel_a1b8e06f240c1bb7d0c4d0d30bcc55e18}{\index{c\-Kernel@{c\-Kernel}!swap\-Processes@{swap\-Processes}}
 \index{swap\-Processes@{swap\-Processes}!cKernel@{c\-Kernel}}
 \subsubsection[{swap\-Processes}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Kernel\-::swap\-Processes} (
 \begin{DoxyParamCaption}
@@ -139,6 +201,38 @@ void \hyperlink{classcKernel_a60ccaffeee3cfcfdfb4aa7b9e33b19f4}{sig\-Handler} (i
 \end{DoxyParamCaption}
 )\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{db/da5/classcKernel_a1b8e06f240c1bb7d0c4d0d30bcc55e18}
 \-Takes the process in its parameter and swaps it with the one currently running in the cpu. 
+
+\-Referenced by boot().
+
+
+
+\subsection{\-Friends \-And \-Related \-Function \-Documentation}
+\hypertarget{classcKernel_af9d3f90a4d65f73fab17cccabb1350bd}{\index{c\-Kernel@{c\-Kernel}!device\-Handle@{device\-Handle}}
+\index{device\-Handle@{device\-Handle}!cKernel@{c\-Kernel}}
+\subsubsection[{device\-Handle}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ {\bf device\-Handle} (
+\begin{DoxyParamCaption}
+\item[{void $\ast$}]{args}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}friend\mbox{]}}}}\label{db/da5/classcKernel_af9d3f90a4d65f73fab17cccabb1350bd}
+\-Since limited work can be done within the signal handlers and the main thread may block, a separate thread must be present to handle device interrupts.
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classcKernel_ab928a0890424b001375a518afa6a91d7}{\-Dev\-Sig\-Sem} 
+
+\hyperlink{classcKernel_a603e89ab3f91bbbea51685810fe51afa}{\-C\-Sig\-Sem} 
+
+\hyperlink{classcKernel_a0ba7a1fd75f4b109d3e8cb1a3ed28868}{\-B\-Sig\-Sem}
+\end{DoxySeeAlso}
+
+\begin{DoxyParams}{\-Parameters}
+{\em void$\ast$} & \-This is a pointer to the kernel instance. \\
+\hline
+\end{DoxyParams}
+
+
+\-Referenced by boot().
+
+
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 

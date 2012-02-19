@@ -88,12 +88,11 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <code>#include &lt;cstdlib&gt;</code><br/>
 <code>#include &lt;assert.h&gt;</code><br/>
 <code>#include &lt;inttypes.h&gt;</code><br/>
-<code>#include &quot;utility/logger.h&quot;</code><br/>
+<code>#include &quot;<a class="el" href="../../d1/d8c/logger_8h_source.xhtml">utility/logger.h</a>&quot;</code><br/>
 </div><div class="textblock"><div class="dynheader">
 Include dependency graph for cpu.h:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="../../d4/d37/cpu_8h__incl.svg" width="462" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
-</div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="../../d4/d37/cpu_8h__incl.svg" width="462" height="187"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 </div>
 </div><div class="textblock"><div class="dynheader">
 This graph shows which files directly or indirectly include this file:</div>
@@ -120,10 +119,14 @@ Typedefs</h2></td></tr>
 typedef unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>pidType</b></td></tr>
 <tr><td colspan="2"><h2><a name="enum-members"></a>
 Enumerations</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9">ePSW</a> { <a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9a5f0829985f41a81da1a46db3501075f1">PS_EXCEPTION</a> =  0x1, 
+<tr><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9">ePSW</a> { <br/>
+&#160;&#160;<a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9a5f0829985f41a81da1a46db3501075f1">PS_EXCEPTION</a> =  0x1, 
 <a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9a45657e0129f354aef59ae454ef5443fd">PS_TERMINATE</a> =  PS_EXCEPTION &lt;&lt; 1, 
-<a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee">PS_SYSCALL</a> =  PS_TERMINATE &lt;&lt; 1, 
-<a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9ac4bd92270ab58449a1752f67ec9e7090">PS_FINISHED</a> =  PS_SYSCALL &lt;&lt; 1
+<a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9a8c8ee347805cce90f5544ec61d6bf21e">PS_ABNORMAL</a> =  PS_TERMINATE &lt;&lt; 1, 
+<a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee">PS_SYSCALL</a> =  PS_ABNORMAL &lt;&lt; 1, 
+<br/>
+&#160;&#160;<a class="el" href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9ac4bd92270ab58449a1752f67ec9e7090">PS_FINISHED</a> =  PS_SYSCALL &lt;&lt; 1
+<br/>
  }</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Enumeration of Program Status Word Flags.  <a href="../../dc/da7/cpu_8h.xhtml#ade10811b11f1c647313bf0a60797a9f9">More...</a><br/></td></tr>
 </table>
@@ -162,6 +165,10 @@ Enumerations</h2></td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ade10811b11f1c647313bf0a60797a9f9a45657e0129f354aef59ae454ef5443fd"></a><!-- doxytag: member="PS_TERMINATE" ref="ade10811b11f1c647313bf0a60797a9f9a45657e0129f354aef59ae454ef5443fd" args="" -->PS_TERMINATE</em>&nbsp;</td><td>
 <p>Executing process has finished. </p>
 </td></tr>
+<tr><td valign="top"><em><a class="anchor" id="ade10811b11f1c647313bf0a60797a9f9a8c8ee347805cce90f5544ec61d6bf21e"></a><!-- doxytag: member="PS_ABNORMAL" ref="ade10811b11f1c647313bf0a60797a9f9a8c8ee347805cce90f5544ec61d6bf21e" args="" -->PS_ABNORMAL</em>&nbsp;</td><td>
+<p>Process raised an exception by exiting abnormally. </p>
+<p>No 'E' instruction. </p>
+</td></tr>
 <tr><td valign="top"><em><a class="anchor" id="ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee"></a><!-- doxytag: member="PS_SYSCALL" ref="ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee" args="" -->PS_SYSCALL</em>&nbsp;</td><td>
 <p>Executing process has made a system call. </p>
 </td></tr>
@@ -181,7 +188,7 @@ Enumerations</h2></td></tr>
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -193,7 +200,7 @@ Enumerations</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 13 2012 18:34:30 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
