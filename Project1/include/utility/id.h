@@ -47,6 +47,7 @@ class cIDManager {
 		 */
 		void returnID(unsigned int id);
 
+		unsigned int nextLowID();
 		unsigned int reservedIDs();
 };
 

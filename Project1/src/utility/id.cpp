@@ -71,6 +71,26 @@ void cIDManager::returnID(unsigned int id) {
 	}
 }
 
+unsigned int cIDManager::nextLowID() {
+	if ( !freeID.empty() ) {
+		return freeID.front();
+	}
+
+	if ( consumeQueue ) {
+		if ( freeID.size() > 0 ) {
+			return freeID.front();
+		} else {
+			 return 0;
+		}
+	} else {
+		if ( currentID >= UINT_MAX ) {
+			return currentID;
+		} else {
+			return currentID;
+		}
+	}
+}
+
 unsigned int cIDManager::reservedIDs() {
 	if ( currentID == UINT_MAX )
 		return currentID - baseID - freeID.size() + 1;

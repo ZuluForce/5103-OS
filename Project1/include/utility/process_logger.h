@@ -7,14 +7,20 @@
 #include <fcntl.h>
 #include <assert.h>
 #include <errno.h>
+#include <string.h>
+#include <pthread.h>
+
+#include <sys/types.h>
+#include <sys/socket.h>
+#include <sys/un.h>
 
 #include "process.h"
 #include "utility/id.h"
 
 using namespace std;
 
-#define MAX_NAME_LENGTH 20
-#define MAX_LINE_LENGTH 30
+#define MAX_LINE_LENGTH 45
+
 
 /** Class specifically for logging process state information
  *
@@ -26,8 +32,10 @@ using namespace std;
  *	only those processes which have changed.
  */
 
-/* Format: pid memory cputime state */
-static const char outputFormat[] = "%u %d %d %d";
+/* Format: pid memory cpustart cputime state */
+static const char procNameReq[] = "proc.log.req";
+static const char outputFormat[] = "%u %d %d %d %d";
+static const char requestError[] = "INVALID_ID";
 
 class cProcessLogger {
 	private:
@@ -36,9 +44,7 @@ class cProcessLogger {
 		string nameFile;
 
 		int procLogFD;
-		int procNameFD;
 		FILE* procLogStream;
-		FILE* procNameStream;
 		int lineSize;
 
 		void addToVector(FILE*);
@@ -48,6 +54,14 @@ class cProcessLogger {
 
 		int previousID;
 
+		/* Socket for requesting process name */
+		int listenSock;
+		pthread_t nameReqListener;
+
+		vector<string> procNames;
+		/* ---------------------------------- */
+
+
 	public:
 		cProcessLogger(const char *file);
 		~cProcessLogger();
@@ -55,11 +69,13 @@ class cProcessLogger {
 		void addProcess(ProcessInfo*, const char*);
 		void rmProcess(ProcessInfo*);
 
-		void writeProcessName(int, const char*);
 		void writeProcessInfo(ProcessInfo*);
 
+		friend void* nameSockFn(void*);
 };
 
+//For the threads to access internal state
+static cProcessLogger* log_ptr;
 
 enum pivotType {
 	pivotMiddle,
