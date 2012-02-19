@@ -59,6 +59,7 @@ void cRoundRobin::setBlocked(ProcessInfo* proc) {
 
 	++totalBlocked;
 	runningProc = NULL;
+	// Reset the clock ticks since we will be picking a new process to run.
 	clockTicksUsed = 0;
 	fprintf(logStream, "Process %d has been blocked\n", proc->pid);
 	pthread_mutex_unlock(&blockedLock);
@@ -127,9 +128,10 @@ void cRoundRobin::printUnblocked(){
 ProcessInfo* cRoundRobin::getNextToRun() {
     printUnblocked();
 	if ( runningProc != NULL) {
-	    if ((clockTicksUsed) > QUANTUM){
+	    if ((clockTicksUsed) > QUANTUM){ // Has the running process used up it's quantum?
 	        runningProc->state == ready;
 	        readyQueue.push(runningProc);
+	        // Reset the clock ticks since we will be picking a new process to run.
 	        clockTicksUsed = 0;
 	    } else{
 	        clockTicksUsed++;
