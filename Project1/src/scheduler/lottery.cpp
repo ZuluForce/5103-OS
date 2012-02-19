@@ -18,6 +18,7 @@ cLottery::cLottery() : blockedID(0), readyID(0) {
 	procLogger = NULL;
 
 	blockedVector.resize(DEF_BLOCK_VEC_SIZE);
+	readyVector.resize(DEF_BLOCK_VEC_SIZE);
 	totalBlocked = 0;
 	totalReady = 0;
 
