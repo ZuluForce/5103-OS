@@ -2,7 +2,7 @@
 #define ALLSCHEDULERS_H_INCLUDED
 
 #include "scheduler/fcfs.h"
-#include "scheduler/lotter.h"
+#include "scheduler/lottery.h"
 #include "scheduler/round_robin.h"
 
 

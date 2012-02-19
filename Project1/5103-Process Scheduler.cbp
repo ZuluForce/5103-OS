@@ -78,6 +78,7 @@
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
+		<Unit filename="include/scheduler/allSchedulers.h" />
 		<Unit filename="include/scheduler/fcfs.h">
 			<Option target="Debug" />
 			<Option target="Release" />
