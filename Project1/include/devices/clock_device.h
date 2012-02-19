@@ -17,6 +17,7 @@
 
 using namespace std;
 
+/** Device for generating repeated clock interrupts */
 class ClockDevice: public AbstractDevice {
 	private:
 		/// @cond

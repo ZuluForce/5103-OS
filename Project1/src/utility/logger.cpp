@@ -1,5 +1,9 @@
 #include "utility/logger.h"
 
+static FILE* logStream;
+
+static bool logInitialized;
+
 FILE* initLog(const char* filename) {
 	assert(filename != NULL);
 

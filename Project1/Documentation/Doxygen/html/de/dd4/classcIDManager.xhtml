@@ -84,7 +84,12 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="title">cIDManager Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="cIDManager" --><div class="dynheader">
+<!-- doxytag: class="cIDManager" -->
+<p>A class for managing unique IDs.  
+</p>
+
+<p><code>#include &lt;<a class="el" href="../../df/db9/id_8h_source.xhtml">id.h</a>&gt;</code></p>
+<div class="dynheader">
 Collaboration diagram for cIDManager:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" frameborder="0" src="../../db/d8e/classcIDManager__coll__graph.svg" width="187" height="128"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
@@ -98,20 +103,28 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Creates a new ID Manager object.  <a href="#a59021595aaf85ebc151c207a8a04f101"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/dd4/classcIDManager.xhtml#a45420147e785cc219743e9aa2c336501">getID</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Reserves a unique ID.  <a href="#a45420147e785cc219743e9aa2c336501"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/dd4/classcIDManager.xhtml#ab0d7d0e2cb257f144fd4a7d61ade3b3f">getLowID</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Get a low ID.  <a href="#ab0d7d0e2cb257f144fd4a7d61ade3b3f"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/dd4/classcIDManager.xhtml#a6671d898740f88cf40860b0b9e119b02">returnID</a> (unsigned int id)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Returns an ID to the manager.  <a href="#a6671d898740f88cf40860b0b9e119b02"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="aeb31ecbcb9716b38f33e96c81929b5fe"></a><!-- doxytag: member="cIDManager::reservedIDs" ref="aeb31ecbcb9716b38f33e96c81929b5fe" args="()" -->
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>reservedIDs</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/dd4/classcIDManager.xhtml#a03d1079ee2f934dcba77e61d605a8e01">nextLowID</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">See what the next low ID would be.  <a href="#a03d1079ee2f934dcba77e61d605a8e01"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/dd4/classcIDManager.xhtml#aeb31ecbcb9716b38f33e96c81929b5fe">reservedIDs</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">How many IDs have been given out.  <a href="#aeb31ecbcb9716b38f33e96c81929b5fe"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0bed8666fa886f86428e7ac059bc5de0"></a><!-- doxytag: member="cIDManager::freeID" ref="a0bed8666fa886f86428e7ac059bc5de0" args="" -->
-queue&lt; unsigned int &gt;&#160;</td><td class="memItemRight" valign="bottom"><b>freeID</b></td></tr>
+queue&lt; unsigned int &gt;&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/dd4/classcIDManager.xhtml#a0bed8666fa886f86428e7ac059bc5de0">freeID</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Queue of returned IDs. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a40438d3df4bce74a0344f21517479066"></a><!-- doxytag: member="cIDManager::baseID" ref="a40438d3df4bce74a0344f21517479066" args="" -->
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>baseID</b></td></tr>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/dd4/classcIDManager.xhtml#a40438d3df4bce74a0344f21517479066">baseID</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">To prevent the IDs from dropping below when being returned. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a951329fb713c227a88b8db71e0f09e9c"></a><!-- doxytag: member="cIDManager::currentID" ref="a951329fb713c227a88b8db71e0f09e9c" args="" -->
-unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>currentID</b></td></tr>
+unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/dd4/classcIDManager.xhtml#a951329fb713c227a88b8db71e0f09e9c">currentID</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Next ID to be given out. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a8e7c466b5b71bf46a203d3c92533daa0"></a><!-- doxytag: member="cIDManager::consumeQueue" ref="a8e7c466b5b71bf46a203d3c92533daa0" args="" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>consumeQueue</b></td></tr>
+bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../de/dd4/classcIDManager.xhtml#a8e7c466b5b71bf46a203d3c92533daa0">consumeQueue</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">This signals that IDs have reached their max and freeIDs should be used. <br/></td></tr>
 </table>
 <hr/><h2>Constructor &amp; Destructor Documentation</h2>
 <a class="anchor" id="a59021595aaf85ebc151c207a8a04f101"></a><!-- doxytag: member="cIDManager::cIDManager" ref="a59021595aaf85ebc151c207a8a04f101" args="(unsigned int startID=0)" -->
@@ -148,6 +161,59 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>consumeQueue</b></td>
 <div class="memdoc">
 <p>Unique is in the sense that no one else is currently using it but it may have been used previously. are distributed in increasing order until UINT_MAX is reached. After this is reached, IDs are given from the queue of returned IDs. If this queue is empty then an exception is thrown. </p>
 
+<p>Referenced by <a class="el" href="../../de/dd4/classcIDManager.xhtml#ab0d7d0e2cb257f144fd4a7d61ade3b3f">getLowID()</a>, <a class="el" href="../../db/da5/classcKernel.xhtml#a5440eace2647ffd5279de55600947b84">cKernel::initProcess()</a>, <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a13609de0f36c81a780072f9c0730f963">cRoundRobin::setBlocked()</a>, and <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a1b8ee3a759a31032ec7c1cd7b15ed5df">cFCFS::setBlocked()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ab0d7d0e2cb257f144fd4a7d61ade3b3f"></a><!-- doxytag: member="cIDManager::getLowID" ref="ab0d7d0e2cb257f144fd4a7d61ade3b3f" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="../../de/dd4/classcIDManager.xhtml#ab0d7d0e2cb257f144fd4a7d61ade3b3f">cIDManager::getLowID</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>When generating process PID's we use the regular getID so that process IDs continue to grow. This choice was mainly to prevent confusion when process 1 terminated and the next one to start had pid = 1. For functions which use vectors and need an ID system, it is more efficient to maintain a smaller window to keep the array small. This method provides this by preferring to return IDs from the freeID queue. Therefore, if there is an ID availabe in freeID then the total range of IDs will not grow after this function call. </p>
+
+</div>
+</div>
+<a class="anchor" id="a03d1079ee2f934dcba77e61d605a8e01"></a><!-- doxytag: member="cIDManager::nextLowID" ref="a03d1079ee2f934dcba77e61d605a8e01" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="../../de/dd4/classcIDManager.xhtml#a03d1079ee2f934dcba77e61d605a8e01">cIDManager::nextLowID</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>There is not longer any purpose for this functino but I left it here for the potential functionality. The intention was to improve performance in the process logger to determine if the next ID would be right after the previous low ID. That way, if we had variable length records we wouldn't have to search from the beginning. </p>
+
+</div>
+</div>
+<a class="anchor" id="aeb31ecbcb9716b38f33e96c81929b5fe"></a><!-- doxytag: member="cIDManager::reservedIDs" ref="aeb31ecbcb9716b38f33e96c81929b5fe" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">unsigned int <a class="el" href="../../de/dd4/classcIDManager.xhtml#aeb31ecbcb9716b38f33e96c81929b5fe">cIDManager::reservedIDs</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Returns the number of IDs which have been reserved </p>
+
 </div>
 </div>
 <a class="anchor" id="a6671d898740f88cf40860b0b9e119b02"></a><!-- doxytag: member="cIDManager::returnID" ref="a6671d898740f88cf40860b0b9e119b02" args="(unsigned int id)" -->
@@ -166,6 +232,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>consumeQueue</b></td>
 <div class="memdoc">
 <p>If the ID is not equal to the one last given then it is added to a 'free queue'. If it is equal to the last one reserved then the ID counter is simply decremented If this last case happens, it causes <a class="el" href="../../de/dd4/classcIDManager.xhtml#a45420147e785cc219743e9aa2c336501" title="Reserves a unique ID.">cIDManager::getID</a> to stop consuming from the queue and return this newly availabe ID. </p>
 
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#abcc0464e62a5fb82ddf4a3f8ba5ec461">cKernel::cleanupProcess()</a>, <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a278d541c78f034020f6921b22a7d37af">cRoundRobin::unblockProcess()</a>, and <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a793da0298f9b36ab8505a0e3daaf41ec">cFCFS::unblockProcess()</a>.</p>
+
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following files:<ul>
@@ -178,7 +246,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>consumeQueue</b></td>
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -190,7 +258,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>consumeQueue</b></td>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 13 2012 18:34:30 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

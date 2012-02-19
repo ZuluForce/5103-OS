@@ -3,6 +3,15 @@
 }
 
 
+\-First-\/\-Come-\/\-First-\/\-Serve \-Scheduler.  
+
+
+
+
+{\ttfamily \#include $<$fcfs.\-h$>$}
+
+
+
 \-Inheritance diagram for c\-F\-C\-F\-S\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -35,7 +44,14 @@ void \hyperlink{classcFCFS_aeeac757885108ae510b728600ebba248}{remove\-Process} (
 \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ \hyperlink{classcFCFS_aa2b92a8a992078e499aab455c9d78faf}{get\-Next\-To\-Run} ()
 \begin{DoxyCompactList}\small\item\em \-Query the scheduler for next process to run. \end{DoxyCompactList}\item 
 pid\-Type \hyperlink{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{num\-Processes} ()
-\begin{DoxyCompactList}\small\item\em \-How many processes are in the scheduler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-How many processes are in the scheduler. \end{DoxyCompactList}\item 
+void \hyperlink{classcFCFS_accb887eae7016719ce770d7b0284adea}{add\-Logger} (\-F\-I\-L\-E $\ast$\-\_\-log\-Stream)
+\begin{DoxyCompactList}\small\item\em \-Add an instance of the trace logger to the scheduler. \end{DoxyCompactList}\item 
+void \hyperlink{classcFCFS_a4da9f2fa83516ac5859772ae09169343}{add\-Proc\-Logger} (\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$\-\_\-proc\-Logger)
+\begin{DoxyCompactList}\small\item\em \-Add instance of process logger to the scheduler. \end{DoxyCompactList}\item 
+\hypertarget{classcFCFS_a37af1bbb7393f800a24ff22ee443f876}{void {\bfseries print\-Unblocked} ()}\label{d6/dc3/classcFCFS_a37af1bbb7393f800a24ff22ee443f876}
+
+\end{DoxyCompactItemize}
 \subsection*{\-Private \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -43,6 +59,12 @@ pid\-Type \hyperlink{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{num\-Processe
 
 \item 
 \hypertarget{classcFCFS_a1353ba13053c744e539b72ae06f0bf31}{vector$<$ \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ $>$ {\bfseries blocked\-Vector}}\label{d6/dc3/classcFCFS_a1353ba13053c744e539b72ae06f0bf31}
+
+\item 
+\hypertarget{classcFCFS_a94e258d1237eaf14679bb557b22a4cbd}{queue$<$ pid\-Type $>$ {\bfseries trace\-Unblocked}}\label{d6/dc3/classcFCFS_a94e258d1237eaf14679bb557b22a4cbd}
+
+\item 
+\hypertarget{classcFCFS_a71011b9c0dc2c005356ff183c057e538}{int {\bfseries total\-Blocked}}\label{d6/dc3/classcFCFS_a71011b9c0dc2c005356ff183c057e538}
 
 \item 
 \hypertarget{classcFCFS_a6ba522300c166895a7db48d7ab918b4e}{\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ {\bfseries running\-Proc}}\label{d6/dc3/classcFCFS_a6ba522300c166895a7db48d7ab918b4e}
@@ -56,10 +78,39 @@ pid\-Type \hyperlink{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{num\-Processe
 \item 
 \hypertarget{classcFCFS_a1cc5fa525a8adb5826dd1dedebd2ff6b}{\hyperlink{classcIDManager}{c\-I\-D\-Manager} {\bfseries blocked\-I\-D}}\label{d6/dc3/classcFCFS_a1cc5fa525a8adb5826dd1dedebd2ff6b}
 
+\item 
+\hypertarget{classcFCFS_a220459254463daf9a8ff8d017740fc79}{\-F\-I\-L\-E $\ast$ {\bfseries log\-Stream}}\label{d6/dc3/classcFCFS_a220459254463daf9a8ff8d017740fc79}
+
+\item 
+\hypertarget{classcFCFS_aa65684700e81cfa01808cbfdbe62e3d6}{\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$ {\bfseries proc\-Logger}}\label{d6/dc3/classcFCFS_aa65684700e81cfa01808cbfdbe62e3d6}
+
 \end{DoxyCompactItemize}
 
 
 \subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcFCFS_accb887eae7016719ce770d7b0284adea}{\index{c\-F\-C\-F\-S@{c\-F\-C\-F\-S}!add\-Logger@{add\-Logger}}
+\index{add\-Logger@{add\-Logger}!cFCFS@{c\-F\-C\-F\-S}}
+\subsubsection[{add\-Logger}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-F\-C\-F\-S\-::add\-Logger} (
+\begin{DoxyParamCaption}
+\item[{\-F\-I\-L\-E $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d6/dc3/classcFCFS_accb887eae7016719ce770d7b0284adea}
+\-The kernel passes a file stream pointer for the scheduler to print trace info such as blocking/unblocking events.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-F\-I\-L\-E$\ast$} & \-File stream for trace log \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{logger_8h_acf2f61176acdfe03ac9f73ec56fb3bd6}{init\-Log(const char$\ast$ filename)} 
+
+\hyperlink{logger_8h_af756a6a1097f12014f446b298d8a266f}{get\-Stream()} 
+\end{DoxySeeAlso}
+
+
+\-Implements \hyperlink{classcScheduler_a7b29af7eab1a9cbe383d98a44693be69}{c\-Scheduler}.
+
 \hypertarget{classcFCFS_a25d4bf440041f5294f3b9c5aff20b411}{\index{c\-F\-C\-F\-S@{c\-F\-C\-F\-S}!add\-Process@{add\-Process}}
 \index{add\-Process@{add\-Process}!cFCFS@{c\-F\-C\-F\-S}}
 \subsubsection[{add\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-F\-C\-F\-S\-::add\-Process} (
@@ -79,6 +130,27 @@ pid\-Type \hyperlink{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{num\-Processe
 
 
 \-Implements \hyperlink{classcScheduler_aeae779c5c160a441e725dfc72656e6dc}{c\-Scheduler}.
+
+\hypertarget{classcFCFS_a4da9f2fa83516ac5859772ae09169343}{\index{c\-F\-C\-F\-S@{c\-F\-C\-F\-S}!add\-Proc\-Logger@{add\-Proc\-Logger}}
+\index{add\-Proc\-Logger@{add\-Proc\-Logger}!cFCFS@{c\-F\-C\-F\-S}}
+\subsubsection[{add\-Proc\-Logger}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-F\-C\-F\-S\-::add\-Proc\-Logger} (
+\begin{DoxyParamCaption}
+\item[{{\bf c\-Process\-Logger} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d6/dc3/classcFCFS_a4da9f2fa83516ac5859772ae09169343}
+\-The kernel passes this pointer so the scheduler can update process info upon process addition, state change and termination. \-This updates the information presented to the top process.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em c\-Process\-Logger$\ast$} & \-Process logger class \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classcProcessLogger}{c\-Process\-Logger} 
+\end{DoxySeeAlso}
+
+
+\-Implements \hyperlink{classcScheduler_a3e7865112718057fcdc277db0a85c21c}{c\-Scheduler}.
 
 \hypertarget{classcFCFS_aa2b92a8a992078e499aab455c9d78faf}{\index{c\-F\-C\-F\-S@{c\-F\-C\-F\-S}!get\-Next\-To\-Run@{get\-Next\-To\-Run}}
 \index{get\-Next\-To\-Run@{get\-Next\-To\-Run}!cFCFS@{c\-F\-C\-F\-S}}
@@ -201,5 +273,5 @@ pid\-Type
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-include/scheduler/fcfs.\-h\item 
+include/scheduler/\hyperlink{fcfs_8h}{fcfs.\-h}\item 
 src/scheduler/fcfs.\-cpp\end{DoxyCompactItemize}

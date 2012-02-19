@@ -8,12 +8,9 @@
 #ifndef LOTTERY_H_INCLUDED
 #define LOTTERY_H_INCLUDED
 
-#include <cstdlib>
-#include <queue>
 #include <assert.h>
 #include <pthread.h>
 #include <time.h>
-
 #include "scheduler/scheduler.h"
 #include "utility/id.h"
 
@@ -21,6 +18,7 @@
 
 using namespace std;
 
+/** Lottery Scheduler */
 class cLottery: public cScheduler {
 private:
 	vector<ProcessInfo*> readyVector;
@@ -64,6 +62,7 @@ public:
 
 };
 
+/** Struct containing process info specific for Lottery scheduling */
 struct lotteryInfo {
 	unsigned int readyIndex;
 	unsigned int blockedIndex;

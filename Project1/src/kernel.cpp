@@ -67,6 +67,7 @@ bDevice(DEFAULT_BTIMER), cDevice(DEFAULT_CTIMER), scheduler(s) {
 
 cKernel::~cKernel() {
 	pthread_cancel(deviceThread);
+	pthread_join(deviceThread, NULL);
 
 	closeLog();
 

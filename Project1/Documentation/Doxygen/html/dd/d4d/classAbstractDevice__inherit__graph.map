@@ -1,5 +1,3 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$db/d6d/classBlockDevice.xhtml" title="BlockDevice" alt="" coords="5,80,101,107"/>
-<area shape="rect" id="node5" href="$d8/d4f/classCharDevice.xhtml" title="CharDevice" alt="" coords="125,80,216,107"/>
-<area shape="rect" id="node7" href="$dc/d14/classClockDevice.xhtml" title="ClockDevice" alt="" coords="241,80,337,107"/>
+<area shape="rect" id="node3" href="$dc/d14/classClockDevice.xhtml" title="Device for generating repeated clock interrupts." alt="" coords="11,80,108,107"/>
 </map>

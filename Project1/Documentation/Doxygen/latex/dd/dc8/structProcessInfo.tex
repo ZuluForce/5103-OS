@@ -13,6 +13,9 @@
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
+\hypertarget{structProcessInfo_a8973fa79d29653211d04b6cf0a993c70}{pid\-Type {\bfseries proc\-File\-Line}}\label{dd/dc8/structProcessInfo_a8973fa79d29653211d04b6cf0a993c70}
+
+\item 
 \hypertarget{structProcessInfo_a102b9e7e7d958b508cec182bbcaf7d85}{unsigned int {\bfseries parent}}\label{dd/dc8/structProcessInfo_a102b9e7e7d958b508cec182bbcaf7d85}
 
 \item 
@@ -58,6 +61,10 @@ void $\ast$ \hyperlink{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{sche
 \index{schedule\-Data@{schedule\-Data}!ProcessInfo@{\-Process\-Info}}
 \subsubsection[{schedule\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ {\bf \-Process\-Info\-::schedule\-Data}}}\label{dd/dc8/structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}
 \-Check specific scheduler docs for the contents of this pointer. \-Since the process struct remains static, this gives the ability for schedulers to store their own state without the kernel having to know ahead of time. 
+
+\-Referenced by c\-Round\-Robin\-::init\-Proc\-Schedule\-Info(), c\-F\-C\-F\-S\-::init\-Proc\-Schedule\-Info(), c\-Round\-Robin\-::remove\-Process(), c\-F\-C\-F\-S\-::remove\-Process(), c\-Round\-Robin\-::set\-Blocked(), c\-F\-C\-F\-S\-::set\-Blocked(), c\-Round\-Robin\-::unblock\-Process(), and c\-F\-C\-F\-S\-::unblock\-Process().
+
+
 
 \-The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
 \item 

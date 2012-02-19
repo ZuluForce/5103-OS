@@ -3,11 +3,20 @@
 }
 
 
+\-Abstract \-Interface for \-Schedulers.  
+
+
+
+
+{\ttfamily \#include $<$scheduler.\-h$>$}
+
+
+
 \-Inheritance diagram for c\-Scheduler\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=144pt]{d8/dde/classcScheduler__inherit__graph}
+\includegraphics[width=292pt]{d8/dde/classcScheduler__inherit__graph}
 \end{center}
 \end{figure}
 \subsection*{\-Public \-Member \-Functions}
@@ -26,10 +35,41 @@ virtual void \hyperlink{classcScheduler_a5632ffa597e9567d475c808070c4e3bb}{remov
 virtual \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ \hyperlink{classcScheduler_a350ad7c55ddcdd17005778b0da241956}{get\-Next\-To\-Run} ()=0
 \begin{DoxyCompactList}\small\item\em \-Query the scheduler for next process to run. \end{DoxyCompactList}\item 
 virtual pid\-Type \hyperlink{classcScheduler_a025532a943093ae7e8d6dc0cdaf60f12}{num\-Processes} ()=0
-\begin{DoxyCompactList}\small\item\em \-How many processes are in the scheduler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-How many processes are in the scheduler. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcScheduler_a7b29af7eab1a9cbe383d98a44693be69}{add\-Logger} (\-F\-I\-L\-E $\ast$)=0
+\begin{DoxyCompactList}\small\item\em \-Add an instance of the trace logger to the scheduler. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcScheduler_a3e7865112718057fcdc277db0a85c21c}{add\-Proc\-Logger} (\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$)=0
+\begin{DoxyCompactList}\small\item\em \-Add instance of process logger to the scheduler. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcScheduler_a7b29af7eab1a9cbe383d98a44693be69}{\index{c\-Scheduler@{c\-Scheduler}!add\-Logger@{add\-Logger}}
+\index{add\-Logger@{add\-Logger}!cScheduler@{c\-Scheduler}}
+\subsubsection[{add\-Logger}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Scheduler\-::add\-Logger} (
+\begin{DoxyParamCaption}
+\item[{\-F\-I\-L\-E $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{d0/d21/classcScheduler_a7b29af7eab1a9cbe383d98a44693be69}
+\-The kernel passes a file stream pointer for the scheduler to print trace info such as blocking/unblocking events.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-F\-I\-L\-E$\ast$} & \-File stream for trace log \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{logger_8h_acf2f61176acdfe03ac9f73ec56fb3bd6}{init\-Log(const char$\ast$ filename)} 
+
+\hyperlink{logger_8h_af756a6a1097f12014f446b298d8a266f}{get\-Stream()} 
+\end{DoxySeeAlso}
+
+
+\-Implemented in \hyperlink{classcFCFS_accb887eae7016719ce770d7b0284adea}{c\-F\-C\-F\-S}, and \hyperlink{classcRoundRobin_a6e0d0ec272a4f7ffe03166b1ff08276b}{c\-Round\-Robin}.
+
+
+
+\-Referenced by c\-Kernel\-::c\-Kernel().
+
 \hypertarget{classcScheduler_aeae779c5c160a441e725dfc72656e6dc}{\index{c\-Scheduler@{c\-Scheduler}!add\-Process@{add\-Process}}
 \index{add\-Process@{add\-Process}!cScheduler@{c\-Scheduler}}
 \subsubsection[{add\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Scheduler\-::add\-Process} (
@@ -48,7 +88,36 @@ virtual pid\-Type \hyperlink{classcScheduler_a025532a943093ae7e8d6dc0cdaf60f12}{
 \end{DoxyParams}
 
 
-\-Implemented in \hyperlink{classcFCFS_a25d4bf440041f5294f3b9c5aff20b411}{c\-F\-C\-F\-S}.
+\-Implemented in \hyperlink{classcFCFS_a25d4bf440041f5294f3b9c5aff20b411}{c\-F\-C\-F\-S}, \hyperlink{classcRoundRobin_a3571d05a8daebccb758d63b8327f8a22}{c\-Round\-Robin}, and \hyperlink{classcLottery_ae250b46d5d3032d40f49b8539cbd9faf}{c\-Lottery}.
+
+
+
+\-Referenced by c\-Kernel\-::init\-Process().
+
+\hypertarget{classcScheduler_a3e7865112718057fcdc277db0a85c21c}{\index{c\-Scheduler@{c\-Scheduler}!add\-Proc\-Logger@{add\-Proc\-Logger}}
+\index{add\-Proc\-Logger@{add\-Proc\-Logger}!cScheduler@{c\-Scheduler}}
+\subsubsection[{add\-Proc\-Logger}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Scheduler\-::add\-Proc\-Logger} (
+\begin{DoxyParamCaption}
+\item[{{\bf c\-Process\-Logger} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{d0/d21/classcScheduler_a3e7865112718057fcdc277db0a85c21c}
+\-The kernel passes this pointer so the scheduler can update process info upon process addition, state change and termination. \-This updates the information presented to the top process.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em c\-Process\-Logger$\ast$} & \-Process logger class \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classcProcessLogger}{c\-Process\-Logger} 
+\end{DoxySeeAlso}
+
+
+\-Implemented in \hyperlink{classcFCFS_a4da9f2fa83516ac5859772ae09169343}{c\-F\-C\-F\-S}, and \hyperlink{classcRoundRobin_a728fa415647d6c71b32ee8d4a04580e1}{c\-Round\-Robin}.
+
+
+
+\-Referenced by c\-Kernel\-::c\-Kernel().
 
 \hypertarget{classcScheduler_a350ad7c55ddcdd17005778b0da241956}{\index{c\-Scheduler@{c\-Scheduler}!get\-Next\-To\-Run@{get\-Next\-To\-Run}}
 \index{get\-Next\-To\-Run@{get\-Next\-To\-Run}!cScheduler@{c\-Scheduler}}
@@ -71,7 +140,11 @@ virtual pid\-Type \hyperlink{classcScheduler_a025532a943093ae7e8d6dc0cdaf60f12}{
 \end{DoxyWarning}
 
 
-\-Implemented in \hyperlink{classcFCFS_aa2b92a8a992078e499aab455c9d78faf}{c\-F\-C\-F\-S}.
+\-Implemented in \hyperlink{classcFCFS_aa2b92a8a992078e499aab455c9d78faf}{c\-F\-C\-F\-S}, \hyperlink{classcRoundRobin_a1979ff71bb2320bdb00eae5feb2b2688}{c\-Round\-Robin}, and \hyperlink{classcLottery_a4df695e7e524164321f92eafd329fbaa}{c\-Lottery}.
+
+
+
+\-Referenced by c\-Kernel\-::boot().
 
 \hypertarget{classcScheduler_a8782803287dce0352623142643eee01a}{\index{c\-Scheduler@{c\-Scheduler}!init\-Proc\-Schedule\-Info@{init\-Proc\-Schedule\-Info}}
 \index{init\-Proc\-Schedule\-Info@{init\-Proc\-Schedule\-Info}!cScheduler@{c\-Scheduler}}
@@ -86,7 +159,11 @@ virtual pid\-Type \hyperlink{classcScheduler_a025532a943093ae7e8d6dc0cdaf60f12}{
 \item \-No required actions. \end{DoxyItemize}
 
 
-\-Implemented in \hyperlink{classcFCFS_aff34f18c6f4c3f38029d904cd2ec55de}{c\-F\-C\-F\-S}.
+\-Implemented in \hyperlink{classcFCFS_aff34f18c6f4c3f38029d904cd2ec55de}{c\-F\-C\-F\-S}, and \hyperlink{classcRoundRobin_aadb221df9b12f61c3151996ea5c09741}{c\-Round\-Robin}.
+
+
+
+\-Referenced by c\-Kernel\-::init\-Process().
 
 \hypertarget{classcScheduler_a025532a943093ae7e8d6dc0cdaf60f12}{\index{c\-Scheduler@{c\-Scheduler}!num\-Processes@{num\-Processes}}
 \index{num\-Processes@{num\-Processes}!cScheduler@{c\-Scheduler}}
@@ -104,7 +181,11 @@ pid\-Type
 \end{DoxyReturn}
 
 
-\-Implemented in \hyperlink{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{c\-F\-C\-F\-S}.
+\-Implemented in \hyperlink{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{c\-F\-C\-F\-S}, \hyperlink{classcRoundRobin_afa0cdfcfc0b8222d39ad5e9c23db1f25}{c\-Round\-Robin}, and \hyperlink{classcLottery_a4f77d186c1f4cbb82d3fff077bba7736}{c\-Lottery}.
+
+
+
+\-Referenced by c\-Kernel\-::boot(), and c\-Kernel\-::c\-Kernel().
 
 \hypertarget{classcScheduler_a5632ffa597e9567d475c808070c4e3bb}{\index{c\-Scheduler@{c\-Scheduler}!remove\-Process@{remove\-Process}}
 \index{remove\-Process@{remove\-Process}!cScheduler@{c\-Scheduler}}
@@ -124,7 +205,11 @@ pid\-Type
 \end{DoxyParams}
 
 
-\-Implemented in \hyperlink{classcFCFS_aeeac757885108ae510b728600ebba248}{c\-F\-C\-F\-S}.
+\-Implemented in \hyperlink{classcFCFS_aeeac757885108ae510b728600ebba248}{c\-F\-C\-F\-S}, \hyperlink{classcRoundRobin_a1bc7bfc4c36bdbe3f3938810817d885e}{c\-Round\-Robin}, and \hyperlink{classcLottery_aa995fc5a68b398aa526e504fed2f7a59}{c\-Lottery}.
+
+
+
+\-Referenced by c\-Kernel\-::cleanup\-Process().
 
 \hypertarget{classcScheduler_ae6119e940a3bf58a00e7dbcea04b5b6a}{\index{c\-Scheduler@{c\-Scheduler}!set\-Blocked@{set\-Blocked}}
 \index{set\-Blocked@{set\-Blocked}!cScheduler@{c\-Scheduler}}
@@ -142,7 +227,11 @@ pid\-Type
 \end{DoxyWarning}
 
 
-\-Implemented in \hyperlink{classcFCFS_a1b8ee3a759a31032ec7c1cd7b15ed5df}{c\-F\-C\-F\-S}.
+\-Implemented in \hyperlink{classcFCFS_a1b8ee3a759a31032ec7c1cd7b15ed5df}{c\-F\-C\-F\-S}, \hyperlink{classcRoundRobin_a13609de0f36c81a780072f9c0730f963}{c\-Round\-Robin}, and \hyperlink{classcLottery_afa726859adb7b98f1ad80a41c196e488}{c\-Lottery}.
+
+
+
+\-Referenced by c\-Kernel\-::boot().
 
 \hypertarget{classcScheduler_a81fe2e5e5e2334e36db1cbf491e3fa57}{\index{c\-Scheduler@{c\-Scheduler}!unblock\-Process@{unblock\-Process}}
 \index{unblock\-Process@{unblock\-Process}!cScheduler@{c\-Scheduler}}
@@ -165,7 +254,7 @@ pid\-Type
 \end{DoxyWarning}
 
 
-\-Implemented in \hyperlink{classcFCFS_a793da0298f9b36ab8505a0e3daaf41ec}{c\-F\-C\-F\-S}.
+\-Implemented in \hyperlink{classcFCFS_a793da0298f9b36ab8505a0e3daaf41ec}{c\-F\-C\-F\-S}, \hyperlink{classcRoundRobin_a278d541c78f034020f6921b22a7d37af}{c\-Round\-Robin}, and \hyperlink{classcLottery_a86bf3ddc6da1a45ffb073a843d744c60}{c\-Lottery}.
 
 
 

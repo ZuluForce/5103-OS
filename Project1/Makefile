@@ -6,7 +6,7 @@ INCDIR=include
 OBJDIR=obj
 BINDIR=bin
 
-CFLAGS=-O3 -I$(INCDIR) -DD_REENTRANT -g
+CFLAGS=-O3 -I$(INCDIR) -DD_REENTRANT -Wall -Werror
 OBJCFLAGS=-O3 -c -I$(INCDIR) -DD_REENTRANT
 LFLAGS=-lrt -lpthread
 
@@ -69,8 +69,8 @@ test_sock: test_name_socket.cpp
 run_sock_test: test_sock
 	cd $(BINDIR) && ./$^ 0
 	
-valgrind: all
-	cd $(BINDIR) && valgrind --tool=memcheck --track-origins=yes --leak-check=full ./$(TARGET)
+valgrind_%: all
+	cd $(BINDIR) && valgrind --tool=memcheck --track-origins=yes --leak-check=full ./$(TARGET) -scheduler $*
 	
 update_docs:
 	doxygen Doxyfile

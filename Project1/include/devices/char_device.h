@@ -3,7 +3,6 @@
 
 /** @file */
 
-#include <queue>
 #include "devices/queued_device.h"
 
 #ifndef CHARSIG
@@ -12,6 +11,7 @@
 
 using namespace std;
 
+/** Queued char device */
 class cCharDevice: public cAbsQueuedDevice {
 	private:
 		/// @cond

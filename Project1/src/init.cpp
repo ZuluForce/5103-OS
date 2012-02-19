@@ -9,6 +9,10 @@ int main(int argc, char **argv) {
 		if ( strcmp(argv[i], "-scheduler") == 0) {
 			if ( ++i < argc )
 				scheduler = argv[i];
+			else {
+				fprintf(stderr, "Scheduler type not specified");
+				exit(1);
+			}
 		}
 	}
 
@@ -43,6 +47,8 @@ int main(int argc, char **argv) {
 		cerr << "Kernel Exception: " << kerr.message << endl;
 		exit(-1);
 	}
+
+	delete schedulerInstance;
 
 	return 0;
 }

@@ -16,8 +16,14 @@
 \hypertarget{classcCPU_a8ed9b15ed0e8ae225eb821ac0974ced0}{void {\bfseries init\-Trace\-Log} ()}\label{d2/dc6/classcCPU_a8ed9b15ed0e8ae225eb821ac0974ced0}
 
 \item 
+\hypertarget{classcCPU_a09419d6cb8371336e123c9b5eb56487d}{void {\bfseries init\-Clock\-Pulse} (pthread\-\_\-mutex\-\_\-t $\ast$\-\_\-pulse\-Lock, pthread\-\_\-cond\-\_\-t $\ast$\-\_\-pulse\-Cond)}\label{d2/dc6/classcCPU_a09419d6cb8371336e123c9b5eb56487d}
+
+\item 
 void \hyperlink{classcCPU_acd957640be8abb7c0d8a24010ed0e737}{set\-Text} (char $\ast$text)
 \begin{DoxyCompactList}\small\item\em \-Set the program text. \end{DoxyCompactList}\item 
+\hypertarget{classcCPU_ab4b62a77df9c4b32a598326e4ec0ca41}{void {\bfseries set\-Max\-P\-C} (unsigned int new\-Max)}\label{d2/dc6/classcCPU_ab4b62a77df9c4b32a598326e4ec0ca41}
+
+\item 
 void \hyperlink{classcCPU_a176eb207069b99c47ddec6b466d1a92b}{set\-User\-Mode} ()
 \begin{DoxyCompactList}\small\item\em \-Set the cpu back into user mode. \end{DoxyCompactList}\item 
 unsigned int \hyperlink{classcCPU_ab04938ac939d530e521181db6a52944f}{get\-Set\-P\-C} (unsigned int new\-P\-C)
@@ -35,7 +41,9 @@ char $\ast$ \hyperlink{classcCPU_a891d9b77e1818ca247e9d76f4db99415}{get\-Param} 
 char \hyperlink{classcCPU_a987e1ab511c71dcde48411f5bb16f9d8}{get\-Opcode} ()
 \begin{DoxyCompactList}\small\item\em \-Get the current \-Opcode. \end{DoxyCompactList}\item 
 void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
-\begin{DoxyCompactList}\small\item\em \-Start execution. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Start execution. \end{DoxyCompactList}\item 
+void \hyperlink{classcCPU_a5d7b4d3ca9a197256dda6560072f036b}{execute\-Priv\-Set} (int num, int \&clock\-Tick)
+\begin{DoxyCompactList}\small\item\em \-Execute set number of privleged instructions. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Public \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -50,6 +58,9 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 \end{DoxyCompactItemize}
 \subsection*{\-Private \-Attributes}
 \begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcCPU_a11a80a1e97141537b44499364c67c8a4}{int {\bfseries clock\-Tick}}\label{d2/dc6/classcCPU_a11a80a1e97141537b44499364c67c8a4}
+
 \item 
 \hypertarget{classcCPU_af1d6fd5349bde1621595f6c1422792b4}{bool {\bfseries \-K\-Mode}}\label{d2/dc6/classcCPU_af1d6fd5349bde1621595f6c1422792b4}
 
@@ -77,6 +88,12 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 \begin{DoxyCompactList}\small\item\em \-Holds the current \-Opcode. \end{DoxyCompactList}\item 
 \hypertarget{classcCPU_a5f4c42c44a803d6bd2c47103c3cec164}{\-F\-I\-L\-E $\ast$ {\bfseries trace\-Stream}}\label{d2/dc6/classcCPU_a5f4c42c44a803d6bd2c47103c3cec164}
 
+\item 
+\hypertarget{classcCPU_a1c5225262967be64645baa08d4b8e9bc}{pthread\-\_\-mutex\-\_\-t $\ast$ {\bfseries pulse\-Lock}}\label{d2/dc6/classcCPU_a1c5225262967be64645baa08d4b8e9bc}
+
+\item 
+\hypertarget{classcCPU_ac86a0f942056eee52f2420c840bdd424}{pthread\-\_\-cond\-\_\-t $\ast$ {\bfseries pulse\-Cond}}\label{d2/dc6/classcCPU_ac86a0f942056eee52f2420c840bdd424}
+
 \end{DoxyCompactItemize}
 
 
@@ -84,6 +101,27 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 \-This class emulates the internals of a very simple cpu with two main registers, \-P\-C and \-V\-C. \-In addition, it has other state for handling system calls and program exceptions. 
 
 \subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcCPU_a5d7b4d3ca9a197256dda6560072f036b}{\index{c\-C\-P\-U@{c\-C\-P\-U}!execute\-Priv\-Set@{execute\-Priv\-Set}}
+\index{execute\-Priv\-Set@{execute\-Priv\-Set}!cCPU@{c\-C\-P\-U}}
+\subsubsection[{execute\-Priv\-Set}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-C\-P\-U\-::execute\-Priv\-Set} (
+\begin{DoxyParamCaption}
+\item[{int}]{num, }
+\item[{int \&}]{clock\-Tick}
+\end{DoxyParamCaption}
+)}}\label{d2/dc6/classcCPU_a5d7b4d3ca9a197256dda6560072f036b}
+\-When the kernel receives a syscall for device \-I/\-O it will call this function to \char`\"{}simulate\char`\"{} executing kernel mode ops.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int} & num \-Number of privleged instructios to execute.\\
+\hline
+{\em int\&} & clock\-Tick \-Reference to the clock\-Tick counter in the kenel. \\
+\hline
+\end{DoxyParams}
+
+
+\-Referenced by c\-Kernel\-::boot().
+
 \hypertarget{classcCPU_a987e1ab511c71dcde48411f5bb16f9d8}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Opcode@{get\-Opcode}}
 \index{get\-Opcode@{get\-Opcode}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{get\-Opcode}]{\setlength{\rightskip}{0pt plus 5cm}char {\bf c\-C\-P\-U\-::get\-Opcode} (
@@ -91,7 +129,11 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 {}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_a987e1ab511c71dcde48411f5bb16f9d8}
-\-Get the current \-Opcode in the cpu. \-This is used by the kernel to determine which system call as being made. \-Used in conjunciton with \hyperlink{classcCPU_a891d9b77e1818ca247e9d76f4db99415}{c\-C\-P\-U\-::get\-Param} the kernel can process system calls. \hypertarget{classcCPU_a891d9b77e1818ca247e9d76f4db99415}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Param@{get\-Param}}
+\-Get the current \-Opcode in the cpu. \-This is used by the kernel to determine which system call as being made. \-Used in conjunciton with \hyperlink{classcCPU_a891d9b77e1818ca247e9d76f4db99415}{c\-C\-P\-U\-::get\-Param} the kernel can process system calls. 
+
+\-Referenced by c\-Kernel\-::boot().
+
+\hypertarget{classcCPU_a891d9b77e1818ca247e9d76f4db99415}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Param@{get\-Param}}
 \index{get\-Param@{get\-Param}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{get\-Param}]{\setlength{\rightskip}{0pt plus 5cm}char $\ast$ {\bf c\-C\-P\-U\-::get\-Param} (
 \begin{DoxyParamCaption}
@@ -108,6 +150,10 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 \begin{DoxyReturn}{\-Returns}
 \-Returns a char$\ast$ which points to a string of at most \-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E -\/ 1 bytes. 
 \end{DoxyReturn}
+
+
+\-Referenced by c\-Kernel\-::boot().
+
 \hypertarget{classcCPU_ad485374a709476e2dfb847046d3d5215}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-P\-S\-W@{get\-P\-S\-W}}
 \index{get\-P\-S\-W@{get\-P\-S\-W}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{get\-P\-S\-W}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t {\bf c\-C\-P\-U\-::get\-P\-S\-W} (
@@ -115,42 +161,66 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 {}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_ad485374a709476e2dfb847046d3d5215}
-\-Returns the program status word which is a unsigned 16-\/bit integer type with flags from \hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9}{e\-P\-S\-W} set. \-These are used by the kernel to make action decisions. \hypertarget{classcCPU_ab04938ac939d530e521181db6a52944f}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Set\-P\-C@{get\-Set\-P\-C}}
+\-Returns the program status word which is a unsigned 16-\/bit integer type with flags from \hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9}{e\-P\-S\-W} set. \-These are used by the kernel to make action decisions. 
+
+\-Referenced by c\-Kernel\-::boot().
+
+\hypertarget{classcCPU_ab04938ac939d530e521181db6a52944f}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Set\-P\-C@{get\-Set\-P\-C}}
 \index{get\-Set\-P\-C@{get\-Set\-P\-C}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{get\-Set\-P\-C}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int {\bf c\-C\-P\-U\-::get\-Set\-P\-C} (
 \begin{DoxyParamCaption}
 \item[{unsigned int}]{new\-P\-C}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_ab04938ac939d530e521181db6a52944f}
-\-Get the current value for the program counter and then set its value to the given parameter. \-This is useful for swapping out process values. \hypertarget{classcCPU_a0b13774a76c6b04d760b8ff072c37a85}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Set\-P\-S\-W@{get\-Set\-P\-S\-W}}
+\-Get the current value for the program counter and then set its value to the given parameter. \-This is useful for swapping out process values. 
+
+\-Referenced by c\-Kernel\-::swap\-Processes().
+
+\hypertarget{classcCPU_a0b13774a76c6b04d760b8ff072c37a85}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Set\-P\-S\-W@{get\-Set\-P\-S\-W}}
 \index{get\-Set\-P\-S\-W@{get\-Set\-P\-S\-W}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{get\-Set\-P\-S\-W}]{\setlength{\rightskip}{0pt plus 5cm}uint16\-\_\-t {\bf c\-C\-P\-U\-::get\-Set\-P\-S\-W} (
 \begin{DoxyParamCaption}
 \item[{uint16\-\_\-t}]{new\-P\-S\-W}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_a0b13774a76c6b04d760b8ff072c37a85}
-\-Get the current value for the \-P\-S\-W and set its value to the given parameter. \hypertarget{classcCPU_a2d593a0d3d66e532826db4754d5fc4d2}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Set\-V\-C@{get\-Set\-V\-C}}
+\-Get the current value for the \-P\-S\-W and set its value to the given parameter. 
+
+\-Referenced by c\-Kernel\-::swap\-Processes().
+
+\hypertarget{classcCPU_a2d593a0d3d66e532826db4754d5fc4d2}{\index{c\-C\-P\-U@{c\-C\-P\-U}!get\-Set\-V\-C@{get\-Set\-V\-C}}
 \index{get\-Set\-V\-C@{get\-Set\-V\-C}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{get\-Set\-V\-C}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf c\-C\-P\-U\-::get\-Set\-V\-C} (
 \begin{DoxyParamCaption}
 \item[{int}]{new\-V\-C}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_a2d593a0d3d66e532826db4754d5fc4d2}
-\-Get the current value for \-V\-C and set its value to the given paramter. \-This is useful for swapping out process values. \hypertarget{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{\index{c\-C\-P\-U@{c\-C\-P\-U}!run@{run}}
+\-Get the current value for \-V\-C and set its value to the given paramter. \-This is useful for swapping out process values. 
+
+\-Referenced by c\-Kernel\-::boot(), and c\-Kernel\-::swap\-Processes().
+
+\hypertarget{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{\index{c\-C\-P\-U@{c\-C\-P\-U}!run@{run}}
 \index{run@{run}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{run}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-C\-P\-U\-::run} (
 \begin{DoxyParamCaption}
 {}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_aee300d68026ba9f13d5434ff82f0372a}
-\-Once all appropriate process data is entered by the kernel this function is called to start execution. \-Any time control needs to be returned to the kernel this function will return with the appropriate \-P\-S\-W flags set for the kernel to act on. \hypertarget{classcCPU_adb6ad793398d28b5615dd1377a619084}{\index{c\-C\-P\-U@{c\-C\-P\-U}!set\-P\-S\-W@{set\-P\-S\-W}}
+\-Once all appropriate process data is entered by the kernel this function is called to start execution. \-Any time control needs to be returned to the kernel this function will return with the appropriate \-P\-S\-W flags set for the kernel to act on. 
+
+\-Referenced by c\-Kernel\-::boot().
+
+\hypertarget{classcCPU_adb6ad793398d28b5615dd1377a619084}{\index{c\-C\-P\-U@{c\-C\-P\-U}!set\-P\-S\-W@{set\-P\-S\-W}}
 \index{set\-P\-S\-W@{set\-P\-S\-W}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{set\-P\-S\-W}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-C\-P\-U\-::set\-P\-S\-W} (
 \begin{DoxyParamCaption}
 \item[{uint16\-\_\-t}]{new\-P\-S\-W}
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_adb6ad793398d28b5615dd1377a619084}
-\-Used by the kernel to reset the \-P\-S\-W after a system call. \-Any process execution which returns to the kernel but does not terminate the process should reset the \-P\-S\-W so subsequent exceptions/terminations are not lost by stray \-P\-S\-W values. \hypertarget{classcCPU_acd957640be8abb7c0d8a24010ed0e737}{\index{c\-C\-P\-U@{c\-C\-P\-U}!set\-Text@{set\-Text}}
+\-Used by the kernel to reset the \-P\-S\-W after a system call. \-Any process execution which returns to the kernel but does not terminate the process should reset the \-P\-S\-W so subsequent exceptions/terminations are not lost by stray \-P\-S\-W values. 
+
+\-Referenced by c\-Kernel\-::boot().
+
+\hypertarget{classcCPU_acd957640be8abb7c0d8a24010ed0e737}{\index{c\-C\-P\-U@{c\-C\-P\-U}!set\-Text@{set\-Text}}
 \index{set\-Text@{set\-Text}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{set\-Text}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-C\-P\-U\-::set\-Text} (
 \begin{DoxyParamCaption}
@@ -164,6 +234,10 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 {\em text} & \-Program text pointer. assert( text != \-N\-U\-L\-L) \\
 \hline
 \end{DoxyParams}
+
+
+\-Referenced by c\-Kernel\-::swap\-Processes().
+
 \hypertarget{classcCPU_a176eb207069b99c47ddec6b466d1a92b}{\index{c\-C\-P\-U@{c\-C\-P\-U}!set\-User\-Mode@{set\-User\-Mode}}
 \index{set\-User\-Mode@{set\-User\-Mode}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{set\-User\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-C\-P\-U\-::set\-User\-Mode} (
@@ -172,6 +246,10 @@ void \hyperlink{classcCPU_aee300d68026ba9f13d5434ff82f0372a}{run} ()
 \end{DoxyParamCaption}
 )}}\label{d2/dc6/classcCPU_a176eb207069b99c47ddec6b466d1a92b}
 \-This is used by the kernel after the kernel has finished servicing a process' kernel mode request (syscall). 
+
+\-Referenced by c\-Kernel\-::swap\-Processes().
+
+
 
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 

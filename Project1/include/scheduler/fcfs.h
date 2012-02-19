@@ -1,18 +1,17 @@
 #ifndef FCFS_H_INCLUDED
 #define FCFS_H_INCLUDED
 
-#include <cstdlib>
-#include <queue>
+/** @file */
+
 #include <assert.h>
-#include <pthread.h>
 
 #include "scheduler/scheduler.h"
-#include "utility/id.h"
 
 #define DEF_BLOCK_VEC_SIZE 4
 
 using namespace std;
 
+/** First-Come-First-Serve Scheduler */
 class cFCFS: public cScheduler {
 	private:
 		/* Internal Datastructures */
@@ -63,6 +62,7 @@ class cFCFS: public cScheduler {
 		void printUnblocked();
 };
 
+/** Struct containing process info specific for FCFS scheduling */
 struct fcfsInfo {
 	unsigned int blockedIndex;
 };

@@ -83,10 +83,15 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="title">cScheduler Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="cScheduler" --><div class="dynheader">
+<!-- doxytag: class="cScheduler" -->
+<p>Abstract Interface for Schedulers.  
+</p>
+
+<p><code>#include &lt;<a class="el" href="../../d2/dd8/scheduler_8h_source.xhtml">scheduler.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for cScheduler:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="../../d8/dde/classcScheduler__inherit__graph.svg" width="96" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="../../d8/dde/classcScheduler__inherit__graph.svg" width="294" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
 <center><span class="legend">[<a href="../../graph_legend.xhtml">legend</a>]</span></center></div>
 
 <p><a href="../../d8/d44/classcScheduler-members.xhtml">List of all members.</a></p>
@@ -107,8 +112,43 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Query the scheduler for next process to run.  <a href="#a350ad7c55ddcdd17005778b0da241956"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">virtual pidType&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d21/classcScheduler.xhtml#a025532a943093ae7e8d6dc0cdaf60f12">numProcesses</a> ()=0</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">How many processes are in the scheduler.  <a href="#a025532a943093ae7e8d6dc0cdaf60f12"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d21/classcScheduler.xhtml#a7b29af7eab1a9cbe383d98a44693be69">addLogger</a> (FILE *)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an instance of the trace logger to the scheduler.  <a href="#a7b29af7eab1a9cbe383d98a44693be69"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">virtual void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d0/d21/classcScheduler.xhtml#a3e7865112718057fcdc277db0a85c21c">addProcLogger</a> (<a class="el" href="../../db/d63/classcProcessLogger.xhtml">cProcessLogger</a> *)=0</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add instance of process logger to the scheduler.  <a href="#a3e7865112718057fcdc277db0a85c21c"></a><br/></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="a7b29af7eab1a9cbe383d98a44693be69"></a><!-- doxytag: member="cScheduler::addLogger" ref="a7b29af7eab1a9cbe383d98a44693be69" args="(FILE *)=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d0/d21/classcScheduler.xhtml#a7b29af7eab1a9cbe383d98a44693be69">cScheduler::addLogger</a> </td>
+          <td>(</td>
+          <td class="paramtype">FILE *&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>The kernel passes a file stream pointer for the scheduler to print trace info such as blocking/unblocking events.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">FILE*</td><td>File stream for trace log </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="../../d1/d8c/logger_8h.xhtml#acf2f61176acdfe03ac9f73ec56fb3bd6" title="Initialize a trace log at filename.">initLog(const char* filename)</a> </dd>
+<dd>
+<a class="el" href="../../d1/d8c/logger_8h.xhtml#af756a6a1097f12014f446b298d8a266f" title="Get the file stream to write to.">getStream()</a> </dd></dl>
+
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#accb887eae7016719ce770d7b0284adea">cFCFS</a>, and <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a6e0d0ec272a4f7ffe03166b1ff08276b">cRoundRobin</a>.</p>
+
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#ab14dbe0cc2a6e4a346a38e24566fbdd1">cKernel::cKernel()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="aeae779c5c160a441e725dfc72656e6dc"></a><!-- doxytag: member="cScheduler::addProcess" ref="aeae779c5c160a441e725dfc72656e6dc" args="(ProcessInfo *)=0" -->
 <div class="memitem">
 <div class="memproto">
@@ -135,7 +175,38 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a25d4bf440041f5294f3b9c5aff20b411">cFCFS</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a25d4bf440041f5294f3b9c5aff20b411">cFCFS</a>, <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a3571d05a8daebccb758d63b8327f8a22">cRoundRobin</a>, and <a class="el" href="../../dd/dc8/classcLottery.xhtml#ae250b46d5d3032d40f49b8539cbd9faf">cLottery</a>.</p>
+
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#a5440eace2647ffd5279de55600947b84">cKernel::initProcess()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a3e7865112718057fcdc277db0a85c21c"></a><!-- doxytag: member="cScheduler::addProcLogger" ref="a3e7865112718057fcdc277db0a85c21c" args="(cProcessLogger *)=0" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d0/d21/classcScheduler.xhtml#a3e7865112718057fcdc277db0a85c21c">cScheduler::addProcLogger</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../db/d63/classcProcessLogger.xhtml">cProcessLogger</a> *&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [pure virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>The kernel passes this pointer so the scheduler can update process info upon process addition, state change and termination. This updates the information presented to the top process.</p>
+<dl class="params"><dt><b>Parameters:</b></dt><dd>
+  <table class="params">
+    <tr><td class="paramname">cProcessLogger*</td><td>Process logger class </td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="see"><dt><b>See also:</b></dt><dd><a class="el" href="../../db/d63/classcProcessLogger.xhtml" title="Class specifically for logging process state information.">cProcessLogger</a> </dd></dl>
+
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a4da9f2fa83516ac5859772ae09169343">cFCFS</a>, and <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a728fa415647d6c71b32ee8d4a04580e1">cRoundRobin</a>.</p>
+
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#ab14dbe0cc2a6e4a346a38e24566fbdd1">cKernel::cKernel()</a>.</p>
 
 </div>
 </div>
@@ -164,7 +235,9 @@ Public Member Functions</h2></td></tr>
 <dl class="return"><dt><b>Returns:</b></dt><dd><a class="el" href="../../dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data.">ProcessInfo</a>* Ready process to run next. May be the same as the currenlty running one.</dd></dl>
 <dl class="warning"><dt><b>Warning:</b></dt><dd>Must be thread safe with block and unblock methods. </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#aa2b92a8a992078e499aab455c9d78faf">cFCFS</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#aa2b92a8a992078e499aab455c9d78faf">cFCFS</a>, <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a1979ff71bb2320bdb00eae5feb2b2688">cRoundRobin</a>, and <a class="el" href="../../dd/dc8/classcLottery.xhtml#a4df695e7e524164321f92eafd329fbaa">cLottery</a>.</p>
+
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#a0ce9a2721bb1ea4d7f999198634f702d">cKernel::boot()</a>.</p>
 
 </div>
 </div>
@@ -188,7 +261,9 @@ Public Member Functions</h2></td></tr>
 <li>No required actions. </li>
 </ul>
 
-<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#aff34f18c6f4c3f38029d904cd2ec55de">cFCFS</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#aff34f18c6f4c3f38029d904cd2ec55de">cFCFS</a>, and <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#aadb221df9b12f61c3151996ea5c09741">cRoundRobin</a>.</p>
+
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#a5440eace2647ffd5279de55600947b84">cKernel::initProcess()</a>.</p>
 
 </div>
 </div>
@@ -212,7 +287,9 @@ Public Member Functions</h2></td></tr>
 </ul>
 <dl class="return"><dt><b>Returns:</b></dt><dd>pidType </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a0a72de791436a84120a534dd2fa0485d">cFCFS</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a0a72de791436a84120a534dd2fa0485d">cFCFS</a>, <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#afa0cdfcfc0b8222d39ad5e9c23db1f25">cRoundRobin</a>, and <a class="el" href="../../dd/dc8/classcLottery.xhtml#a4f77d186c1f4cbb82d3fff077bba7736">cLottery</a>.</p>
+
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#a0ce9a2721bb1ea4d7f999198634f702d">cKernel::boot()</a>, and <a class="el" href="../../db/da5/classcKernel.xhtml#ab14dbe0cc2a6e4a346a38e24566fbdd1">cKernel::cKernel()</a>.</p>
 
 </div>
 </div>
@@ -245,7 +322,9 @@ Public Member Functions</h2></td></tr>
   </dd>
 </dl>
 
-<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#aeeac757885108ae510b728600ebba248">cFCFS</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#aeeac757885108ae510b728600ebba248">cFCFS</a>, <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a1bc7bfc4c36bdbe3f3938810817d885e">cRoundRobin</a>, and <a class="el" href="../../dd/dc8/classcLottery.xhtml#aa995fc5a68b398aa526e504fed2f7a59">cLottery</a>.</p>
+
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#abcc0464e62a5fb82ddf4a3f8ba5ec461">cKernel::cleanupProcess()</a>.</p>
 
 </div>
 </div>
@@ -271,7 +350,9 @@ Public Member Functions</h2></td></tr>
 </ul>
 <dl class="warning"><dt><b>Warning:</b></dt><dd>Must be thread safe. Signal handler/s may block during schedule decision. </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a1b8ee3a759a31032ec7c1cd7b15ed5df">cFCFS</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a1b8ee3a759a31032ec7c1cd7b15ed5df">cFCFS</a>, <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a13609de0f36c81a780072f9c0730f963">cRoundRobin</a>, and <a class="el" href="../../dd/dc8/classcLottery.xhtml#afa726859adb7b98f1ad80a41c196e488">cLottery</a>.</p>
+
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#a0ce9a2721bb1ea4d7f999198634f702d">cKernel::boot()</a>.</p>
 
 </div>
 </div>
@@ -302,7 +383,7 @@ Public Member Functions</h2></td></tr>
 </dl>
 <dl class="warning"><dt><b>Warning:</b></dt><dd>Must be thread safe. Signal handler/s may unblock during schedule decision. </dd></dl>
 
-<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a793da0298f9b36ab8505a0e3daaf41ec">cFCFS</a>.</p>
+<p>Implemented in <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a793da0298f9b36ab8505a0e3daaf41ec">cFCFS</a>, <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a278d541c78f034020f6921b22a7d37af">cRoundRobin</a>, and <a class="el" href="../../dd/dc8/classcLottery.xhtml#a86bf3ddc6da1a45ffb073a843d744c60">cLottery</a>.</p>
 
 </div>
 </div>
@@ -315,7 +396,7 @@ Public Member Functions</h2></td></tr>
      onmouseover="return searchBox.OnSearchSelectShow()"
      onmouseout="return searchBox.OnSearchSelectHide()"
      onkeydown="return searchBox.OnSearchSelectKey(event)">
-<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Defines</a></div>
+<a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(0)"><span class="SelectionMark">&#160;</span>All</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(1)"><span class="SelectionMark">&#160;</span>Classes</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(2)"><span class="SelectionMark">&#160;</span>Files</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(3)"><span class="SelectionMark">&#160;</span>Functions</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(4)"><span class="SelectionMark">&#160;</span>Variables</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(5)"><span class="SelectionMark">&#160;</span>Enumerations</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(6)"><span class="SelectionMark">&#160;</span>Enumerator</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(7)"><span class="SelectionMark">&#160;</span>Friends</a><a class="SelectItem" href="javascript:void(0)" onclick="searchBox.OnSelectItem(8)"><span class="SelectionMark">&#160;</span>Defines</a></div>
 
 <!-- iframe showing the search results (closed by default) -->
 <div id="MSearchResultsWindow">
@@ -327,7 +408,7 @@ Public Member Functions</h2></td></tr>
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Mon Feb 13 2012 18:34:30 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
