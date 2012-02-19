@@ -7,4 +7,9 @@ C 5 proc1.trace
 C 10 proc2.trace
 C 5 io_heavy.trace
 C 5 abnormal.trace
+C 5 traces/invalid1.trace
+C 5 traces/invalid2.trace
+C 5	traces/invalid3.trace
+C 5 traces/invalid4.trace
+C 5 traces/invalid5.trace
 E
