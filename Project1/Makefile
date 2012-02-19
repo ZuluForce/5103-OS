@@ -6,7 +6,7 @@ INCDIR=include
 OBJDIR=obj
 BINDIR=bin
 
-CFLAGS=-O3 -I$(INCDIR) -DD_REENTRANT
+CFLAGS=-O3 -I$(INCDIR) -DD_REENTRANT -g
 OBJCFLAGS=-O3 -c -I$(INCDIR) -DD_REENTRANT
 LFLAGS=-lrt -lpthread
 
@@ -54,11 +54,17 @@ run_rr: all
 run_lottery: all
 	cd $(BINDIR) && ./$(TARGET) -scheduler lottery
 	
-run_gdb: all
-	gdb --cd=$(BINDIR) --command=gdb_batch --return-child-result -exec=$(TARGET)
+gdb_%: all
+	gdb --cd=$(BINDIR) --command=gdb_batch_$* --return-child-result -exec=$(TARGET)
 	
 top: top.cpp top.h
 	$(CC) -Iinclude $(SRCDIR)/top.cpp -o $(BINDIR)/$@
+	
+test_sock: test_name_socket.cpp
+	$(CC) -Iinclude $^ -o $(BINDIR)/$@
+	
+run_sock_test: test_sock
+	cd $(BINDIR) && ./$^ 0
 	
 valgrind: all
 	cd $(BINDIR) && valgrind --tool=memcheck --track-origins=yes --leak-check=full ./$(TARGET)

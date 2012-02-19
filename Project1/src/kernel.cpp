@@ -163,10 +163,11 @@ void cKernel::cleanupProcess(ProcessInfo* proc) {
 
 	idGenerator.returnID(proc->pid);
 
+	procLogger.rmProcess(proc);
+
 	free(proc->processText);
 	free(proc);
 
-	//procLogger.rmProcess(proc);
 
 	return;
 }
@@ -277,7 +278,7 @@ void cKernel::boot() {
 
 		} else if ( localPSW & PS_EXCEPTION ) {
 			printf("Process raised an exception\n");
-			fprintf(traceStream, "localPSW & PS_ABNORMAL = %d\n", localPSW & PS_ABNORMAL);
+
 			if ( localPSW & PS_ABNORMAL ) {
 				fprintf(traceStream, "Process %d raised an abnormal termination exception. Cleaning up soon.\n", runningProc->pid);
 			} else {

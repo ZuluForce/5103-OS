@@ -108,14 +108,18 @@ void cFCFS::removeProcess(ProcessInfo* proc) {
 }
 
 void cFCFS::printUnblocked() {
-	pidType tempID;
+	pidType tempID = 0;
 
 	while ( traceUnblocked.size() > 0 ) {
 		tempID = traceUnblocked.front();
 		traceUnblocked.pop();
 		fprintf(logStream, "Process %d unblocked\n", tempID);
-
 	}
+
+	//For the output to look nicer
+	if ( tempID != 0 )
+		fprintf(logStream, "\n");
+
 	return;
 }
 
@@ -133,7 +137,7 @@ ProcessInfo* cFCFS::getNextToRun() {
 
 	if ( readyQueue.size() == 0 ) {
 		if ( totalBlocked > 0) {
-
+			fprintf(logStream, "Scheduler waiting for a process to unblock\n");
 			while ( readyQueue.size() == 0)
 				pthread_cond_wait(&allBlocked, &blockedLock);
 
