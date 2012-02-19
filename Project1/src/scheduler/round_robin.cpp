@@ -60,6 +60,7 @@ void cRoundRobin::setBlocked(ProcessInfo* proc) {
 	++totalBlocked;
 	runningProc = NULL;
 	clockTicksUsed = 0;
+	fprintf(logStream, "Process %d has been blocked\n", proc->pid);
 	pthread_mutex_unlock(&blockedLock);
 
 	/* Update Process info for Top */
@@ -83,6 +84,7 @@ void cRoundRobin::unblockProcess(ProcessInfo* proc) {
 	blockedID.returnID(info->blockedIndex);
 
 	--totalBlocked;
+	traceUnblocked.push(proc->pid);
 
 	pthread_mutex_unlock(&blockedLock);
 	pthread_cond_signal(&allBlocked);
@@ -107,7 +109,23 @@ void cRoundRobin::removeProcess(ProcessInfo* proc) {
 	return;
 }
 
+void cRoundRobin::printUnblocked(){
+    pidType tempID = 0;
+    while( traceUnblocked.size() > 0){
+        tempID = traceUnblocked.front();
+        traceUnblocked.pop();
+        fprintf(logStream, "Process %d unblocked\n", tempID;
+    }
+
+    // For the output to look nicer
+    if (tempID != 0){
+        fprintf(logStream "\n");
+    }
+    return;
+}
+
 ProcessInfo* cRoundRobin::getNextToRun() {
+    printUnblocked();
 	if ( runningProc != NULL) {
 	    if ((clockTicksUsed) > QUANTUM){
 	        runningProc->state == ready;
