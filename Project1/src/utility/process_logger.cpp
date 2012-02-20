@@ -55,6 +55,9 @@ void* nameSockFn(void* args) {
 cProcessLogger::cProcessLogger(const char *file) {
 	assert(file != NULL);
 
+	log_ptr = this;
+	pthread_create(&nameReqListener, NULL, nameSockFn, this);
+
 	procLogStream = fopen(file, "w");
 
 	if ( procLogStream == NULL ) {
@@ -73,10 +76,9 @@ cProcessLogger::cProcessLogger(const char *file) {
 	}
 
 	procNames.resize( 4 );
-	log_ptr = this;
 
 	pthread_mutex_init(&logWriteLock, NULL);
-	pthread_create(&nameReqListener, NULL, nameSockFn, this);
+
 	return;
 }
 
