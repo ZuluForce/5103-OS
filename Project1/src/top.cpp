@@ -146,7 +146,7 @@ int main(int argc, char** argv) {
 	    exit(-1);
 	}
 
-	int filesize;
+	int fileSize;
 	int numLines;
 	unsigned int pid, memory, cpustart, cputime, state;
 	char *buf = (char*) malloc( FILENAME_MAX);
