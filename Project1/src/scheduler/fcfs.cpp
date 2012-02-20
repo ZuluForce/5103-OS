@@ -111,8 +111,6 @@ void cFCFS::removeProcess(ProcessInfo* proc) {
 
 	runningProc = NULL;
 
-	/* Remove process from log */
-
 	return;
 }
 

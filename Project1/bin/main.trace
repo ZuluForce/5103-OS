@@ -12,4 +12,5 @@ C 5 traces/invalid2.trace
 C 5	traces/invalid3.trace
 C 5 traces/invalid4.trace
 C 5 traces/invalid5.trace
+C 20 traces/this_is_a_very_long_program_trace.trace
 E

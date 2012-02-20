@@ -98,22 +98,19 @@ void cLottery::setBlocked(ProcessInfo* proc) {
 
 void cLottery::unblockProcess(ProcessInfo* proc) {
 	assert(proc != NULL);
-	if ( proc->state != blocked)
-		printf("Process state in unblockProcess: %d (blocked = %d)\n", proc->state, blocked);
 	assert(proc->state == blocked);
 	assert(totalBlocked > 0);
 
 	pthread_mutex_lock(&blockedLock);
 
 	proc->state = ready;
-	totalTickets += proc->priority;
+	totalTickets += proc->priority; //Put tickets into pool
 
 	lotteryInfo* info = (lotteryInfo*) proc->scheduleData;
 	assert(info->blockedIndex < blockedVector.size());
 
 	//put back into readyVector
 	unsigned int lowID = readyID.getLowID();
-	printf("Placing unblocked process at index %d\n", lowID);
 	if ( lowID >= readyVector.size() )
 		readyVector.resize(readyVector.size() * 2);
 
@@ -156,7 +153,7 @@ void cLottery::removeProcess(ProcessInfo* proc) {
 
 	pthread_mutex_unlock(&blockedLock);
 
-	printf("Finished removing process\n");
+	procLogger->writeProcessInfo(proc);
 	return;
 
 
@@ -183,6 +180,7 @@ ProcessInfo* cLottery::getNextToRun() {
 
 	if(runningProc != NULL) {
 		runningProc->state = ready;
+		procLogger->writeProcessInfo(runningProc);
 
 		runningProc = NULL;
 		++totalReady;
@@ -209,7 +207,6 @@ ProcessInfo* cLottery::getNextToRun() {
 	for ( iter = readyVector.begin(); iter < readyVector.end(); ++iter ) {
 		if (*iter != NULL) {
 			fprintf(logStream, "%d: %d tickets  ", (*iter)->pid, (*iter)->priority);
-			printf("%d: %d tickets ", (*iter)->pid, (*iter)->priority);
 		}
 	}
 	fprintf(logStream, "\n");
@@ -218,7 +215,6 @@ ProcessInfo* cLottery::getNextToRun() {
 	//Set bounds for tickets and choose a random ticket
 	int low = 0, high = totalTickets;
 	int ticket = rand() % (high - low + 1) + low;
-	printf("ticket = %d		totalTickets = %d\n", ticket, totalTickets);
 	assert(ticket >= low && ticket <= totalTickets);
 
 	//Initialize bounds to determine which process has ticket
@@ -247,6 +243,8 @@ ProcessInfo* cLottery::getNextToRun() {
 	}
 
 	assert(toRun != NULL);
+	assert(toRun->state == ready);
+
 	runningProc = toRun;
 	runningProc->state = running;
 	procLogger->writeProcessInfo(runningProc);

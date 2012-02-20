@@ -151,7 +151,7 @@ int main(int argc, char** argv) {
 
 	while(1) {
 
-        boost::format fmter("%1% %|40t|%2% %|52t|%3% %|64t|%4% %|76t|%5% %|88t|%6%\n");
+        boost::format fmter("%1% %|30t|%2% %|52t|%3% %|64t|%4% %|76t|%5% %|88t|%6%\n");
 
         fmter % "NAME" % "PID" % "MEMORY" % "CPUSTART" % "CPUTIME" % "STATE";
 
@@ -177,6 +177,10 @@ int main(int argc, char** argv) {
                 if (getProcessName(i, buf) != 0){
                     strcpy(buf, "Unknown process name");
                 }
+
+                if ( strlen(buf) > 30 )
+                	strcpy(buf, TOO_LONG);
+
                 fmter % buf % pid % memory % cpustart % cputime % getStatString((eProcState) state);
                 cout << fmter;
                 //printf("%d %d %d %d %s\n", pid, memory, cpustart, cputime, getStatString((eProcState) state));
@@ -217,7 +221,8 @@ int main(int argc, char** argv) {
             }
         }
 
-         printf("\n\n\n\n");
+		//printf("\n\n\n\n");
+		system("clear");
 
 	}
 

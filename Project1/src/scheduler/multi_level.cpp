@@ -156,6 +156,8 @@ ProcessInfo* cMultiLevel::getNextToRun() {
 
 	sMultiInfo* info;
 
+	pthread_mutex_lock(&blockedLock);
+
 	if ( runningProc != NULL) {
 
 		/* Continue running the current process if it hasn't used it quanta
@@ -177,7 +179,7 @@ ProcessInfo* cMultiLevel::getNextToRun() {
 			case 2:
 				++(info->level);
 				printf("Process %d moved to queue %d\n", runningProc->pid, info->level);
-				readyQueues.at(info->level + 1).push(runningProc);
+				readyQueues.at(info->level).push(runningProc);
 				break;
 
 			case 3:
@@ -194,8 +196,6 @@ ProcessInfo* cMultiLevel::getNextToRun() {
 		procLogger->writeProcessInfo(runningProc);
 		runningProc = NULL;
 	}
-
-	pthread_mutex_lock(&blockedLock);
 
 	if ( totalReady == 0 ) {
 		if ( totalBlocked > 0) {

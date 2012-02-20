@@ -31,7 +31,6 @@ void* nameSockFn(void* args) {
 			exit(-1);
 		}
 
-		printf("Received request for prcess name %d\n", reqID);
 		if ( reqID > log_ptr->procNames.size() ) {
 			/* Return Error Messages */
 			printf("Invalid request for precess name (pid %d)\n", reqID);
@@ -42,8 +41,7 @@ void* nameSockFn(void* args) {
 		}
 
 		pName = log_ptr->procNames.at(reqID).c_str();
-		nameLen = log_ptr->procNames.at(reqID).length();
-		printf("Process name: %s\n", pName);
+		nameLen = log_ptr->procNames.at(reqID).length() + 1;
 
 		sendto(log_ptr->listenSock, pName, nameLen, 0, (struct sockaddr*) &remote, sizeof(struct sockaddr_un));
 	}
@@ -55,9 +53,11 @@ void* nameSockFn(void* args) {
 cProcessLogger::cProcessLogger(const char *file) {
 	assert(file != NULL);
 
+	/* Create socket for top to request trace names */
 	log_ptr = this;
 	pthread_create(&nameReqListener, NULL, nameSockFn, this);
 
+	/* Open trace log file */
 	procLogStream = fopen(file, "w");
 
 	if ( procLogStream == NULL ) {
@@ -71,10 +71,12 @@ cProcessLogger::cProcessLogger(const char *file) {
 
 	previousID = 0;
 
+	/* Could have used memset */
 	for ( int i = 0; i < MAX_LINE_LENGTH; ++i ) {
 		emptyBuffer[i] = ' ';
 	}
 
+	/* Initialize the vector for storing process names */
 	procNames.resize( 4 );
 
 	pthread_mutex_init(&logWriteLock, NULL);
@@ -99,7 +101,6 @@ void cProcessLogger::addProcess(ProcessInfo* proc, const char* name) {
 	assert( name != NULL );
 
 	pidType newID = lineIDs.getLowID();
-	printf("Added process to log file on line %d\n", newID);
 
 	proc->procFileLine = newID;
 
