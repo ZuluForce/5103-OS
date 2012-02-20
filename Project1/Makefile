@@ -11,7 +11,7 @@ OBJCFLAGS=-O3 -c -I$(INCDIR) -DD_REENTRANT
 LFLAGS=-lrt -lpthread
 
 DEPS=clock_device.o char_device.o block_device.o id.o cpu.o scheduler.o fcfs.o round_robin.o\
-		kernel.o abstract_device.o logger.o process_logger.o lottery.o
+		kernel.o abstract_device.o logger.o process_logger.o lottery.o multi_level.o
 ##Dependencies with obj directory appended
 _DEPS=$(patsubst %,$(OBJDIR)/%,$(DEPS))
 
@@ -42,17 +42,8 @@ $(TARGET): $(TARGET).cpp $(TARGET).h $(DEPS)
 %.o: %.cpp %.h
 	$(CC) $< $(OBJCFLAGS) -o $(OBJDIR)/$@
 	
-run: all
-	cd $(BINDIR) && ./$(TARGET)
-	
-run_fcfs: all
-	cd $(BINDIR) && ./$(TARGET) -scheduler fcfs
-
-run_rr: all
-	cd $(BINDIR) && ./$(TARGET) -scheduler round-robin
-	
-run_lottery: all
-	cd $(BINDIR) && ./$(TARGET) -scheduler lottery
+run_%: all
+	cd $(BINDIR) && ./$(TARGET) -scheduler $*
 	
 gdb_%: all
 	gdb --cd=$(BINDIR) --command=gdb_batch_$* --return-child-result -exec=$(TARGET)
