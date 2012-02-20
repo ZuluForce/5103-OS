@@ -176,7 +176,6 @@ void cKernel::cleanupProcess(ProcessInfo* proc) {
 	free(proc->processText);
 	free(proc);
 
-
 	return;
 }
 

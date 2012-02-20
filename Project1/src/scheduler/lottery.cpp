@@ -48,7 +48,7 @@ void cLottery::addProcess(ProcessInfo* proc) {
 	assert(proc != NULL);
 	assert(proc->state == ready);
 
-	unsigned int newID = readyID.getID();
+	unsigned int newID = readyID.getLowID();
 	if(newID >= readyVector.size()) {
 		readyVector.resize(readyVector.size() * 2);
 	}
@@ -87,13 +87,11 @@ void cLottery::setBlocked(ProcessInfo* proc) {
 		blockedVector.resize(blockedVector.size() * 2);
 	}
 
-	/* Carry the index with the process */
-	lotteryInfo* info = (lotteryInfo*) proc->scheduleData;
 	info->blockedIndex = newID;
 
-	blockedVector[newID] = proc;
+	blockedVector.at(newID) = proc;
 
-	--totalReady;
+	//--totalReady; If it was running then it was already removed from totalReady
 	++totalBlocked;
 	runningProc = NULL;
 	fprintf(logStream, "Process %d has been blocked\n", proc->pid);
@@ -107,19 +105,27 @@ void cLottery::setBlocked(ProcessInfo* proc) {
 
 void cLottery::unblockProcess(ProcessInfo* proc) {
 	assert(proc != NULL);
+	if ( proc->state != blocked)
+		printf("Process state in unblockProcess: %d (blocked = %d)\n", proc->state, blocked);
 	assert(proc->state == blocked);
 	assert(totalBlocked > 0);
 
 	pthread_mutex_lock(&blockedLock);
 
 	proc->state = ready;
+	totalTickets += proc->priority;
 
 	lotteryInfo* info = (lotteryInfo*) proc->scheduleData;
 	assert(info->blockedIndex < blockedVector.size());
 
 	//put back into readyVector
 	unsigned int lowID = readyID.getLowID();
+	printf("Placing unblocked process at index %d\n", lowID);
+	if ( lowID >= readyVector.size() )
+		readyVector.resize(readyVector.size() * 2);
+
 	readyVector.at(lowID) = proc;
+	info->readyIndex = lowID;
 
 	blockedID.returnID(info->blockedIndex);
 
@@ -142,15 +148,22 @@ void cLottery::removeProcess(ProcessInfo* proc) {
 
 	pthread_mutex_lock(&blockedLock);
 
+	lotteryInfo* info = (lotteryInfo*) proc->scheduleData;
+	printf("Removing process at ready index: %d\n", info->readyIndex);
+	readyVector.at(info->readyIndex) = NULL;
+
+	readyID.returnID(info->readyIndex);
+
+	totalTickets -= proc->priority;
+
 	proc->state = terminated;
 	free(proc->scheduleData);
 
 	runningProc = NULL;
 
-	/* Remove process from log */
-
 	pthread_mutex_unlock(&blockedLock);
 
+	printf("Finished removing process\n");
 	return;
 
 
@@ -171,13 +184,15 @@ void cLottery::printUnblocked() {
 }
 
 ProcessInfo* cLottery::getNextToRun() {
-	/* Find ready process which came first */
 	printUnblocked();
 
-	//This makes it non-preemptive
+	lotteryInfo* info;
+
 	if(runningProc != NULL) {
-		procLogger->writeProcessInfo(runningProc);
-		return runningProc;
+		runningProc->state = ready;
+
+		runningProc = NULL;
+		++totalReady;
 	}
 
 	pthread_mutex_lock(&blockedLock);
@@ -192,39 +207,49 @@ ProcessInfo* cLottery::getNextToRun() {
 		else {
 			/* Nothing is left to run */
 			pthread_mutex_unlock(&blockedLock);
+			return NULL;
 		}
 	}
+
+	vector<ProcessInfo*>::iterator iter;
+	fprintf(logStream, "Ticket Info (pid:# tickets)\n\t");
+	for ( iter = readyVector.begin(); iter < readyVector.end(); ++iter ) {
+		if (*iter != NULL) {
+			fprintf(logStream, "%d: %d tickets  ", (*iter)->pid, (*iter)->priority);
+			printf("%d: %d tickets ", (*iter)->pid, (*iter)->priority);
+		}
+	}
+	fprintf(logStream, "\n");
+	printf("\n");
 
 	//Set bounds for tickets and choose a random ticket
 	int low = 0, high = totalTickets;
 	int ticket = rand() % (high - low + 1) + low;
-	assert(ticket >= 0 && ticket <= totalTickets);
+	printf("ticket = %d		totalTickets = %d\n", ticket, totalTickets);
+	assert(ticket >= low && ticket <= totalTickets);
 
 	//Initialize bounds to determine which process has ticket
-	int lowerBound = 0;
-	int upperBound;
+	int lowerBound = low;
+	int upperBound = low;
 	ProcessInfo* toRun;
 
 	//Iterate through readyVector
-	vector<ProcessInfo*>::iterator iter;
 	for(iter = readyVector.begin(); iter < readyVector.end(); ++iter) {
 		if(*iter != NULL) {
 
 			upperBound += (*iter)->priority;
 			assert(lowerBound != upperBound);
 
-			if(ticket >= lowerBound && ticket <= upperBound) {
+			if(/*ticket >= lowerBound && */ ticket <= upperBound) {
 				toRun = *iter;
-				lotteryInfo* info = (lotteryInfo*) toRun->scheduleData;
 
-				//Not sure if I can do this with the iterator object
-				readyVector.at(info->readyIndex) = NULL;
-
-				readyID.returnID(info->readyIndex);
 				--totalReady;
+
+				fprintf(logStream, "\tLottery Ticket: %d  Total Tickets: %d  Winner: pid %d\n",
+							ticket, totalTickets, toRun->pid);
 				break;
 			}
-			lowerBound = upperBound;
+
 		}
 	}
 

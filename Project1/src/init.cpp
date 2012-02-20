@@ -28,6 +28,11 @@ int main(int argc, char **argv) {
 
 	} else if ( strcmp(scheduler, "lottery") == 0) {
 		cout << "Using Lottery scheduler" << endl;
+		schedulerInstance = new cLottery();
+
+	} else if ( strcmp(scheduler, "multi") == 0) {
+		cout << "Using Multi-Level Queue scheduler" << endl;
+		//schedulerInstance = new cMultiLevel();
 		exit(1);
 
 	} else {
