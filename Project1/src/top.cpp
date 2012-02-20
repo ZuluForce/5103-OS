@@ -1,6 +1,7 @@
 #include "top.h"
 
 static int inotify_fd;
+static int sockfd;
 
 const char* getStatString(eProcState state) {
 	switch (state) {
@@ -72,8 +73,7 @@ int open_inotify_fd() {
 }
 
 int setUpSocket(){
-    int sockfd = socket(AF_UNIX, SOCK_DGRAM, 0);
-    printf("sockfd = %d\n", sockfd);
+    sockfd = socket(AF_UNIX, SOCK_DGRAM, 0);
     if (sockfd < 0){
         perror("Error opening socket for writing");
         return -1;
@@ -93,14 +93,11 @@ int setUpSocket(){
     /* The name of the unix socket where we will request process names */
     dest.sun_family = AF_UNIX;
     strcpy(dest.sun_path, procNameReq);
-    printf("Request socket name = %s\n", dest.sun_path);
     return 0;
 }
 
 int getProcessName(unsigned int num, char *buf){
-	printf("Request process %d name\n", num);
     // Request the process name
-    printf("Requesting name from sockfd = %d\n", sockfd);
     if (sendto(sockfd, &num, sizeof(num), 0, (struct sockaddr*) &dest, sizeof(dest)) == -1){
         perror("Could not send a request to the OS for the process name");
         return -1;
@@ -152,7 +149,7 @@ int main(int argc, char** argv) {
 	char *buf = (char*) malloc( FILENAME_MAX);
 	char *temp = (char*) malloc( MAX_LINE_LENGTH);
 
-	while(1){
+	while(1) {
 
         boost::format fmter("%1% %|40t|%2% %|52t|%3% %|64t|%4% %|76t|%5% %|88t|%6%\n");
 
