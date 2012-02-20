@@ -234,7 +234,7 @@ void cCPU::run() {
 				return;
 
 			case 'P':
-				/* Priveleged instruction */
+				/* Privileged instruction */
 				if ( !KMode ) {
 					/* Exception!, notify the OS */
 					printf("Process pid = %d tried privileged operation in user mode\n", pid);
@@ -279,7 +279,7 @@ void cCPU::executePrivSet(int num, int& clockTick) {
 		if ( KMode ) {
 			++clockTick;
 			fprintf(traceStream, "\nClocktick: %d\n", clockTick);
-			fprintf(traceStream, "Executing privleged instruction for kernel on behalf of pid = %d\n", pid);
+			fprintf(traceStream, "Executing privileged instruction for kernel on behalf of pid = %d\n", pid);
 			--num;
 		} else {
 			PSW |= PS_EXCEPTION;
