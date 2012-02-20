@@ -22,7 +22,7 @@ int main(int argc, char **argv) {
 		cout << "Using First-Come-First-Serve scheduler" << endl;
 		schedulerInstance = new cFCFS();
 
-	} else if ( strcmp(scheduler, "round-robin") == 0) {
+	} else if ( strcmp(scheduler, "rr") == 0) {
 		cout << "Using Round-Robin scheduler" << endl;
 		schedulerInstance = new cRoundRobin();
 
@@ -32,8 +32,7 @@ int main(int argc, char **argv) {
 
 	} else if ( strcmp(scheduler, "multi") == 0) {
 		cout << "Using Multi-Level Queue scheduler" << endl;
-		//schedulerInstance = new cMultiLevel();
-		exit(1);
+		schedulerInstance = new cMultiLevel();
 
 	} else {
 		cout << "Scheduler type not specified" << endl;
