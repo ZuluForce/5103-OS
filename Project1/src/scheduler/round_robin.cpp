@@ -14,6 +14,7 @@ cRoundRobin::cRoundRobin(): blockedID(0) {
 	totalBlocked = 0;
 
 	return;
+
 }
 
 cRoundRobin::~cRoundRobin() {
@@ -115,12 +116,12 @@ void cRoundRobin::printUnblocked(){
     while( traceUnblocked.size() > 0){
         tempID = traceUnblocked.front();
         traceUnblocked.pop();
-        fprintf(logStream, "Process %d unblocked\n", tempID;
+        fprintf(logStream, "Process %d unblocked\n", tempID);
     }
 
     // For the output to look nicer
     if (tempID != 0){
-        fprintf(logStream "\n");
+        fprintf(logStream, "\n");
     }
     return;
 }

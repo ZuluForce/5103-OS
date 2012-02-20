@@ -28,7 +28,7 @@ class cScheduler {
 		/* Logging */
 		virtual void addLogger(FILE*) = 0;
 		virtual void addProcLogger(cProcessLogger*) = 0;
-		virtual void printUnblocked = 0;
+		virtual void printUnblocked() = 0;
 };
 
 /** @fn virtual void cScheduler::initProcScheduleInfo(ProcessInfo*) = 0

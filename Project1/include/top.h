@@ -25,7 +25,12 @@
 using namespace std;
 using namespace boost;
 
+char procLogFileDir[256];
 static const char procLogFile[] = "proc.log";
+static const char recvSockName[] = "proc.names.recv";
+struct sockaddr_un local, dest;
+int sockfd;
+
 
 const char* getStatString(eProcState state);
 
