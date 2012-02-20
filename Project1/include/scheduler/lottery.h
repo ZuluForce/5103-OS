@@ -1,10 +1,3 @@
-/*
- * lottery.h
- *
- *  Created on: Feb 14, 2012
- *      Author: Dylan
- */
-
 #ifndef LOTTERY_H_INCLUDED
 #define LOTTERY_H_INCLUDED
 
@@ -67,5 +60,23 @@ struct lotteryInfo {
 	unsigned int readyIndex;
 	unsigned int blockedIndex;
 };
+
+/* Doxygen knows to include the documentation for the methods in the
+ * abstract class. Don't think I need to include it here.
+ */
+
+/** @fn void cLottery::addLogger(FILE* _logStream)
+ *  Assign the file pointer to the logStream data field.
+ */
+
+/** @fn void cLottery::addProcLogger(cProcessLogger*)
+ *  Assign the cProcessLogger pointer to the procLogger data field.
+ */
+
+/** @fn void cLottery::printUnblocked()
+ *  Removes each PID from the traceUnblocked queue and prints it to the trace logger.
+ */
+
+
 
 #endif /* LOTTERY_H_ */
