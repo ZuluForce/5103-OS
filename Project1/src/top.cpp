@@ -152,8 +152,8 @@ int main(int argc, char** argv) {
 
         cout << fmter;
         //printf("PID  MEMORY  CPUSTART  CPUTIME  STATE\n");
+        stat(procLogFile, &fileinfo);
         int fileSize = fileinfo.st_size;
-        printf("File has %d bytes \n", fileSize);
         int numLines = fileSize / MAX_LINE_LENGTH;
         unsigned int pid, memory, cpustart, cputime, state;
 
@@ -205,8 +205,6 @@ int main(int argc, char** argv) {
             int i = 0;
             while (i < length){
                 struct inotify_event *event = (struct inotify_event *) &buffer[0];
-                printf("got an event\n");
-                printf("name: %s\n", event->name);
                 if (event->mask & IN_MODIFY){
                     printf("%s file was modified.\n", procLogFile);
                     logFileModified = 1;
