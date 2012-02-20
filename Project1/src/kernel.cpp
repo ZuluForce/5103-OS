@@ -122,7 +122,14 @@ void cKernel::initProcess(const char *filename, pidType parent, int priority) {
     int processFile = open( filename, S_IRUSR);
     if ( read(processFile, newProc->processText, fileinfo.st_size) <= 0 ) {
     	/* Error Creating Process */
-    	perror("Error creating new process");
+    	if ( errno == 0 ) {
+    		fprintf(traceStream, "New process has no text. Aborting creation.\n");
+    		printf("New process has no text. Aborting creation.\n");
+    	} else {
+    		fprintf(traceStream, "Error reading process contents. Aborting creation.\n");
+    		printf("Error reading process contents. Aborting creation.\n");
+    	}
+
     	free(newProc->processText);
     	free(newProc);
     	close(processFile);
@@ -301,6 +308,20 @@ void cKernel::boot() {
 
 				case 'I': {
 					printf("System call for device I/O\n");
+
+					char* devClassStr = cpu.getParam(0);
+					assert( strlen(devClassStr) > 0 );
+					char devClass = devClassStr[0];
+
+					if ( !(devClass == 'B' || devClass == 'C') ) {
+						printf("Invalid device type: %c\n", devClass);
+						fprintf(traceStream, "Invalid device type: %c\n", devClass);
+						cleanupProcess(runningProc);
+						runningProc = NULL;
+
+						break;
+					}
+
 					cpu.executePrivSet(3, clockTick);
 					localPSW = cpu.getPSW();
 
@@ -314,9 +335,6 @@ void cKernel::boot() {
 					}
 
 					//Put in request for device I/O
-					char* devClassStr = cpu.getParam(0);
-					assert( strlen(devClassStr) > 0 );
-					char devClass = devClassStr[0];
 
 					switch ( devClass ) {
 						case 'B': {

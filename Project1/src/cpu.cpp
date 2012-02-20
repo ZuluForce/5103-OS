@@ -27,17 +27,20 @@ void cCPU::initClockPulse(pthread_mutex_t* _pulseLock, pthread_cond_t* _pulseCon
 }
 
 int cCPU::tokenizeLine() {
+	if ( PC >= maxPC )
+		return 0;
+
 	char c = execText[PC];
 
 	//Strip all whitespace
-	while ( c == ' ' ) {
+	while ( c == ' ' || c == '\t') {
 		c = execText[++PC];
 	}
 
 	int bufferIndex = 0, count = 0;
 
 	while ( count < MAX_PARAMS && bufferIndex < MAX_PARAM_SIZE ) {
-		if ( c == ' ' ) {
+		if ( c == ' ' || c == '\t') {
 			//Space encountered. Could be between parameters or trailing after the last one
 			tokenBuffer[count][bufferIndex] = '\0'; //Terminate string
 			count = bufferIndex > 0 ? count + 1 : count; //Increment the counter if anything was read in
@@ -140,6 +143,7 @@ void cCPU::run() {
 				++PC; //For the tokenizer to work
 				if ( (arg = tokenizeLine()) != 1 ) {
 					/* Invalid arguments. Notify the OS. */
+					fprintf(traceStream, "Invalid number of arguments for S operation: %d\n", arg);
 					printf("Invalid number of arguments for S operation: %d\n", arg);
 					for ( int i = 0; i < arg; ++i)
 						printf("Arg %d = %s\n", arg, tokenBuffer[i]);
@@ -160,6 +164,9 @@ void cCPU::run() {
 				++PC;
 				if ( tokenizeLine() != 1 ) {
 					/* Invalid arguments. Notify the OS. */
+					fprintf(traceStream, "Invalid number of arguments for A operation: %d\n", arg);
+					printf("Invalid number of arguments for A operation: %d\n", arg);
+
 					PSW |= PS_EXCEPTION;
 					return;
 				}
@@ -176,6 +183,9 @@ void cCPU::run() {
 				++PC;
 				if ( tokenizeLine() != 1 ) {
 					/* Invalid arguments. Notify the OS. */
+					fprintf(traceStream, "Invalid number of arguments for D operation: %d\n", arg);
+					printf("Invalid number of arguments for D operation: %d\n", arg);
+
 					PSW |= PS_EXCEPTION;
 					return;
 				}
@@ -192,6 +202,9 @@ void cCPU::run() {
 				++PC;
 				if ( tokenizeLine() != 2 ) {
 					/* Invalid arguments. Notify the OS. */
+					fprintf(traceStream, "Invalid number of arguments for C operation: %d\n", arg);
+					printf("Invalid number of arguments for C operation: %d\n", arg);
+
 					PSW |= PS_EXCEPTION;
 					return;
 				}
@@ -207,6 +220,9 @@ void cCPU::run() {
 				/* IO syscall to device class: 'I <dev-class> (B/C) */
 				++PC;
 				if ( tokenizeLine() != 1) {
+					fprintf(traceStream, "Invalid number of arguments for I operation: %d\n", arg);
+					printf("Invalid number of arguments for I operation: %d\n", arg);
+
 					PSW |= PS_EXCEPTION;
 					return;
 				}
