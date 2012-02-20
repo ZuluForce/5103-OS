@@ -28,6 +28,7 @@ class cScheduler {
 		/* Logging */
 		virtual void addLogger(FILE*) = 0;
 		virtual void addProcLogger(cProcessLogger*) = 0;
+		virtual void printUnblocked = 0;
 };
 
 /** @fn virtual void cScheduler::initProcScheduleInfo(ProcessInfo*) = 0
@@ -124,6 +125,7 @@ class cScheduler {
  *
  *
  *	Implementation Requirements:
+ *	\li Call printUnblocked() to update the trace log after a clock step.
  *	\li Block if there are > 0 processes but none can run.
  *	\li A process listed as ::running within the scheduler should be
  *	treated as ready when this method is called.
@@ -169,5 +171,12 @@ class cScheduler {
  *
  *	@param cProcessLogger* Process logger class
  *	@see cProcessLogger
+ */
+
+/**	@fn virtual void cScheduler::printUnblocked() = 0
+ *	Prints at once all processes that may have become unblocked
+ *	asynchronously. This method is needed to avoid mixed
+ *	output in the trace logger.
+ *
  */
 #endif // SCHEDULER_H_INCLUDED
