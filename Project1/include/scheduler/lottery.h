@@ -14,6 +14,10 @@ using namespace std;
 /** Lottery Scheduler */
 class cLottery: public cScheduler {
 private:
+
+	/* Vectors used to keep track of process state
+	 * Running process will be in readyVector
+	 */
 	vector<ProcessInfo*> readyVector;
 	vector<ProcessInfo*> blockedVector;
 
@@ -23,14 +27,20 @@ private:
 	int totalBlocked;
 	int totalTickets;
 
+	/* Currently running process */
 	ProcessInfo* runningProc;
 
+	/* Synch lock for lottery functions */
 	pthread_mutex_t blockedLock;
+
+	/* Used when there are process, but all are blocked */
 	pthread_cond_t allBlocked;
 
+	/* Used to keep track of indices in vectors */
 	cIDManager blockedID;
 	cIDManager readyID;
 
+	/* Used for logging */
 	FILE* logStream;
 	cProcessLogger* procLogger;
 
