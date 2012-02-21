@@ -63,11 +63,17 @@ void cMultiLevel::setBlocked(ProcessInfo* proc) {
 
 	/* Even though it blocked it may have used its whole quanta */
 	if ( quantaUsed >= levelQuantas[currentLevel] ) {
-		if ( schedInfo->level != 3)
+		if ( schedInfo->level != 3) {
 			++(schedInfo->level); //This is the queue it will be resumed in
+			fprintf(logStream, "Process %d will be moved down to level %d after unblock\n",
+					proc->pid, schedInfo->level);
+		}
 	} else {
-		if ( schedInfo->level != 0 )
+		if ( schedInfo->level != 0 ) {
 			--(schedInfo->level);
+			fprintf(logStream, "Process %d will be moved up to level %d after unblock\n",
+					proc->pid, schedInfo->level);
+		}
 	}
 
 	unsigned int newID = blockedID.getID();
@@ -81,10 +87,10 @@ void cMultiLevel::setBlocked(ProcessInfo* proc) {
 
 	blockedVector[newID] = proc;
 
-	--totalReady;
 	++totalBlocked;
-
 	runningProc = NULL;
+
+	quantaUsed = 0;
 	fprintf(logStream, "Process %d has been blocked\n", proc->pid);
 	pthread_mutex_unlock(&blockedLock);
 
@@ -151,8 +157,39 @@ void cMultiLevel::printUnblocked() {
 	return;
 }
 
+void cMultiLevel::printLevels() {
+	int level = 0;
+	vector<queue<ProcessInfo*> >::iterator it;
+	//queue<ProcessInfo*>::iterator itq;
+
+	fprintf(logStream, "------Multi-Level Queue Info------\n");
+	printf("------Multi-Level Queue Info------\n");
+	fprintf(logStream, "---------Blocked not shown--------\n");
+	printf("---runningProc not included---\n");
+
+	for ( it = readyQueues.begin(); it < readyQueues.end(); ++it, ++level) {
+		fprintf(logStream, "Level %d: %d elements\n", level, (int) (*it).size());
+		printf("Level %d: %d elements\n", level, (int) (*it).size());
+
+		//Regular queue doesn't have iterators
+		//for ( itq = (*it).begin(); itq < (*itq).end(); ++itq) {
+		//	printf("%d -->", (*itq)->pid);
+		//}
+	}
+
+	fprintf(logStream, "------------ End Info ------------\n");
+	printf("------------ End Info ------------\n");
+
+	return;
+}
+
 ProcessInfo* cMultiLevel::getNextToRun() {
 	printUnblocked();
+	printf("currentLevel = %d  quantaUsed = %d  totalReady = %d  levelQuanta = %d\n",
+			currentLevel, quantaUsed, totalReady, levelQuantas[currentLevel]);
+
+	fprintf(logStream, "currentLevel = %d  quantaUsed = %d  totalReady = %d  levelQuanta = %d\n",
+			currentLevel, quantaUsed, totalReady, levelQuantas[currentLevel]);
 
 	sMultiInfo* info;
 
@@ -163,9 +200,13 @@ ProcessInfo* cMultiLevel::getNextToRun() {
 		/* Continue running the current process if it hasn't used it quanta
 		 * or there are no other processes to choose from
 		 */
-		if ( quantaUsed < levelQuantas[currentLevel] || totalReady == 0) {
+		if ( quantaUsed < levelQuantas[currentLevel]) {
 			++quantaUsed;
 			procLogger->writeProcessInfo(runningProc);
+
+			fprintf(logStream, "Scheduling same process\n\n");
+			printf("Scheduling same process\n\n");
+			pthread_mutex_unlock(&blockedLock);
 			return runningProc;
 		}
 
@@ -178,11 +219,14 @@ ProcessInfo* cMultiLevel::getNextToRun() {
 			case 1:
 			case 2:
 				++(info->level);
+				fprintf(logStream, "Process %d moved to queue %d\n", runningProc->pid, info->level);
 				printf("Process %d moved to queue %d\n", runningProc->pid, info->level);
 				readyQueues.at(info->level).push(runningProc);
 				break;
 
 			case 3:
+				fprintf(logStream, "Process %d put back in level 3 queue\n", runningProc->pid);
+				printf("Process %d put back in level 3 queue\n", runningProc->pid);
 				readyQueues.at(3).push(runningProc);
 				break;
 
@@ -192,10 +236,14 @@ ProcessInfo* cMultiLevel::getNextToRun() {
 				break;
 		}
 
+		quantaUsed = 0;
+		runningProc->state = ready;
 		++totalReady;
 		procLogger->writeProcessInfo(runningProc);
 		runningProc = NULL;
 	}
+
+	printLevels();
 
 	if ( totalReady == 0 ) {
 		if ( totalBlocked > 0) {
@@ -224,12 +272,14 @@ ProcessInfo* cMultiLevel::getNextToRun() {
 			info = (sMultiInfo*) toRun->scheduleData;
 			info->level = index;
 			currentLevel = index;
+
+			break;
 		}
 	}
 
 	assert(toRun != NULL);
 
-	quantaUsed = 0;
+	quantaUsed = 1;
 	--totalReady;
 
 	runningProc = toRun;
@@ -238,6 +288,7 @@ ProcessInfo* cMultiLevel::getNextToRun() {
 
 	procLogger->writeProcessInfo(runningProc);
 
+	fprintf(logStream, "\n\n"); //A lot is being printed so some extra whitespace doesn't hurt
 	pthread_mutex_unlock(&blockedLock);
 
 	return toRun;

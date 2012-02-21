@@ -1,6 +1,8 @@
 #ifndef ROUND_ROBIN_H_INCLUDED
 #define ROUND_ROBIN_H_INCLUDED
 
+/** @file */
+
 #include <assert.h>
 
 #include "scheduler/scheduler.h"

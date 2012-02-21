@@ -67,6 +67,7 @@ class cMultiLevel: public cScheduler {
 		void addProcLogger(cProcessLogger* _procLogger);
 
 		void printUnblocked();
+		void printLevels();
 };
 
 struct sMultiInfo {
