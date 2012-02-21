@@ -236,7 +236,7 @@ ProcessInfo* cLottery::getNextToRun() {
 
 				--totalReady;
 
-				fprintf(logStream, "\tLottery Ticket: %d  Total Tickets: %d  Winner: pid %d\n",
+				fprintf(logStream, "\t!!--Lottery Ticket: %d  Total Tickets: %d  Winner: pid %d--!!\n",
 							ticket, totalTickets, toRun->pid);
 				break;
 			}
@@ -251,6 +251,7 @@ ProcessInfo* cLottery::getNextToRun() {
 	runningProc->state = running;
 	procLogger->writeProcessInfo(runningProc);
 
+	fprintf(logStream, "\n");
 	pthread_mutex_unlock(&blockedLock);
 
 	return toRun;

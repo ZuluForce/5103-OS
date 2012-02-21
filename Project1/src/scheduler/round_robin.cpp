@@ -135,6 +135,8 @@ ProcessInfo* cRoundRobin::getNextToRun() {
     printUnblocked();
 
 	pthread_mutex_lock(&blockedLock);
+	fprintf(logStream, "Quantum Tick: %d\n\n", clockTicksUsed);
+
 	if ( runningProc != NULL) {
 	    if (clockTicksUsed >= QUANTUM){ // Has the running process used up it's quantum?
 	        runningProc->state = ready;
@@ -171,6 +173,8 @@ ProcessInfo* cRoundRobin::getNextToRun() {
 	assert(toRun != NULL);
 	assert(toRun->state == ready);
 
+	fprintf(logStream, "Scheduling process %d\n", toRun->pid);
+
 	runningProc = toRun;
 	clockTicksUsed++;
 	runningProc->state = running;
@@ -178,6 +182,7 @@ ProcessInfo* cRoundRobin::getNextToRun() {
 
 	procLogger->writeProcessInfo(runningProc);
 
+	fprintf(logStream, "\n");
 	pthread_mutex_unlock(&blockedLock);
 
 

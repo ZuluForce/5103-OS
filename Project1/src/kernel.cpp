@@ -389,6 +389,7 @@ void cKernel::boot() {
 		fflush(traceStream);
 	} while( scheduler.numProcesses() > 0 );
 
+	fprintf(traceStream, "All processes have finished executing. Exiting kernel.\n");
 	printf("All processes have finished executing. Exiting kernel.\n");
 
 	return;

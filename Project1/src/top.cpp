@@ -151,7 +151,7 @@ int main(int argc, char** argv) {
 
 	while(1) {
 
-        boost::format fmter("%1% %|30t|%2% %|52t|%3% %|64t|%4% %|76t|%5% %|88t|%6%\n");
+        boost::format fmter("%1% %|30t|%2% %|42t|%3% %|54t|%4% %|66t|%5% %|78t|%6%\n");
 
         fmter % "NAME" % "PID" % "MEMORY" % "CPUSTART" % "CPUTIME" % "STATE";
 
