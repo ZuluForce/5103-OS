@@ -49,9 +49,8 @@ void \hyperlink{classcFCFS_accb887eae7016719ce770d7b0284adea}{add\-Logger} (\-F\
 \begin{DoxyCompactList}\small\item\em \-Add an instance of the trace logger to the scheduler. \end{DoxyCompactList}\item 
 void \hyperlink{classcFCFS_a4da9f2fa83516ac5859772ae09169343}{add\-Proc\-Logger} (\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$\-\_\-proc\-Logger)
 \begin{DoxyCompactList}\small\item\em \-Add instance of process logger to the scheduler. \end{DoxyCompactList}\item 
-\hypertarget{classcFCFS_a37af1bbb7393f800a24ff22ee443f876}{void {\bfseries print\-Unblocked} ()}\label{d6/dc3/classcFCFS_a37af1bbb7393f800a24ff22ee443f876}
-
-\end{DoxyCompactItemize}
+void \hyperlink{classcFCFS_a37af1bbb7393f800a24ff22ee443f876}{print\-Unblocked} ()
+\begin{DoxyCompactList}\small\item\em \-Prints at once all processes that may have become unblocked asynchronously. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Private \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -164,7 +163,7 @@ void \hyperlink{classcFCFS_a4da9f2fa83516ac5859772ae09169343}{add\-Proc\-Logger}
 \-If there are processes left but all are blocked. \-This function should block until it receives a signal that a process is unblocked.
 
 \-Implementation \-Requirements\-: \begin{DoxyItemize}
-\item \-Block if there are $>$ 0 processes but none can run. \item \-A process listed as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} within the scheduler should be treated as ready when this method is called. \item \-A process returned as the 'next to run' should be marked as being in a \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} state before returning. \item \-If there are no more remaining processes this should return \-N\-U\-L\-L.\end{DoxyItemize}
+\item \-Call \hyperlink{classcFCFS_a37af1bbb7393f800a24ff22ee443f876}{print\-Unblocked()} to update the trace log after a clock step. \item \-Block if there are $>$ 0 processes but none can run. \item \-A process listed as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} within the scheduler should be treated as ready when this method is called. \item \-A process returned as the 'next to run' should be marked as being in a \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} state before returning. \item \-If there are no more remaining processes this should return \-N\-U\-L\-L.\end{DoxyItemize}
 \begin{DoxyReturn}{\-Returns}
 \hyperlink{structProcessInfo}{\-Process\-Info}$\ast$ \-Ready process to run next. \-May be the same as the currenlty running one.
 \end{DoxyReturn}
@@ -207,6 +206,21 @@ pid\-Type
 
 
 \-Implements \hyperlink{classcScheduler_a025532a943093ae7e8d6dc0cdaf60f12}{c\-Scheduler}.
+
+\hypertarget{classcFCFS_a37af1bbb7393f800a24ff22ee443f876}{\index{c\-F\-C\-F\-S@{c\-F\-C\-F\-S}!print\-Unblocked@{print\-Unblocked}}
+\index{print\-Unblocked@{print\-Unblocked}!cFCFS@{c\-F\-C\-F\-S}}
+\subsubsection[{print\-Unblocked}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-F\-C\-F\-S\-::print\-Unblocked} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d6/dc3/classcFCFS_a37af1bbb7393f800a24ff22ee443f876}
+\-This method is needed to avoid mixed output in the trace logger. 
+
+\-Implements \hyperlink{classcScheduler_a27258d070a59a61a0b0ecbb35c514417}{c\-Scheduler}.
+
+
+
+\-Referenced by get\-Next\-To\-Run().
 
 \hypertarget{classcFCFS_aeeac757885108ae510b728600ebba248}{\index{c\-F\-C\-F\-S@{c\-F\-C\-F\-S}!remove\-Process@{remove\-Process}}
 \index{remove\-Process@{remove\-Process}!cFCFS@{c\-F\-C\-F\-S}}

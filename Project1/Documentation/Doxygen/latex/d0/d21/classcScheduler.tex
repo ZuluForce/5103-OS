@@ -16,7 +16,7 @@
 \begin{figure}[H]
 \begin{center}
 \leavevmode
-\includegraphics[width=292pt]{d8/dde/classcScheduler__inherit__graph}
+\includegraphics[width=350pt]{d8/dde/classcScheduler__inherit__graph}
 \end{center}
 \end{figure}
 \subsection*{\-Public \-Member \-Functions}
@@ -39,7 +39,9 @@ virtual pid\-Type \hyperlink{classcScheduler_a025532a943093ae7e8d6dc0cdaf60f12}{
 virtual void \hyperlink{classcScheduler_a7b29af7eab1a9cbe383d98a44693be69}{add\-Logger} (\-F\-I\-L\-E $\ast$)=0
 \begin{DoxyCompactList}\small\item\em \-Add an instance of the trace logger to the scheduler. \end{DoxyCompactList}\item 
 virtual void \hyperlink{classcScheduler_a3e7865112718057fcdc277db0a85c21c}{add\-Proc\-Logger} (\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$)=0
-\begin{DoxyCompactList}\small\item\em \-Add instance of process logger to the scheduler. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Add instance of process logger to the scheduler. \end{DoxyCompactList}\item 
+virtual void \hyperlink{classcScheduler_a27258d070a59a61a0b0ecbb35c514417}{print\-Unblocked} ()=0
+\begin{DoxyCompactList}\small\item\em \-Prints at once all processes that may have become unblocked asynchronously. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{\-Member \-Function \-Documentation}
@@ -64,7 +66,7 @@ virtual void \hyperlink{classcScheduler_a3e7865112718057fcdc277db0a85c21c}{add\-
 \end{DoxySeeAlso}
 
 
-\-Implemented in \hyperlink{classcFCFS_accb887eae7016719ce770d7b0284adea}{c\-F\-C\-F\-S}, and \hyperlink{classcRoundRobin_a6e0d0ec272a4f7ffe03166b1ff08276b}{c\-Round\-Robin}.
+\-Implemented in \hyperlink{classcMultiLevel_aa26aafd1e6a4582d16b47df72ca68601}{c\-Multi\-Level}, \hyperlink{classcRoundRobin_a6e0d0ec272a4f7ffe03166b1ff08276b}{c\-Round\-Robin}, \hyperlink{classcFCFS_accb887eae7016719ce770d7b0284adea}{c\-F\-C\-F\-S}, and \hyperlink{classcLottery_ad9b5803ea8dabd0df69d8063173b95a5}{c\-Lottery}.
 
 
 
@@ -88,7 +90,7 @@ virtual void \hyperlink{classcScheduler_a3e7865112718057fcdc277db0a85c21c}{add\-
 \end{DoxyParams}
 
 
-\-Implemented in \hyperlink{classcFCFS_a25d4bf440041f5294f3b9c5aff20b411}{c\-F\-C\-F\-S}, \hyperlink{classcRoundRobin_a3571d05a8daebccb758d63b8327f8a22}{c\-Round\-Robin}, and \hyperlink{classcLottery_ae250b46d5d3032d40f49b8539cbd9faf}{c\-Lottery}.
+\-Implemented in \hyperlink{classcMultiLevel_af34029dd10cbd0b97d5c9f026e7c3838}{c\-Multi\-Level}, \hyperlink{classcRoundRobin_a3571d05a8daebccb758d63b8327f8a22}{c\-Round\-Robin}, \hyperlink{classcFCFS_a25d4bf440041f5294f3b9c5aff20b411}{c\-F\-C\-F\-S}, and \hyperlink{classcLottery_ae250b46d5d3032d40f49b8539cbd9faf}{c\-Lottery}.
 
 
 
@@ -113,7 +115,7 @@ virtual void \hyperlink{classcScheduler_a3e7865112718057fcdc277db0a85c21c}{add\-
 \end{DoxySeeAlso}
 
 
-\-Implemented in \hyperlink{classcFCFS_a4da9f2fa83516ac5859772ae09169343}{c\-F\-C\-F\-S}, and \hyperlink{classcRoundRobin_a728fa415647d6c71b32ee8d4a04580e1}{c\-Round\-Robin}.
+\-Implemented in \hyperlink{classcMultiLevel_ad87a35e7828a916b4542c0fdd6301323}{c\-Multi\-Level}, \hyperlink{classcRoundRobin_a728fa415647d6c71b32ee8d4a04580e1}{c\-Round\-Robin}, \hyperlink{classcFCFS_a4da9f2fa83516ac5859772ae09169343}{c\-F\-C\-F\-S}, and \hyperlink{classcLottery_a3181bce7c9e3464215fdd9c328851787}{c\-Lottery}.
 
 
 
@@ -131,7 +133,7 @@ virtual void \hyperlink{classcScheduler_a3e7865112718057fcdc277db0a85c21c}{add\-
 \-If there are processes left but all are blocked. \-This function should block until it receives a signal that a process is unblocked.
 
 \-Implementation \-Requirements\-: \begin{DoxyItemize}
-\item \-Block if there are $>$ 0 processes but none can run. \item \-A process listed as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} within the scheduler should be treated as ready when this method is called. \item \-A process returned as the 'next to run' should be marked as being in a \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} state before returning. \item \-If there are no more remaining processes this should return \-N\-U\-L\-L.\end{DoxyItemize}
+\item \-Call \hyperlink{classcScheduler_a27258d070a59a61a0b0ecbb35c514417}{print\-Unblocked()} to update the trace log after a clock step. \item \-Block if there are $>$ 0 processes but none can run. \item \-A process listed as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} within the scheduler should be treated as ready when this method is called. \item \-A process returned as the 'next to run' should be marked as being in a \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} state before returning. \item \-If there are no more remaining processes this should return \-N\-U\-L\-L.\end{DoxyItemize}
 \begin{DoxyReturn}{\-Returns}
 \hyperlink{structProcessInfo}{\-Process\-Info}$\ast$ \-Ready process to run next. \-May be the same as the currenlty running one.
 \end{DoxyReturn}
@@ -140,7 +142,7 @@ virtual void \hyperlink{classcScheduler_a3e7865112718057fcdc277db0a85c21c}{add\-
 \end{DoxyWarning}
 
 
-\-Implemented in \hyperlink{classcFCFS_aa2b92a8a992078e499aab455c9d78faf}{c\-F\-C\-F\-S}, \hyperlink{classcRoundRobin_a1979ff71bb2320bdb00eae5feb2b2688}{c\-Round\-Robin}, and \hyperlink{classcLottery_a4df695e7e524164321f92eafd329fbaa}{c\-Lottery}.
+\-Implemented in \hyperlink{classcMultiLevel_af653d9a0d370d95c5d27914bae976628}{c\-Multi\-Level}, \hyperlink{classcRoundRobin_a1979ff71bb2320bdb00eae5feb2b2688}{c\-Round\-Robin}, \hyperlink{classcFCFS_aa2b92a8a992078e499aab455c9d78faf}{c\-F\-C\-F\-S}, and \hyperlink{classcLottery_a81195e7055070fa9743497621898c441}{c\-Lottery}.
 
 
 
@@ -159,7 +161,7 @@ virtual void \hyperlink{classcScheduler_a3e7865112718057fcdc277db0a85c21c}{add\-
 \item \-No required actions. \end{DoxyItemize}
 
 
-\-Implemented in \hyperlink{classcFCFS_aff34f18c6f4c3f38029d904cd2ec55de}{c\-F\-C\-F\-S}, and \hyperlink{classcRoundRobin_aadb221df9b12f61c3151996ea5c09741}{c\-Round\-Robin}.
+\-Implemented in \hyperlink{classcMultiLevel_ad403c4589bcd66289aa0c9f6a78a7a1b}{c\-Multi\-Level}, \hyperlink{classcRoundRobin_aadb221df9b12f61c3151996ea5c09741}{c\-Round\-Robin}, \hyperlink{classcFCFS_aff34f18c6f4c3f38029d904cd2ec55de}{c\-F\-C\-F\-S}, and \hyperlink{classcLottery_a04e2ae003310bf45f0db0d3017e308e2}{c\-Lottery}.
 
 
 
@@ -181,11 +183,22 @@ pid\-Type
 \end{DoxyReturn}
 
 
-\-Implemented in \hyperlink{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{c\-F\-C\-F\-S}, \hyperlink{classcRoundRobin_afa0cdfcfc0b8222d39ad5e9c23db1f25}{c\-Round\-Robin}, and \hyperlink{classcLottery_a4f77d186c1f4cbb82d3fff077bba7736}{c\-Lottery}.
+\-Implemented in \hyperlink{classcMultiLevel_ab36db79f48f6dd388eb8504af261d3e4}{c\-Multi\-Level}, \hyperlink{classcRoundRobin_afa0cdfcfc0b8222d39ad5e9c23db1f25}{c\-Round\-Robin}, \hyperlink{classcFCFS_a0a72de791436a84120a534dd2fa0485d}{c\-F\-C\-F\-S}, and \hyperlink{classcLottery_a4f77d186c1f4cbb82d3fff077bba7736}{c\-Lottery}.
 
 
 
 \-Referenced by c\-Kernel\-::boot(), and c\-Kernel\-::c\-Kernel().
+
+\hypertarget{classcScheduler_a27258d070a59a61a0b0ecbb35c514417}{\index{c\-Scheduler@{c\-Scheduler}!print\-Unblocked@{print\-Unblocked}}
+\index{print\-Unblocked@{print\-Unblocked}!cScheduler@{c\-Scheduler}}
+\subsubsection[{print\-Unblocked}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Scheduler\-::print\-Unblocked} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{d0/d21/classcScheduler_a27258d070a59a61a0b0ecbb35c514417}
+\-This method is needed to avoid mixed output in the trace logger. 
+
+\-Implemented in \hyperlink{classcMultiLevel_a3e20033afe7915530ad5fc4c9baf0a70}{c\-Multi\-Level}, \hyperlink{classcRoundRobin_a3df89085fb98c328b7db6bfc0ee9f9f9}{c\-Round\-Robin}, \hyperlink{classcFCFS_a37af1bbb7393f800a24ff22ee443f876}{c\-F\-C\-F\-S}, and \hyperlink{classcLottery_ab878165e4106b7e09cfa1fbc87d33d1b}{c\-Lottery}.
 
 \hypertarget{classcScheduler_a5632ffa597e9567d475c808070c4e3bb}{\index{c\-Scheduler@{c\-Scheduler}!remove\-Process@{remove\-Process}}
 \index{remove\-Process@{remove\-Process}!cScheduler@{c\-Scheduler}}
@@ -205,7 +218,7 @@ pid\-Type
 \end{DoxyParams}
 
 
-\-Implemented in \hyperlink{classcFCFS_aeeac757885108ae510b728600ebba248}{c\-F\-C\-F\-S}, \hyperlink{classcRoundRobin_a1bc7bfc4c36bdbe3f3938810817d885e}{c\-Round\-Robin}, and \hyperlink{classcLottery_aa995fc5a68b398aa526e504fed2f7a59}{c\-Lottery}.
+\-Implemented in \hyperlink{classcMultiLevel_a862a0b03ba06e25021486aa396446895}{c\-Multi\-Level}, \hyperlink{classcRoundRobin_a1bc7bfc4c36bdbe3f3938810817d885e}{c\-Round\-Robin}, \hyperlink{classcFCFS_aeeac757885108ae510b728600ebba248}{c\-F\-C\-F\-S}, and \hyperlink{classcLottery_aa995fc5a68b398aa526e504fed2f7a59}{c\-Lottery}.
 
 
 
@@ -227,7 +240,7 @@ pid\-Type
 \end{DoxyWarning}
 
 
-\-Implemented in \hyperlink{classcFCFS_a1b8ee3a759a31032ec7c1cd7b15ed5df}{c\-F\-C\-F\-S}, \hyperlink{classcRoundRobin_a13609de0f36c81a780072f9c0730f963}{c\-Round\-Robin}, and \hyperlink{classcLottery_afa726859adb7b98f1ad80a41c196e488}{c\-Lottery}.
+\-Implemented in \hyperlink{classcMultiLevel_a2d3f9e5013d5ef2777c64aa662f98fbd}{c\-Multi\-Level}, \hyperlink{classcRoundRobin_a13609de0f36c81a780072f9c0730f963}{c\-Round\-Robin}, \hyperlink{classcFCFS_a1b8ee3a759a31032ec7c1cd7b15ed5df}{c\-F\-C\-F\-S}, and \hyperlink{classcLottery_afa726859adb7b98f1ad80a41c196e488}{c\-Lottery}.
 
 
 
@@ -254,7 +267,7 @@ pid\-Type
 \end{DoxyWarning}
 
 
-\-Implemented in \hyperlink{classcFCFS_a793da0298f9b36ab8505a0e3daaf41ec}{c\-F\-C\-F\-S}, \hyperlink{classcRoundRobin_a278d541c78f034020f6921b22a7d37af}{c\-Round\-Robin}, and \hyperlink{classcLottery_a86bf3ddc6da1a45ffb073a843d744c60}{c\-Lottery}.
+\-Implemented in \hyperlink{classcMultiLevel_abe3cfe3c2a5828505ea5c52fb12f7d09}{c\-Multi\-Level}, \hyperlink{classcRoundRobin_a278d541c78f034020f6921b22a7d37af}{c\-Round\-Robin}, \hyperlink{classcFCFS_a793da0298f9b36ab8505a0e3daaf41ec}{c\-F\-C\-F\-S}, and \hyperlink{classcLottery_a86bf3ddc6da1a45ffb073a843d744c60}{c\-Lottery}.
 
 
 

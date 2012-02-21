@@ -64,7 +64,7 @@ class cFCFS: public cScheduler {
 
 /** Struct containing process info specific for FCFS scheduling */
 struct fcfsInfo {
-	unsigned int blockedIndex;
+	unsigned int blockedIndex; /**< Index position in blocked vector */
 };
 
 #endif // FCFS_H_INCLUDED

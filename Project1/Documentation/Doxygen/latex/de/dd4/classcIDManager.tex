@@ -71,7 +71,7 @@ unsigned int \hyperlink{classcIDManager_aeb31ecbcb9716b38f33e96c81929b5fe}{reser
 )}}\label{de/dd4/classcIDManager_a45420147e785cc219743e9aa2c336501}
 \-Unique is in the sense that no one else is currently using it but it may have been used previously. are distributed in increasing order until \-U\-I\-N\-T\-\_\-\-M\-A\-X is reached. \-After this is reached, \-I\-Ds are given from the queue of returned \-I\-Ds. \-If this queue is empty then an exception is thrown. 
 
-\-Referenced by get\-Low\-I\-D(), c\-Kernel\-::init\-Process(), c\-Round\-Robin\-::set\-Blocked(), and c\-F\-C\-F\-S\-::set\-Blocked().
+\-Referenced by get\-Low\-I\-D(), c\-Kernel\-::init\-Process(), c\-Lottery\-::set\-Blocked(), c\-F\-C\-F\-S\-::set\-Blocked(), c\-Round\-Robin\-::set\-Blocked(), and c\-Multi\-Level\-::set\-Blocked().
 
 \hypertarget{classcIDManager_ab0d7d0e2cb257f144fd4a7d61ade3b3f}{\index{c\-I\-D\-Manager@{c\-I\-D\-Manager}!get\-Low\-I\-D@{get\-Low\-I\-D}}
 \index{get\-Low\-I\-D@{get\-Low\-I\-D}!cIDManager@{c\-I\-D\-Manager}}
@@ -80,7 +80,11 @@ unsigned int \hyperlink{classcIDManager_aeb31ecbcb9716b38f33e96c81929b5fe}{reser
 {}
 \end{DoxyParamCaption}
 )}}\label{de/dd4/classcIDManager_ab0d7d0e2cb257f144fd4a7d61ade3b3f}
-\-When generating process \-P\-I\-D's we use the regular get\-I\-D so that process \-I\-Ds continue to grow. \-This choice was mainly to prevent confusion when process 1 terminated and the next one to start had pid = 1. \-For functions which use vectors and need an \-I\-D system, it is more efficient to maintain a smaller window to keep the array small. \-This method provides this by preferring to return \-I\-Ds from the free\-I\-D queue. \-Therefore, if there is an \-I\-D availabe in free\-I\-D then the total range of \-I\-Ds will not grow after this function call. \hypertarget{classcIDManager_a03d1079ee2f934dcba77e61d605a8e01}{\index{c\-I\-D\-Manager@{c\-I\-D\-Manager}!next\-Low\-I\-D@{next\-Low\-I\-D}}
+\-When generating process \-P\-I\-D's we use the regular get\-I\-D so that process \-I\-Ds continue to grow. \-This choice was mainly to prevent confusion when process 1 terminated and the next one to start had pid = 1. \-For functions which use vectors and need an \-I\-D system, it is more efficient to maintain a smaller window to keep the array small. \-This method provides this by preferring to return \-I\-Ds from the free\-I\-D queue. \-Therefore, if there is an \-I\-D availabe in free\-I\-D then the total range of \-I\-Ds will not grow after this function call. 
+
+\-Referenced by c\-Lottery\-::add\-Process(), and c\-Lottery\-::unblock\-Process().
+
+\hypertarget{classcIDManager_a03d1079ee2f934dcba77e61d605a8e01}{\index{c\-I\-D\-Manager@{c\-I\-D\-Manager}!next\-Low\-I\-D@{next\-Low\-I\-D}}
 \index{next\-Low\-I\-D@{next\-Low\-I\-D}!cIDManager@{c\-I\-D\-Manager}}
 \subsubsection[{next\-Low\-I\-D}]{\setlength{\rightskip}{0pt plus 5cm}unsigned int {\bf c\-I\-D\-Manager\-::next\-Low\-I\-D} (
 \begin{DoxyParamCaption}
@@ -103,7 +107,7 @@ unsigned int \hyperlink{classcIDManager_aeb31ecbcb9716b38f33e96c81929b5fe}{reser
 )}}\label{de/dd4/classcIDManager_a6671d898740f88cf40860b0b9e119b02}
 \-If the \-I\-D is not equal to the one last given then it is added to a 'free queue'. \-If it is equal to the last one reserved then the \-I\-D counter is simply decremented \-If this last case happens, it causes \hyperlink{classcIDManager_a45420147e785cc219743e9aa2c336501}{c\-I\-D\-Manager\-::get\-I\-D} to stop consuming from the queue and return this newly availabe \-I\-D. 
 
-\-Referenced by c\-Kernel\-::cleanup\-Process(), c\-Round\-Robin\-::unblock\-Process(), and c\-F\-C\-F\-S\-::unblock\-Process().
+\-Referenced by c\-Kernel\-::cleanup\-Process(), c\-Lottery\-::remove\-Process(), c\-Lottery\-::set\-Blocked(), c\-Lottery\-::unblock\-Process(), c\-F\-C\-F\-S\-::unblock\-Process(), c\-Round\-Robin\-::unblock\-Process(), and c\-Multi\-Level\-::unblock\-Process().
 
 
 

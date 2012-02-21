@@ -1,6 +1,8 @@
 #ifndef LOTTERY_H_INCLUDED
 #define LOTTERY_H_INCLUDED
 
+/** @file */
+
 #include <assert.h>
 #include <pthread.h>
 #include <time.h>
@@ -57,8 +59,8 @@ public:
 
 /** Struct containing process info specific for Lottery scheduling */
 struct lotteryInfo {
-	unsigned int readyIndex;
-	unsigned int blockedIndex;
+	unsigned int readyIndex;	/**< Index position in ready vector */
+	unsigned int blockedIndex;	/**< Index position in blocked vector */
 };
 
 /* Doxygen knows to include the documentation for the methods in the

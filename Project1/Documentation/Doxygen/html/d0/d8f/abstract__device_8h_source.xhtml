@@ -85,14 +85,14 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <a name="l00004"></a>00004 <span class="preprocessor">#include &lt;time.h&gt;</span>
 <a name="l00005"></a>00005 <span class="preprocessor">#include &lt;signal.h&gt;</span>
 <a name="l00006"></a>00006 
-<a name="l00007"></a><a class="code" href="../../db/d0e/classAbstractDevice.xhtml">00007</a> <span class="keyword">class </span><a class="code" href="../../db/d0e/classAbstractDevice.xhtml">AbstractDevice</a> {
-<a name="l00008"></a>00008 
-<a name="l00009"></a>00009     <span class="keyword">public</span>:
-<a name="l00010"></a>00010         <span class="keyword">virtual</span> <span class="keywordtype">void</span> setTimer(<span class="keywordtype">int</span> time) = 0;
-<a name="l00011"></a>00011         <span class="keyword">virtual</span> <span class="keywordtype">void</span> disarm() = 0;
-<a name="l00012"></a>00012 };
-<a name="l00013"></a>00013 
-<a name="l00014"></a>00014 <span class="preprocessor">#endif</span>
+<a name="l00017"></a><a class="code" href="../../db/d0e/classAbstractDevice.xhtml">00017</a> <span class="keyword">class </span><a class="code" href="../../db/d0e/classAbstractDevice.xhtml" title="An abstract device class.">AbstractDevice</a> {
+<a name="l00018"></a>00018 
+<a name="l00019"></a>00019     <span class="keyword">public</span>:
+<a name="l00020"></a>00020         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="../../db/d0e/classAbstractDevice.xhtml#adbf2b1dbd7d51896697fce8ae924f286" title="Set the length of the timer for this device.">setTimer</a>(<span class="keywordtype">int</span> time) = 0;
+<a name="l00021"></a>00021         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="../../db/d0e/classAbstractDevice.xhtml#a79059fee864bb0cca04e57e5f5a84401" title="Disarm the timer set from a previous call to setTimer.">disarm</a>() = 0;
+<a name="l00022"></a>00022 };
+<a name="l00023"></a>00023 
+<a name="l00035"></a>00035 <span class="preprocessor">#endif</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -111,7 +111,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 21 2012 08:49:14 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

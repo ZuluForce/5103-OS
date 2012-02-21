@@ -4,8 +4,6 @@
 /** @file */
 
 #include <vector>
-//#include <fcntl.h>
-//#include <sys/types.h>
 #include <sys/stat.h>
 #include <semaphore.h>
 
@@ -13,9 +11,6 @@
 #include "devices/char_device.h"
 #include "devices/block_device.h"
 #include "devices/clock_device.h"
-//#include "utility/id.h"
-//#include "utility/logger.h"
-//#include "utility/process_logger.h"
 
 #include "scheduler/allSchedulers.h"
 

@@ -13,6 +13,7 @@
 
 using namespace std;
 
+/** Multi-Level Queue Scheduler */
 class cMultiLevel: public cScheduler {
 	private:
 		/* Internal Datastructures */
@@ -70,9 +71,10 @@ class cMultiLevel: public cScheduler {
 		void printLevels();
 };
 
+/** Struct containing process info specific for Multi-Level scheduling */
 struct sMultiInfo {
-	int blockedIndex;
-	int level;
+	int blockedIndex; 	/**< Index position in blocked vector */
+	int level;			/**< Current queue level */
 };
 
 #endif // MULTI_LEVEL_H_INCLUDED

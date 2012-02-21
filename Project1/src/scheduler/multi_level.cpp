@@ -165,7 +165,7 @@ void cMultiLevel::printLevels() {
 	fprintf(logStream, "------Multi-Level Queue Info------\n");
 	printf("------Multi-Level Queue Info------\n");
 	fprintf(logStream, "---------Blocked not shown--------\n");
-	printf("---runningProc not included---\n");
+	printf("---------Blocked not shown--------\n");
 
 	for ( it = readyQueues.begin(); it < readyQueues.end(); ++it, ++level) {
 		fprintf(logStream, "Level %d: %d elements\n", level, (int) (*it).size());

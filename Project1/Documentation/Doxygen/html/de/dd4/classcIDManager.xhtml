@@ -161,7 +161,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 <div class="memdoc">
 <p>Unique is in the sense that no one else is currently using it but it may have been used previously. are distributed in increasing order until UINT_MAX is reached. After this is reached, IDs are given from the queue of returned IDs. If this queue is empty then an exception is thrown. </p>
 
-<p>Referenced by <a class="el" href="../../de/dd4/classcIDManager.xhtml#ab0d7d0e2cb257f144fd4a7d61ade3b3f">getLowID()</a>, <a class="el" href="../../db/da5/classcKernel.xhtml#a5440eace2647ffd5279de55600947b84">cKernel::initProcess()</a>, <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a13609de0f36c81a780072f9c0730f963">cRoundRobin::setBlocked()</a>, and <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a1b8ee3a759a31032ec7c1cd7b15ed5df">cFCFS::setBlocked()</a>.</p>
+<p>Referenced by <a class="el" href="../../de/dd4/classcIDManager.xhtml#ab0d7d0e2cb257f144fd4a7d61ade3b3f">getLowID()</a>, <a class="el" href="../../db/da5/classcKernel.xhtml#a5440eace2647ffd5279de55600947b84">cKernel::initProcess()</a>, <a class="el" href="../../dd/dc8/classcLottery.xhtml#afa726859adb7b98f1ad80a41c196e488">cLottery::setBlocked()</a>, <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a1b8ee3a759a31032ec7c1cd7b15ed5df">cFCFS::setBlocked()</a>, <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a13609de0f36c81a780072f9c0730f963">cRoundRobin::setBlocked()</a>, and <a class="el" href="../../de/d3b/classcMultiLevel.xhtml#a2d3f9e5013d5ef2777c64aa662f98fbd">cMultiLevel::setBlocked()</a>.</p>
 
 </div>
 </div>
@@ -179,6 +179,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 </div>
 <div class="memdoc">
 <p>When generating process PID's we use the regular getID so that process IDs continue to grow. This choice was mainly to prevent confusion when process 1 terminated and the next one to start had pid = 1. For functions which use vectors and need an ID system, it is more efficient to maintain a smaller window to keep the array small. This method provides this by preferring to return IDs from the freeID queue. Therefore, if there is an ID availabe in freeID then the total range of IDs will not grow after this function call. </p>
+
+<p>Referenced by <a class="el" href="../../dd/dc8/classcLottery.xhtml#ae250b46d5d3032d40f49b8539cbd9faf">cLottery::addProcess()</a>, and <a class="el" href="../../dd/dc8/classcLottery.xhtml#a86bf3ddc6da1a45ffb073a843d744c60">cLottery::unblockProcess()</a>.</p>
 
 </div>
 </div>
@@ -232,7 +234,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 <div class="memdoc">
 <p>If the ID is not equal to the one last given then it is added to a 'free queue'. If it is equal to the last one reserved then the ID counter is simply decremented If this last case happens, it causes <a class="el" href="../../de/dd4/classcIDManager.xhtml#a45420147e785cc219743e9aa2c336501" title="Reserves a unique ID.">cIDManager::getID</a> to stop consuming from the queue and return this newly availabe ID. </p>
 
-<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#abcc0464e62a5fb82ddf4a3f8ba5ec461">cKernel::cleanupProcess()</a>, <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a278d541c78f034020f6921b22a7d37af">cRoundRobin::unblockProcess()</a>, and <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a793da0298f9b36ab8505a0e3daaf41ec">cFCFS::unblockProcess()</a>.</p>
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#abcc0464e62a5fb82ddf4a3f8ba5ec461">cKernel::cleanupProcess()</a>, <a class="el" href="../../dd/dc8/classcLottery.xhtml#aa995fc5a68b398aa526e504fed2f7a59">cLottery::removeProcess()</a>, <a class="el" href="../../dd/dc8/classcLottery.xhtml#afa726859adb7b98f1ad80a41c196e488">cLottery::setBlocked()</a>, <a class="el" href="../../dd/dc8/classcLottery.xhtml#a86bf3ddc6da1a45ffb073a843d744c60">cLottery::unblockProcess()</a>, <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a793da0298f9b36ab8505a0e3daaf41ec">cFCFS::unblockProcess()</a>, <a class="el" href="../../dc/dcc/classcRoundRobin.xhtml#a278d541c78f034020f6921b22a7d37af">cRoundRobin::unblockProcess()</a>, and <a class="el" href="../../de/d3b/classcMultiLevel.xhtml#abe3cfe3c2a5828505ea5c52fb12f7d09">cMultiLevel::unblockProcess()</a>.</p>
 
 </div>
 </div>
@@ -258,7 +260,7 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 21 2012 08:49:14 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

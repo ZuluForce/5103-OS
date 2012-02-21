@@ -122,8 +122,8 @@ Public Member Functions</h2></td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an instance of the trace logger to the scheduler.  <a href="#accb887eae7016719ce770d7b0284adea"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a4da9f2fa83516ac5859772ae09169343">addProcLogger</a> (<a class="el" href="../../db/d63/classcProcessLogger.xhtml">cProcessLogger</a> *_procLogger)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add instance of process logger to the scheduler.  <a href="#a4da9f2fa83516ac5859772ae09169343"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a37af1bbb7393f800a24ff22ee443f876"></a><!-- doxytag: member="cFCFS::printUnblocked" ref="a37af1bbb7393f800a24ff22ee443f876" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>printUnblocked</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d6/dc3/classcFCFS.xhtml#a37af1bbb7393f800a24ff22ee443f876">printUnblocked</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints at once all processes that may have become unblocked asynchronously.  <a href="#a37af1bbb7393f800a24ff22ee443f876"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="afebe08e2ae6dc564b5aad24e3b30f842"></a><!-- doxytag: member="cFCFS::readyQueue" ref="afebe08e2ae6dc564b5aad24e3b30f842" args="" -->
@@ -251,6 +251,7 @@ FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>logStream</b></td><
 <p>If there are processes left but all are blocked. This function should block until it receives a signal that a process is unblocked.</p>
 <p>Implementation Requirements: </p>
 <ul>
+<li>Call <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a37af1bbb7393f800a24ff22ee443f876" title="Prints at once all processes that may have become unblocked asynchronously.">printUnblocked()</a> to update the trace log after a clock step. </li>
 <li>Block if there are &gt; 0 processes but none can run. </li>
 <li>A process listed as <a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243" title="Process is currently running.">running</a> within the scheduler should be treated as ready when this method is called. </li>
 <li>A process returned as the 'next to run' should be marked as being in a <a class="el" href="../../da/d42/process_8h.xhtml#a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243" title="Process is currently running.">running</a> state before returning. </li>
@@ -308,6 +309,27 @@ FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>logStream</b></td><
 <dl class="return"><dt><b>Returns:</b></dt><dd>pidType </dd></dl>
 
 <p>Implements <a class="el" href="../../d0/d21/classcScheduler.xhtml#a025532a943093ae7e8d6dc0cdaf60f12">cScheduler</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a37af1bbb7393f800a24ff22ee443f876"></a><!-- doxytag: member="cFCFS::printUnblocked" ref="a37af1bbb7393f800a24ff22ee443f876" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d6/dc3/classcFCFS.xhtml#a37af1bbb7393f800a24ff22ee443f876">cFCFS::printUnblocked</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>This method is needed to avoid mixed output in the trace logger. </p>
+
+<p>Implements <a class="el" href="../../d0/d21/classcScheduler.xhtml#a27258d070a59a61a0b0ecbb35c514417">cScheduler</a>.</p>
+
+<p>Referenced by <a class="el" href="../../d6/dc3/classcFCFS.xhtml#aa2b92a8a992078e499aab455c9d78faf">getNextToRun()</a>.</p>
 
 </div>
 </div>
@@ -423,7 +445,7 @@ FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>logStream</b></td><
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 21 2012 08:49:14 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

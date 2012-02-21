@@ -65,12 +65,9 @@ class cRoundRobin: public cScheduler {
 
 };
 
-/** Struct containing process info specific for Round-Robin scheduling.
-    Has a blockedIndex which is the index into the blockedVector if the process
-    becomes blocked.
-    */
+/** Struct containing process info specific for Round-Robin scheduling */
 struct roundRobinInfo {
-	unsigned int blockedIndex;
+	unsigned int blockedIndex; /**< Index position in blocked vector */
 };
 
 /** @fn void cRoundRobin::initProcScheduleInfo(ProcessInfo*)

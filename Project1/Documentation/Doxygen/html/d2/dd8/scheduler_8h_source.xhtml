@@ -108,9 +108,10 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <a name="l00028"></a>00028         <span class="comment">/* Logging */</span>
 <a name="l00029"></a>00029         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="../../d0/d21/classcScheduler.xhtml#a7b29af7eab1a9cbe383d98a44693be69" title="Add an instance of the trace logger to the scheduler.">addLogger</a>(FILE*) = 0;
 <a name="l00030"></a>00030         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="../../d0/d21/classcScheduler.xhtml#a3e7865112718057fcdc277db0a85c21c" title="Add instance of process logger to the scheduler.">addProcLogger</a>(<a class="code" href="../../db/d63/classcProcessLogger.xhtml" title="Class specifically for logging process state information.">cProcessLogger</a>*) = 0;
-<a name="l00031"></a>00031 };
-<a name="l00032"></a>00032 
-<a name="l00173"></a>00173 <span class="preprocessor">#endif // SCHEDULER_H_INCLUDED</span>
+<a name="l00031"></a>00031         <span class="keyword">virtual</span> <span class="keywordtype">void</span> <a class="code" href="../../d0/d21/classcScheduler.xhtml#a27258d070a59a61a0b0ecbb35c514417" title="Prints at once all processes that may have become unblocked asynchronously.">printUnblocked</a>() = 0;
+<a name="l00032"></a>00032 };
+<a name="l00033"></a>00033 
+<a name="l00182"></a>00182 <span class="preprocessor">#endif // SCHEDULER_H_INCLUDED</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -129,7 +130,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 21 2012 08:49:14 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

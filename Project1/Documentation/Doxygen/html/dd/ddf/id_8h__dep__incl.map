@@ -1,11 +1,12 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$d2/dd8/scheduler_8h_source.xhtml" title="include/scheduler/scheduler.h" alt="" coords="180,155,375,181"/>
-<area shape="rect" id="node18" href="$dd/d00/process__logger_8h.xhtml" title="include/utility/process_logger.h" alt="" coords="315,80,516,107"/>
-<area shape="rect" id="node5" href="$db/d41/fcfs_8h.xhtml" title="include/scheduler/fcfs.h" alt="" coords="5,229,164,256"/>
-<area shape="rect" id="node13" href="$db/dc3/lottery_8h_source.xhtml" title="include/scheduler/lottery.h" alt="" coords="190,229,364,256"/>
-<area shape="rect" id="node15" href="$d9/dd2/round__robin_8h_source.xhtml" title="include/scheduler/round_robin.h" alt="" coords="389,229,595,256"/>
-<area shape="rect" id="node7" href="$d5/d8b/allSchedulers_8h_source.xhtml" title="include/scheduler/allSchedulers.h" alt="" coords="180,304,396,331"/>
-<area shape="rect" id="node9" href="$d0/daa/kernel_8h.xhtml" title="include/kernel.h" alt="" coords="231,379,344,405"/>
-<area shape="rect" id="node11" href="$d8/dc0/init_8h_source.xhtml" title="include/init.h" alt="" coords="241,453,335,480"/>
-<area shape="rect" id="node21" href="$db/db5/top_8h_source.xhtml" title="include/top.h" alt="" coords="399,155,495,181"/>
+<area shape="rect" id="node3" href="$db/dc3/lottery_8h.xhtml" title="include/scheduler/lottery.h" alt="" coords="5,229,179,256"/>
+<area shape="rect" id="node11" href="$d2/dd8/scheduler_8h_source.xhtml" title="include/scheduler/scheduler.h" alt="" coords="187,155,381,181"/>
+<area shape="rect" id="node23" href="$dd/d00/process__logger_8h.xhtml" title="include/utility/process_logger.h" alt="" coords="253,80,453,107"/>
+<area shape="rect" id="node5" href="$d5/d8b/allSchedulers_8h_source.xhtml" title="include/scheduler/allSchedulers.h" alt="" coords="277,304,493,331"/>
+<area shape="rect" id="node7" href="$d0/daa/kernel_8h.xhtml" title="include/kernel.h" alt="" coords="329,379,441,405"/>
+<area shape="rect" id="node9" href="$d8/dc0/init_8h_source.xhtml" title="include/init.h" alt="" coords="338,453,432,480"/>
+<area shape="rect" id="node13" href="$db/d41/fcfs_8h.xhtml" title="include/scheduler/fcfs.h" alt="" coords="204,229,363,256"/>
+<area shape="rect" id="node17" href="$de/da3/multi__level_8h_source.xhtml" title="include/scheduler/multi_level.h" alt="" coords="388,229,587,256"/>
+<area shape="rect" id="node20" href="$d9/dd2/round__robin_8h.xhtml" title="include/scheduler/round_robin.h" alt="" coords="612,229,817,256"/>
+<area shape="rect" id="node26" href="$db/db5/top_8h_source.xhtml" title="include/top.h" alt="" coords="405,155,501,181"/>
 </map>

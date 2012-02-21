@@ -16,7 +16,7 @@
 </g>
 <!-- Node2 -->
 <g id="node2" class="node"><title>Node2</title>
-<a xlink:href="../../db/d0e/classAbstractDevice.xhtml" target="_top" xlink:title="AbstractDevice">
+<a xlink:href="../../db/d0e/classAbstractDevice.xhtml" target="_top" xlink:title="An abstract device class.">
 <polygon fill="white" stroke="black" points="-1,-56.5 -1,-75.5 83,-75.5 83,-56.5 -1,-56.5"/>
 <text text-anchor="middle" x="41" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00">AbstractDevice</text>
 </a>

@@ -3,6 +3,15 @@
 }
 
 
+\-An abstract device class.  
+
+
+
+
+{\ttfamily \#include $<$abstract\-\_\-device.\-h$>$}
+
+
+
 \-Inheritance diagram for \-Abstract\-Device\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -13,12 +22,33 @@
 \subsection*{\-Public \-Member \-Functions}
 \begin{DoxyCompactItemize}
 \item 
-\hypertarget{classAbstractDevice_a393c627235e10b16507161febe32cae0}{virtual void {\bfseries set\-Timer} (int time)=0}\label{db/d0e/classAbstractDevice_a393c627235e10b16507161febe32cae0}
+virtual void \hyperlink{classAbstractDevice_adbf2b1dbd7d51896697fce8ae924f286}{set\-Timer} (int time)=0
+\begin{DoxyCompactList}\small\item\em \-Set the length of the timer for this device. \end{DoxyCompactList}\item 
+\hypertarget{classAbstractDevice_a79059fee864bb0cca04e57e5f5a84401}{virtual void \hyperlink{classAbstractDevice_a79059fee864bb0cca04e57e5f5a84401}{disarm} ()=0}\label{db/d0e/classAbstractDevice_a79059fee864bb0cca04e57e5f5a84401}
 
-\item 
-\hypertarget{classAbstractDevice_a4dcc0ef16c540b36a5b628db8f7fe315}{virtual void {\bfseries disarm} ()=0}\label{db/d0e/classAbstractDevice_a4dcc0ef16c540b36a5b628db8f7fe315}
+\begin{DoxyCompactList}\small\item\em \-Disarm the timer set from a previous call to \hyperlink{classAbstractDevice_adbf2b1dbd7d51896697fce8ae924f286}{set\-Timer}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
-\end{DoxyCompactItemize}
+
+\subsection{\-Detailed \-Description}
+\-This was initially gonig to ge the abstract class for all devices such as the clock, character and block devices but it turned out this was not the desired interface for everything. \-This is why the \hyperlink{classcAbsQueuedDevice}{c\-Abs\-Queued\-Device} class was made. \-This class remains here because it is used by the clock device however it is no longer necessary. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classAbstractDevice_adbf2b1dbd7d51896697fce8ae924f286}{\index{\-Abstract\-Device@{\-Abstract\-Device}!set\-Timer@{set\-Timer}}
+\index{set\-Timer@{set\-Timer}!AbstractDevice@{\-Abstract\-Device}}
+\subsubsection[{set\-Timer}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf \-Abstract\-Device\-::set\-Timer} (
+\begin{DoxyParamCaption}
+\item[{int}]{time}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}pure virtual\mbox{]}}}}\label{db/d0e/classAbstractDevice_adbf2b1dbd7d51896697fce8ae924f286}
+
+\begin{DoxyParams}{\-Parameters}
+{\em int} & time \-It is up to the implementation what the scale for this time is. \-It will likely be milliseconds or more. \\
+\hline
+\end{DoxyParams}
+
+
+\-Implemented in \hyperlink{classClockDevice_a780eebde86fb6a6400894128ac37fa37}{\-Clock\-Device}.
+
 
 
 \-The documentation for this class was generated from the following file\-:\begin{DoxyCompactItemize}

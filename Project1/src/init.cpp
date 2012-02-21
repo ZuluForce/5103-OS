@@ -42,6 +42,7 @@ int main(int argc, char **argv) {
 	/* Initialize the Kernel */
     cKernel kernel = cKernel(*schedulerInstance);
 
+	/* Boot kernel and catch any exceptions */
 	try {
 		kernel.boot();
 	} catch (const std::string& emsg) {

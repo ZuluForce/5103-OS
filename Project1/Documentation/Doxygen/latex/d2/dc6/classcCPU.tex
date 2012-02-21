@@ -21,9 +21,8 @@
 \item 
 void \hyperlink{classcCPU_acd957640be8abb7c0d8a24010ed0e737}{set\-Text} (char $\ast$text)
 \begin{DoxyCompactList}\small\item\em \-Set the program text. \end{DoxyCompactList}\item 
-\hypertarget{classcCPU_ab4b62a77df9c4b32a598326e4ec0ca41}{void {\bfseries set\-Max\-P\-C} (unsigned int new\-Max)}\label{d2/dc6/classcCPU_ab4b62a77df9c4b32a598326e4ec0ca41}
-
-\item 
+void \hyperlink{classcCPU_ab4b62a77df9c4b32a598326e4ec0ca41}{set\-Max\-P\-C} (unsigned int new\-Max)
+\begin{DoxyCompactList}\small\item\em \-Set the max \-P\-C value. \end{DoxyCompactList}\item 
 void \hyperlink{classcCPU_a176eb207069b99c47ddec6b466d1a92b}{set\-User\-Mode} ()
 \begin{DoxyCompactList}\small\item\em \-Set the cpu back into user mode. \end{DoxyCompactList}\item 
 unsigned int \hyperlink{classcCPU_ab04938ac939d530e521181db6a52944f}{get\-Set\-P\-C} (unsigned int new\-P\-C)
@@ -62,9 +61,8 @@ void \hyperlink{classcCPU_a5d7b4d3ca9a197256dda6560072f036b}{execute\-Priv\-Set}
 \hypertarget{classcCPU_a11a80a1e97141537b44499364c67c8a4}{int {\bfseries clock\-Tick}}\label{d2/dc6/classcCPU_a11a80a1e97141537b44499364c67c8a4}
 
 \item 
-\hypertarget{classcCPU_af1d6fd5349bde1621595f6c1422792b4}{bool {\bfseries \-K\-Mode}}\label{d2/dc6/classcCPU_af1d6fd5349bde1621595f6c1422792b4}
-
-\item 
+bool \hyperlink{classcCPU_af1d6fd5349bde1621595f6c1422792b4}{\-K\-Mode}
+\begin{DoxyCompactList}\small\item\em \-Kernel \-Mode bit. \end{DoxyCompactList}\item 
 \hypertarget{classcCPU_a982f4af913ec39928e62129200c21e58}{unsigned int {\bfseries \-P\-C}}\label{d2/dc6/classcCPU_a982f4af913ec39928e62129200c21e58}
 
 \item 
@@ -89,12 +87,12 @@ void \hyperlink{classcCPU_a5d7b4d3ca9a197256dda6560072f036b}{execute\-Priv\-Set}
 \hypertarget{classcCPU_a5f4c42c44a803d6bd2c47103c3cec164}{\-F\-I\-L\-E $\ast$ {\bfseries trace\-Stream}}\label{d2/dc6/classcCPU_a5f4c42c44a803d6bd2c47103c3cec164}
 
 \item 
-\hypertarget{classcCPU_a1c5225262967be64645baa08d4b8e9bc}{pthread\-\_\-mutex\-\_\-t $\ast$ {\bfseries pulse\-Lock}}\label{d2/dc6/classcCPU_a1c5225262967be64645baa08d4b8e9bc}
+\hypertarget{classcCPU_a1c5225262967be64645baa08d4b8e9bc}{pthread\-\_\-mutex\-\_\-t $\ast$ \hyperlink{classcCPU_a1c5225262967be64645baa08d4b8e9bc}{pulse\-Lock}}\label{d2/dc6/classcCPU_a1c5225262967be64645baa08d4b8e9bc}
 
-\item 
-\hypertarget{classcCPU_ac86a0f942056eee52f2420c840bdd424}{pthread\-\_\-cond\-\_\-t $\ast$ {\bfseries pulse\-Cond}}\label{d2/dc6/classcCPU_ac86a0f942056eee52f2420c840bdd424}
+\begin{DoxyCompactList}\small\item\em \-Used when executing privileged set to synchronize with clock. \end{DoxyCompactList}\item 
+\hypertarget{classcCPU_ac86a0f942056eee52f2420c840bdd424}{pthread\-\_\-cond\-\_\-t $\ast$ \hyperlink{classcCPU_ac86a0f942056eee52f2420c840bdd424}{pulse\-Cond}}\label{d2/dc6/classcCPU_ac86a0f942056eee52f2420c840bdd424}
 
-\end{DoxyCompactItemize}
+\begin{DoxyCompactList}\small\item\em \-Used in conjunction with \hyperlink{classcCPU_a1c5225262967be64645baa08d4b8e9bc}{pulse\-Lock}. \end{DoxyCompactList}\end{DoxyCompactItemize}
 
 
 \subsection{\-Detailed \-Description}
@@ -209,6 +207,17 @@ void \hyperlink{classcCPU_a5d7b4d3ca9a197256dda6560072f036b}{execute\-Priv\-Set}
 
 \-Referenced by c\-Kernel\-::boot().
 
+\hypertarget{classcCPU_ab4b62a77df9c4b32a598326e4ec0ca41}{\index{c\-C\-P\-U@{c\-C\-P\-U}!set\-Max\-P\-C@{set\-Max\-P\-C}}
+\index{set\-Max\-P\-C@{set\-Max\-P\-C}!cCPU@{c\-C\-P\-U}}
+\subsubsection[{set\-Max\-P\-C}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-C\-P\-U\-::set\-Max\-P\-C} (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{new\-Max}
+\end{DoxyParamCaption}
+)}}\label{d2/dc6/classcCPU_ab4b62a77df9c4b32a598326e4ec0ca41}
+\-This sets the max\-P\-C 'register' in the cpu. \-This is used when parsing commands to ensure that the cpu does not fall of the end of the process' text segment. 
+
+\-Referenced by c\-Kernel\-::swap\-Processes().
+
 \hypertarget{classcCPU_adb6ad793398d28b5615dd1377a619084}{\index{c\-C\-P\-U@{c\-C\-P\-U}!set\-P\-S\-W@{set\-P\-S\-W}}
 \index{set\-P\-S\-W@{set\-P\-S\-W}!cCPU@{c\-C\-P\-U}}
 \subsubsection[{set\-P\-S\-W}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-C\-P\-U\-::set\-P\-S\-W} (
@@ -248,6 +257,16 @@ void \hyperlink{classcCPU_a5d7b4d3ca9a197256dda6560072f036b}{execute\-Priv\-Set}
 \-This is used by the kernel after the kernel has finished servicing a process' kernel mode request (syscall). 
 
 \-Referenced by c\-Kernel\-::swap\-Processes().
+
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classcCPU_af1d6fd5349bde1621595f6c1422792b4}{\index{c\-C\-P\-U@{c\-C\-P\-U}!\-K\-Mode@{\-K\-Mode}}
+\index{\-K\-Mode@{\-K\-Mode}!cCPU@{c\-C\-P\-U}}
+\subsubsection[{\-K\-Mode}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf c\-C\-P\-U\-::\-K\-Mode}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{d2/dc6/classcCPU_af1d6fd5349bde1621595f6c1422792b4}
+\-Set upon system calls. 
+
+\-Referenced by execute\-Priv\-Set(), run(), and set\-User\-Mode().
 
 
 

@@ -11,7 +11,7 @@
 <polygon fill="white" stroke="white" points="-4,5 -4,-24 199,-24 199,5 -4,5"/>
 <!-- Node1 -->
 <g id="node1" class="node"><title>Node1</title>
-<a xlink:href="db/d0e/classAbstractDevice.xhtml" target="_top" xlink:title="AbstractDevice">
+<a xlink:href="db/d0e/classAbstractDevice.xhtml" target="_top" xlink:title="An abstract device class.">
 <polygon fill="white" stroke="black" points="0,-0.5 0,-19.5 84,-19.5 84,-0.5 0,-0.5"/>
 <text text-anchor="middle" x="42" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">AbstractDevice</text>
 </a>

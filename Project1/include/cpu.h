@@ -13,7 +13,7 @@
 #define MAX_PARAMS 2		/**< Max number of execution parameters for any Opcode */
 #define MAX_PARAM_SIZE 256 	/**< Maximum size in bytes for an execution parameter. Creates exception if exceeded. */
 
-/** \enum ePSW
+/** @enum ePSW
  *	Enumeration of Program Status Word Flags
  *
  *	The program status word is a bit vector and this
@@ -35,7 +35,7 @@ class cCPU {
 		int clockTick;
 
 		/* 0 = User   1 = Kernel */
-		bool KMode;
+		bool KMode; /**< Kernel Mode bit. Set upon system calls. */
 
 		/* max PC should be the size of the VAS */
 		unsigned int PC, maxPC;
@@ -58,8 +58,8 @@ class cCPU {
 		FILE* traceStream;
 
 		/* Clock pulse synchronization */
-		pthread_mutex_t* pulseLock;
-		pthread_cond_t* pulseCond;
+		pthread_mutex_t* pulseLock;	/**< Used when executing privileged set to synchronize with clock */
+		pthread_cond_t* pulseCond;	/**< Used in conjunction with #pulseLock */
 
 	public:
 		pidType pid; //Only necessary for printint trace file
@@ -83,6 +83,13 @@ class cCPU {
 		 */
         void setText(char* text);
 
+		/** Set the max PC value
+		 *
+		 *	This sets the maxPC 'register' in the cpu.
+		 *	This is used when parsing commands to ensure that
+		 *	the cpu does not fall of the end of the process'
+		 *	text segment.
+		 */
         void setMaxPC(unsigned int newMax);
 
 		/** Set the cpu back into user mode
@@ -182,7 +189,7 @@ class cCPU {
         /* ------------------------------------ */
 };
 
-/** \class cCPU
+/** @class cCPU
  *	A class for emulating a simple cpu.
  *
  *	This class emulates the internals of a very simple cpu with

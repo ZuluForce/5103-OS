@@ -159,7 +159,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node9 -->
 <g id="node19" class="node"><title>Node9</title>
-<a xlink:href="../../db/d0e/classAbstractDevice.xhtml" target="_top" xlink:title="AbstractDevice">
+<a xlink:href="../../db/d0e/classAbstractDevice.xhtml" target="_top" xlink:title="An abstract device class.">
 <polygon fill="white" stroke="black" points="406,-132.506 406,-151.506 490,-151.506 490,-132.506 406,-132.506"/>
 <text text-anchor="middle" x="448" y="-139.506" font-family="Helvetica,sans-Serif" font-size="10.00">AbstractDevice</text>
 </a>

@@ -102,8 +102,8 @@ void&#160;</td><td class="memItemRight" valign="bottom"><b>initTraceLog</b> ()</
 void&#160;</td><td class="memItemRight" valign="bottom"><b>initClockPulse</b> (pthread_mutex_t *_pulseLock, pthread_cond_t *_pulseCond)</td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#acd957640be8abb7c0d8a24010ed0e737">setText</a> (char *text)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the program text.  <a href="#acd957640be8abb7c0d8a24010ed0e737"></a><br/></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab4b62a77df9c4b32a598326e4ec0ca41"></a><!-- doxytag: member="cCPU::setMaxPC" ref="ab4b62a77df9c4b32a598326e4ec0ca41" args="(unsigned int newMax)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setMaxPC</b> (unsigned int newMax)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#ab4b62a77df9c4b32a598326e4ec0ca41">setMaxPC</a> (unsigned int newMax)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the max PC value.  <a href="#ab4b62a77df9c4b32a598326e4ec0ca41"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#a176eb207069b99c47ddec6b466d1a92b">setUserMode</a> ()</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the cpu back into user mode.  <a href="#a176eb207069b99c47ddec6b466d1a92b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#ab04938ac939d530e521181db6a52944f">getSetPC</a> (unsigned int newPC)</td></tr>
@@ -136,8 +136,8 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>tokenizeLine</b> ()</t
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a11a80a1e97141537b44499364c67c8a4"></a><!-- doxytag: member="cCPU::clockTick" ref="a11a80a1e97141537b44499364c67c8a4" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>clockTick</b></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af1d6fd5349bde1621595f6c1422792b4"></a><!-- doxytag: member="cCPU::KMode" ref="af1d6fd5349bde1621595f6c1422792b4" args="" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>KMode</b></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#af1d6fd5349bde1621595f6c1422792b4">KMode</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Kernel Mode bit.  <a href="#af1d6fd5349bde1621595f6c1422792b4"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a982f4af913ec39928e62129200c21e58"></a><!-- doxytag: member="cCPU::PC" ref="a982f4af913ec39928e62129200c21e58" args="" -->
 unsigned int&#160;</td><td class="memItemRight" valign="bottom"><b>PC</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6d922807d65a8a39722dde518febc52"></a><!-- doxytag: member="cCPU::maxPC" ref="af6d922807d65a8a39722dde518febc52" args="" -->
@@ -159,9 +159,11 @@ char&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../.
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a5f4c42c44a803d6bd2c47103c3cec164"></a><!-- doxytag: member="cCPU::traceStream" ref="a5f4c42c44a803d6bd2c47103c3cec164" args="" -->
 FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>traceStream</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a1c5225262967be64645baa08d4b8e9bc"></a><!-- doxytag: member="cCPU::pulseLock" ref="a1c5225262967be64645baa08d4b8e9bc" args="" -->
-pthread_mutex_t *&#160;</td><td class="memItemRight" valign="bottom"><b>pulseLock</b></td></tr>
+pthread_mutex_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#a1c5225262967be64645baa08d4b8e9bc">pulseLock</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Used when executing privileged set to synchronize with clock. <br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac86a0f942056eee52f2420c840bdd424"></a><!-- doxytag: member="cCPU::pulseCond" ref="ac86a0f942056eee52f2420c840bdd424" args="" -->
-pthread_cond_t *&#160;</td><td class="memItemRight" valign="bottom"><b>pulseCond</b></td></tr>
+pthread_cond_t *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d2/dc6/classcCPU.xhtml#ac86a0f942056eee52f2420c840bdd424">pulseCond</a></td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Used in conjunction with <a class="el" href="../../d2/dc6/classcCPU.xhtml#a1c5225262967be64645baa08d4b8e9bc" title="Used when executing privileged set to synchronize with clock.">pulseLock</a>. <br/></td></tr>
 </table>
 <hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
 <div class="textblock"><p>This class emulates the internals of a very simple cpu with two main registers, PC and VC. In addition, it has other state for handling system calls and program exceptions. </p>
@@ -347,6 +349,26 @@ pthread_cond_t *&#160;</td><td class="memItemRight" valign="bottom"><b>pulseCond
 
 </div>
 </div>
+<a class="anchor" id="ab4b62a77df9c4b32a598326e4ec0ca41"></a><!-- doxytag: member="cCPU::setMaxPC" ref="ab4b62a77df9c4b32a598326e4ec0ca41" args="(unsigned int newMax)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">void <a class="el" href="../../d2/dc6/classcCPU.xhtml#ab4b62a77df9c4b32a598326e4ec0ca41">cCPU::setMaxPC</a> </td>
+          <td>(</td>
+          <td class="paramtype">unsigned int&#160;</td>
+          <td class="paramname"><em>newMax</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>This sets the maxPC 'register' in the cpu. This is used when parsing commands to ensure that the cpu does not fall of the end of the process' text segment. </p>
+
+<p>Referenced by <a class="el" href="../../db/da5/classcKernel.xhtml#a1b8e06f240c1bb7d0c4d0d30bcc55e18">cKernel::swapProcesses()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="adb6ad793398d28b5615dd1377a619084"></a><!-- doxytag: member="cCPU::setPSW" ref="adb6ad793398d28b5615dd1377a619084" args="(uint16_t newPSW)" -->
 <div class="memitem">
 <div class="memproto">
@@ -412,6 +434,23 @@ pthread_cond_t *&#160;</td><td class="memItemRight" valign="bottom"><b>pulseCond
 
 </div>
 </div>
+<hr/><h2>Member Data Documentation</h2>
+<a class="anchor" id="af1d6fd5349bde1621595f6c1422792b4"></a><!-- doxytag: member="cCPU::KMode" ref="af1d6fd5349bde1621595f6c1422792b4" args="" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">bool <a class="el" href="../../d2/dc6/classcCPU.xhtml#af1d6fd5349bde1621595f6c1422792b4">cCPU::KMode</a><code> [private]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Set upon system calls. </p>
+
+<p>Referenced by <a class="el" href="../../d2/dc6/classcCPU.xhtml#a5d7b4d3ca9a197256dda6560072f036b">executePrivSet()</a>, <a class="el" href="../../d2/dc6/classcCPU.xhtml#aee300d68026ba9f13d5434ff82f0372a">run()</a>, and <a class="el" href="../../d2/dc6/classcCPU.xhtml#a176eb207069b99c47ddec6b466d1a92b">setUserMode()</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/<a class="el" href="../../dc/da7/cpu_8h_source.xhtml">cpu.h</a></li>
 <li>src/cpu.cpp</li>
@@ -434,7 +473,7 @@ pthread_cond_t *&#160;</td><td class="memItemRight" valign="bottom"><b>pulseCond
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Sun Feb 19 2012 11:15:09 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Tue Feb 21 2012 08:49:14 for 5103 Project 1 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

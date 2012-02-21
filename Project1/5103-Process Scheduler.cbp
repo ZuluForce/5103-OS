@@ -87,6 +87,7 @@
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
+		<Unit filename="include/scheduler/multi_level.h" />
 		<Unit filename="include/scheduler/round_robin.h">
 			<Option target="Debug" />
 			<Option target="Release" />
@@ -148,6 +149,7 @@
 			<Option target="Debug" />
 			<Option target="Release" />
 		</Unit>
+		<Unit filename="src/scheduler/multi_level.cpp" />
 		<Unit filename="src/scheduler/round_robin.cpp">
 			<Option target="Debug" />
 			<Option target="Release" />

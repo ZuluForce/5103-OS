@@ -34,7 +34,6 @@ void cLottery::initProcScheduleInfo(ProcessInfo* proc) {
 	proc->scheduleData = newInfoStruct;
 
 	return;
-
 }
 
 void cLottery::addProcess(ProcessInfo* proc) {
@@ -58,7 +57,6 @@ void cLottery::addProcess(ProcessInfo* proc) {
 	totalTickets += proc->priority;
 	pthread_mutex_unlock(&blockedLock);
 
-
 	return;
 }
 
@@ -73,9 +71,9 @@ void cLottery::setBlocked(ProcessInfo* proc) {
 	readyVector.at(info->readyIndex) = NULL;
 	totalTickets -= proc->priority;
 
-	readyID.returnID(info->readyIndex);
+	readyID.returnID(info->readyIndex); //Return ready index
 
-
+	//Get new index for blocked vector
 	unsigned int newID = blockedID.getID();
 	if (newID >= blockedVector.size()) {
 		/* Resize the vector */
@@ -117,7 +115,7 @@ void cLottery::unblockProcess(ProcessInfo* proc) {
 		readyVector.resize(readyVector.size() * 2);
 
 	readyVector.at(lowID) = proc;
-	info->readyIndex = lowID;
+	info->readyIndex = lowID; //Store index in info struct
 
 	blockedID.returnID(info->blockedIndex);
 
@@ -142,7 +140,7 @@ void cLottery::removeProcess(ProcessInfo* proc) {
 
 	lotteryInfo* info = (lotteryInfo*) proc->scheduleData;
 	printf("Removing process at ready index: %d\n", info->readyIndex);
-	readyVector.at(info->readyIndex) = NULL;
+	readyVector.at(info->readyIndex) = NULL; //Remove it from the ready vector
 
 	readyID.returnID(info->readyIndex);
 
@@ -182,6 +180,10 @@ ProcessInfo* cLottery::getNextToRun() {
 
 	pthread_mutex_lock(&blockedLock);
 
+	/* Since every call results in a lottery we
+	 * must put the currently running process back
+	 * to ready.
+	 */
 	if(runningProc != NULL) {
 		runningProc->state = ready;
 		procLogger->writeProcessInfo(runningProc);
@@ -284,24 +286,3 @@ void cLottery::addProcLogger(cProcessLogger* _procLogger) {
 	procLogger = _procLogger;
 	return;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
