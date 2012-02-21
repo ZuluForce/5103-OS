@@ -1,8 +1,21 @@
 #include "top.h"
 
+/**
+Top works in the following way:
+It reads a proc.log file to get the PID, memory, cpustart, cputime,
+and state information for each process. Each process is assigned a particular line
+in this file. Top then uses these line numbers to request the name of the process from
+the OS via a Unix socket. The OS updates the proc.log file as processes executes and Top
+knows when to read again from this file by waiting on an inotify modify event.
+*/
+
 static int inotify_fd;
 static int sockfd;
+vector<char*> processNames;
 
+/** @fn const char* getStatString(eProcState state)
+*   This function converts the eProcState enum into a string.
+*/
 const char* getStatString(eProcState state) {
 	switch (state) {
 		case ready:
@@ -22,8 +35,12 @@ const char* getStatString(eProcState state) {
 	}
 }
 
+/** @fn int waitUpdate()
+*   Waits for the proc.log file to be created.
+*/
 int waitUpdate() {
     int wd;
+    // Add a watch on the current directory.
     wd = inotify_add_watch(inotify_fd, ".", IN_CREATE);
     if (wd == -1){
         perror("Could not add watch");
@@ -39,6 +56,9 @@ int waitUpdate() {
             return -1;
         }
         int i = 0;
+        /* A while loop is needed as multiple events could be generated before a read. This looping
+        ensures that we get all of the events out and check to see if one matches the event of the
+        procLogFile being created*/
         while (i < length){
             struct inotify_event *event = (struct inotify_event *) &buffer[0];
             if (event->mask & IN_CREATE){
@@ -53,7 +73,7 @@ int waitUpdate() {
         }
     }
 
-
+    // Remove the watch on the current directory
     if (inotify_rm_watch(inotify_fd, wd) < 0){
         perror("Could not remove the watch");
         return -1;
@@ -62,6 +82,10 @@ int waitUpdate() {
 }
 
 
+/** @fn int open_inotify_fd()
+*   Initialize a new inotify instance and returns the file descriptor associated with the
+*   inotify event
+*/
 int open_inotify_fd() {
 	int fd;
     fd = inotify_init ();
@@ -72,6 +96,9 @@ int open_inotify_fd() {
     return fd;
 }
 
+/** @fn int setUpSocket()
+*   Sets up the socket for OS <-> top communication
+*/
 int setUpSocket(){
     sockfd = socket(AF_UNIX, SOCK_DGRAM, 0);
     if (sockfd < 0){
@@ -96,6 +123,10 @@ int setUpSocket(){
     return 0;
 }
 
+/** @fn int getProcessName(unsigned int num, char *buf)
+*   Sends the fileline number of the process to the OS via a Unix socket then waits for the OS to send
+*   it back the corresponding name.
+*/
 int getProcessName(unsigned int num, char *buf){
     // Request the process name
     if (sendto(sockfd, &num, sizeof(num), 0, (struct sockaddr*) &dest, sizeof(dest)) == -1){
@@ -113,11 +144,44 @@ int getProcessName(unsigned int num, char *buf){
 
 }
 
+/** @fn void saveProcessName(int id, char* name)
+*   Saves the name in the processNames vector at the id location.
+*/
+void saveProcessName(int id, char* name){
+    char *savedStr = (char*) malloc(strlen(name) + 1);
+    if (savedStr == NULL){
+        perror("Malloc failed in saveProcessName");
+        exit(-1);
+    }
+    strcpy(savedStr, name);
+    processNames.at(id) = savedStr;
+}
+
+/** @fn void removeProcessName(int id)
+*   Removes a name from the process name vector and frees up the dynamic memory.
+*/
+void removeProcessName(int id){
+    char *savedStr = processNames.at(id);
+    processNames.at(id) = NULL;
+    free(savedStr);
+}
+
+/** @fn assureProcessNameVectorBigEnough(int size)
+*   This makes sure that the vector is big enough to store all of the process names.
+*/
+void assureProcessNameVectorBigEnough(int size){
+    if (size >= processNames.size()){
+        processNames.resize(size, NULL); // Fill new entries with NULL pointers
+    }
+}
+
 int main(int argc, char** argv) {
     if (argc != 2){
         printf("Usage: %s <proc.log directory>", argv[0]);
         exit(-1);
     }
+
+    // Change directory to the command line argument
     if ( chdir(argv[1]) == -1 ) {
         perror("Failed to change directories");
         exit(-1);
@@ -143,76 +207,95 @@ int main(int argc, char** argv) {
 	    exit(-1);
 	}
 
+	processNames.resize(PROCESS_NAMES_VEC_SIZE);
+	processNames.clear();
+
 	int fileSize;
 	int numLines;
 	unsigned int pid, memory, cpustart, cputime, state;
 	char *buf = (char*) malloc( FILENAME_MAX);
+	if (buf == NULL){
+	    perror("Malloc failed");
+	    exit(-1);
+	}
 	char *temp = (char*) malloc( MAX_LINE_LENGTH);
+	if (temp == NULL){
+	    perror("Malloc failed");
+	    exit(-1);
+	}
+	ifstream file;
+    boost::format fmter("%1% %|30t|%2% %|42t|%3% %|54t|%4% %|66t|%5% %|78t|%6%\n");
+
+    int wf;
+    // Add a watch on proc.log to generate events when it is modified
+    wf = inotify_add_watch(inotify_fd, procLogFile, IN_MODIFY);
+    int length;
+    char buffer[EVENT_BUF_SIZE];
+    int logFileModified;
 
 	while(1) {
 
-        boost::format fmter("%1% %|30t|%2% %|42t|%3% %|54t|%4% %|66t|%5% %|78t|%6%\n");
-
         fmter % "NAME" % "PID" % "MEMORY" % "CPUSTART" % "CPUTIME" % "STATE";
-
-
         cout << fmter;
 
+        // Get the file size
         stat(procLogFile, &fileinfo);
         fileSize = fileinfo.st_size;
         numLines = fileSize / MAX_LINE_LENGTH;
+        assureProcessNameVectorBigEnough(numLines);
 
         // Read from the file
-        ifstream file;
         file.open(procLogFile);
         if (file.good()){
             for (int i = 0; i < numLines; i++){
                 file.seekg(i * MAX_LINE_LENGTH);
                 file.getline(temp, MAX_LINE_LENGTH);
+                // Check if the process has been removed from the OS
                 if (strncmp(temp, " ", 1) == 0){
+                    if(processNames.at(i) != NULL){
+                        removeProcessName(i);
+                    }
                     continue;
                 }
                 file.seekg(i * MAX_LINE_LENGTH);
                 file >> pid >> memory >> cpustart >> cputime >> state;
-                if (getProcessName(i, buf) != 0){
-                    strcpy(buf, "Unknown process name");
+                if (processNames.at(i) != NULL){
+                    strcpy(buf, processNames.at(i));
+                } else{
+                    if (getProcessName(i, buf) != 0){
+                        strcpy(buf, "Unknown process name");
+                    } else{
+                        // Save the process name for later so we don't have to go to the socket again
+                        saveProcessName(i, buf);
+                    }
                 }
 
-                if ( strlen(buf) > 30 )
-                	strcpy(buf, TOO_LONG);
+                // If the process name is too long to fit on the screen, truncate it and append "..."
+                if ( strlen(buf) > 30 ){
+                	strcpy(buf+26, "...");
+                }
 
                 fmter % buf % pid % memory % cpustart % cputime % getStatString((eProcState) state);
                 cout << fmter;
-                //printf("%d %d %d %d %s\n", pid, memory, cpustart, cputime, getStatString((eProcState) state));
             }
         }
+
         file.close();
 
-
-
-
-
-
-
-
-        int wf;
-        wf = inotify_add_watch(inotify_fd, procLogFile, IN_MODIFY);
-
-        int length;
-        char buffer[EVENT_BUF_SIZE];
-        int logFileModified = 0;
+        logFileModified = 0;
         while(!logFileModified){
-            printf("Wating for process log file to be modified\n");
             length = read(inotify_fd, buffer, EVENT_BUF_SIZE);
             if (length < 0){
                 perror("Problem waiting for proc file to be modified");
                 return -1;
             }
             int i = 0;
+            /* A while loop is needed as multiple events could be generated before a read. This looping
+            ensures that we get all of the events out and check to see if one matches the event of the
+            procLogFile being modified.*/
             while (i < length){
                 struct inotify_event *event = (struct inotify_event *) &buffer[0];
                 if (event->mask & IN_MODIFY){
-                    printf("%s file was modified.\n", procLogFile);
                     logFileModified = 1;
                     break;
                 }
@@ -221,7 +304,7 @@ int main(int argc, char** argv) {
             }
         }
 
-		//printf("\n\n\n\n");
+        // Clear the screen in between file updates
 		system("clear");
 
 	}

@@ -19,9 +19,8 @@
 
 #define EVENT_SIZE (sizeof (struct inotify_event))
 #define EVENT_BUF_SIZE (1024 * (EVENT_SIZE + 16)) // in case the optional name char[] is included in the inotify_event
-#define DEFAULT_PORT 9000
+#define PROCESS_NAMES_VEC_SIZE 8
 
-#define TOO_LONG "--Error: Too Long--"
 
 using namespace std;
 using namespace boost;
