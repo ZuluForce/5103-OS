@@ -2,7 +2,7 @@
 
 /* ======== Static members of cKernel ======== */
 void cKernel::sig_catch(int signum, siginfo_t *info, void *context) {
-			cKernel::kernel_instance->sigHandler(signum, info);
+	cKernel::kernel_instance->sigHandler(signum, info);
 }
 
 cKernel* cKernel::kernel_instance;
@@ -54,7 +54,7 @@ bDevice(DEFAULT_BTIMER), cDevice(DEFAULT_CTIMER), scheduler(s) {
 	sa.sa_mask = sa_set; //Block all signals while in the handler
 	sa.sa_flags = SA_SIGINFO;
 
-	//Allow main thread o receive clock interrupts
+	//Allow main thread to receive clock interrupts
 	sigdelset(&sa_set, clockSigValue);
 	sigprocmask(SIG_SETMASK, &sa_set, NULL);
 
@@ -80,11 +80,11 @@ void cKernel::sigHandler(int signum, siginfo_t *info) {
 		pthread_cond_signal(&intCond);
 
 	} else if (signum == blockSigValue ) {
-		sem_post(&DevSigSem);
 		sem_post(&BSigSem);
-	} else if ( signum == charSigValue ) {
 		sem_post(&DevSigSem);
+	} else if ( signum == charSigValue ) {
 		sem_post(&CSigSem);
+		sem_post(&DevSigSem);
 	} else {
 		printf("Unknown signal received\n");
 	}

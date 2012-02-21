@@ -14,13 +14,24 @@ cBlockDevice::cBlockDevice(int usec) {
 	if ( usec >= USEC_IN_SEC ) {
 		iTime.it_value.tv_sec = usec / USEC_IN_SEC;
 		iTime.it_value.tv_nsec = (usec % USEC_IN_SEC) * 1000;
+
+		iTime.it_interval.tv_sec = iTime.it_value.tv_sec * TIMEOUT_SCALE;
+		iTime.it_interval.tv_nsec = iTime.it_value.tv_nsec * TIMEOUT_SCALE;
 	} else {
 		iTime.it_value.tv_nsec = usec * 1000;
 		iTime.it_value.tv_sec = 0;
+
+		iTime.it_interval.tv_sec = iTime.it_value.tv_sec * TIMEOUT_SCALE;
+		iTime.it_interval.tv_nsec = iTime.it_value.tv_nsec * TIMEOUT_SCALE;
 	}
 
-	iTime.it_interval.tv_nsec = 0;
-	iTime.it_interval.tv_sec = 0;
+	//iTime.it_interval.tv_sec = 0;
+	//iTime.it_interval.tv_nsec = 0;
+
+	iDisarm.it_value.tv_nsec = 0;
+	iDisarm.it_value.tv_sec = 0;
+	iDisarm.it_interval.tv_nsec = 0;
+	iDisarm.it_interval.tv_sec = 0;
 
 	return;
 }
@@ -61,6 +72,9 @@ void cBlockDevice::scheduleDevice(ProcessInfo* proc) {
 
 ProcessInfo* cBlockDevice::timerFinished() {
 	pthread_mutex_lock(&deviceLock);
+
+	if ( timer_settime(timerid, 0, &iDisarm, NULL) == -1 )
+		throw ((string) "Failed to disarm timer: " + strerror(errno));
 
 	ProcessInfo* finishedProc = waitQueue.front();
 	waitQueue.pop();

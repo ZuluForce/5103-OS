@@ -8,3 +8,8 @@ Kevin Mehlhaff
 Dylan Bettermann
 	x500: bett0159
 	ID#: 3966450
+	
+Notes on Implementation and Possible Improvements:
+	For this project we implemented devices in the kernel as individual and static objects. We do have a design for supporting more devices (and multiple of the same type) but it would have broken the operating syntax for this machine language. Our idea was rather than using explicit classes such as 'B' or 'C', each device would be assigned an integer id using the standard id manager used in our code. It is up to the kernel/cpu design if certain characters like 'B' or 'C' should always map to a specific id. If you still want a sense of separate device classes then these could be conceived by the OS designer and each registered device would have to be assigned to a class. Then processes could request a listing of all 'B' class devices in order to make a request to the proper one using its unique ID.
+	
+	Then the problem comes of multiplexing device signals. For this, each device would attach either its id or some structure to the sival_ptr structure that is passed inside the siginfo_t struct to the handler. If we stick to the convention that each device can only have one pending signal then it would be easy to get this id back and lookup the device in some table.

@@ -6,7 +6,7 @@
 #include "scheduler/scheduler.h"
 
 #define DEF_BLOCK_VEC_SIZE 4
-#define QUANTUM 2 // in clock ticks
+#define QUANTUM 4 // in clock ticks
 
 using namespace std;
 

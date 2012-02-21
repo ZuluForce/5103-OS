@@ -41,6 +41,7 @@ void cLottery::addProcess(ProcessInfo* proc) {
 	assert(proc != NULL);
 	assert(proc->state == ready);
 
+	pthread_mutex_lock(&blockedLock);
 	unsigned int newID = readyID.getLowID();
 	if(newID >= readyVector.size()) {
 		readyVector.resize(readyVector.size() * 2);
@@ -55,6 +56,7 @@ void cLottery::addProcess(ProcessInfo* proc) {
 	++totalReady;
 
 	totalTickets += proc->priority;
+	pthread_mutex_unlock(&blockedLock);
 
 
 	return;
@@ -178,6 +180,8 @@ ProcessInfo* cLottery::getNextToRun() {
 
 	lotteryInfo* info;
 
+	pthread_mutex_lock(&blockedLock);
+
 	if(runningProc != NULL) {
 		runningProc->state = ready;
 		procLogger->writeProcessInfo(runningProc);
@@ -185,8 +189,6 @@ ProcessInfo* cLottery::getNextToRun() {
 		runningProc = NULL;
 		++totalReady;
 	}
-
-	pthread_mutex_lock(&blockedLock);
 
 	if(totalReady == 0){
 		if(totalBlocked > 0) {

@@ -280,6 +280,8 @@ void cCPU::executePrivSet(int num, int& clockTick) {
 			++clockTick;
 			fprintf(traceStream, "\nClocktick: %d\n", clockTick);
 			fprintf(traceStream, "Executing privileged instruction for kernel on behalf of pid = %d\n", pid);
+			printf("\nClocktick: %d\n", clockTick);
+			printf("Executing privileged instruction for kernel on behalf of pid = %d\n", pid);
 			--num;
 		} else {
 			PSW |= PS_EXCEPTION;

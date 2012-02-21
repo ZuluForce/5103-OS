@@ -34,7 +34,10 @@ void cRoundRobin::initProcScheduleInfo(ProcessInfo* proc) {
 void cRoundRobin::addProcess(ProcessInfo* proc) {
 	assert( proc != NULL );
 	assert( proc->state == ready );
+
+	pthread_mutex_lock(&blockedLock);
 	readyQueue.push(proc);
+	pthread_mutex_unlock(&blockedLock);
 
 	return;
 }
@@ -56,17 +59,19 @@ void cRoundRobin::setBlocked(ProcessInfo* proc) {
 	roundRobinInfo* info = (roundRobinInfo*) proc->scheduleData;
 	info->blockedIndex = newID;
 
-	blockedVector[newID] = proc;
+	blockedVector.at(newID) = proc;
 
 	++totalBlocked;
 	runningProc = NULL;
+
 	// Reset the clock ticks since we will be picking a new process to run.
 	clockTicksUsed = 0;
 	fprintf(logStream, "Process %d has been blocked\n", proc->pid);
-	pthread_mutex_unlock(&blockedLock);
 
 	/* Update Process info for Top */
 	procLogger->writeProcessInfo(proc);
+
+	pthread_mutex_unlock(&blockedLock);
 
 	return;
 }
@@ -106,7 +111,7 @@ void cRoundRobin::removeProcess(ProcessInfo* proc) {
 	runningProc = NULL;
 	clockTicksUsed = 0;
 
-	/* Remove process from log */
+	procLogger->writeProcessInfo(proc);
 
 	return;
 }
@@ -128,20 +133,26 @@ void cRoundRobin::printUnblocked(){
 
 ProcessInfo* cRoundRobin::getNextToRun() {
     printUnblocked();
+
+	pthread_mutex_lock(&blockedLock);
 	if ( runningProc != NULL) {
-	    if ((clockTicksUsed) > QUANTUM){ // Has the running process used up it's quantum?
-	        runningProc->state == ready;
+	    if (clockTicksUsed >= QUANTUM){ // Has the running process used up it's quantum?
+	        runningProc->state = ready;
 	        readyQueue.push(runningProc);
 	        // Reset the clock ticks since we will be picking a new process to run.
 	        clockTicksUsed = 0;
+	        procLogger->writeProcessInfo(runningProc);
+
+	        runningProc = NULL;
 	    } else{
 	        clockTicksUsed++;
             procLogger->writeProcessInfo(runningProc);
+
+            pthread_mutex_unlock(&blockedLock);
             return runningProc;
 	    }
 	}
 
-	pthread_mutex_lock(&blockedLock);
 	if ( readyQueue.size() == 0 ) {
 		if ( totalBlocked > 0) {
 			while ( readyQueue.size() == 0)
@@ -158,6 +169,7 @@ ProcessInfo* cRoundRobin::getNextToRun() {
 	readyQueue.pop();
 
 	assert(toRun != NULL);
+	assert(toRun->state == ready);
 
 	runningProc = toRun;
 	clockTicksUsed++;

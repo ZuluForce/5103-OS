@@ -16,6 +16,7 @@
 
 #define QD_CLOCKID CLOCK_REALTIME /**< Type of clock used by these devices */
 #define USEC_IN_SEC 1000000			/**< Constant used in converting times */
+#define TIMEOUT_SCALE 5				/**< In rare occurences the signal is never received so we set a timeout */
 
 /** Abstract class for a device which queues requests */
 class cAbsQueuedDevice {

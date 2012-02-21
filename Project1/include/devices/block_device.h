@@ -18,7 +18,7 @@ class cBlockDevice: public cAbsQueuedDevice {
 		/// @cond
 		timer_t timerid;
 		struct sigevent sev;
-		struct itimerspec iTime;
+		struct itimerspec iTime, iDisarm;
 		/// @endcond
 
 		queue<ProcessInfo*> waitQueue;
