@@ -1,7 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node1" href="$d0/d21/classcScheduler.xhtml" title="Abstract Interface for Schedulers." alt="" coords="6,81,93,108"/>
-<area shape="rect" id="node3" href="$d6/dc3/classcFCFS.xhtml" title="First&#45;Come&#45;First&#45;Serve Scheduler." alt="" coords="160,5,224,32"/>
-<area shape="rect" id="node5" href="$dd/dc8/classcLottery.xhtml" title="Lottery Scheduler." alt="" coords="157,56,227,83"/>
-<area shape="rect" id="node7" href="$de/d3b/classcMultiLevel.xhtml" title="Multi&#45;Level Queue Scheduler." alt="" coords="148,107,236,133"/>
-<area shape="rect" id="node9" href="$dc/dcc/classcRoundRobin.xhtml" title="Round Robin Scheduler." alt="" coords="141,157,243,184"/>
-</map>
