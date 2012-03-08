@@ -1,16 +1,18 @@
 CC=g++
-TARGET=init
+TARGET=main
+
+RUN_R1=-t main.trace -s settings.ini
 
 SRCDIR=src
 INCDIR=include
 OBJDIR=obj
 BINDIR=bin
 
-CFLAGS=-O3 -I$(INCDIR) -DD_REENTRANT -Wall -Werror
+CFLAGS=-O3 -I$(INCDIR) -I/usr/include/boost -Wall
 OBJCFLAGS=-O3 -c -I$(INCDIR) -DD_REENTRANT
-LFLAGS=-lrt -lpthread
+LFLAGS=-L/usr/lib/ -lboost_regex
 
-DEPS= ##*.o
+DEPS= vmm_core.o iniReader.o
 ##Dependencies with obj directory appended
 _DEPS=$(patsubst %,$(OBJDIR)/%,$(DEPS))
 
@@ -28,33 +30,14 @@ vpath %.o $(OBJDIR)
 
 all: $(TARGET)
 
+run_%: $(TARGET)
+	cd $(BINDIR) && ./$(TARGET) $(RUN_$*)
 
 $(TARGET): $(TARGET).cpp $(TARGET).h $(DEPS)
 	$(CC) $(CFLAGS) $(LFLAGS) $(_DEPS) $(SRCDIR)/$@.cpp -o $(BINDIR)/$@ 
 
 %.o: %.cpp %.h
 	$(CC) $< $(OBJCFLAGS) -o $(OBJDIR)/$@
-	
-run_%: all
-	cd $(BINDIR) && ./$(TARGET) -scheduler $*
-	
-gdb_%: all
-	gdb --cd=$(BINDIR) --command=gdb_batch_$* --return-child-result -exec=$(TARGET)
-	
-run_top: top
-	./$(BINDIR)/$^ $(BINDIR)
-	
-top: top.cpp top.h
-	$(CC) -Iinclude $(SRCDIR)/top.cpp -o $(BINDIR)/$@
-	
-test_sock: test_name_socket.cpp
-	$(CC) -Iinclude $^ -o $(BINDIR)/$@
-	
-run_sock_test: test_sock
-	cd $(BINDIR) && ./$^ 0
-	
-valgrind_%: all
-	cd $(BINDIR) && valgrind --tool=memcheck --track-origins=yes --leak-check=full ./$(TARGET) -scheduler $*
 	
 update_docs:
 	doxygen Doxyfile

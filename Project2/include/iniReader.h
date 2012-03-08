@@ -20,26 +20,11 @@ typedef map<string,KeyMap> SectionMap;
 typedef map<string,string> DefaultKeyMap;
 typedef map<string,DefaultKeyMap> DefaultMap;
 
-/* Option masks for INIReader */
-#define MASK(x) (1 << x)        //Puts the bit in the correct location for the mask
-#define INI_ALL = 0xFFFFFFFF;
-
-typedef enum {
-    INI_STD = 0,
-    INI_LOWER,          //All strings are converted to lower case
-    INI_IGNORE_COMM,    //Does not save any comments, can save small time if there are a lot
-    INI_IGNORE_SEC      //Ignores section headers, puts everything into the same category
-
-} INI_OPTIONS;
-
-typedef enum {
-    STD_MASK = MASK(INI_STD),
-    LOWER_MASK =  MASK(INI_LOWER),
-    IGNORE_COMM_MASK = MASK(INI_IGNORE_COMM),
-    IGNORE_SEC_MASK = MASK(INI_IGNORE_SEC),
-    IGNORE_ALL_MASK = MASK(INI_IGNORE_COMM) |
-                        MASK(INI_IGNORE_SEC)
-}OPTION_MASKS;
+#define STR(x) #x
+#define EXTRACT(type,sec,opt) settings.extractValue<type>(STR(sec),STR(opt))
+#define EXTRACTP(type,sec,opt) settings->extractValue<type>(STR(sec),STR(opt))
+#define EXTRACT_(obj,type,sec,opt) settings.extractValue<type>(STR(sec),STR(opt))
+#define EXTRACTP_(obj,type,sec,opt) settings->extractValue<type>(STR(sec),STR(opt))
 
 struct KeyRecord {
     private:
@@ -50,8 +35,8 @@ struct KeyRecord {
 
     public:
         /* Initializers */
-        KeyRecord(string value);
-        KeyRecord(string,string,int);
+        KeyRecord(const string value);
+        KeyRecord(const string, const string,int);
 
         /* Setters */
         void setValue(string);
@@ -65,7 +50,7 @@ struct KeyRecord {
 };
 
 class INIReader {
-    private:
+    protected:
         fstream ini_file;
 
         int get_pointer;    //Stream pointer to current get line
@@ -113,8 +98,10 @@ class INIReader {
 
         /* Manipulators */
         void addDefault(const string& section, const string& key, const string& value);
+
+        //Returns true if the value was overriden. False if it doesn't exist.
+        bool overWriteOp(const string& section, const string& key, const string& value);
         template<class T> T extractValue(const string& section, const string& key);
-        template<class T> T extractDefault(const string& section, const string& key);
 
         string extractComment(const string& section, const string& key);
 };
@@ -128,17 +115,6 @@ T INIReader::extractValue(const string& section, const string& key) {
     stream >> out;
 
     return out;
-}
-
-template <class T>
-T INIReader::extractDefault(const string& section, const string& key) {
-	stringstream stream;
-	stream << getDefault(section,key);
-
-	T out;
-	stream >> out;
-
-	return out;
 }
 
 #endif // INIREADER_H_INCLUDED
