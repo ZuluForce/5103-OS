@@ -1,0 +1,8 @@
+*.o
+*.cbp
+*.layout
+*.zip
+bin/init
+bin/*.log
+obj
+.cccc

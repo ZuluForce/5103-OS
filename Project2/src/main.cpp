@@ -112,7 +112,7 @@ void parseCmdLine(int argc, char** argv, sCmdOptions* ops) {
 			tempOver = new sOpOverride;
 			tempOver->section = overmap["section"];
 			tempOver->option = overmap["option"];
-			tempOver->section = overmap["value"];
+			tempOver->newValue = overmap["value"];
 
 			ops->overrides.push_back(tempOver);
 

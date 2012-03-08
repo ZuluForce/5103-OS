@@ -27,7 +27,7 @@ typedef map<string,DefaultKeyMap> DefaultMap;
 #define EXTRACTP_(obj,type,sec,opt) settings->extractValue<type>(STR(sec),STR(opt))
 
 struct KeyRecord {
-    private:
+    protected:
         string value;
         string comment;
 
@@ -39,7 +39,7 @@ struct KeyRecord {
         KeyRecord(const string, const string,int);
 
         /* Setters */
-        void setValue(string);
+        void setValue(const string);
         void setComment(string);
         void setPosPtr(int);
 
@@ -47,6 +47,10 @@ struct KeyRecord {
         string& getValue();
         string& getComment();
         int getPosPtr();
+
+        string operator() (const KeyRecord& record) {
+        	return value;
+        }
 };
 
 class INIReader {

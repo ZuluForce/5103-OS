@@ -23,7 +23,7 @@ KeyRecord::KeyRecord(const string val, const string com, int ptr) {
     PosPtr = ptr;
 }
 
-void KeyRecord::setValue(string val) {
+void KeyRecord::setValue(const string val) {
     value = val;
 }
 
@@ -286,8 +286,18 @@ void INIReader::addDefault(const string& section, const string& key, const strin
 }
 
 bool INIReader::overWriteOp(const string& section, const string& key, const string& value) {
-	if ( !exists(section, key) )
-		return false;
+    sec_it = section_map.find(section);
+
+    if ( sec_it == section_map.end() )
+        return false;
+
+    temp_map = &(sec_it->second);
+    key_it = temp_map->find(key);
+
+    if ( key_it == temp_map->end() )
+        return false;
+
+	(key_it->second).setValue(value);
 
 	return true;
 }
