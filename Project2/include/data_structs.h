@@ -23,6 +23,8 @@ struct sPTE {
 struct sProc {
 	uint16_t cswitches;
 	string data;
+
+	sPTE* PTptr;
 };
 
 struct sOpOverride {

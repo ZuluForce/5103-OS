@@ -8,11 +8,11 @@ INCDIR=include
 OBJDIR=obj
 BINDIR=bin
 
-CFLAGS=-O3 -I$(INCDIR) -I/usr/include/boost -Wall
+CFLAGS=-O3 -I$(INCDIR) -Wall
 OBJCFLAGS=-O3 -c -I$(INCDIR) -DD_REENTRANT
-LFLAGS=-L/usr/lib/ -lboost_regex
+LFLAGS=-L/usr/lib/
 
-DEPS= vmm_core.o iniReader.o
+DEPS= vmm_core.o iniReader.o mmu.o cpu.o
 ##Dependencies with obj directory appended
 _DEPS=$(patsubst %,$(OBJDIR)/%,$(DEPS))
 
