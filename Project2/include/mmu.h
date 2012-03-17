@@ -6,6 +6,12 @@
 #include "data_structs.h"
 #include "iniReader.h"
 
+enum eMMUstate {
+	MMU_THIT,				/**< TLB Hit */
+	MMU_TMISS,	/**< TLB Miss */
+	MMU_PF		/**< Page Fault */
+};
+
 /**< Struct representing a single entry in the TLB */
 struct sTLBE {
 	uint32_t VPN;
@@ -24,26 +30,46 @@ class cMMU {
 	private:
 		sTLBE* TLB;
 		uint16_t tlbSize;
+		uint32_t off_bits;
+		bool hexAddr;
 
-		/** For excavating old tlb entries we are simply
+		stringstream ssAddr;
+
+		/** For replacing old tlb entries we are simply
 		 *	treating it as a ring buffer. This is the index
 		 *	where new entries are being placed */
 		uint32_t replaceIndex;
 
 		/* -- Page Table Info --*/
 		sPTE* ptbr;
-		uint32_t ptlr;
 
-		bool initialized;
+		/* These will be collected during cleanup to
+		 * provide the appropriate statistics.
+		 */
+		int tlb_hits;
+		int tlb_misses;
+
+		eMMUstate mmu_status;
 
 	public:
-		cMMU(INIReader* settings);
+		cMMU();
 		~cMMU();
 
 		void setPTBR(sPTE* _ptbr) { ptbr = _ptbr; };
-		void setPTLR(uint32_t val) { ptlr = val; };
 
 		void flushTLB();
+
+		/** Translate virtual to physical address
+		 *
+		 *	This method checks the tlb and page table
+		 *	simultaneously and returns the appropriate
+		 *	address. Whoever receives this should first
+		 *	check the mmu status to make sure it is valid.
+		 *
+		 *	@param bool write If set, the mmu will mark this
+		 *	page as dirty.
+		 */
+		uint32_t getAddr(string& sVA, bool write);
 };
 
 #endif // MMU_CPP_INCLUDED

@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <sstream>
+#include <iostream>
 #include <inttypes.h>
 
 using namespace std;
@@ -15,18 +17,27 @@ struct sPTE {
 	 *	flags[0]: Present/absent
 	 *	flags[1]: Dirty
 	 *	flags[2]: Referenced
-	 *	flags[3]: ---
 	 */
-	char flags[4];
+	char flags[3];
+
+	uint8_t time;
 };
 
 struct sProc {
+	unsigned int pid;
 	uint16_t cswitches;
-	string data;
+	int pageFaults;
+	int clockTime;
+
+	istringstream* data;
+	int PC;
 
 	sPTE* PTptr;
+
+	void* scheduleData;
 };
 
+/* ---- Control Structs for parsing options ---- */
 struct sOpOverride {
 	string section;
 	string option;

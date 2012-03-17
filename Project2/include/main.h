@@ -9,6 +9,11 @@
 #include <map>
 
 #include "vmm_core.h"
+#include "utility/id.h"
+#include "settings/defaults.h"
+#include "Policy/pr_fifo.h"
+
+INIReader* settings;
 
 #define MAX_SETTINGS_PROCS 20
 

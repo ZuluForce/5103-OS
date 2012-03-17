@@ -1,0 +1,21 @@
+111111
+1024:150:fifo:T2
+Process 0:
+Context Switches: 2
+Page Faults: 0
+Execution Time: 5
+
+Process 1:
+Context Switches: 2
+Page Faults: 0
+Execution Time: 5
+
+Process 2:
+Context Switches: 7
+Page Faults: 0
+Execution Time: 20
+
+Global VMM info:
+Context Switches: 5
+Page Faults: 10
+Execution Time: 15

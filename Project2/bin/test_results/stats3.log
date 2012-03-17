@@ -1,0 +1,21 @@
+111111
+8192:50:fifo:T3
+Process 0:
+Context Switches: 2
+Page Faults: 0
+Execution Time: 5
+
+Process 1:
+Context Switches: 2
+Page Faults: 0
+Execution Time: 5
+
+Process 2:
+Context Switches: 1
+Page Faults: 0
+Execution Time: 5
+
+Global VMM info:
+Context Switches: 5
+Page Faults: 5
+Execution Time: 15

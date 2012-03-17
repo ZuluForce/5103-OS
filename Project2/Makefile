@@ -12,7 +12,8 @@ CFLAGS=-O3 -I$(INCDIR) -Wall
 OBJCFLAGS=-O3 -c -I$(INCDIR) -DD_REENTRANT
 LFLAGS=-L/usr/lib/
 
-DEPS= vmm_core.o iniReader.o mmu.o cpu.o
+DEPS= vmm_core.o iniReader.o mmu.o cpu.o round_robin.o frameAlloc.o pageReplace.o\
+	pr_fifo.o defaults.o id.o strConv.o
 ##Dependencies with obj directory appended
 _DEPS=$(patsubst %,$(OBJDIR)/%,$(DEPS))
 
@@ -23,8 +24,14 @@ BINDIR=bin
 DOCDIR=docs
 
 vpath %.cpp $(SRCDIR)
+vpath %.cpp $(SRCDIR)/Policy
+vpath %.cpp $(SRCDIR)/settings
+vpath %.cpp $(SRCDIR)/utility
 
 vpath %.h $(INCDIR)
+vpath %.h $(INCDIR)/Policy
+vpath %.h $(INCDIR)/settings
+vpath %.h $(INCDIR)/utility
 
 vpath %.o $(OBJDIR)
 
@@ -34,7 +41,10 @@ run_%: $(TARGET)
 	cd $(BINDIR) && ./$(TARGET) $(RUN_$*)
 
 $(TARGET): $(TARGET).cpp $(TARGET).h $(DEPS)
-	$(CC) $(CFLAGS) $(LFLAGS) $(_DEPS) $(SRCDIR)/$@.cpp -o $(BINDIR)/$@ 
+	$(CC) $(CFLAGS) $(LFLAGS) $(_DEPS) $(SRCDIR)/$@.cpp -o $(BINDIR)/$@
+	
+filt: $(TARGET).cpp $(TARGET).h $(DEPS)
+	make CC="./scripts/gfilt"
 
 %.o: %.cpp %.h
 	$(CC) $< $(OBJCFLAGS) -o $(OBJDIR)/$@

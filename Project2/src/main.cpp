@@ -2,6 +2,8 @@
 
 using namespace std;
 
+static cIDManager* pidGen;
+
 enum eParseState {
 	PS_NONE = 0,
 	PS_OVER = 0x1,
@@ -154,6 +156,9 @@ void parseCmdLine(int argc, char** argv, sCmdOptions* ops) {
 
 sProc* loadProc(string& filename) {
 	sProc* newProc = new sProc;
+	newProc->pid = pidGen->getID();
+	newProc->pageFaults = 0;
+	newProc->clockTime = 0;
 	newProc->cswitches = 0;
 
     /* Read process contents into memory */
@@ -173,7 +178,7 @@ sProc* loadProc(string& filename) {
     	return NULL;
     }
 
-	newProc->data = buf;
+	newProc->data = new istringstream(buf);
 	close(file);
 	free(buf);
 
@@ -198,6 +203,11 @@ int main(int argc, char** argv) {
 	parseCmdLine(argc, argv, options);
 
 	INIReader* reader = new INIReader();
+	settings = reader;
+	setDefaults(settings); //Add static defaults
+
+	pidGen = new cIDManager(0);
+
 	vector<string>::iterator it;
 	it = options->settingFiles.begin();
 
@@ -217,22 +227,27 @@ int main(int argc, char** argv) {
 			exit(-1);
 	}
 
-	string settingsProc;
+
+	stringstream settingsProc;
+	//string settingsProc;
 	string procName;
 
 	/* Load processes specified in the settings files */
 	for ( int i = 0; i < MAX_SETTINGS_PROCS; ++i) {
-		settingsProc = i;
+		settingsProc.str("");
+		settingsProc << i;
 
-		if( !reader->exists("Processes", settingsProc) )
+		if( !reader->exists("Processes", settingsProc.str()) )
 			break;
 
 		//Get process 'i' from the settings file
-		procName = reader->extractValue<string>("Processes", settingsProc);
+		procName = reader->extractValue<string>("Processes", settingsProc.str());
 		processes.push_back(loadProc(procName));
 
-		if ( processes.back() == NULL )
+		if ( processes.back() == NULL ) {
+			cout << "Loaded " << i << " processes from settings file/s" << endl;
 			exit(-1);
+		}
 	}
 
 	vector<sOpOverride*>::iterator ito;
@@ -255,7 +270,26 @@ int main(int argc, char** argv) {
 	delete options;
 
 	/* Start up the VMM */
-	cVMM manager = cVMM(reader, processes);
+	try {
+		cPRPolicy* pr_policy;
+		cFrameAllocPolicy* fa_policy;
+
+		fa_policy = new cFixedAlloc();
+		pr_policy = new cPRFifo(*fa_policy);
+		cVMM* manager = new cVMM(processes, *pr_policy);
+		manager->start();
+	} catch ( cVMMExc& error) {
+		cout << "Caught VMM core error: " << endl;
+		cout << "\tError Msg: " << error.getErrorStr() << endl;
+		cout << "\tInfo Dump: " << error.getDump() << endl;
+
+		exit(-1);
+	} catch ( cException& error ) {
+		cout << "Caught Exception: " << endl;
+		cout << "\tErr Msg: " << error.getErrorStr() << endl;
+
+		exit(-1);
+	}
 
 	return 0;
 }
