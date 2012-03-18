@@ -1,6 +1,7 @@
 #ifndef VMM_CORE_H_INCLUDED
 #define VMM_CORE_H_INCLUDED
 
+#include <ctime>
 #include <vector>
 #include <queue>
 #include <bitset>
@@ -15,9 +16,10 @@
 #include "iniReader.h"
 #include "exceptions.h"
 #include "round_robin.h"
+#include "io_control.h"
+#include "Policy/allPR.h"
 #include "utility/strConv.h"
 #include "Policy/frameAlloc.h"
-#include "Policy/pageReplace.h"
 
 using namespace std;
 using namespace boost;
@@ -44,8 +46,7 @@ class cVMM {
 
 
 		/* ------ I/O Control ------ */
-		void pageOut(uint32_t page);
-		void pageIn(uint32_t page);
+		cIOControl* ioCtrl;
 
 		/* ------ Policy Modules ------ */
 		cPRPolicy& PRModule;
@@ -58,6 +59,12 @@ class cVMM {
 		cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM);
 		~cVMM();
 
+		/* ------ I/O Control ------ */
+		sIOContext* pageOut(sProc*,uint32_t,sIOContext* ctx = NULL);
+		sIOContext* pageIn(sProc*, uint32_t, eIOType,sIOContext* ctx = NULL);
+		void tickController(int times);
+
+		sProc* getProcess(unsigned int id);
 		int start();
 };
 

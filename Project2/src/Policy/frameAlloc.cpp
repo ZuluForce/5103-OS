@@ -1,5 +1,8 @@
 #include "Policy/frameAlloc.h"
 
+extern INIReader* settings;
+extern FILE* logStream;
+
 cFixedAlloc::cFixedAlloc() {
 	/* ---- Set Defaults ---- */
 	settings->addDefault("PM-Alloc-Fixed","alloc-size","20");
@@ -7,11 +10,12 @@ cFixedAlloc::cFixedAlloc() {
 	allocSize = EXTRACTP(int,PM-Alloc-Fixed,alloc-size);
 
 	uint32_t numFrames = EXTRACTP(uint32_t, Global, total_frames);
+	assert(numFrames > 0);
 
-	dynamic_bitset<> frames(numFrames);
+	frames = dynamic_bitset<>(numFrames);
 	frames.reset();
 
-	dynamic_bitset<> pinned(numFrames);
+	pinned = dynamic_bitset<>(numFrames);
 	pinned.reset();
 }
 
@@ -35,6 +39,7 @@ uint32_t cFixedAlloc::findFirstOf(bool check, dynamic_bitset<>& bit) {
 pair<bool,uint32_t> cFixedAlloc::getFrame() {
 	//Find first free
 	uint32_t firstFree = findFirstOf(false, frames);
+
 	if ( firstFree == frames.size() + 1 )
 		return make_pair(false, 0);
 
@@ -72,6 +77,7 @@ bool cFixedAlloc::pin(uint32_t frame) {
 	if ( pinned.test(frame) )
 		return false;
 
+	fprintf(logStream, "FA Policy: Pinning frame %d\n", frame);
 	pinned.set(frame);
 	return true;
 }
@@ -80,6 +86,7 @@ bool cFixedAlloc::unpin(uint32_t frame) {
 	if ( !pinned.test(frame) )
 		return false;
 
+	fprintf(logStream, "FA Policy: Unpinnig frame %d\n", frame);
 	pinned.flip(frame);
 	return true;
 }

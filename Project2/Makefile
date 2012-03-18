@@ -9,11 +9,11 @@ OBJDIR=obj
 BINDIR=bin
 
 CFLAGS=-O3 -I$(INCDIR) -Wall
-OBJCFLAGS=-O3 -c -I$(INCDIR) -DD_REENTRANT
+OBJCFLAGS=-O3 -c -I$(INCDIR)
 LFLAGS=-L/usr/lib/
 
 DEPS= vmm_core.o iniReader.o mmu.o cpu.o round_robin.o frameAlloc.o pageReplace.o\
-	pr_fifo.o defaults.o id.o strConv.o
+	pr_fifo.o defaults.o id.o strConv.o io_control.o logger.o
 ##Dependencies with obj directory appended
 _DEPS=$(patsubst %,$(OBJDIR)/%,$(DEPS))
 
@@ -42,6 +42,10 @@ run_%: $(TARGET)
 
 $(TARGET): $(TARGET).cpp $(TARGET).h $(DEPS)
 	$(CC) $(CFLAGS) $(LFLAGS) $(_DEPS) $(SRCDIR)/$@.cpp -o $(BINDIR)/$@
+	
+run_gdb:
+	make CFLAGS="-I$(INCDIR) -Wall -g -DDEBUG" OBJCFLAGS="-DDEBUG -g -c -I$(INCDIR)"
+	gdb --cd=$(BINDIR) --command=gdb_batch --return-child-result -exec=$(TARGET)
 	
 filt: $(TARGET).cpp $(TARGET).h $(DEPS)
 	make CC="./scripts/gfilt"

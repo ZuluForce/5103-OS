@@ -5,6 +5,7 @@
 
 #include "iniReader.h"
 #include "data_structs.h"
+#include "utility/logger.h"
 
 using namespace std;
 using namespace boost;
@@ -41,6 +42,9 @@ class cFrameAllocPolicy {
 		 *	of the page cleaning daemon.
 		 */
 		virtual void returnFrame(uint32_t frame) = 0;
+
+		virtual bool pin(uint32_t frame) = 0;
+		virtual bool unpin(uint32_t frame) = 0;
 };
 
 class cFixedAlloc: public cFrameAllocPolicy {

@@ -2,14 +2,15 @@
 #define PR_FIFO_H_INCLUDED
 
 #include <queue>
-#include "Policy/pageReplace.h"
+#include "vmm_core.h"
 
 using namespace std;
 
 class cPRFifo: public cPRPolicy {
 	private:
 		//FIFO history of the pages
-		queue<uint32_t> pageHist;
+		queue<sPTE*> pageHist;
+		queue<unsigned int> pageOwners;
 
 		cFrameAllocPolicy& FAPolicy;
 
@@ -18,6 +19,10 @@ class cPRFifo: public cPRPolicy {
 		~cPRFifo();
 
 		const char* name() { return "fifo"; };
+
+		void getPage(sProc* proc, uint32_t page);
+
+		void unpinFrame(uint32_t frame);
 };
 
 #endif // PR_FIFO_H_INCLUDED

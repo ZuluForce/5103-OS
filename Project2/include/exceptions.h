@@ -28,8 +28,17 @@ class cVMMExc: public cException {
 		string dumpInfo;
 
 	public:
-		void setDump(string& dump) { dumpInfo = dump; };
+		void setDump(const string& dump) { dumpInfo = dump; };
 		string& getDump() { return dumpInfo; };
+};
+
+class cIOExc: public cException {
+	private:
+		string IO_Data_Trace;
+
+	public:
+		void setTrace(const string& trace) { IO_Data_Trace = trace; };
+		string& getTrace() { return IO_Data_Trace; };
 };
 
 #endif // EXCEPTIONS_H_INCLUDED

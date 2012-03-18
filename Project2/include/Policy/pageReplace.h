@@ -2,6 +2,7 @@
 #define PAGEREPLACE_H_INCLUDED
 
 #include "iniReader.h"
+#include "utility/logger.h"
 #include "Policy/frameAlloc.h"
 
 class cPRPolicy {
@@ -22,12 +23,12 @@ class cPRPolicy {
 		 *	@param sProc* A pointer to the process that the
 		 *	frame is being requested for.
 		 *
-		 *	@return uint32_t The page that is now available for
+		 *	@param uint32_t page The page for the given process
+		 *	that needs to be fetched.
 		 */
-		uint32_t getPage(sProc* proc);
+		virtual void getPage(sProc* proc, uint32_t page) = 0;
 
-		int pinPage(uint32_t page);
-
+		virtual void unpinFrame(uint32_t frame) = 0;
 };
 
 #endif // PAGEREPLACE_H_INCLUDED

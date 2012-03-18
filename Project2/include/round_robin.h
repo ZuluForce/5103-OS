@@ -8,6 +8,7 @@
 #include "iniReader.h"
 #include "data_structs.h"
 #include "utility/id.h"
+#include "utility/logger.h"
 
 using namespace std;
 

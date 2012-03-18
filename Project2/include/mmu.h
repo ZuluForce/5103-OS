@@ -6,8 +6,9 @@
 #include "data_structs.h"
 #include "iniReader.h"
 
+
 enum eMMUstate {
-	MMU_THIT,				/**< TLB Hit */
+	MMU_THIT,	/**< TLB Hit */
 	MMU_TMISS,	/**< TLB Miss */
 	MMU_PF		/**< Page Fault */
 };
@@ -30,6 +31,7 @@ class cMMU {
 	private:
 		sTLBE* TLB;
 		uint16_t tlbSize;
+		uint32_t pageSize;
 		uint32_t off_bits;
 		bool hexAddr;
 
@@ -51,6 +53,10 @@ class cMMU {
 
 		eMMUstate mmu_status;
 
+		uint32_t faultPage;
+
+		void addTLB(uint32_t, uint32_t);
+
 	public:
 		cMMU();
 		~cMMU();
@@ -59,6 +65,8 @@ class cMMU {
 
 		void flushTLB();
 
+		eMMUstate checkStatus() { return mmu_status; };
+		uint32_t getFaultPage() { return faultPage; };
 		/** Translate virtual to physical address
 		 *
 		 *	This method checks the tlb and page table

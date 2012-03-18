@@ -1,6 +1,7 @@
 #include "round_robin.h"
 
 extern INIReader* settings;
+extern FILE* logStream;
 
 cRoundRobin::cRoundRobin(): blockedID(0) {
 	/* ---- Set Defaults ---- */
@@ -48,6 +49,8 @@ void cRoundRobin::setBlocked(sProc* proc) {
 	assert( proc != NULL );
 	assert( proc == runningProc );
 
+	fprintf(logStream, "Scheduler: Blocking process %d\n", proc->pid);
+
 	unsigned int newID = blockedID.getID();
 	if ( newID >= blockedVector.size() ) {
 		/* Resize the vector */
@@ -73,6 +76,8 @@ void cRoundRobin::unblockProcess(sProc* proc) {
 	assert( proc != NULL );
 	assert( totalBlocked > 0 );
 
+	fprintf(logStream, "Scheduler: Unblocking process %d\n", proc->pid);
+
 	roundRobinInfo* info = (roundRobinInfo*) proc->scheduleData;
 	assert(info->blockedIndex < blockedVector.size());
 
@@ -80,8 +85,6 @@ void cRoundRobin::unblockProcess(sProc* proc) {
 	blockedID.returnID(info->blockedIndex);
 
 	--totalBlocked;
-
-	//pthread_cond_signal(&allBlocked);
 
 	return;
 }

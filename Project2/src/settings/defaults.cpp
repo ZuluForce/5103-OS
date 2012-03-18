@@ -28,6 +28,7 @@ void setDefaults(INIReader* settings) {
 	/* ------ Results ------ */
 	SETDP(Results,file,stats.log);
 	SETDP(Results,title,default);
+	SETDP(Results,trace,results.trace);
 
 	SETDP(Results,g_cs,1);
 	SETDP(Results,g_pf,1);

@@ -9,6 +9,12 @@
 
 using namespace std;
 
+enum eFlagIndex {
+	FI_PRESENT,
+	FI_DIRTY,
+	FI_REF,
+};
+
 struct sPTE {
 	uint32_t frame;
 
@@ -18,7 +24,7 @@ struct sPTE {
 	 *	flags[1]: Dirty
 	 *	flags[2]: Referenced
 	 */
-	char flags[3];
+	bool flags[3];
 
 	uint8_t time;
 };
@@ -31,6 +37,9 @@ struct sProc {
 
 	istringstream* data;
 	int PC;
+	/* Used to redo a single instr */
+	bool restart;
+	string rline;
 
 	sPTE* PTptr;
 

@@ -4,6 +4,7 @@
 #include "mmu.h"
 #include "data_structs.h"
 #include "iniReader.h"
+#include "utility/logger.h"
 
 enum eCPUState {
 	CPU_OK = 0x1,			/**< CPU finished executing instruction ok */
@@ -30,13 +31,22 @@ class cCPU {
 		string opCode;
 		string addr;
 
+		int instr_time, cs_time;
+		int* VC;
+		void incVC(int amnt);
+
 	public:
 		cCPU();
 		~cCPU();
 
+		void addVC(int* VC);
+
 		void switchProc(sProc*);
 
+		uint32_t getFaultPage();
 		uint8_t run();
 };
+
+#include "vmm_core.h"
 
 #endif // CPU_H_INCLUDED

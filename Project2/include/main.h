@@ -10,6 +10,7 @@
 
 #include "vmm_core.h"
 #include "utility/id.h"
+#include "utility/logger.h"
 #include "settings/defaults.h"
 #include "Policy/pr_fifo.h"
 

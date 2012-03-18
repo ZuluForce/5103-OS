@@ -4,6 +4,8 @@ using namespace std;
 
 static cIDManager* pidGen;
 
+FILE* logStream;
+
 enum eParseState {
 	PS_NONE = 0,
 	PS_OVER = 0x1,
@@ -160,6 +162,7 @@ sProc* loadProc(string& filename) {
 	newProc->pageFaults = 0;
 	newProc->clockTime = 0;
 	newProc->cswitches = 0;
+	newProc->restart = false;
 
     /* Read process contents into memory */
 	struct stat fileinfo;
@@ -205,6 +208,9 @@ int main(int argc, char** argv) {
 	INIReader* reader = new INIReader();
 	settings = reader;
 	setDefaults(settings); //Add static defaults
+
+	initLog(EXTRACTP(string, Results, trace).c_str());
+	logStream = getStream();
 
 	pidGen = new cIDManager(0);
 

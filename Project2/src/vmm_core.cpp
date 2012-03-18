@@ -1,9 +1,15 @@
 #include "vmm_core.h"
 
-//extern INIReader* settings;
+/* These could be passed around as parameters but it
+ * would be more clumsy than is necessary
+ */
+extern INIReader* settings;
+extern FILE* logStream;
+
+cVMM* VMMCore;
 
 cVMM::cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM)
-: procs(_procs), PRModule(_PRM) {
+: procs(_procs),PRModule(_PRM) {
 
 	int page_bits = EXTRACTP(int,Global,page_bits);
 	int off_bits = EXTRACTP(int,Global,offset_bits);
@@ -20,8 +26,12 @@ cVMM::cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM)
 	PT_Size = 1 << page_bits;
 
 	VC = 0;
+	cpu.addVC(&VC);
+	ioCtrl = new cIOControl(procs.size(), &VC);
 
 	initProcesses();
+
+	VMMCore = this;
 
 	return;
 }
@@ -53,6 +63,20 @@ void cVMM::initProcesses() {
 	}
 
 	cout << "Finished initializing process' virtual memory" << endl;
+
+	return;
+}
+
+sIOContext* cVMM::pageOut(sProc* proc, uint32_t page, sIOContext* ctx) {
+	ioCtrl->scheduleIO(proc, page, IO_OUT, ctx);
+}
+
+sIOContext* cVMM::pageIn(sProc* proc, uint32_t page, eIOType iotype, sIOContext* ctx) {
+	ioCtrl->scheduleIO(proc, page, iotype, ctx);
+}
+
+void cVMM::tickController(int times) {
+	ioCtrl->tick(times);
 
 	return;
 }
@@ -128,15 +152,54 @@ void cVMM::printResults() {
 }
 
 
+sProc* cVMM::getProcess(unsigned int id) {
+	return procs.at(id);
+}
+
 int cVMM::start() {
 	sProc* runningProc;
 
 	uint8_t result;
 
+	queue<uint64_t>& finishedIO = ioCtrl->getFinishedQueue();
+	uint64_t finishInfo = 0;
+	uint32_t fPID = 0;
+	uint32_t fFrame = 0;
+
+	cout << "-*-Virtual Counter: " << this->VC << "-*-" << endl;
+	fprintf(logStream, "Virtual Counter: %d\n", VC);
+
 	while ( scheduler.numProcesses() ) {
-		cout << "Looping" << endl;
+
+		//Process all finished I/O
+		while ( !finishedIO.empty() ) {
+			finishInfo = finishedIO.front();
+			finishedIO.pop();
+
+			fPID = finishInfo / ( 0xFFFFFFFF );
+			fFrame = finishInfo % ( 0xFFFFFFFF );
+
+			cout << "***Unblocking Process " << fPID << "***" << endl;
+			scheduler.unblockProcess(procs.at(fPID));
+			PRModule.unpinFrame(fFrame);
+
+			fPID = 0;
+			fFrame = 0;
+		}
 
 		runningProc = scheduler.getNextToRun();
+		/* This means there are still valid processes but
+		 * can currently run.
+		 */
+		if ( runningProc == NULL ) {
+			++VC;
+			cout << "Virtual Counter: " << VC << endl;
+			fprintf(logStream, "-*-Virtual Counter: %d-*-\n", VC);
+
+			ioCtrl->tick();
+			continue;
+		}
+
 		++(runningProc->clockTime);
 
 		cpu.switchProc(runningProc);
@@ -145,8 +208,24 @@ int cVMM::start() {
 
 		if ( result & CPU_TERM ) {
 			scheduler.removeProcess(runningProc);
+			fprintf(logStream, "Process %d terminated\n", runningProc->pid);
+
 			runningProc = NULL;
+		} else if ( result & CPU_PF ) {
+			cout << "**Process "<< runningProc->pid << " Page Faulted**" << endl;
+			fprintf(logStream, "**Process %d page faulted**\n", runningProc->pid);
+
+			++runningProc->pageFaults;
+
+			PRModule.getPage(runningProc, cpu.getFaultPage());
+
+			cout << "Blocking process" << endl;
+			scheduler.setBlocked(runningProc);
 		}
+
+		//sleep(1);
+		cout << endl;
+		fprintf(logStream, "\n");
 	}
 
 	/* Gather simulation data and output it */
