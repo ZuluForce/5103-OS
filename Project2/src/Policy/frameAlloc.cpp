@@ -9,7 +9,7 @@ cFixedAlloc::cFixedAlloc() {
 
 	allocSize = EXTRACTP(int,PM-Alloc-Fixed,alloc-size);
 
-	uint32_t numFrames = EXTRACTP(uint32_t, Global, total_frames);
+	numFrames = EXTRACTP(uint32_t, Global, total_frames);
 	assert(numFrames > 0);
 
 	frames = dynamic_bitset<>(numFrames);
@@ -64,16 +64,22 @@ bool cFixedAlloc::getFrame(uint32_t frame) {
 }
 
 void cFixedAlloc::returnFrame(uint32_t frame) {
+	assert(frame < numFrames);
+
 	frames.set(frame, false);
 
 	return;
 }
 
 bool cFixedAlloc::checkAvailable(uint32_t frame) {
+	if ( frame >= numFrames ) return false;
+
 	return frames.test(frame);
 }
 
 bool cFixedAlloc::pin(uint32_t frame) {
+	assert(frame < numFrames);
+
 	if ( pinned.test(frame) )
 		return false;
 
@@ -83,6 +89,8 @@ bool cFixedAlloc::pin(uint32_t frame) {
 }
 
 bool cFixedAlloc::unpin(uint32_t frame) {
+	assert( frame < numFrames );
+
 	if ( !pinned.test(frame) )
 		return false;
 

@@ -176,8 +176,8 @@ int cVMM::start() {
 			finishInfo = finishedIO.front();
 			finishedIO.pop();
 
-			fPID = finishInfo / ( 0xFFFFFFFF );
-			fFrame = finishInfo % ( 0xFFFFFFFF );
+			fPID = finishInfo / ( 0x100000000 );
+			fFrame = finishInfo % ( 0x100000000 );
 
 			cout << "***Unblocking Process " << fPID << "***" << endl;
 			scheduler.unblockProcess(procs.at(fPID));

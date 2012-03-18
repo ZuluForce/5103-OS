@@ -53,6 +53,8 @@ class cFixedAlloc: public cFrameAllocPolicy {
 		dynamic_bitset<> frames;
 		dynamic_bitset<> pinned;
 
+		uint32_t numFrames;
+
 		uint32_t findFirstOf(bool check, dynamic_bitset<>& bits);
 
 	public:

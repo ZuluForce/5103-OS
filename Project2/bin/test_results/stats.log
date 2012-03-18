@@ -1,5 +1,5 @@
 111111
-4096:100:fifo:T1
+4096:3:fifo:T1
 Process 0:
 Context Switches: 3
 Page Faults: 2

@@ -121,6 +121,9 @@ void cIOControl::tick() {
 			fdata = fdata << 32;
 			fdata += ctx->page->frame;
 
+			cout << "fData = " << fdata << endl;
+			cout << "\tPID = " << ctx->pid << "  frame = " << ctx->page->frame << endl;
+
 			finished.push(fdata);
 			io_in.pop();
 
