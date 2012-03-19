@@ -13,6 +13,7 @@
 #include "utility/logger.h"
 #include "settings/defaults.h"
 #include "Policy/pr_fifo.h"
+#include "Policy/cleaningDaemon.h"
 
 INIReader* settings;
 

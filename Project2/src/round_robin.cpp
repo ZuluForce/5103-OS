@@ -104,31 +104,13 @@ void cRoundRobin::removeProcess(sProc* proc) {
 sProc* cRoundRobin::getNextToRun() {
 
 	if ( runningProc != NULL) {
-	    if (clockTicksUsed >= quantum){ // Has the running process used up it's quantum?
-	        readyQueue.push(runningProc);
-	        // Reset the clock ticks since we will be picking a new process to run.
-	        clockTicksUsed = 0;
+		readyQueue.push(runningProc);
 
-	        runningProc = NULL;
-	    } else{
-	        clockTicksUsed++;
-
-            return runningProc;
-	    }
+		runningProc = NULL;
 	}
 
 	if ( readyQueue.size() == 0 ) {
 		return NULL;
-
-		//if ( totalBlocked > 0) {
-		//	while ( readyQueue.size() == 0)
-		//		pthread_cond_wait(&allBlocked, &blockedLock);
-
-		//} else {
-		//	/* Nothing is left to run */
-		//	pthread_mutex_unlock(&blockedLock);
-		//	return NULL;
-		//}
 	}
 
 	sProc* toRun = readyQueue.front();
@@ -137,7 +119,7 @@ sProc* cRoundRobin::getNextToRun() {
 	assert(toRun != NULL);
 
 	runningProc = toRun;
-	clockTicksUsed++;
+	//clockTicksUsed++;
 
 	//pthread_mutex_unlock(&blockedLock);
 

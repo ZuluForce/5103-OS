@@ -8,8 +8,8 @@ extern FILE* logStream;
 
 cVMM* VMMCore;
 
-cVMM::cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM)
-: procs(_procs),PRModule(_PRM) {
+cVMM::cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM, cCleanDaemon& _cDaemon)
+: procs(_procs),PRModule(_PRM),cDaemon(_cDaemon) {
 
 	int page_bits = EXTRACTP(int,Global,page_bits);
 	int off_bits = EXTRACTP(int,Global,offset_bits);
@@ -28,6 +28,8 @@ cVMM::cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM)
 	VC = 0;
 	cpu.addVC(&VC);
 	ioCtrl = new cIOControl(procs.size(), &VC);
+
+	pageInCount = pageOutCount = 0;
 
 	initProcesses();
 
@@ -69,10 +71,12 @@ void cVMM::initProcesses() {
 
 sIOContext* cVMM::pageOut(sProc* proc, uint32_t page, sIOContext* ctx) {
 	ioCtrl->scheduleIO(proc, page, IO_OUT, ctx);
+	++pageOutCount;
 }
 
 sIOContext* cVMM::pageIn(sProc* proc, uint32_t page, eIOType iotype, sIOContext* ctx) {
 	ioCtrl->scheduleIO(proc, page, iotype, ctx);
+	++pageInCount;
 }
 
 void cVMM::tickController(int times) {
@@ -149,6 +153,10 @@ void cVMM::printResults() {
 
 	if ( options.test(G_ET) )
 		log << "Execution Time: " << g_et << endl;
+
+	/* I haven't created any options for these yet */
+	log << "Page In: " << pageInCount << endl;
+	log << "Page Out: " << pageOutCount << endl;
 }
 
 
@@ -162,9 +170,11 @@ int cVMM::start() {
 	uint8_t result;
 
 	queue<uint64_t>& finishedIO = ioCtrl->getFinishedQueue();
+	queue<sPTE*>& finisheIOPage = ioCtrl->getFinishedPTEQueue();
 	uint64_t finishInfo = 0;
 	uint32_t fPID = 0;
 	uint32_t fFrame = 0;
+	sPTE* fPTE = NULL;
 
 	cout << "-*-Virtual Counter: " << this->VC << "-*-" << endl;
 	fprintf(logStream, "Virtual Counter: %d\n", VC);
@@ -174,6 +184,7 @@ int cVMM::start() {
 		//Process all finished I/O
 		while ( !finishedIO.empty() ) {
 			finishInfo = finishedIO.front();
+			fPTE = finisheIOPage.front();
 			finishedIO.pop();
 
 			fPID = finishInfo / ( 0x100000000 );
@@ -181,7 +192,10 @@ int cVMM::start() {
 
 			cout << "***Unblocking Process " << fPID << "***" << endl;
 			scheduler.unblockProcess(procs.at(fPID));
-			PRModule.unpinFrame(fFrame);
+
+			PRModule.finishedIO(procs.at(fPID), fPTE);
+			//PRModule.unpinFrame(fFrame);
+			PRModule.unpinFrame(fPTE->frame);
 
 			fPID = 0;
 			fFrame = 0;
@@ -200,7 +214,7 @@ int cVMM::start() {
 			continue;
 		}
 
-		++(runningProc->clockTime);
+		//++(runningProc->clockTime);
 
 		cpu.switchProc(runningProc);
 
@@ -209,6 +223,7 @@ int cVMM::start() {
 		if ( result & CPU_TERM ) {
 			scheduler.removeProcess(runningProc);
 			fprintf(logStream, "Process %d terminated\n", runningProc->pid);
+			/* Cleanup page table */
 
 			runningProc = NULL;
 		} else if ( result & CPU_PF ) {
@@ -217,13 +232,17 @@ int cVMM::start() {
 
 			++runningProc->pageFaults;
 
-			PRModule.getPage(runningProc, cpu.getFaultPage());
+			PRModule.resolvePageFault(runningProc, cpu.getFaultPage());
 
 			cout << "Blocking process" << endl;
 			scheduler.setBlocked(runningProc);
+		} else {
+			PRModule.finishedQuanta(runningProc);
 		}
 
-		//sleep(1);
+		/* Cleaning Daemon checks if cleaning is needed and
+		 * notifies the PR module how many to clean, if any */
+		PRModule.clearPages(cDaemon.checkClean());
 		cout << endl;
 		fprintf(logStream, "\n");
 	}

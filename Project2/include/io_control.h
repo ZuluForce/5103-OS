@@ -75,6 +75,7 @@ class cIOControl {
 		 *	the core can get the frame and unpin it.
 		 */
 		queue<uint64_t> finished;
+		queue<sPTE*> finishedPTE;
 
 		void removeWait(uint32_t);
 
@@ -90,6 +91,7 @@ class cIOControl {
 		~cIOControl();
 
 		queue<uint64_t>& getFinishedQueue() { return finished; };
+		queue<sPTE*>& getFinishedPTEQueue() { return finishedPTE; };
 		void tick();
 		void tick(int times);
 

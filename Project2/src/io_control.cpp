@@ -30,7 +30,8 @@ void cIOControl::removeWait(uint32_t pid) {
 	io_in_wait.at(pid) = NULL;
 
 	if ( ctx == NULL ) {
-		cerr << "Output finished an tried to release non-existent pending input" << endl;
+		cerr << "Output finished and tried to release non-existent pending input" << endl;
+
 		return;
 	}
 
@@ -40,6 +41,9 @@ void cIOControl::removeWait(uint32_t pid) {
 	}
 
 	cout << "***Adding Process " << ctx->pid << " to io_in queue from io_in_wait***" << endl;
+	fprintf(logStream, "IO Control: Adding Process %d to io_in queue from io_in_wait\n", ctx->pid);
+	fprintf(logStream, "\tI/O will complete when VC = %d\n", *VC + io_time);
+
 	io_in.push(ctx);
 
 	return;
@@ -66,7 +70,6 @@ void cIOControl::returnContext(sIOContext* ctx) {
 	ctx->time = -1;
 
 	context_cache.push(ctx);
-
 	return;
 }
 
@@ -83,36 +86,32 @@ void cIOControl::tick() {
 	sIOContext* ctx;
 	for(; out_iter != io_out.end(); ++out_iter) {
 
-		//Is there I/O for this process
-		if ( !((*out_iter).empty()) ) {
+		/* Remove all I/O's that have 0 time left */
+		while ( !((*out_iter).empty()) ) {
+			ctx = (*out_iter).front();
+			--(ctx->time);
 
-			/* Remove all I/O's that have 0 time left */
-			while ( !((*out_iter).empty()) ) {
-				ctx = (*out_iter).front();
-				--ctx->time;
+			if ( ctx->time <= 0 ) {
+				/* I/O finished. Remove and take care of the release (if any). */
+				fprintf(logStream, "IO Control: I/O (output) finished\n");
+				(*out_iter).pop();
 
-				if ( ctx->time <= 0 ) {
-					/* I/O finished. Remove and take care of the release (if any). */
-					(*out_iter).pop();
-
-					if ( ctx->release != NULL ) {
-						removeWait(ctx->release->pid);
-					}
-
-					returnContext(ctx);
-					continue; /* Continue checking for completions */
+				if ( ctx->release != NULL ) {
+					removeWait(ctx->release->pid);
 				}
 
-				break; /* Fist in queue isn't finished. */
+				returnContext(ctx);
+				continue; /* Continue checking for completions */
 			}
-			ctx = (*out_iter).front();
-			--ctx->time;
+
+			break; /* Fist in queue isn't finished. */
 		}
 	}
 
 	while ( !io_in.empty()) {
 		ctx = io_in.front();
-		if ( --ctx->time <= 0 ) {
+
+		if ( --(ctx->time) <= 0 ) {
 			cout << "***Pushing Process " << ctx->pid << " onto finished queue***" << endl;
 			fprintf(logStream, "IO Control: I/O(input) finished for process %d\n", ctx->pid);
 
@@ -121,10 +120,8 @@ void cIOControl::tick() {
 			fdata = fdata << 32;
 			fdata += ctx->page->frame;
 
-			cout << "fData = " << fdata << endl;
-			cout << "\tPID = " << ctx->pid << "  frame = " << ctx->page->frame << endl;
-
 			finished.push(fdata);
+			finishedPTE.push(ctx->page);
 			io_in.pop();
 
 			ctx->page->flags[FI_PRESENT] = true;
@@ -138,6 +135,7 @@ void cIOControl::tick() {
 		break;
 	}
 
+	return;
 }
 
 sIOContext* cIOControl::scheduleIO(sProc* proc, uint32_t page, eIOType iotype, sIOContext* release) {
@@ -173,6 +171,10 @@ sIOContext* cIOControl::scheduleIO(sProc* proc, uint32_t page, eIOType iotype, s
 				newContext->time = io_time;
 			}
 
+			fprintf(logStream, "Scheduling I/O (output)\n");
+			fprintf(logStream, "\tMoving process %d's page %d out\n", proc->pid, page);
+			fprintf(logStream, "\tI/O will complete when VC = %d\n", *VC + io_time);
+
 			queueOut.push(newContext);
 			break;
 		}
@@ -194,7 +196,7 @@ sIOContext* cIOControl::scheduleIO(sProc* proc, uint32_t page, eIOType iotype, s
 
 			cout << "***Adding Process " << proc->pid << " to io_in queue***" << endl;
 			fprintf(logStream, "Scheduling I/O (input) for process %d\n", proc->pid);
-			fprintf(logStream, "\tFetching Process Page %d\n", page);
+			fprintf(logStream, "\tFetching Process' Page %d\n", page);
 			fprintf(logStream, "\tI/O will complete when VC = %d\n", *VC + io_time);
 
 			io_in.push(newContext);
@@ -219,6 +221,9 @@ sIOContext* cIOControl::scheduleIO(sProc* proc, uint32_t page, eIOType iotype, s
 				proc->clockTime += release->time;
 			else
 				proc->clockTime += io_time;
+
+			cout << "Added I/O to wait queue for process " << proc->pid << endl;
+			fprintf(logStream, "Added I/O (input) to wait queue for process %d\n", proc->pid);
 
 			break;
 		}

@@ -23,7 +23,8 @@ void setDefaults(INIReader* settings) {
 	/* ------ Policy ------ */
 	SETDP(Policy,FA,fixed);
 	SETDP(Policy,PR,fifo);
-
+	SETDP(Policy,clean_min,10);
+	SETDP(Policy,cleanup_amnt,20);
 
 	/* ------ Results ------ */
 	SETDP(Results,file,stats.log);

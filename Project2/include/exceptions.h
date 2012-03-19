@@ -1,6 +1,10 @@
 #ifndef EXCEPTIONS_H_INCLUDED
 #define EXCEPTIONS_H_INCLUDED
 
+enum eExType {
+	PR_NO_FRAMES_AVAIL,
+};
+
 class cException {
 	private:
 		string errMsg;
@@ -26,10 +30,13 @@ class cException {
 class cVMMExc: public cException {
 	private:
 		string dumpInfo;
+		eExType type;
 
 	public:
 		void setDump(const string& dump) { dumpInfo = dump; };
 		string& getDump() { return dumpInfo; };
+
+		void setType(eExType _type) { type = _type; };
 };
 
 class cIOExc: public cException {

@@ -11,11 +11,13 @@ cCPU::cCPU() {
 	/* ---- Print Init Info to Screen ---- */
 	instr_time = EXTRACTP(int, Timings, instr_time);
 	cs_time = EXTRACTP(int, Timings, cs_time);
+	quanta = EXTRACTP(int, Timings, quanta);
 	/* --------------------------------- */
 
 	cout << "CPU initialized with: " << endl;
 	cout << "\tinstruction time = " << instr_time << " units" << endl;
-	cout << "\tContext Switch time = " << cs_time << " units" << endl << endl;
+	cout << "\tContext Switch time = " << cs_time << " units" << endl;
+	cout << "\tExecution Quanta = " << quanta << " units" << endl << endl;
 
 	return;
 }
@@ -46,7 +48,6 @@ void cCPU::switchProc(sProc* newProc) {
 		++(curProc->cswitches);
 
 		mmu.flushTLB();
-
 		mmu.setPTBR(newProc->PTptr);
 
 		curProc = newProc;
@@ -77,47 +78,57 @@ uint32_t cCPU::getFaultPage() {
 
 uint8_t cCPU::run() {
 
-	string line;
-	if ( curProc->restart ) {
-		line = curProc->rline;
-		curProc->restart = false;
-	} else if ( !std::getline(*curProc->data, line) ) {
-			cout << "Process ran out of data" << endl;
-			return CPU_TERM;
+	for ( int i = 0; i < quanta; ++i) {
+
+		string line;
+		if ( curProc->restart ) {
+			line = curProc->rline;
+			curProc->restart = false;
+		} else if ( !std::getline(*curProc->data, line) ) {
+				cout << "Process ran out of data" << endl;
+				return CPU_TERM;
+		}
+
+		//If so it can't possibly be valid
+		if ( line.length() < 3 ) {
+			return CPU_EX;
+		}
+
+		opCode = line[0];
+		addr = line.substr(2);
+
+		cout << "opCode: " << opCode << endl;
+		cout << "Address: " << addr << endl;
+
+		fprintf(logStream, "CPU: Opcode:%s  Virtual-Address:%s  PID:%d\n", opCode.c_str(), addr.c_str(), curProc->pid);
+		incVC(instr_time);
+		uint32_t VA;
+
+		if ( opCode[0] == 'R' ) {
+			VA = mmu.getAddr(addr, false);
+		} else if ( opCode[0] == 'W' ) {
+			VA = mmu.getAddr(addr, true);
+		} else {
+			return CPU_EX;
+		}
+
+		/* Check for page fault */
+		eMMUstate status = mmu.checkStatus();
+		if ( status == MMU_PF ) {
+			/* Save instruction */
+			curProc->restart = true;
+			curProc->rline = line;
+
+			/* Sync the tlb with the page table */
+			mmu.syncTLB();
+
+			return CPU_PF;
+		}
 	}
 
-	//If so it can't possibly be valid
-	if ( line.length() < 3 ) {
-		return CPU_EX;
-	}
+	if ( curProc->data->peek() == '\0' )
+		return CPU_TERM;
 
-	opCode = line[0];
-	addr = line.substr(2);
-
-	cout << "opCode: " << opCode << endl;
-	cout << "Address: " << addr << endl;
-
-	fprintf(logStream, "CPU: Opcode:%s  Virtual-Address:%s  PID:%d\n", opCode.c_str(), addr.c_str(), curProc->pid);
-	incVC(instr_time);
-	uint32_t VA;
-
-	if ( opCode[0] == 'R' ) {
-		VA = mmu.getAddr(addr, false);
-	} else if ( opCode[0] == 'W' ) {
-		VA = mmu.getAddr(addr, true);
-	} else {
-		return CPU_EX;
-	}
-
-	/* Check for page fault */
-	eMMUstate status = mmu.checkStatus();
-	if ( status == MMU_PF ) {
-		/* Save instruction */
-		curProc->restart = true;
-		curProc->rline = line;
-
-		return CPU_PF;
-	}
-
+	mmu.syncTLB();
 	return CPU_OK;
 }

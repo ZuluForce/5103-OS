@@ -19,7 +19,7 @@ extern INIReader* settings;
  */
 class cFrameAllocPolicy {
 	private:
-		int numFrames;
+		uint32_t numFrames;
 
 	public:
 		/** How many frames does the whole system have */
@@ -43,6 +43,8 @@ class cFrameAllocPolicy {
 		 */
 		virtual void returnFrame(uint32_t frame) = 0;
 
+		virtual uint32_t checkOpen() = 0;
+
 		virtual bool pin(uint32_t frame) = 0;
 		virtual bool unpin(uint32_t frame) = 0;
 };
@@ -54,6 +56,7 @@ class cFixedAlloc: public cFrameAllocPolicy {
 		dynamic_bitset<> pinned;
 
 		uint32_t numFrames;
+		uint32_t openFrames;
 
 		uint32_t findFirstOf(bool check, dynamic_bitset<>& bits);
 
@@ -63,13 +66,15 @@ class cFixedAlloc: public cFrameAllocPolicy {
 
 		void regProcs(vector<sProc*>& procs);
 
-		bool checkAvailable(uint32_t frame);
+		bool checkAvailable(uint32_t frame, bool pinnedTaken = true);
 
 		pair<bool,uint32_t> getFrame();
 		pair<bool,uint32_t> getFrame(sProc*);
 		bool getFrame(uint32_t frame);
 
 		void returnFrame(uint32_t frame);
+
+		uint32_t checkOpen();
 
 		bool pin(uint32_t frame);
 		bool unpin(uint32_t frame);

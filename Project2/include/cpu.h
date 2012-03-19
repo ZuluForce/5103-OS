@@ -31,7 +31,7 @@ class cCPU {
 		string opCode;
 		string addr;
 
-		int instr_time, cs_time;
+		int instr_time, cs_time, quanta;
 		int* VC;
 		void incVC(int amnt);
 

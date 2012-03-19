@@ -37,10 +37,18 @@ cMMU::~cMMU() {
 	free(TLB);
 }
 
-void cMMU::flushTLB() {
+void cMMU::flushTLB(bool sync) {
+
 	/* Flush it */
 	for ( int i = 0; i < tlbSize; ++i) {
+		if ( sync && TLB[i].valid && (TLB[i].dirty | TLB[i].ref)) {
+			cout << "Syncing TLB entry " << i << " back to page table (page:" << TLB[i].VPN << ")" << endl;
+			ptbr[TLB[i].VPN].flags[FI_DIRTY] = TLB[i].dirty;
+		}
+
 		TLB[i].valid = false;
+		TLB[i].dirty = false;
+		TLB[i].ref = false;
 	}
 
 	replaceIndex = 0;
@@ -48,17 +56,50 @@ void cMMU::flushTLB() {
 	return;
 }
 
-void cMMU::addTLB(uint32_t VPN, uint32_t frame) {
-	TLB[replaceIndex].valid = true;
-	TLB[replaceIndex].VPN = VPN;
-	TLB[replaceIndex].frame = frame;
+void cMMU::syncTLB() {
+	assert( ptbr != NULL);
+
+	for ( int i = 0; i < tlbSize; ++i) {
+		if ( TLB[i].valid ) {
+			cout << "Syncing TLB entry " << i << " to the page table (page:" << TLB[i].VPN << ")" << endl;
+			ptbr[TLB[i].VPN].flags[FI_DIRTY] = TLB[i].dirty;
+			ptbr[TLB[i].VPN].flags[FI_REF] = TLB[i].ref;
+			TLB[i].dirty = false;
+			TLB[i].ref = false;
+		}
+	}
+
+	return;
+}
+
+void cMMU::addTLB(uint32_t VPN, uint32_t frame, bool isWrite) {
+	assert(TLB != NULL);
+	assert(ptbr != NULL);
+
+	sTLBE* replaceEntry = TLB + replaceIndex;
+	/* Sync the old entry with the page table */
+	if ( replaceEntry->valid ) {
+		ptbr[replaceEntry->VPN].flags[FI_DIRTY] = replaceEntry->dirty;
+		//ptbr[replaceEntry.frame].flags[FI_REF] = ...;
+	}
+
+	//TLB[replaceIndex].valid = true;
+	//TLB[replaceIndex].VPN = VPN;
+	//TLB[replaceIndex].frame = frame;
+
+	//TLB[replaceIndex].dirty = isWrite ? true : false;
+
+	replaceEntry->valid = true;
+	replaceEntry->VPN = VPN;
+	replaceEntry->frame = frame;
+	replaceEntry->dirty = isWrite ? true : false;
 
 	replaceIndex = ++replaceIndex % tlbSize;
 
 	return;
 }
 
-uint32_t cMMU::getAddr(string& sVA, bool write) {
+uint32_t cMMU::getAddr(string& sVA, bool isWrite) {
 	/* Make sure the stream is empty */
 	ssAddr.str(std::string());
 	ssAddr.clear(); //This is necessary to reset eof bit in stream
@@ -99,7 +140,9 @@ uint32_t cMMU::getAddr(string& sVA, bool write) {
 
 			mmu_status = MMU_THIT;
 			cout << "***TLB_HIT***" << endl;
-			fprintf(logStream, "MMU: *TLB HIT* PA=%d\n", PA);
+			fprintf(logStream, "MMU: *TLB HIT* Frame=%d PA=%d\n", FN, PA);
+
+			TLB[i].dirty = isWrite ? true : false;
 
 			++tlb_hits;
 			return PA;
@@ -117,7 +160,7 @@ uint32_t cMMU::getAddr(string& sVA, bool write) {
 		fprintf(logStream, "MMU: *TLB MISS* Found Frame=%d  PA=%d\n", ptbr[VPN].frame, PA);
 
 		/* Save in TLB */
-		addTLB(VPN, ptbr[VPN].frame);
+		addTLB(VPN, ptbr[VPN].frame, isWrite);
 
 		return PA;
 	}

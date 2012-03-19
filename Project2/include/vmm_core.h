@@ -20,6 +20,7 @@
 #include "Policy/allPR.h"
 #include "utility/strConv.h"
 #include "Policy/frameAlloc.h"
+#include "Policy/cleaningDaemon.h"
 
 using namespace std;
 using namespace boost;
@@ -47,16 +48,18 @@ class cVMM {
 
 		/* ------ I/O Control ------ */
 		cIOControl* ioCtrl;
+		uint32_t pageInCount, pageOutCount;
 
 		/* ------ Policy Modules ------ */
 		cPRPolicy& PRModule;
+		cCleanDaemon& cDaemon;
 
 		void initProcesses();
 
 		void printResults();
 
 	public:
-		cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM);
+		cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM, cCleanDaemon& _cDaemon);
 		~cVMM();
 
 		/* ------ I/O Control ------ */

@@ -1,6 +1,7 @@
 #ifndef MMU_CPP_INCLUDED
 #define MMU_CPP_INCLUDED
 
+#include <cassert>
 #include <inttypes.h>
 
 #include "data_structs.h"
@@ -21,10 +22,12 @@ struct sTLBE {
 	/** Is this a valid translation?
 	 *
 	 *	If false, the MMU will ignore any cache
-	 *	hits on this entry. This is used in flushing
-	 *	the tlb.
+	 *	hits on this entry. This is also used in
+	 *	flushing the tlb.
 	 */
 	bool valid;
+	bool dirty;
+	bool ref;
 };
 
 class cMMU {
@@ -55,7 +58,7 @@ class cMMU {
 
 		uint32_t faultPage;
 
-		void addTLB(uint32_t, uint32_t);
+		void addTLB(uint32_t, uint32_t, bool);
 
 	public:
 		cMMU();
@@ -63,7 +66,8 @@ class cMMU {
 
 		void setPTBR(sPTE* _ptbr) { ptbr = _ptbr; };
 
-		void flushTLB();
+		void flushTLB(bool sync = true);
+		void syncTLB();
 
 		eMMUstate checkStatus() { return mmu_status; };
 		uint32_t getFaultPage() { return faultPage; };
@@ -77,7 +81,7 @@ class cMMU {
 		 *	@param bool write If set, the mmu will mark this
 		 *	page as dirty.
 		 */
-		uint32_t getAddr(string& sVA, bool write);
+		uint32_t getAddr(string& sVA, bool isWrite);
 };
 
 #endif // MMU_CPP_INCLUDED

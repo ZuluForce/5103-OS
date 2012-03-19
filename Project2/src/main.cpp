@@ -185,9 +185,6 @@ sProc* loadProc(string& filename) {
 	close(file);
 	free(buf);
 
-	cout << "New process contents: " << endl;
-	cout << newProc->data << endl;
-
 	return newProc;
 }
 
@@ -279,10 +276,12 @@ int main(int argc, char** argv) {
 	try {
 		cPRPolicy* pr_policy;
 		cFrameAllocPolicy* fa_policy;
+		cCleanDaemon* cDaemon;
 
 		fa_policy = new cFixedAlloc();
 		pr_policy = new cPRFifo(*fa_policy);
-		cVMM* manager = new cVMM(processes, *pr_policy);
+		cDaemon = new cCleanDaemon(*fa_policy);
+		cVMM* manager = new cVMM(processes, *pr_policy, *cDaemon);
 		manager->start();
 	} catch ( cVMMExc& error) {
 		cout << "Caught VMM core error: " << endl;
