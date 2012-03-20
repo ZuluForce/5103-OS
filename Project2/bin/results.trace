@@ -871,6 +871,6 @@ CPU: Opcode:W  Virtual-Address:0x30000  PID:0
 MMU: VPN=48  Offset=0
 MMU: *TLB MISS* Found Frame=4  PA=16384
 Process 0 terminated
-Freed 14 frames that the terminating process was using
+Freed 5 frames that the terminating process was using
 
 Collecting/Recording resultsLogName: ./test_results/T1/stats.log

@@ -20,6 +20,7 @@ cFixedAlloc::cFixedAlloc() {
 	pinned.reset();
 
 	_printF = EXTRACTP(bool, Policy, print_frames);
+	_printF_on_pin = EXTRACTP(bool, Policy, print_frames_on_pin);
 	if ( _printF ) {
 		printLoc = fopen(EXTRACTP(string, Policy, frame_log).c_str(), "w");
 		if ( printLoc == NULL ) {
@@ -111,7 +112,9 @@ bool cFixedAlloc::pin(uint32_t frame) {
 	fprintf(logStream, "FA Policy: Pinning frame %d\n", frame);
 	pinned.set(frame);
 
-	//printFrames();
+	if (_printF_on_pin)
+		printFrames();
+
 	return true;
 }
 
@@ -124,7 +127,9 @@ bool cFixedAlloc::unpin(uint32_t frame) {
 	fprintf(logStream, "FA Policy: Unpinnig frame %d\n", frame);
 	pinned.flip(frame);
 
-	//printFrames();
+	if (_printF_on_pin)
+		printFrames();
+
 	return true;
 }
 

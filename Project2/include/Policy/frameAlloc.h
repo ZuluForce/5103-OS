@@ -63,6 +63,7 @@ class cFixedAlloc: public cFrameAllocPolicy {
 		uint32_t findFirstOf(bool check, dynamic_bitset<>& bits);
 
 		bool _printF;
+		bool _printF_on_pin;
 		void printFrames();
 		FILE* printLoc;
 

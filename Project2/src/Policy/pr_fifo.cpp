@@ -86,6 +86,9 @@ void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
 	proc->PTptr[page].frame = rPage->frame;
 	FAPolicy.pin(rPage->frame);
 
+	//It's moving out no matter what
+	rPage->flags[FI_PRESENT] = false;
+
 	//Check if the page is dirty
 	if ( rPage->flags[FI_DIRTY] ) {
 		cout << "Spilling frame " << rPage->frame << " containing a dirty page belonging to Process " << ownerid << endl;
@@ -94,7 +97,6 @@ void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
 
 		/* Spill old page */
 		rPage->flags[FI_DIRTY] = false;
-		rPage->flags[FI_PRESENT] = false;
 
 		/* Schedule the desired page to be read in after the
 		 * frame's current page is spilled. */

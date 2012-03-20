@@ -112,7 +112,7 @@ void cIOControl::tick() {
 		ctx = io_in.front();
 
 		if ( --(ctx->time) <= 0 ) {
-			cout << "***Pushing Process " << ctx->pid << " onto finished queue***" << endl;
+			cout << "***Pushing Process " << ctx->pid << " onto finished I/O queue***" << endl;
 			fprintf(logStream, "IO Control: I/O(input) finished for process %d\n", ctx->pid);
 
 			/* Do the funky bitshift to pack the <pid, frame> info */
