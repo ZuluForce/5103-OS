@@ -1,0 +1,19 @@
+111111
+4096:5:fifo:T1
+Process 0:
+Context Switches: 6
+Page Faults: 22
+Execution Time: 322
+
+Process 1:
+Context Switches: 6
+Page Faults: 3
+Execution Time: 43
+
+
+Global VMM info:
+Context Switches: 12
+Page Faults: 25
+Execution Time: 365
+Page In: 25
+Page Out: 9
