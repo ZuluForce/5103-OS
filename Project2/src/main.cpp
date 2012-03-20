@@ -209,6 +209,7 @@ int main(int argc, char** argv) {
 	INIReader* reader = new INIReader();
 	settings = reader;
 	setDefaults(settings); //Add static defaults
+	settings->addOverwriteException("Processes");
 
 	initLog(EXTRACTP(string, Results, trace).c_str());
 	logStream = getStream();
@@ -220,6 +221,7 @@ int main(int argc, char** argv) {
 
 	/* Parse all the given settings files into the reader */
 	for (; it != options->settingFiles.end(); ++it) {
+		cout << "Loading settings file: " << *it << endl;
 		reader->load_ini(*it);
 	}
 

@@ -4,6 +4,7 @@
 #include <stdlib.h>
 #include <string>
 #include <map>
+#include <vector>
 #include <iostream>
 #include <sstream>
 #include <fstream>
@@ -61,6 +62,8 @@ class INIReader {
         int put_pointer;    //Stream pointer to current put line
         int lineNumber;
 
+        bool overwriteMode;
+
         string ini_name;
         string currLine;   //Current line being read/parsed
         string currSection;     //Current section being parsed
@@ -79,6 +82,8 @@ class INIReader {
 
         DefaultKeyMap *def_temp_map;
 
+        vector<string> noOverwriteSection;
+
         //Loads the sections and (key,value) pairs from the ini file
         void parse_ini();
 
@@ -96,12 +101,14 @@ class INIReader {
     public:
         INIReader(/*Uint8 flags = 0x0000*/);
         INIReader(string filename /*, Uint8 flags = 0x0000 */);
-        bool load_ini(string filename, bool auto_parse = true);
+        bool load_ini(string filename, bool auto_parse = true, bool overwrite = true);
         bool loaded(); //True = there is a .ini loaded   False = none is loaded or there was an error loading one
         bool exists(const string& section, const string& key);
 
         /* Manipulators */
         void addDefault(const string& section, const string& key, const string& value);
+
+        void addOverwriteException(const string& section);
 
         //Returns true if the value was overriden. False if it doesn't exist.
         bool overWriteOp(const string& section, const string& key, const string& value);
@@ -119,6 +126,26 @@ T INIReader::extractValue(const string& section, const string& key) {
     stream >> out;
 
     return out;
+}
+
+/* Without the attribute the compiler thinks it is unused because it depends
+ * on the templated function findInVector being used with string& types.
+ */
+__attribute__((unused)) static bool strEq(const string& s1, const string& s2) {
+	if ( s1.compare(s2) == 0 ) return true;
+
+	return false;
+}
+
+template<class T>
+bool findInVector(vector<T>& vec, const T& item, bool (*comp_fn) (const T&,const T&)) {
+	typename std::vector<T>::iterator it;
+
+	for ( it = vec.begin(); it != vec.end(); ++it ) {
+		if ( comp_fn(*it, item) ) return true;
+	}
+
+	return false;
 }
 
 #endif // INIREADER_H_INCLUDED

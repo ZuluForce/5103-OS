@@ -1,7 +1,7 @@
 Virtual Counter: 0
-CPU: Opcode:R  Virtual-Address:0x100  PID:0
+CPU: Opcode:R  Virtual-Address:0x0  PID:0
 -*-Virtual Counter: 1-*-
-MMU: VPN=0  Offset=256
+MMU: VPN=0  Offset=0
 **Process 0 page faulted**
 PR_FIFO: Found Free Frame (0) for page
 -*-Virtual counter = 2-*-
@@ -13,9 +13,9 @@ Scheduler: Blocking process 0
 
 Switching out Process 0 for Process 1
 -*-Virtual Counter: 7-*-
-CPU: Opcode:R  Virtual-Address:0x100  PID:1
+CPU: Opcode:R  Virtual-Address:0x0  PID:1
 -*-Virtual Counter: 8-*-
-MMU: VPN=0  Offset=256
+MMU: VPN=0  Offset=0
 **Process 1 page faulted**
 PR_FIFO: Found Free Frame (1) for page
 -*-Virtual counter = 9-*-
@@ -25,656 +25,662 @@ Scheduling I/O (input) for process 1
 FA Policy: Pinning frame 1
 Scheduler: Blocking process 1
 
-Switching out Process 1 for Process 2
+-*-Virtual Counter: 10-*-
+-*-Virtual Counter: 11-*-
+-*-Virtual Counter: 12-*-
 IO Control: I/O(input) finished for process 0
--*-Virtual Counter: 14-*-
-CPU: Opcode:R  Virtual-Address:0x100  PID:2
--*-Virtual Counter: 15-*-
-MMU: VPN=0  Offset=256
-**Process 2 page faulted**
-PR_FIFO: Found Free Frame (2) for page
--*-Virtual counter = 16-*-
-Scheduling I/O (input) for process 2
-	Fetching Process' Page 0
-	I/O will complete when VC = 26
-FA Policy: Pinning frame 2
-Scheduler: Blocking process 2
-
 Scheduler: Unblocking process 0
 FA Policy: Unpinnig frame 0
-Switching out Process 2 for Process 3
+Switching out Process 1 for Process 0
+-*-Virtual Counter: 17-*-
+CPU: Opcode:R  Virtual-Address:0x0  PID:0
 IO Control: I/O(input) finished for process 1
--*-Virtual Counter: 21-*-
-CPU: Opcode:R  Virtual-Address:0x0  PID:3
--*-Virtual Counter: 22-*-
+-*-Virtual Counter: 18-*-
 MMU: VPN=0  Offset=0
-**Process 3 page faulted**
-PR_FIFO: Found Free Frame (3) for page
--*-Virtual counter = 23-*-
-Scheduling I/O (input) for process 3
-	Fetching Process' Page 0
-	I/O will complete when VC = 33
-FA Policy: Pinning frame 3
-Scheduler: Blocking process 3
+MMU: *TLB MISS* Found Frame=0  PA=0
+CPU: Opcode:W  Virtual-Address:0x20000  PID:0
+-*-Virtual Counter: 19-*-
+MMU: VPN=32  Offset=0
+**Process 0 page faulted**
+PR_FIFO: Found Free Frame (2) for page
+-*-Virtual counter = 20-*-
+Scheduling I/O (input) for process 0
+	Fetching Process' Page 32
+	I/O will complete when VC = 30
+FA Policy: Pinning frame 2
+Scheduler: Blocking process 0
 
 Scheduler: Unblocking process 1
 FA Policy: Unpinnig frame 1
-Switching out Process 3 for Process 4
-IO Control: I/O(input) finished for process 2
--*-Virtual Counter: 28-*-
-CPU: Opcode:R  Virtual-Address:0x100  PID:4
--*-Virtual Counter: 29-*-
-MMU: VPN=0  Offset=256
-**Process 4 page faulted**
-PR_FIFO: Found Free Frame (4) for page
--*-Virtual counter = 30-*-
-Scheduling I/O (input) for process 4
-	Fetching Process' Page 0
-	I/O will complete when VC = 40
-FA Policy: Pinning frame 4
-Scheduler: Blocking process 4
-
-Scheduler: Unblocking process 2
-FA Policy: Unpinnig frame 2
-Switching out Process 4 for Process 5
-IO Control: I/O(input) finished for process 3
--*-Virtual Counter: 35-*-
-CPU: Opcode:R  Virtual-Address:0x0  PID:5
--*-Virtual Counter: 36-*-
-MMU: VPN=0  Offset=0
-**Process 5 page faulted**
-PR_FIFO: Found Free Frame (5) for page
--*-Virtual counter = 37-*-
-Scheduling I/O (input) for process 5
-	Fetching Process' Page 0
-	I/O will complete when VC = 47
-FA Policy: Pinning frame 5
-Scheduler: Blocking process 5
-
-Scheduler: Unblocking process 3
-FA Policy: Unpinnig frame 3
-Switching out Process 5 for Process 6
-IO Control: I/O(input) finished for process 4
--*-Virtual Counter: 42-*-
-CPU: Opcode:R  Virtual-Address:0x0  PID:6
--*-Virtual Counter: 43-*-
-MMU: VPN=0  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (6) for page
--*-Virtual counter = 44-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 0
-	I/O will complete when VC = 54
-FA Policy: Pinning frame 6
-Scheduler: Blocking process 6
-
-Scheduler: Unblocking process 4
-FA Policy: Unpinnig frame 4
-Switching out Process 6 for Process 0
-IO Control: I/O(input) finished for process 5
--*-Virtual Counter: 49-*-
-CPU: Opcode:R  Virtual-Address:0x100  PID:0
--*-Virtual Counter: 50-*-
-MMU: VPN=0  Offset=256
-MMU: *TLB MISS* Found Frame=0  PA=256
-CPU: Opcode:W  Virtual-Address:0x250  PID:0
--*-Virtual Counter: 51-*-
-MMU: VPN=0  Offset=592
-MMU: *TLB HIT* Frame=0 PA=592
-CPU: Opcode:R  Virtual-Address:0x123895  PID:0
--*-Virtual Counter: 52-*-
-MMU: VPN=291  Offset=2197
-**Process 0 page faulted**
-PR_FIFO: Found Free Frame (7) for page
-IO Control: I/O(input) finished for process 6
--*-Virtual counter = 53-*-
-Scheduling I/O (input) for process 0
-	Fetching Process' Page 291
-	I/O will complete when VC = 63
-FA Policy: Pinning frame 7
-Scheduler: Blocking process 0
-
-Scheduler: Unblocking process 5
-FA Policy: Unpinnig frame 5
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 6
 Switching out Process 0 for Process 1
--*-Virtual Counter: 58-*-
-CPU: Opcode:R  Virtual-Address:0x100  PID:1
--*-Virtual Counter: 59-*-
-MMU: VPN=0  Offset=256
-MMU: *TLB MISS* Found Frame=1  PA=4352
-CPU: Opcode:W  Virtual-Address:0x250  PID:1
--*-Virtual Counter: 60-*-
-MMU: VPN=0  Offset=592
-MMU: *TLB HIT* Frame=1 PA=4688
-CPU: Opcode:R  Virtual-Address:0x123895  PID:1
--*-Virtual Counter: 61-*-
-MMU: VPN=291  Offset=2197
-**Process 1 page faulted**
-PR_FIFO: Found Free Frame (8) for page
--*-Virtual counter = 62-*-
-Scheduling I/O (input) for process 1
-	Fetching Process' Page 291
-	I/O will complete when VC = 72
-FA Policy: Pinning frame 8
-Scheduler: Blocking process 1
+-*-Virtual Counter: 25-*-
+CPU: Opcode:R  Virtual-Address:0x0  PID:1
+-*-Virtual Counter: 26-*-
+MMU: VPN=0  Offset=0
+MMU: *TLB MISS* Found Frame=1  PA=4096
+CPU: Opcode:R  Virtual-Address:0x150  PID:1
+-*-Virtual Counter: 27-*-
+MMU: VPN=0  Offset=336
+MMU: *TLB HIT* Frame=1 PA=4432
+CPU: Opcode:R  Virtual-Address:0x300  PID:1
+-*-Virtual Counter: 28-*-
+MMU: VPN=0  Offset=768
+MMU: *TLB HIT* Frame=1 PA=4864
 
-Switching out Process 1 for Process 2
+CPU: Opcode:R  Virtual-Address:0x450  PID:1
+-*-Virtual Counter: 29-*-
+MMU: VPN=0  Offset=1104
+MMU: *TLB HIT* Frame=1 PA=5200
+CPU: Opcode:R  Virtual-Address:0x600  PID:1
 IO Control: I/O(input) finished for process 0
--*-Virtual Counter: 67-*-
-CPU: Opcode:R  Virtual-Address:0x100  PID:2
--*-Virtual Counter: 68-*-
-MMU: VPN=0  Offset=256
-MMU: *TLB MISS* Found Frame=2  PA=8448
-CPU: Opcode:W  Virtual-Address:0x250  PID:2
--*-Virtual Counter: 69-*-
-MMU: VPN=0  Offset=592
-MMU: *TLB HIT* Frame=2 PA=8784
-CPU: Opcode:R  Virtual-Address:0x123895  PID:2
--*-Virtual Counter: 70-*-
-MMU: VPN=291  Offset=2197
-**Process 2 page faulted**
-PR_FIFO: Found Free Frame (9) for page
-IO Control: I/O(input) finished for process 1
--*-Virtual counter = 71-*-
-Scheduling I/O (input) for process 2
-	Fetching Process' Page 291
-	I/O will complete when VC = 81
-FA Policy: Pinning frame 9
-Scheduler: Blocking process 2
+-*-Virtual Counter: 30-*-
+MMU: VPN=0  Offset=1536
+MMU: *TLB HIT* Frame=1 PA=5632
+CPU: Opcode:R  Virtual-Address:0x750  PID:1
+-*-Virtual Counter: 31-*-
+MMU: VPN=0  Offset=1872
+MMU: *TLB HIT* Frame=1 PA=5968
 
 Scheduler: Unblocking process 0
-FA Policy: Unpinnig frame 7
-Scheduler: Unblocking process 1
-FA Policy: Unpinnig frame 8
-Switching out Process 2 for Process 3
--*-Virtual Counter: 76-*-
-CPU: Opcode:R  Virtual-Address:0x0  PID:3
--*-Virtual Counter: 77-*-
-MMU: VPN=0  Offset=0
-MMU: *TLB MISS* Found Frame=3  PA=12288
-CPU: Opcode:R  Virtual-Address:0x150  PID:3
--*-Virtual Counter: 78-*-
-MMU: VPN=0  Offset=336
-MMU: *TLB HIT* Frame=3 PA=12624
-CPU: Opcode:R  Virtual-Address:0x300  PID:3
--*-Virtual Counter: 79-*-
-MMU: VPN=0  Offset=768
-MMU: *TLB HIT* Frame=3 PA=13056
-
-Switching out Process 3 for Process 4
-IO Control: I/O(input) finished for process 2
--*-Virtual Counter: 84-*-
-CPU: Opcode:R  Virtual-Address:0x100  PID:4
--*-Virtual Counter: 85-*-
-MMU: VPN=0  Offset=256
-MMU: *TLB MISS* Found Frame=4  PA=16640
-CPU: Opcode:W  Virtual-Address:0x250  PID:4
--*-Virtual Counter: 86-*-
-MMU: VPN=0  Offset=592
-MMU: *TLB HIT* Frame=4 PA=16976
-CPU: Opcode:R  Virtual-Address:0x123895  PID:4
--*-Virtual Counter: 87-*-
-MMU: VPN=291  Offset=2197
-**Process 4 page faulted**
-PR_FIFO: Found Free Frame (10) for page
--*-Virtual counter = 88-*-
-Scheduling I/O (input) for process 4
-	Fetching Process' Page 291
-	I/O will complete when VC = 98
-FA Policy: Pinning frame 10
-Scheduler: Blocking process 4
-
-Scheduler: Unblocking process 2
-FA Policy: Unpinnig frame 9
-Switching out Process 4 for Process 5
--*-Virtual Counter: 93-*-
-CPU: Opcode:R  Virtual-Address:0x0  PID:5
--*-Virtual Counter: 94-*-
-MMU: VPN=0  Offset=0
-MMU: *TLB MISS* Found Frame=5  PA=20480
-CPU: Opcode:R  Virtual-Address:0x150  PID:5
--*-Virtual Counter: 95-*-
-MMU: VPN=0  Offset=336
-MMU: *TLB HIT* Frame=5 PA=20816
-CPU: Opcode:R  Virtual-Address:0x300  PID:5
--*-Virtual Counter: 96-*-
-MMU: VPN=0  Offset=768
-MMU: *TLB HIT* Frame=5 PA=21248
-
-Switching out Process 5 for Process 6
-IO Control: I/O(input) finished for process 4
--*-Virtual Counter: 101-*-
-CPU: Opcode:R  Virtual-Address:0x0  PID:6
--*-Virtual Counter: 102-*-
-MMU: VPN=0  Offset=0
-MMU: *TLB MISS* Found Frame=6  PA=24576
-CPU: Opcode:W  Virtual-Address:0x20000  PID:6
--*-Virtual Counter: 103-*-
+FA Policy: Unpinnig frame 2
+Switching out Process 1 for Process 0
+-*-Virtual Counter: 36-*-
+CPU: Opcode:W  Virtual-Address:0x20000  PID:0
+-*-Virtual Counter: 37-*-
 MMU: VPN=32  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (11) for page
--*-Virtual counter = 104-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 32
-	I/O will complete when VC = 114
-FA Policy: Pinning frame 11
-Scheduler: Blocking process 6
-
-Scheduler: Unblocking process 4
-FA Policy: Unpinnig frame 10
-Switching out Process 6 for Process 0
--*-Virtual Counter: 109-*-
-CPU: Opcode:R  Virtual-Address:0x123895  PID:0
--*-Virtual Counter: 110-*-
-MMU: VPN=291  Offset=2197
-MMU: *TLB MISS* Found Frame=7  PA=30869
-Process 0 terminated
-Freed 2 frames that the terminating process was using
+MMU: *TLB MISS* Found Frame=2  PA=8192
+CPU: Opcode:R  Virtual-Address:0x1000  PID:0
+-*-Virtual Counter: 38-*-
+MMU: VPN=1  Offset=0
+**Process 0 page faulted**
+PR_FIFO: Found Free Frame (3) for page
+-*-Virtual counter = 39-*-
+Scheduling I/O (input) for process 0
+	Fetching Process' Page 1
+	I/O will complete when VC = 49
+FA Policy: Pinning frame 3
+Scheduler: Blocking process 0
 
 Switching out Process 0 for Process 1
-IO Control: I/O(input) finished for process 6
+-*-Virtual Counter: 44-*-
+CPU: Opcode:W  Virtual-Address:0x0  PID:1
+-*-Virtual Counter: 45-*-
+MMU: VPN=0  Offset=0
+MMU: *TLB MISS* Found Frame=1  PA=4096
+CPU: Opcode:W  Virtual-Address:0x150  PID:1
+-*-Virtual Counter: 46-*-
+MMU: VPN=0  Offset=336
+MMU: *TLB HIT* Frame=1 PA=4432
+CPU: Opcode:W  Virtual-Address:0x300  PID:1
+-*-Virtual Counter: 47-*-
+MMU: VPN=0  Offset=768
+MMU: *TLB HIT* Frame=1 PA=4864
+
+CPU: Opcode:W  Virtual-Address:0x450  PID:1
+-*-Virtual Counter: 48-*-
+MMU: VPN=0  Offset=1104
+MMU: *TLB HIT* Frame=1 PA=5200
+CPU: Opcode:W  Virtual-Address:0x600  PID:1
+IO Control: I/O(input) finished for process 0
+-*-Virtual Counter: 49-*-
+MMU: VPN=0  Offset=1536
+MMU: *TLB HIT* Frame=1 PA=5632
+CPU: Opcode:W  Virtual-Address:0x750  PID:1
+-*-Virtual Counter: 50-*-
+MMU: VPN=0  Offset=1872
+MMU: *TLB HIT* Frame=1 PA=5968
+
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 3
+Switching out Process 1 for Process 0
+-*-Virtual Counter: 55-*-
+CPU: Opcode:R  Virtual-Address:0x1000  PID:0
+-*-Virtual Counter: 56-*-
+MMU: VPN=1  Offset=0
+MMU: *TLB MISS* Found Frame=3  PA=12288
+CPU: Opcode:W  Virtual-Address:0x21000  PID:0
+-*-Virtual Counter: 57-*-
+MMU: VPN=33  Offset=0
+**Process 0 page faulted**
+PR_FIFO: Found Free Frame (4) for page
+-*-Virtual counter = 58-*-
+Scheduling I/O (input) for process 0
+	Fetching Process' Page 33
+	I/O will complete when VC = 68
+FA Policy: Pinning frame 4
+Scheduler: Blocking process 0
+
+Switching out Process 0 for Process 1
+-*-Virtual Counter: 63-*-
+CPU: Opcode:R  Virtual-Address:0x2000  PID:1
+-*-Virtual Counter: 64-*-
+MMU: VPN=2  Offset=0
+**Process 1 page faulted**
+FA Policy: Pinning frame 0
+PR_FIFO: Found non-dirty page frame 0
+-*-Virtual counter = 65-*-
+Scheduling I/O (input) for process 1
+	Fetching Process' Page 2
+	I/O will complete when VC = 75
+Scheduler: Blocking process 1
+
+-*-Virtual Counter: 66-*-
+-*-Virtual Counter: 67-*-
+-*-Virtual Counter: 68-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 4
+Switching out Process 1 for Process 0
+-*-Virtual Counter: 73-*-
+CPU: Opcode:W  Virtual-Address:0x21000  PID:0
+IO Control: I/O(input) finished for process 1
+-*-Virtual Counter: 74-*-
+MMU: VPN=33  Offset=0
+MMU: *TLB MISS* Found Frame=4  PA=16384
+CPU: Opcode:R  Virtual-Address:0x2000  PID:0
+-*-Virtual Counter: 75-*-
+MMU: VPN=2  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 1
+PR_FIFO: Spilling frame 1 contianing a dirty page belonging to Process 1
+-*-Virtual counter = 76-*-
+Added I/O (input) to wait queue for process 0
+-*-Virtual counter = 77-*-
+Scheduling I/O (output)
+	Moving process 1's page 1 out
+	I/O will complete when VC = 87
+Scheduler: Blocking process 0
+
+Scheduler: Unblocking process 1
+FA Policy: Unpinnig frame 0
+Switching out Process 0 for Process 1
+-*-Virtual Counter: 82-*-
+CPU: Opcode:R  Virtual-Address:0x2000  PID:1
+-*-Virtual Counter: 83-*-
+MMU: VPN=2  Offset=0
+MMU: *TLB MISS* Found Frame=0  PA=0
+CPU: Opcode:R  Virtual-Address:0x2150  PID:1
+-*-Virtual Counter: 84-*-
+MMU: VPN=2  Offset=336
+MMU: *TLB HIT* Frame=0 PA=336
+CPU: Opcode:R  Virtual-Address:0x2300  PID:1
+-*-Virtual Counter: 85-*-
+MMU: VPN=2  Offset=768
+MMU: *TLB HIT* Frame=0 PA=768
+
+CPU: Opcode:R  Virtual-Address:0x2450  PID:1
+-*-Virtual Counter: 86-*-
+MMU: VPN=2  Offset=1104
+MMU: *TLB HIT* Frame=0 PA=1104
+CPU: Opcode:R  Virtual-Address:0x2600  PID:1
+IO Control: I/O (output) finished
+IO Control: Adding Process 0 to io_in queue from io_in_wait
+	I/O will complete when VC = 97
+-*-Virtual Counter: 87-*-
+MMU: VPN=2  Offset=1536
+MMU: *TLB HIT* Frame=0 PA=1536
+CPU: Opcode:R  Virtual-Address:0x2750  PID:1
+-*-Virtual Counter: 88-*-
+MMU: VPN=2  Offset=1872
+MMU: *TLB HIT* Frame=0 PA=1872
+
+CPU: Opcode:W  Virtual-Address:0x2000  PID:1
+-*-Virtual Counter: 89-*-
+MMU: VPN=2  Offset=0
+MMU: *TLB HIT* Frame=0 PA=0
+CPU: Opcode:W  Virtual-Address:0x2150  PID:1
+-*-Virtual Counter: 90-*-
+MMU: VPN=2  Offset=336
+MMU: *TLB HIT* Frame=0 PA=336
+CPU: Opcode:W  Virtual-Address:0x2300  PID:1
+-*-Virtual Counter: 91-*-
+MMU: VPN=2  Offset=768
+MMU: *TLB HIT* Frame=0 PA=768
+
+CPU: Opcode:W  Virtual-Address:0x2450  PID:1
+-*-Virtual Counter: 92-*-
+MMU: VPN=2  Offset=1104
+MMU: *TLB HIT* Frame=0 PA=1104
+CPU: Opcode:W  Virtual-Address:0x2600  PID:1
+-*-Virtual Counter: 93-*-
+MMU: VPN=2  Offset=1536
+MMU: *TLB HIT* Frame=0 PA=1536
+CPU: Opcode:W  Virtual-Address:0x275001  PID:1
+-*-Virtual Counter: 94-*-
+MMU: VPN=629  Offset=1
+**Process 1 page faulted**
+FA Policy: Pinning frame 2
+PR_FIFO: Spilling frame 2 contianing a dirty page belonging to Process 0
+-*-Virtual counter = 95-*-
+Added I/O (input) to wait queue for process 1
+IO Control: I/O(input) finished for process 0
+-*-Virtual counter = 96-*-
+Scheduling I/O (output)
+	Moving process 0's page 2 out
+	I/O will complete when VC = 106
+Scheduler: Blocking process 1
+
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 1
+Switching out Process 1 for Process 0
+-*-Virtual Counter: 101-*-
+CPU: Opcode:R  Virtual-Address:0x2000  PID:0
+-*-Virtual Counter: 102-*-
+MMU: VPN=2  Offset=0
+MMU: *TLB MISS* Found Frame=1  PA=4096
+CPU: Opcode:W  Virtual-Address:0x22000  PID:0
+-*-Virtual Counter: 103-*-
+MMU: VPN=34  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 3
+PR_FIFO: Found non-dirty page frame 3
+-*-Virtual counter = 104-*-
+Scheduling I/O (input) for process 0
+	Fetching Process' Page 34
+	I/O will complete when VC = 114
+Scheduler: Blocking process 0
+
+-*-Virtual Counter: 105-*-
+-*-Virtual Counter: 106-*-
+IO Control: I/O (output) finished
+IO Control: Adding Process 1 to io_in queue from io_in_wait
+	I/O will complete when VC = 116
+-*-Virtual Counter: 107-*-
+-*-Virtual Counter: 108-*-
+-*-Virtual Counter: 109-*-
+-*-Virtual Counter: 110-*-
+-*-Virtual Counter: 111-*-
+-*-Virtual Counter: 112-*-
+-*-Virtual Counter: 113-*-
+-*-Virtual Counter: 114-*-
+IO Control: I/O(input) finished for process 0
+IO Control: I/O(input) finished for process 1
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 3
+Scheduler: Unblocking process 1
+FA Policy: Unpinnig frame 2
+CPU: Opcode:W  Virtual-Address:0x22000  PID:0
 -*-Virtual Counter: 115-*-
-CPU: Opcode:R  Virtual-Address:0x123895  PID:1
+MMU: VPN=34  Offset=0
+MMU: *TLB MISS* Found Frame=3  PA=12288
+CPU: Opcode:R  Virtual-Address:0x3000  PID:0
 -*-Virtual Counter: 116-*-
-MMU: VPN=291  Offset=2197
-MMU: *TLB MISS* Found Frame=8  PA=34965
+MMU: VPN=3  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 4
+PR_FIFO: Spilling frame 4 contianing a dirty page belonging to Process 0
+-*-Virtual counter = 117-*-
+Added I/O (input) to wait queue for process 0
+-*-Virtual counter = 118-*-
+Scheduling I/O (output)
+	Moving process 0's page 4 out
+	I/O will complete when VC = 128
+Scheduler: Blocking process 0
+
+Switching out Process 0 for Process 1
+-*-Virtual Counter: 123-*-
+CPU: Opcode:W  Virtual-Address:0x275001  PID:1
+-*-Virtual Counter: 124-*-
+MMU: VPN=629  Offset=1
+MMU: *TLB MISS* Found Frame=2  PA=8193
 Process 1 terminated
 Freed 2 frames that the terminating process was using
 
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 11
-Switching out Process 1 for Process 3
--*-Virtual Counter: 121-*-
-CPU: Opcode:R  Virtual-Address:0x450  PID:3
--*-Virtual Counter: 122-*-
-MMU: VPN=0  Offset=1104
-MMU: *TLB MISS* Found Frame=3  PA=13392
-CPU: Opcode:R  Virtual-Address:0x600  PID:3
--*-Virtual Counter: 123-*-
-MMU: VPN=0  Offset=1536
-MMU: *TLB HIT* Frame=3 PA=13824
-CPU: Opcode:R  Virtual-Address:0x750  PID:3
--*-Virtual Counter: 124-*-
-MMU: VPN=0  Offset=1872
-MMU: *TLB HIT* Frame=3 PA=14160
-
-Switching out Process 3 for Process 2
+-*-Virtual Counter: 125-*-
+-*-Virtual Counter: 126-*-
+-*-Virtual Counter: 127-*-
+-*-Virtual Counter: 128-*-
+IO Control: I/O (output) finished
+IO Control: Adding Process 0 to io_in queue from io_in_wait
+	I/O will complete when VC = 138
 -*-Virtual Counter: 129-*-
-CPU: Opcode:R  Virtual-Address:0x123895  PID:2
 -*-Virtual Counter: 130-*-
-MMU: VPN=291  Offset=2197
-MMU: *TLB MISS* Found Frame=9  PA=39061
-Process 2 terminated
-Freed 2 frames that the terminating process was using
-
-Switching out Process 2 for Process 5
+-*-Virtual Counter: 131-*-
+-*-Virtual Counter: 132-*-
+-*-Virtual Counter: 133-*-
+-*-Virtual Counter: 134-*-
 -*-Virtual Counter: 135-*-
-CPU: Opcode:R  Virtual-Address:0x450  PID:5
 -*-Virtual Counter: 136-*-
-MMU: VPN=0  Offset=1104
-MMU: *TLB MISS* Found Frame=5  PA=21584
-CPU: Opcode:R  Virtual-Address:0x600  PID:5
 -*-Virtual Counter: 137-*-
-MMU: VPN=0  Offset=1536
-MMU: *TLB HIT* Frame=5 PA=22016
-CPU: Opcode:R  Virtual-Address:0x750  PID:5
--*-Virtual Counter: 138-*-
-MMU: VPN=0  Offset=1872
-MMU: *TLB HIT* Frame=5 PA=22352
-
-Switching out Process 5 for Process 4
--*-Virtual Counter: 143-*-
-CPU: Opcode:R  Virtual-Address:0x123895  PID:4
--*-Virtual Counter: 144-*-
-MMU: VPN=291  Offset=2197
-MMU: *TLB MISS* Found Frame=10  PA=43157
-Process 4 terminated
-Freed 2 frames that the terminating process was using
-
-Switching out Process 4 for Process 6
--*-Virtual Counter: 149-*-
-CPU: Opcode:W  Virtual-Address:0x20000  PID:6
--*-Virtual Counter: 150-*-
-MMU: VPN=32  Offset=0
-MMU: *TLB MISS* Found Frame=11  PA=45056
-CPU: Opcode:R  Virtual-Address:0x1000  PID:6
--*-Virtual Counter: 151-*-
-MMU: VPN=1  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (0) for page
--*-Virtual counter = 152-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 1
-	I/O will complete when VC = 162
-FA Policy: Pinning frame 0
-Scheduler: Blocking process 6
-
-Switching out Process 6 for Process 3
--*-Virtual Counter: 157-*-
-CPU: Opcode:W  Virtual-Address:0x0  PID:3
--*-Virtual Counter: 158-*-
-MMU: VPN=0  Offset=0
-MMU: *TLB MISS* Found Frame=3  PA=12288
-CPU: Opcode:W  Virtual-Address:0x150  PID:3
--*-Virtual Counter: 159-*-
-MMU: VPN=0  Offset=336
-MMU: *TLB HIT* Frame=3 PA=12624
-CPU: Opcode:W  Virtual-Address:0x300  PID:3
--*-Virtual Counter: 160-*-
-MMU: VPN=0  Offset=768
-MMU: *TLB HIT* Frame=3 PA=13056
-
-Switching out Process 3 for Process 5
-IO Control: I/O(input) finished for process 6
--*-Virtual Counter: 165-*-
-CPU: Opcode:W  Virtual-Address:0x0  PID:5
--*-Virtual Counter: 166-*-
-MMU: VPN=0  Offset=0
-MMU: *TLB MISS* Found Frame=5  PA=20480
-CPU: Opcode:W  Virtual-Address:0x150  PID:5
--*-Virtual Counter: 167-*-
-MMU: VPN=0  Offset=336
-MMU: *TLB HIT* Frame=5 PA=20816
-CPU: Opcode:W  Virtual-Address:0x300  PID:5
--*-Virtual Counter: 168-*-
-MMU: VPN=0  Offset=768
-MMU: *TLB HIT* Frame=5 PA=21248
-
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 0
-Switching out Process 5 for Process 3
--*-Virtual Counter: 173-*-
-CPU: Opcode:W  Virtual-Address:0x450  PID:3
--*-Virtual Counter: 174-*-
-MMU: VPN=0  Offset=1104
-MMU: *TLB MISS* Found Frame=3  PA=13392
-CPU: Opcode:W  Virtual-Address:0x600  PID:3
--*-Virtual Counter: 175-*-
-MMU: VPN=0  Offset=1536
-MMU: *TLB HIT* Frame=3 PA=13824
-CPU: Opcode:W  Virtual-Address:0x750  PID:3
--*-Virtual Counter: 176-*-
-MMU: VPN=0  Offset=1872
-MMU: *TLB HIT* Frame=3 PA=14160
-
-Switching out Process 3 for Process 6
--*-Virtual Counter: 181-*-
-CPU: Opcode:R  Virtual-Address:0x1000  PID:6
--*-Virtual Counter: 182-*-
-MMU: VPN=1  Offset=0
-MMU: *TLB MISS* Found Frame=0  PA=0
-CPU: Opcode:W  Virtual-Address:0x21000  PID:6
--*-Virtual Counter: 183-*-
-MMU: VPN=33  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (1) for page
--*-Virtual counter = 184-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 33
-	I/O will complete when VC = 194
-FA Policy: Pinning frame 1
-Scheduler: Blocking process 6
-
-Switching out Process 6 for Process 5
--*-Virtual Counter: 189-*-
-CPU: Opcode:W  Virtual-Address:0x450  PID:5
--*-Virtual Counter: 190-*-
-MMU: VPN=0  Offset=1104
-MMU: *TLB MISS* Found Frame=5  PA=21584
-CPU: Opcode:W  Virtual-Address:0x600  PID:5
--*-Virtual Counter: 191-*-
-MMU: VPN=0  Offset=1536
-MMU: *TLB HIT* Frame=5 PA=22016
-CPU: Opcode:W  Virtual-Address:0x750  PID:5
--*-Virtual Counter: 192-*-
-MMU: VPN=0  Offset=1872
-MMU: *TLB HIT* Frame=5 PA=22352
-
-Switching out Process 5 for Process 3
-IO Control: I/O(input) finished for process 6
--*-Virtual Counter: 197-*-
-CPU: Opcode:R  Virtual-Address:0x2000  PID:3
--*-Virtual Counter: 198-*-
-MMU: VPN=2  Offset=0
-**Process 3 page faulted**
-PR_FIFO: Found Free Frame (2) for page
--*-Virtual counter = 199-*-
-Scheduling I/O (input) for process 3
-	Fetching Process' Page 2
-	I/O will complete when VC = 209
-FA Policy: Pinning frame 2
-Scheduler: Blocking process 3
-
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 1
-Switching out Process 3 for Process 5
--*-Virtual Counter: 204-*-
-CPU: Opcode:R  Virtual-Address:0x2000  PID:5
--*-Virtual Counter: 205-*-
-MMU: VPN=2  Offset=0
-**Process 5 page faulted**
-PR_FIFO: Found Free Frame (4) for page
--*-Virtual counter = 206-*-
-Scheduling I/O (input) for process 5
-	Fetching Process' Page 2
-	I/O will complete when VC = 216
-FA Policy: Pinning frame 4
-Scheduler: Blocking process 5
-
-Switching out Process 5 for Process 6
-IO Control: I/O(input) finished for process 3
--*-Virtual Counter: 211-*-
-CPU: Opcode:W  Virtual-Address:0x21000  PID:6
--*-Virtual Counter: 212-*-
-MMU: VPN=33  Offset=0
-MMU: *TLB MISS* Found Frame=1  PA=4096
-CPU: Opcode:R  Virtual-Address:0x2000  PID:6
--*-Virtual Counter: 213-*-
-MMU: VPN=2  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (7) for page
--*-Virtual counter = 214-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 2
-	I/O will complete when VC = 224
-FA Policy: Pinning frame 7
-Scheduler: Blocking process 6
-
-Scheduler: Unblocking process 3
-FA Policy: Unpinnig frame 2
-Switching out Process 6 for Process 3
-IO Control: I/O(input) finished for process 5
--*-Virtual Counter: 219-*-
-CPU: Opcode:R  Virtual-Address:0x2000  PID:3
--*-Virtual Counter: 220-*-
-MMU: VPN=2  Offset=0
-MMU: *TLB MISS* Found Frame=2  PA=8192
-CPU: Opcode:R  Virtual-Address:0x2150  PID:3
--*-Virtual Counter: 221-*-
-MMU: VPN=2  Offset=336
-MMU: *TLB HIT* Frame=2 PA=8528
-CPU: Opcode:R  Virtual-Address:0x2300  PID:3
--*-Virtual Counter: 222-*-
-MMU: VPN=2  Offset=768
-MMU: *TLB HIT* Frame=2 PA=8960
-
-Scheduler: Unblocking process 5
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
 FA Policy: Unpinnig frame 4
-Switching out Process 3 for Process 5
-IO Control: I/O(input) finished for process 6
--*-Virtual Counter: 227-*-
-CPU: Opcode:R  Virtual-Address:0x2000  PID:5
--*-Virtual Counter: 228-*-
-MMU: VPN=2  Offset=0
-MMU: *TLB MISS* Found Frame=4  PA=16384
-CPU: Opcode:R  Virtual-Address:0x2150  PID:5
--*-Virtual Counter: 229-*-
-MMU: VPN=2  Offset=336
-MMU: *TLB HIT* Frame=4 PA=16720
-CPU: Opcode:R  Virtual-Address:0x2300  PID:5
--*-Virtual Counter: 230-*-
-MMU: VPN=2  Offset=768
-MMU: *TLB HIT* Frame=4 PA=17152
-
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 7
-Switching out Process 5 for Process 3
--*-Virtual Counter: 235-*-
-CPU: Opcode:R  Virtual-Address:0x2450  PID:3
--*-Virtual Counter: 236-*-
-MMU: VPN=2  Offset=1104
-MMU: *TLB MISS* Found Frame=2  PA=9296
-CPU: Opcode:R  Virtual-Address:0x2600  PID:3
--*-Virtual Counter: 237-*-
-MMU: VPN=2  Offset=1536
-MMU: *TLB HIT* Frame=2 PA=9728
-CPU: Opcode:R  Virtual-Address:0x2750  PID:3
--*-Virtual Counter: 238-*-
-MMU: VPN=2  Offset=1872
-MMU: *TLB HIT* Frame=2 PA=10064
-
-Switching out Process 3 for Process 6
--*-Virtual Counter: 243-*-
-CPU: Opcode:R  Virtual-Address:0x2000  PID:6
--*-Virtual Counter: 244-*-
-MMU: VPN=2  Offset=0
-MMU: *TLB MISS* Found Frame=7  PA=28672
-CPU: Opcode:W  Virtual-Address:0x22000  PID:6
--*-Virtual Counter: 245-*-
-MMU: VPN=34  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (8) for page
--*-Virtual counter = 246-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 34
-	I/O will complete when VC = 256
-FA Policy: Pinning frame 8
-Scheduler: Blocking process 6
-
-Switching out Process 6 for Process 5
--*-Virtual Counter: 251-*-
-CPU: Opcode:R  Virtual-Address:0x2450  PID:5
--*-Virtual Counter: 252-*-
-MMU: VPN=2  Offset=1104
-MMU: *TLB MISS* Found Frame=4  PA=17488
-CPU: Opcode:R  Virtual-Address:0x2600  PID:5
--*-Virtual Counter: 253-*-
-MMU: VPN=2  Offset=1536
-MMU: *TLB HIT* Frame=4 PA=17920
-CPU: Opcode:R  Virtual-Address:0x2750  PID:5
--*-Virtual Counter: 254-*-
-MMU: VPN=2  Offset=1872
-MMU: *TLB HIT* Frame=4 PA=18256
-
-Switching out Process 5 for Process 3
-IO Control: I/O(input) finished for process 6
--*-Virtual Counter: 259-*-
-CPU: Opcode:W  Virtual-Address:0x2000  PID:3
--*-Virtual Counter: 260-*-
-MMU: VPN=2  Offset=0
-MMU: *TLB MISS* Found Frame=2  PA=8192
-CPU: Opcode:W  Virtual-Address:0x2150  PID:3
--*-Virtual Counter: 261-*-
-MMU: VPN=2  Offset=336
-MMU: *TLB HIT* Frame=2 PA=8528
-CPU: Opcode:W  Virtual-Address:0x2300  PID:3
--*-Virtual Counter: 262-*-
-MMU: VPN=2  Offset=768
-MMU: *TLB HIT* Frame=2 PA=8960
-
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 8
-Switching out Process 3 for Process 5
--*-Virtual Counter: 267-*-
-CPU: Opcode:W  Virtual-Address:0x2000  PID:5
--*-Virtual Counter: 268-*-
-MMU: VPN=2  Offset=0
-MMU: *TLB MISS* Found Frame=4  PA=16384
-CPU: Opcode:W  Virtual-Address:0x2150  PID:5
--*-Virtual Counter: 269-*-
-MMU: VPN=2  Offset=336
-MMU: *TLB HIT* Frame=4 PA=16720
-CPU: Opcode:W  Virtual-Address:0x2300  PID:5
--*-Virtual Counter: 270-*-
-MMU: VPN=2  Offset=768
-MMU: *TLB HIT* Frame=4 PA=17152
-
-Switching out Process 5 for Process 6
--*-Virtual Counter: 275-*-
-CPU: Opcode:W  Virtual-Address:0x22000  PID:6
--*-Virtual Counter: 276-*-
-MMU: VPN=34  Offset=0
-MMU: *TLB MISS* Found Frame=8  PA=32768
-CPU: Opcode:R  Virtual-Address:0x3000  PID:6
--*-Virtual Counter: 277-*-
+Switching out Process 1 for Process 0
+-*-Virtual Counter: 142-*-
+CPU: Opcode:R  Virtual-Address:0x3000  PID:0
+-*-Virtual Counter: 143-*-
 MMU: VPN=3  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (9) for page
--*-Virtual counter = 278-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 3
-	I/O will complete when VC = 288
-FA Policy: Pinning frame 9
-Scheduler: Blocking process 6
-
-Switching out Process 6 for Process 3
--*-Virtual Counter: 283-*-
-CPU: Opcode:W  Virtual-Address:0x2450  PID:3
--*-Virtual Counter: 284-*-
-MMU: VPN=2  Offset=1104
-MMU: *TLB MISS* Found Frame=2  PA=9296
-CPU: Opcode:W  Virtual-Address:0x2600  PID:3
--*-Virtual Counter: 285-*-
-MMU: VPN=2  Offset=1536
-MMU: *TLB HIT* Frame=2 PA=9728
-CPU: Opcode:W  Virtual-Address:0x2750  PID:3
--*-Virtual Counter: 286-*-
-MMU: VPN=2  Offset=1872
-MMU: *TLB HIT* Frame=2 PA=10064
-Process 3 terminated
-Freed 2 frames that the terminating process was using
-
-Switching out Process 3 for Process 5
-IO Control: I/O(input) finished for process 6
--*-Virtual Counter: 291-*-
-CPU: Opcode:W  Virtual-Address:0x2450  PID:5
--*-Virtual Counter: 292-*-
-MMU: VPN=2  Offset=1104
-MMU: *TLB MISS* Found Frame=4  PA=17488
-CPU: Opcode:W  Virtual-Address:0x2600  PID:5
--*-Virtual Counter: 293-*-
-MMU: VPN=2  Offset=1536
-MMU: *TLB HIT* Frame=4 PA=17920
-CPU: Opcode:W  Virtual-Address:0x2750  PID:5
--*-Virtual Counter: 294-*-
-MMU: VPN=2  Offset=1872
-MMU: *TLB HIT* Frame=4 PA=18256
-Process 5 terminated
-Freed 2 frames that the terminating process was using
-
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 9
-Switching out Process 5 for Process 6
--*-Virtual Counter: 299-*-
-CPU: Opcode:R  Virtual-Address:0x3000  PID:6
--*-Virtual Counter: 300-*-
-MMU: VPN=3  Offset=0
-MMU: *TLB MISS* Found Frame=9  PA=36864
-CPU: Opcode:W  Virtual-Address:0x23000  PID:6
--*-Virtual Counter: 301-*-
+MMU: *TLB MISS* Found Frame=4  PA=16384
+CPU: Opcode:W  Virtual-Address:0x23000  PID:0
+-*-Virtual Counter: 144-*-
 MMU: VPN=35  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (2) for page
--*-Virtual counter = 302-*-
-Scheduling I/O (input) for process 6
+**Process 0 page faulted**
+PR_FIFO: Found Free Frame (0) for page
+-*-Virtual counter = 145-*-
+Scheduling I/O (input) for process 0
 	Fetching Process' Page 35
-	I/O will complete when VC = 312
-FA Policy: Pinning frame 2
-Scheduler: Blocking process 6
+	I/O will complete when VC = 155
+FA Policy: Pinning frame 0
+Scheduler: Blocking process 0
 
+-*-Virtual Counter: 146-*-
+-*-Virtual Counter: 147-*-
+-*-Virtual Counter: 148-*-
+-*-Virtual Counter: 149-*-
+-*-Virtual Counter: 150-*-
+-*-Virtual Counter: 151-*-
+-*-Virtual Counter: 152-*-
+-*-Virtual Counter: 153-*-
+-*-Virtual Counter: 154-*-
+-*-Virtual Counter: 155-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 0
+CPU: Opcode:W  Virtual-Address:0x23000  PID:0
+-*-Virtual Counter: 156-*-
+MMU: VPN=35  Offset=0
+MMU: *TLB MISS* Found Frame=0  PA=0
+CPU: Opcode:R  Virtual-Address:0x4000  PID:0
+-*-Virtual Counter: 157-*-
+MMU: VPN=4  Offset=0
+**Process 0 page faulted**
+PR_FIFO: Found Free Frame (2) for page
+-*-Virtual counter = 158-*-
+Scheduling I/O (input) for process 0
+	Fetching Process' Page 4
+	I/O will complete when VC = 168
+FA Policy: Pinning frame 2
+Scheduler: Blocking process 0
+
+-*-Virtual Counter: 159-*-
+-*-Virtual Counter: 160-*-
+-*-Virtual Counter: 161-*-
+-*-Virtual Counter: 162-*-
+-*-Virtual Counter: 163-*-
+-*-Virtual Counter: 164-*-
+-*-Virtual Counter: 165-*-
+-*-Virtual Counter: 166-*-
+-*-Virtual Counter: 167-*-
+-*-Virtual Counter: 168-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 2
+CPU: Opcode:R  Virtual-Address:0x4000  PID:0
+-*-Virtual Counter: 169-*-
+MMU: VPN=4  Offset=0
+MMU: *TLB MISS* Found Frame=2  PA=8192
+CPU: Opcode:W  Virtual-Address:0x24000  PID:0
+-*-Virtual Counter: 170-*-
+MMU: VPN=36  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 1
+PR_FIFO: Found non-dirty page frame 1
+-*-Virtual counter = 171-*-
+Scheduling I/O (input) for process 0
+	Fetching Process' Page 36
+	I/O will complete when VC = 181
+Scheduler: Blocking process 0
+
+-*-Virtual Counter: 172-*-
+-*-Virtual Counter: 173-*-
+-*-Virtual Counter: 174-*-
+-*-Virtual Counter: 175-*-
+-*-Virtual Counter: 176-*-
+-*-Virtual Counter: 177-*-
+-*-Virtual Counter: 178-*-
+-*-Virtual Counter: 179-*-
+-*-Virtual Counter: 180-*-
+-*-Virtual Counter: 181-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 1
+CPU: Opcode:W  Virtual-Address:0x24000  PID:0
+-*-Virtual Counter: 182-*-
+MMU: VPN=36  Offset=0
+MMU: *TLB MISS* Found Frame=1  PA=4096
+CPU: Opcode:R  Virtual-Address:0x5000  PID:0
+-*-Virtual Counter: 183-*-
+MMU: VPN=5  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 3
+PR_FIFO: Spilling frame 3 contianing a dirty page belonging to Process 0
+-*-Virtual counter = 184-*-
+Added I/O (input) to wait queue for process 0
+-*-Virtual counter = 185-*-
+Scheduling I/O (output)
+	Moving process 0's page 3 out
+	I/O will complete when VC = 195
+Scheduler: Blocking process 0
+
+-*-Virtual Counter: 186-*-
+-*-Virtual Counter: 187-*-
+-*-Virtual Counter: 188-*-
+-*-Virtual Counter: 189-*-
+-*-Virtual Counter: 190-*-
+-*-Virtual Counter: 191-*-
+-*-Virtual Counter: 192-*-
+-*-Virtual Counter: 193-*-
+-*-Virtual Counter: 194-*-
+-*-Virtual Counter: 195-*-
+IO Control: I/O (output) finished
+IO Control: Adding Process 0 to io_in queue from io_in_wait
+	I/O will complete when VC = 205
+-*-Virtual Counter: 196-*-
+-*-Virtual Counter: 197-*-
+-*-Virtual Counter: 198-*-
+-*-Virtual Counter: 199-*-
+-*-Virtual Counter: 200-*-
+-*-Virtual Counter: 201-*-
+-*-Virtual Counter: 202-*-
+-*-Virtual Counter: 203-*-
+-*-Virtual Counter: 204-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 3
+CPU: Opcode:R  Virtual-Address:0x5000  PID:0
+-*-Virtual Counter: 205-*-
+MMU: VPN=5  Offset=0
+MMU: *TLB MISS* Found Frame=3  PA=12288
+CPU: Opcode:W  Virtual-Address:0x25000  PID:0
+-*-Virtual Counter: 206-*-
+MMU: VPN=37  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 4
+PR_FIFO: Found non-dirty page frame 4
+-*-Virtual counter = 207-*-
+Scheduling I/O (input) for process 0
+	Fetching Process' Page 37
+	I/O will complete when VC = 217
+Scheduler: Blocking process 0
+
+-*-Virtual Counter: 208-*-
+-*-Virtual Counter: 209-*-
+-*-Virtual Counter: 210-*-
+-*-Virtual Counter: 211-*-
+-*-Virtual Counter: 212-*-
+-*-Virtual Counter: 213-*-
+-*-Virtual Counter: 214-*-
+-*-Virtual Counter: 215-*-
+-*-Virtual Counter: 216-*-
+-*-Virtual Counter: 217-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 4
+CPU: Opcode:W  Virtual-Address:0x25000  PID:0
+-*-Virtual Counter: 218-*-
+MMU: VPN=37  Offset=0
+MMU: *TLB MISS* Found Frame=4  PA=16384
+CPU: Opcode:R  Virtual-Address:0x6000  PID:0
+-*-Virtual Counter: 219-*-
+MMU: VPN=6  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 0
+PR_FIFO: Spilling frame 0 contianing a dirty page belonging to Process 0
+-*-Virtual counter = 220-*-
+Added I/O (input) to wait queue for process 0
+-*-Virtual counter = 221-*-
+Scheduling I/O (output)
+	Moving process 0's page 0 out
+	I/O will complete when VC = 231
+Scheduler: Blocking process 0
+
+-*-Virtual Counter: 222-*-
+-*-Virtual Counter: 223-*-
+-*-Virtual Counter: 224-*-
+-*-Virtual Counter: 225-*-
+-*-Virtual Counter: 226-*-
+-*-Virtual Counter: 227-*-
+-*-Virtual Counter: 228-*-
+-*-Virtual Counter: 229-*-
+-*-Virtual Counter: 230-*-
+-*-Virtual Counter: 231-*-
+IO Control: I/O (output) finished
+IO Control: Adding Process 0 to io_in queue from io_in_wait
+	I/O will complete when VC = 241
+-*-Virtual Counter: 232-*-
+-*-Virtual Counter: 233-*-
+-*-Virtual Counter: 234-*-
+-*-Virtual Counter: 235-*-
+-*-Virtual Counter: 236-*-
+-*-Virtual Counter: 237-*-
+-*-Virtual Counter: 238-*-
+-*-Virtual Counter: 239-*-
+-*-Virtual Counter: 240-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 0
+CPU: Opcode:R  Virtual-Address:0x6000  PID:0
+-*-Virtual Counter: 241-*-
+MMU: VPN=6  Offset=0
+MMU: *TLB MISS* Found Frame=0  PA=0
+CPU: Opcode:W  Virtual-Address:0x26000  PID:0
+-*-Virtual Counter: 242-*-
+MMU: VPN=38  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 2
+PR_FIFO: Found non-dirty page frame 2
+-*-Virtual counter = 243-*-
+Scheduling I/O (input) for process 0
+	Fetching Process' Page 38
+	I/O will complete when VC = 253
+Scheduler: Blocking process 0
+
+-*-Virtual Counter: 244-*-
+-*-Virtual Counter: 245-*-
+-*-Virtual Counter: 246-*-
+-*-Virtual Counter: 247-*-
+-*-Virtual Counter: 248-*-
+-*-Virtual Counter: 249-*-
+-*-Virtual Counter: 250-*-
+-*-Virtual Counter: 251-*-
+-*-Virtual Counter: 252-*-
+-*-Virtual Counter: 253-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 2
+CPU: Opcode:W  Virtual-Address:0x26000  PID:0
+-*-Virtual Counter: 254-*-
+MMU: VPN=38  Offset=0
+MMU: *TLB MISS* Found Frame=2  PA=8192
+CPU: Opcode:R  Virtual-Address:0x7000  PID:0
+-*-Virtual Counter: 255-*-
+MMU: VPN=7  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 1
+PR_FIFO: Spilling frame 1 contianing a dirty page belonging to Process 0
+-*-Virtual counter = 256-*-
+Added I/O (input) to wait queue for process 0
+-*-Virtual counter = 257-*-
+Scheduling I/O (output)
+	Moving process 0's page 1 out
+	I/O will complete when VC = 267
+Scheduler: Blocking process 0
+
+-*-Virtual Counter: 258-*-
+-*-Virtual Counter: 259-*-
+-*-Virtual Counter: 260-*-
+-*-Virtual Counter: 261-*-
+-*-Virtual Counter: 262-*-
+-*-Virtual Counter: 263-*-
+-*-Virtual Counter: 264-*-
+-*-Virtual Counter: 265-*-
+-*-Virtual Counter: 266-*-
+-*-Virtual Counter: 267-*-
+IO Control: I/O (output) finished
+IO Control: Adding Process 0 to io_in queue from io_in_wait
+	I/O will complete when VC = 277
+-*-Virtual Counter: 268-*-
+-*-Virtual Counter: 269-*-
+-*-Virtual Counter: 270-*-
+-*-Virtual Counter: 271-*-
+-*-Virtual Counter: 272-*-
+-*-Virtual Counter: 273-*-
+-*-Virtual Counter: 274-*-
+-*-Virtual Counter: 275-*-
+-*-Virtual Counter: 276-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 1
+CPU: Opcode:R  Virtual-Address:0x7000  PID:0
+-*-Virtual Counter: 277-*-
+MMU: VPN=7  Offset=0
+MMU: *TLB MISS* Found Frame=1  PA=4096
+CPU: Opcode:W  Virtual-Address:0x27000  PID:0
+-*-Virtual Counter: 278-*-
+MMU: VPN=39  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 3
+PR_FIFO: Found non-dirty page frame 3
+-*-Virtual counter = 279-*-
+Scheduling I/O (input) for process 0
+	Fetching Process' Page 39
+	I/O will complete when VC = 289
+Scheduler: Blocking process 0
+
+-*-Virtual Counter: 280-*-
+-*-Virtual Counter: 281-*-
+-*-Virtual Counter: 282-*-
+-*-Virtual Counter: 283-*-
+-*-Virtual Counter: 284-*-
+-*-Virtual Counter: 285-*-
+-*-Virtual Counter: 286-*-
+-*-Virtual Counter: 287-*-
+-*-Virtual Counter: 288-*-
+-*-Virtual Counter: 289-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 3
+CPU: Opcode:W  Virtual-Address:0x27000  PID:0
+-*-Virtual Counter: 290-*-
+MMU: VPN=39  Offset=0
+MMU: *TLB MISS* Found Frame=3  PA=12288
+CPU: Opcode:R  Virtual-Address:0x8000  PID:0
+-*-Virtual Counter: 291-*-
+MMU: VPN=8  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 4
+PR_FIFO: Spilling frame 4 contianing a dirty page belonging to Process 0
+-*-Virtual counter = 292-*-
+Added I/O (input) to wait queue for process 0
+-*-Virtual counter = 293-*-
+Scheduling I/O (output)
+	Moving process 0's page 4 out
+	I/O will complete when VC = 303
+Scheduler: Blocking process 0
+
+-*-Virtual Counter: 294-*-
+-*-Virtual Counter: 295-*-
+-*-Virtual Counter: 296-*-
+-*-Virtual Counter: 297-*-
+-*-Virtual Counter: 298-*-
+-*-Virtual Counter: 299-*-
+-*-Virtual Counter: 300-*-
+-*-Virtual Counter: 301-*-
+-*-Virtual Counter: 302-*-
 -*-Virtual Counter: 303-*-
+IO Control: I/O (output) finished
+IO Control: Adding Process 0 to io_in queue from io_in_wait
+	I/O will complete when VC = 313
 -*-Virtual Counter: 304-*-
 -*-Virtual Counter: 305-*-
 -*-Virtual Counter: 306-*-
@@ -684,24 +690,24 @@ Scheduler: Blocking process 6
 -*-Virtual Counter: 310-*-
 -*-Virtual Counter: 311-*-
 -*-Virtual Counter: 312-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 2
-CPU: Opcode:W  Virtual-Address:0x23000  PID:6
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 4
+CPU: Opcode:R  Virtual-Address:0x8000  PID:0
 -*-Virtual Counter: 313-*-
-MMU: VPN=35  Offset=0
-MMU: *TLB MISS* Found Frame=2  PA=8192
-CPU: Opcode:R  Virtual-Address:0x4000  PID:6
+MMU: VPN=8  Offset=0
+MMU: *TLB MISS* Found Frame=4  PA=16384
+CPU: Opcode:W  Virtual-Address:0x28000  PID:0
 -*-Virtual Counter: 314-*-
-MMU: VPN=4  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (3) for page
+MMU: VPN=40  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 0
+PR_FIFO: Found non-dirty page frame 0
 -*-Virtual counter = 315-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 4
+Scheduling I/O (input) for process 0
+	Fetching Process' Page 40
 	I/O will complete when VC = 325
-FA Policy: Pinning frame 3
-Scheduler: Blocking process 6
+Scheduler: Blocking process 0
 
 -*-Virtual Counter: 316-*-
 -*-Virtual Counter: 317-*-
@@ -713,26 +719,27 @@ Scheduler: Blocking process 6
 -*-Virtual Counter: 323-*-
 -*-Virtual Counter: 324-*-
 -*-Virtual Counter: 325-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 3
-CPU: Opcode:R  Virtual-Address:0x4000  PID:6
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 0
+CPU: Opcode:W  Virtual-Address:0x28000  PID:0
 -*-Virtual Counter: 326-*-
-MMU: VPN=4  Offset=0
-MMU: *TLB MISS* Found Frame=3  PA=12288
-CPU: Opcode:W  Virtual-Address:0x24000  PID:6
+MMU: VPN=40  Offset=0
+MMU: *TLB MISS* Found Frame=0  PA=0
+CPU: Opcode:R  Virtual-Address:0x9000  PID:0
 -*-Virtual Counter: 327-*-
-MMU: VPN=36  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (4) for page
+MMU: VPN=9  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 2
+PR_FIFO: Spilling frame 2 contianing a dirty page belonging to Process 0
 -*-Virtual counter = 328-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 36
-	I/O will complete when VC = 338
-FA Policy: Pinning frame 4
-Scheduler: Blocking process 6
+Added I/O (input) to wait queue for process 0
+-*-Virtual counter = 329-*-
+Scheduling I/O (output)
+	Moving process 0's page 2 out
+	I/O will complete when VC = 339
+Scheduler: Blocking process 0
 
--*-Virtual Counter: 329-*-
 -*-Virtual Counter: 330-*-
 -*-Virtual Counter: 331-*-
 -*-Virtual Counter: 332-*-
@@ -742,25 +749,12 @@ Scheduler: Blocking process 6
 -*-Virtual Counter: 336-*-
 -*-Virtual Counter: 337-*-
 -*-Virtual Counter: 338-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 4
-CPU: Opcode:W  Virtual-Address:0x24000  PID:6
 -*-Virtual Counter: 339-*-
-MMU: VPN=36  Offset=0
-MMU: *TLB MISS* Found Frame=4  PA=16384
-CPU: Opcode:R  Virtual-Address:0x5000  PID:6
+IO Control: I/O (output) finished
+IO Control: Adding Process 0 to io_in queue from io_in_wait
+	I/O will complete when VC = 349
 -*-Virtual Counter: 340-*-
-MMU: VPN=5  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (5) for page
--*-Virtual counter = 341-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 5
-	I/O will complete when VC = 351
-FA Policy: Pinning frame 5
-Scheduler: Blocking process 6
-
+-*-Virtual Counter: 341-*-
 -*-Virtual Counter: 342-*-
 -*-Virtual Counter: 343-*-
 -*-Virtual Counter: 344-*-
@@ -768,28 +762,28 @@ Scheduler: Blocking process 6
 -*-Virtual Counter: 346-*-
 -*-Virtual Counter: 347-*-
 -*-Virtual Counter: 348-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 2
+CPU: Opcode:R  Virtual-Address:0x9000  PID:0
 -*-Virtual Counter: 349-*-
+MMU: VPN=9  Offset=0
+MMU: *TLB MISS* Found Frame=2  PA=8192
+CPU: Opcode:W  Virtual-Address:0x29000  PID:0
 -*-Virtual Counter: 350-*-
--*-Virtual Counter: 351-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 5
-CPU: Opcode:R  Virtual-Address:0x5000  PID:6
--*-Virtual Counter: 352-*-
-MMU: VPN=5  Offset=0
-MMU: *TLB MISS* Found Frame=5  PA=20480
-CPU: Opcode:W  Virtual-Address:0x25000  PID:6
--*-Virtual Counter: 353-*-
-MMU: VPN=37  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (10) for page
--*-Virtual counter = 354-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 37
-	I/O will complete when VC = 364
-FA Policy: Pinning frame 10
-Scheduler: Blocking process 6
+MMU: VPN=41  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 1
+PR_FIFO: Found non-dirty page frame 1
+-*-Virtual counter = 351-*-
+Scheduling I/O (input) for process 0
+	Fetching Process' Page 41
+	I/O will complete when VC = 361
+Scheduler: Blocking process 0
 
+-*-Virtual Counter: 352-*-
+-*-Virtual Counter: 353-*-
+-*-Virtual Counter: 354-*-
 -*-Virtual Counter: 355-*-
 -*-Virtual Counter: 356-*-
 -*-Virtual Counter: 357-*-
@@ -797,28 +791,29 @@ Scheduler: Blocking process 6
 -*-Virtual Counter: 359-*-
 -*-Virtual Counter: 360-*-
 -*-Virtual Counter: 361-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 1
+CPU: Opcode:W  Virtual-Address:0x29000  PID:0
 -*-Virtual Counter: 362-*-
+MMU: VPN=41  Offset=0
+MMU: *TLB MISS* Found Frame=1  PA=4096
+CPU: Opcode:R  Virtual-Address:0x10000  PID:0
 -*-Virtual Counter: 363-*-
--*-Virtual Counter: 364-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 10
-CPU: Opcode:W  Virtual-Address:0x25000  PID:6
--*-Virtual Counter: 365-*-
-MMU: VPN=37  Offset=0
-MMU: *TLB MISS* Found Frame=10  PA=40960
-CPU: Opcode:R  Virtual-Address:0x6000  PID:6
--*-Virtual Counter: 366-*-
-MMU: VPN=6  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (12) for page
--*-Virtual counter = 367-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 6
-	I/O will complete when VC = 377
-FA Policy: Pinning frame 12
-Scheduler: Blocking process 6
+MMU: VPN=16  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 3
+PR_FIFO: Spilling frame 3 contianing a dirty page belonging to Process 0
+-*-Virtual counter = 364-*-
+Added I/O (input) to wait queue for process 0
+-*-Virtual counter = 365-*-
+Scheduling I/O (output)
+	Moving process 0's page 3 out
+	I/O will complete when VC = 375
+Scheduler: Blocking process 0
 
+-*-Virtual Counter: 366-*-
+-*-Virtual Counter: 367-*-
 -*-Virtual Counter: 368-*-
 -*-Virtual Counter: 369-*-
 -*-Virtual Counter: 370-*-
@@ -827,363 +822,55 @@ Scheduler: Blocking process 6
 -*-Virtual Counter: 373-*-
 -*-Virtual Counter: 374-*-
 -*-Virtual Counter: 375-*-
+IO Control: I/O (output) finished
+IO Control: Adding Process 0 to io_in queue from io_in_wait
+	I/O will complete when VC = 385
 -*-Virtual Counter: 376-*-
 -*-Virtual Counter: 377-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 12
-CPU: Opcode:R  Virtual-Address:0x6000  PID:6
 -*-Virtual Counter: 378-*-
-MMU: VPN=6  Offset=0
-MMU: *TLB MISS* Found Frame=12  PA=49152
-CPU: Opcode:W  Virtual-Address:0x26000  PID:6
 -*-Virtual Counter: 379-*-
-MMU: VPN=38  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (13) for page
--*-Virtual counter = 380-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 38
-	I/O will complete when VC = 390
-FA Policy: Pinning frame 13
-Scheduler: Blocking process 6
-
+-*-Virtual Counter: 380-*-
 -*-Virtual Counter: 381-*-
 -*-Virtual Counter: 382-*-
 -*-Virtual Counter: 383-*-
 -*-Virtual Counter: 384-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 3
+CPU: Opcode:R  Virtual-Address:0x10000  PID:0
 -*-Virtual Counter: 385-*-
+MMU: VPN=16  Offset=0
+MMU: *TLB MISS* Found Frame=3  PA=12288
+CPU: Opcode:W  Virtual-Address:0x30000  PID:0
 -*-Virtual Counter: 386-*-
--*-Virtual Counter: 387-*-
+MMU: VPN=48  Offset=0
+**Process 0 page faulted**
+FA Policy: Pinning frame 4
+PR_FIFO: Found non-dirty page frame 4
+-*-Virtual counter = 387-*-
+Scheduling I/O (input) for process 0
+	Fetching Process' Page 48
+	I/O will complete when VC = 397
+Scheduler: Blocking process 0
+
 -*-Virtual Counter: 388-*-
 -*-Virtual Counter: 389-*-
 -*-Virtual Counter: 390-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 13
-CPU: Opcode:W  Virtual-Address:0x26000  PID:6
 -*-Virtual Counter: 391-*-
-MMU: VPN=38  Offset=0
-MMU: *TLB MISS* Found Frame=13  PA=53248
-CPU: Opcode:R  Virtual-Address:0x7000  PID:6
 -*-Virtual Counter: 392-*-
-MMU: VPN=7  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (14) for page
--*-Virtual counter = 393-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 7
-	I/O will complete when VC = 403
-FA Policy: Pinning frame 14
-Scheduler: Blocking process 6
-
+-*-Virtual Counter: 393-*-
 -*-Virtual Counter: 394-*-
 -*-Virtual Counter: 395-*-
 -*-Virtual Counter: 396-*-
 -*-Virtual Counter: 397-*-
+IO Control: I/O(input) finished for process 0
+Scheduler: Unblocking process 0
+FA Policy: Unpinnig frame 4
+CPU: Opcode:W  Virtual-Address:0x30000  PID:0
 -*-Virtual Counter: 398-*-
--*-Virtual Counter: 399-*-
--*-Virtual Counter: 400-*-
--*-Virtual Counter: 401-*-
--*-Virtual Counter: 402-*-
--*-Virtual Counter: 403-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 14
-CPU: Opcode:R  Virtual-Address:0x7000  PID:6
--*-Virtual Counter: 404-*-
-MMU: VPN=7  Offset=0
-MMU: *TLB MISS* Found Frame=14  PA=57344
-CPU: Opcode:W  Virtual-Address:0x27000  PID:6
--*-Virtual Counter: 405-*-
-MMU: VPN=39  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (15) for page
--*-Virtual counter = 406-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 39
-	I/O will complete when VC = 416
-FA Policy: Pinning frame 15
-Scheduler: Blocking process 6
-
--*-Virtual Counter: 407-*-
--*-Virtual Counter: 408-*-
--*-Virtual Counter: 409-*-
--*-Virtual Counter: 410-*-
--*-Virtual Counter: 411-*-
--*-Virtual Counter: 412-*-
--*-Virtual Counter: 413-*-
--*-Virtual Counter: 414-*-
--*-Virtual Counter: 415-*-
--*-Virtual Counter: 416-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 15
-CPU: Opcode:W  Virtual-Address:0x27000  PID:6
--*-Virtual Counter: 417-*-
-MMU: VPN=39  Offset=0
-MMU: *TLB MISS* Found Frame=15  PA=61440
-CPU: Opcode:R  Virtual-Address:0x8000  PID:6
--*-Virtual Counter: 418-*-
-MMU: VPN=8  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (16) for page
--*-Virtual counter = 419-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 8
-	I/O will complete when VC = 429
-FA Policy: Pinning frame 16
-Scheduler: Blocking process 6
-
--*-Virtual Counter: 420-*-
--*-Virtual Counter: 421-*-
--*-Virtual Counter: 422-*-
--*-Virtual Counter: 423-*-
--*-Virtual Counter: 424-*-
--*-Virtual Counter: 425-*-
--*-Virtual Counter: 426-*-
--*-Virtual Counter: 427-*-
--*-Virtual Counter: 428-*-
--*-Virtual Counter: 429-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 16
-CPU: Opcode:R  Virtual-Address:0x8000  PID:6
--*-Virtual Counter: 430-*-
-MMU: VPN=8  Offset=0
-MMU: *TLB MISS* Found Frame=16  PA=65536
-CPU: Opcode:W  Virtual-Address:0x28000  PID:6
--*-Virtual Counter: 431-*-
-MMU: VPN=40  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (17) for page
--*-Virtual counter = 432-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 40
-	I/O will complete when VC = 442
-FA Policy: Pinning frame 17
-Scheduler: Blocking process 6
-
--*-Virtual Counter: 433-*-
--*-Virtual Counter: 434-*-
--*-Virtual Counter: 435-*-
--*-Virtual Counter: 436-*-
--*-Virtual Counter: 437-*-
--*-Virtual Counter: 438-*-
--*-Virtual Counter: 439-*-
--*-Virtual Counter: 440-*-
--*-Virtual Counter: 441-*-
--*-Virtual Counter: 442-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 17
-CPU: Opcode:W  Virtual-Address:0x28000  PID:6
--*-Virtual Counter: 443-*-
-MMU: VPN=40  Offset=0
-MMU: *TLB MISS* Found Frame=17  PA=69632
-CPU: Opcode:R  Virtual-Address:0x9000  PID:6
--*-Virtual Counter: 444-*-
-MMU: VPN=9  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (18) for page
--*-Virtual counter = 445-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 9
-	I/O will complete when VC = 455
-FA Policy: Pinning frame 18
-Scheduler: Blocking process 6
-
--*-Virtual Counter: 446-*-
--*-Virtual Counter: 447-*-
--*-Virtual Counter: 448-*-
--*-Virtual Counter: 449-*-
--*-Virtual Counter: 450-*-
--*-Virtual Counter: 451-*-
--*-Virtual Counter: 452-*-
--*-Virtual Counter: 453-*-
--*-Virtual Counter: 454-*-
--*-Virtual Counter: 455-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 18
-CPU: Opcode:R  Virtual-Address:0x9000  PID:6
--*-Virtual Counter: 456-*-
-MMU: VPN=9  Offset=0
-MMU: *TLB MISS* Found Frame=18  PA=73728
-CPU: Opcode:W  Virtual-Address:0x29000  PID:6
--*-Virtual Counter: 457-*-
-MMU: VPN=41  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (19) for page
--*-Virtual counter = 458-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 41
-	I/O will complete when VC = 468
-FA Policy: Pinning frame 19
-Scheduler: Blocking process 6
-
--*-Virtual Counter: 459-*-
--*-Virtual Counter: 460-*-
--*-Virtual Counter: 461-*-
--*-Virtual Counter: 462-*-
--*-Virtual Counter: 463-*-
--*-Virtual Counter: 464-*-
--*-Virtual Counter: 465-*-
--*-Virtual Counter: 466-*-
--*-Virtual Counter: 467-*-
--*-Virtual Counter: 468-*-
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 19
-CPU: Opcode:W  Virtual-Address:0x29000  PID:6
--*-Virtual Counter: 469-*-
-MMU: VPN=41  Offset=0
-MMU: *TLB MISS* Found Frame=19  PA=77824
-CPU: Opcode:R  Virtual-Address:0x10000  PID:6
--*-Virtual Counter: 470-*-
-MMU: VPN=16  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (20) for page
--*-Virtual counter = 471-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 16
-	I/O will complete when VC = 481
-FA Policy: Pinning frame 20
-Scheduler: Blocking process 6
-
-###-------- Cleaning Daemon Starting --------###
-Removing process 0's page from frame 0
-	Page is dirty. Scheduling page out.
--*-Virtual counter = 472-*-
-Scheduling I/O (output)
-	Moving process 0's page 0 out
-	I/O will complete when VC = 482
-Removing process 1's page from frame 1
-	Page is dirty. Scheduling page out.
--*-Virtual counter = 473-*-
-Scheduling I/O (output)
-	Moving process 1's page 1 out
-	I/O will complete when VC = 483
-Removing process 2's page from frame 2
-	Page is dirty. Scheduling page out.
--*-Virtual counter = 474-*-
-Scheduling I/O (output)
-	Moving process 2's page 2 out
-	I/O will complete when VC = 484
-Removing process 3's page from frame 3
-	Page is dirty. Scheduling page out.
--*-Virtual counter = 475-*-
-Scheduling I/O (output)
-	Moving process 3's page 3 out
-	I/O will complete when VC = 485
-Removing process 4's page from frame 4
-	Page is dirty. Scheduling page out.
--*-Virtual counter = 476-*-
-Scheduling I/O (output)
-	Moving process 4's page 4 out
-	I/O will complete when VC = 486
-Removing process 5's page from frame 5
-	Page is dirty. Scheduling page out.
--*-Virtual counter = 477-*-
-Scheduling I/O (output)
-	Moving process 5's page 5 out
-	I/O will complete when VC = 487
-Removing process 6's page from frame 6
-Removing process 0's page from frame 7
-Removing process 1's page from frame 8
-Removing process 2's page from frame 9
-Removing process 4's page from frame 10
-Removing process 6's page from frame 11
-	Page is dirty. Scheduling page out.
--*-Virtual counter = 478-*-
-Scheduling I/O (output)
-	Moving process 6's page 11 out
-	I/O will complete when VC = 488
-Removing process 6's page from frame 0
-Removing process 6's page from frame 1
-	Page is dirty. Scheduling page out.
--*-Virtual counter = 479-*-
-Scheduling I/O (output)
-	Moving process 6's page 1 out
-	I/O will complete when VC = 489
-Removing process 3's page from frame 2
-	Page is dirty. Scheduling page out.
--*-Virtual counter = 480-*-
-Scheduling I/O (output)
-	Moving process 3's page 2 out
-	I/O will complete when VC = 490
-Removing process 5's page from frame 4
-	Page is dirty. Scheduling page out.
-IO Control: I/O(input) finished for process 6
--*-Virtual counter = 481-*-
-Scheduling I/O (output)
-	Moving process 5's page 4 out
-	I/O will complete when VC = 491
-Removing process 6's page from frame 7
-Removing process 6's page from frame 8
-	Page is dirty. Scheduling page out.
-IO Control: I/O (output) finished
--*-Virtual counter = 482-*-
-Scheduling I/O (output)
-	Moving process 6's page 8 out
-	I/O will complete when VC = 492
-Removing process 6's page from frame 9
-Removing process 6's page from frame 2
-	Page is dirty. Scheduling page out.
-IO Control: I/O (output) finished
--*-Virtual counter = 483-*-
-Scheduling I/O (output)
-	Moving process 6's page 2 out
-	I/O will complete when VC = 493
-###-------- Finished Clearing 20 Frames --------###
-
-
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 20
-CPU: Opcode:R  Virtual-Address:0x10000  PID:6
-IO Control: I/O (output) finished
--*-Virtual Counter: 484-*-
-MMU: VPN=16  Offset=0
-MMU: *TLB MISS* Found Frame=20  PA=81920
-CPU: Opcode:W  Virtual-Address:0x30000  PID:6
-IO Control: I/O (output) finished
--*-Virtual Counter: 485-*-
 MMU: VPN=48  Offset=0
-**Process 6 page faulted**
-PR_FIFO: Found Free Frame (0) for page
-IO Control: I/O (output) finished
--*-Virtual counter = 486-*-
-Scheduling I/O (input) for process 6
-	Fetching Process' Page 48
-	I/O will complete when VC = 496
-FA Policy: Pinning frame 0
-Scheduler: Blocking process 6
-
--*-Virtual Counter: 487-*-
-IO Control: I/O (output) finished
--*-Virtual Counter: 488-*-
-IO Control: I/O (output) finished
-IO Control: I/O (output) finished
--*-Virtual Counter: 489-*-
-IO Control: I/O (output) finished
--*-Virtual Counter: 490-*-
-IO Control: I/O (output) finished
--*-Virtual Counter: 491-*-
--*-Virtual Counter: 492-*-
--*-Virtual Counter: 493-*-
--*-Virtual Counter: 494-*-
--*-Virtual Counter: 495-*-
--*-Virtual Counter: 496-*-
-IO Control: I/O (output) finished
-IO Control: I/O (output) finished
-IO Control: I/O(input) finished for process 6
-Scheduler: Unblocking process 6
-FA Policy: Unpinnig frame 0
-CPU: Opcode:W  Virtual-Address:0x30000  PID:6
--*-Virtual Counter: 497-*-
-MMU: VPN=48  Offset=0
-MMU: *TLB MISS* Found Frame=0  PA=0
-Process 6 terminated
+MMU: *TLB MISS* Found Frame=4  PA=16384
+Process 0 terminated
 Freed 14 frames that the terminating process was using
 
-Collecting/Recording resultsLogName: ./test_results/stats.log
+Collecting/Recording resultsLogName: ./test_results/T1/stats.log

@@ -118,7 +118,8 @@ void cPRFifo::finishedIO(sProc* proc, sPTE* page) {
 	pageHist.push( page );
 	pageOwners.push( proc->pid );
 
-	FAPolicy.pin(page->frame);
+	FAPolicy.unpin(page->frame);
+	//FAPolicy.getFrame(page->frame);
 
 	return;
 }

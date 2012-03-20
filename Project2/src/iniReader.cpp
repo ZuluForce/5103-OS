@@ -54,6 +54,7 @@ INIReader::INIReader(/*Uint8 flags*/) {
     get_pointer = 0;
     put_pointer = 0;
     lineNumber = -1;
+    overwriteMode = false;
 
     addDefault("==NO_DEF==","EMPTY", "");
 }
@@ -65,6 +66,7 @@ INIReader::INIReader(string filename /*, Uint8 flags*/) {
     get_pointer = 0;
     put_pointer = 0;
     lineNumber = -1;
+    overwriteMode = true;
 
     addDefault("==NO_DEF==","EMPTY", "");
 
@@ -151,6 +153,7 @@ int INIReader::addSection(string& line, bool modCurrSection, bool ignoreRules) {
     }
 
     if ( section_map.count(line) != 0) {
+		if ( modCurrSection ) currSection = line;
         return 1;
     } else {
         #ifdef DEBUG
@@ -209,6 +212,17 @@ int INIReader::addKey(string& line, string& section) {
     strip_white_space(key);
     strip_white_space(value);
     strip_white_space(comment);
+
+    if ( overwriteMode && !findInVector(noOverwriteSection, section, strEq) ) {
+		if ( !overWriteOp(section, key, value) ) {
+			cerr << "Failed to overwrite entry" << endl;
+			cerr << "Section: " << section << endl;
+			cerr << "Key: " << key << endl;
+			cerr << "Value: " << value << endl;
+		}
+
+		return 0;
+    }
 
     #ifdef DEBUG
     printf("KV Pair:\n");
@@ -309,9 +323,11 @@ void INIReader::strip_white_space(string& str, const string& TrimChars, int Trim
     if (TrimDir!=1) str = str.substr(0, str.find_last_not_of(TrimChars) + 1);
 }
 
-bool INIReader::load_ini(string filename, bool auto_parse) {
-	if ( ini_file.is_open() )
+bool INIReader::load_ini(string filename, bool auto_parse, bool overwrite) {
+	if ( ini_file.is_open() ) {
 		ini_file.close();
+		overwriteMode = overwrite;
+	}
 
     ini_file.open(filename.c_str(), ios_base::in);
     ini_name = filename;
@@ -319,6 +335,7 @@ bool INIReader::load_ini(string filename, bool auto_parse) {
     if ( auto_parse && ini_file.is_open() ) {
         parse_ini();
     }
+
     return ini_file.is_open();
 }
 
@@ -344,4 +361,11 @@ bool INIReader::exists(const string& section, const string& key) {
 string INIReader::extractComment(const string& section, const string& key) {
     string comm( getKeyComment(section, key) );
     return comm;
+}
+
+
+void INIReader::addOverwriteException(const string& section) {
+	noOverwriteSection.push_back(section);
+
+	return;
 }

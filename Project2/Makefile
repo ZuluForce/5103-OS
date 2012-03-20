@@ -2,6 +2,7 @@ CC=g++
 TARGET=main
 
 RUN_R1=-t main.trace -s settings.ini
+RUN_T1=-s settings.ini ./test_configs/T1/T1.ini
 
 SRCDIR=src
 INCDIR=include

@@ -22,6 +22,11 @@ cVMM::cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM, cCleanDaemon& _cDaemon)
 	cout << "\t# Frames (Global): " << numFrames << endl;
 	cout << "\t# Processes: " << procs.size() << endl;
 
+	if ( procs.size() == 0 ) {
+		cerr << "No processes to run. Exiting..." << endl;
+		exit(0);
+	}
+
 	PS = 1 << off_bits;
 	PT_Size = 1 << page_bits;
 
@@ -56,12 +61,13 @@ void cVMM::initProcesses() {
 
 	for ( it = procs.begin(); it != procs.end(); ++it) {
 		/* Allocate new complete page table */
-		newPT = malloc( pt_byte_size );
+		//newPT = malloc( pt_byte_size );
 
 		/* Clear the new table */
-		memset(newPT, '\0', pt_byte_size);
+		//memset(newPT, '\0', pt_byte_size);
 
 		(*it)->PTptr = (sPTE*) malloc( sizeof(sPTE) * PT_Size);
+		memset((*it)->PTptr, '\0', pt_byte_size);
 	}
 
 	cout << "Finished initializing process' virtual memory" << endl;
