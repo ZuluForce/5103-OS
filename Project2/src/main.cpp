@@ -182,6 +182,10 @@ sProc* loadProc(string& filename) {
     }
 
 	newProc->data = new istringstream(buf);
+
+	newProc->PC = 0;
+	newProc->maxPC = fileinfo.st_size;
+
 	close(file);
 	free(buf);
 

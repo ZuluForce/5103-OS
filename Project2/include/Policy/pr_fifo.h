@@ -32,6 +32,16 @@ class cPRFifo: public cPRPolicy {
 		void clearPages(int numPages);
 
 		void unpinFrame(uint32_t frame);
+
+		/** Return a frame to the system.
+		 *
+		 *	The VMM core calls this when a process termintates
+		 *	to free up any of its used frames. This call could
+		 *	be made directly to the frame allocator but using
+		 *	the PR module as a middle man gives it a chance to
+		 *	update as needed.
+		 */
+		void returnFrame(uint32_t frame);
 };
 
 #endif // PR_FIFO_H_INCLUDED

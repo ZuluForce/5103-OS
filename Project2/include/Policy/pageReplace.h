@@ -32,14 +32,11 @@ class cPRPolicy {
 		 *	that needs to be fetched.
 		 */
 		virtual void resolvePageFault(sProc* proc, uint32_t page) = 0;
-
 		virtual void finishedQuanta(sProc*) = 0;
-
 		virtual void finishedIO(sProc*, sPTE*) = 0;
-
 		virtual void clearPages(int numPages) = 0;
-
 		virtual void unpinFrame(uint32_t frame) = 0;
+		virtual void returnFrame(uint32_t frame) = 0;
 };
 
 /** @fn cPRPolicy::finishedQuanta(sProc*)

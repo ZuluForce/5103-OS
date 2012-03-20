@@ -69,6 +69,30 @@ void cVMM::initProcesses() {
 	return;
 }
 
+void cVMM::cleanupProcess(sProc* proc) {
+	/* We hold on to the process struct to print out stats
+	 * in the end so we use PC values = -1 as a sentinel of
+	 * a terminated process
+	 */
+	proc->PC = -1;
+	proc->maxPC = -1;
+
+	int cleanupCount = 0;
+
+	for ( int i = 0; i < PT_Size; ++i) {
+		if ( proc->PTptr[i].flags[FI_PRESENT] ) {
+			PRModule.returnFrame(proc->PTptr[i].frame);
+			proc->PTptr[i].flags[FI_PRESENT] = false;
+
+			++cleanupCount;
+		}
+	}
+
+	cout << "Freed " << cleanupCount << " frames that the terminating process was using" << endl;
+	fprintf(logStream, "Freed %d frames that the terminating process was using\n", cleanupCount);
+	return;
+}
+
 sIOContext* cVMM::pageOut(sProc* proc, uint32_t page, sIOContext* ctx) {
 	ioCtrl->scheduleIO(proc, page, IO_OUT, ctx);
 	++pageOutCount;
@@ -87,8 +111,11 @@ void cVMM::tickController(int times) {
 
 void cVMM::printResults() {
 	cout << "Collecting/Recording results" << endl;
+	fprintf(logStream, "Collecting/Recording results");
+
 	string logName = EXTRACTP(string, Results,file);
 	cout << "LogName: " << logName << endl;
+	fprintf(logStream, "LogName: %s\n", logName);
 
 	if ( logName.compare("") == 0 ) {
 		cerr << "No results file indicated!!" << endl;
@@ -170,7 +197,7 @@ int cVMM::start() {
 	uint8_t result;
 
 	queue<uint64_t>& finishedIO = ioCtrl->getFinishedQueue();
-	queue<sPTE*>& finisheIOPage = ioCtrl->getFinishedPTEQueue();
+	queue<sPTE*>& finishedIOPage = ioCtrl->getFinishedPTEQueue();
 	uint64_t finishInfo = 0;
 	uint32_t fPID = 0;
 	uint32_t fFrame = 0;
@@ -184,8 +211,9 @@ int cVMM::start() {
 		//Process all finished I/O
 		while ( !finishedIO.empty() ) {
 			finishInfo = finishedIO.front();
-			fPTE = finisheIOPage.front();
+			fPTE = finishedIOPage.front();
 			finishedIO.pop();
+			finishedIOPage.pop();
 
 			fPID = finishInfo / ( 0x100000000 );
 			fFrame = finishInfo % ( 0x100000000 );
@@ -222,8 +250,10 @@ int cVMM::start() {
 
 		if ( result & CPU_TERM ) {
 			scheduler.removeProcess(runningProc);
+			cout << "Process " << runningProc->pid << " termintated" << endl;
 			fprintf(logStream, "Process %d terminated\n", runningProc->pid);
 			/* Cleanup page table */
+			cleanupProcess(runningProc);
 
 			runningProc = NULL;
 		} else if ( result & CPU_PF ) {

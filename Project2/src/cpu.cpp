@@ -84,9 +84,15 @@ uint8_t cCPU::run() {
 		if ( curProc->restart ) {
 			line = curProc->rline;
 			curProc->restart = false;
-		} else if ( !std::getline(*curProc->data, line) ) {
+		} else {
+			bool empty = !std::getline(*curProc->data, line);
+
+			if ( empty ) {
 				cout << "Process ran out of data" << endl;
 				return CPU_TERM;
+			}
+
+			curProc->PC += line.size() + 1;
 		}
 
 		//If so it can't possibly be valid
@@ -124,10 +130,10 @@ uint8_t cCPU::run() {
 
 			return CPU_PF;
 		}
-	}
 
-	if ( curProc->data->peek() == '\0' )
-		return CPU_TERM;
+		if ( curProc->PC >= (curProc->maxPC - 1) )
+			return CPU_TERM;
+	}
 
 	mmu.syncTLB();
 	return CPU_OK;

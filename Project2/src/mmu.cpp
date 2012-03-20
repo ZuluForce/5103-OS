@@ -38,12 +38,12 @@ cMMU::~cMMU() {
 }
 
 void cMMU::flushTLB(bool sync) {
-
 	/* Flush it */
 	for ( int i = 0; i < tlbSize; ++i) {
-		if ( sync && TLB[i].valid && (TLB[i].dirty | TLB[i].ref)) {
+		if ( sync && TLB[i].valid && (TLB[i].dirty || TLB[i].ref)) {
 			cout << "Syncing TLB entry " << i << " back to page table (page:" << TLB[i].VPN << ")" << endl;
 			ptbr[TLB[i].VPN].flags[FI_DIRTY] = TLB[i].dirty;
+			ptbr[TLB[i].VPN].flags[FI_REF] = TLB[i].ref;
 		}
 
 		TLB[i].valid = false;
@@ -60,7 +60,7 @@ void cMMU::syncTLB() {
 	assert( ptbr != NULL);
 
 	for ( int i = 0; i < tlbSize; ++i) {
-		if ( TLB[i].valid ) {
+		if ( TLB[i].valid && (TLB[i].dirty || TLB[i].ref) ) {
 			cout << "Syncing TLB entry " << i << " to the page table (page:" << TLB[i].VPN << ")" << endl;
 			ptbr[TLB[i].VPN].flags[FI_DIRTY] = TLB[i].dirty;
 			ptbr[TLB[i].VPN].flags[FI_REF] = TLB[i].ref;

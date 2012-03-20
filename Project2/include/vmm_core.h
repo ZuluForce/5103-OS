@@ -55,6 +55,7 @@ class cVMM {
 		cCleanDaemon& cDaemon;
 
 		void initProcesses();
+		void cleanupProcess(sProc* proc);
 
 		void printResults();
 

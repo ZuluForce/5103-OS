@@ -37,6 +37,8 @@ struct sProc {
 
 	istringstream* data;
 	int PC;
+	int maxPC;
+
 	/* Used to redo a single instr */
 	bool restart;
 	string rline;

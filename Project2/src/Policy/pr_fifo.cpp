@@ -19,10 +19,12 @@ cPRFifo::~cPRFifo() {
 }
 
 void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
+
 	//Check for any open frames
 	pair<bool,uint32_t> freeFrame = FAPolicy.getFrame(proc);
 
 	if ( freeFrame.first ) {
+		cout << "PR_FIFO: Found free frame (" << freeFrame.second << ") for page" << endl;
 		fprintf(logStream, "PR_FIFO: Found Free Frame (%d) for page\n", freeFrame.second);
 
 		/* Update the page table entry */
@@ -52,8 +54,20 @@ void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
 		rPage = pageHist.front();
 		ownerid = pageOwners.front();
 
-		if ( !(rPage->flags[FI_PRESENT]) )
+		if ( rPage == NULL ) {
+			cVMMExc ex;
+			ex.setErrorStr("PR_FIFO: Extracted NULL PTE from Fifo queue");
+			ex.setDump("--");
+			throw((cVMMExc) ex);
+		}
+		/* If a process was termintated its page isn't removed
+		 * from the queue for efficiency reasons. */
+		if ( !(rPage->flags[FI_PRESENT]) ) {
+			cout << "Owner: " << ownerid << " Frame: " << rPage->frame << endl;
+			pageHist.pop();
+			pageOwners.pop();
 			continue;
+		}
 
 		break;
 	}
@@ -99,6 +113,7 @@ void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
 
 void cPRFifo::finishedIO(sProc* proc, sPTE* page) {
 	assert(proc != NULL);
+	assert(page != NULL);
 
 	pageHist.push( page );
 	pageOwners.push( proc->pid );
@@ -134,10 +149,13 @@ void cPRFifo::clearPages(int numPages) {
 	sPTE* rmPage;
 	unsigned int owner;
 
+	int removed = 0;
 	/* Clear pages in a fifo order. Just take from the queue */
-	while ( numPages > 0 ) {
+	while ( removed < numPages ) {
 		rmPage = pageHist.front();
 		owner = pageOwners.front();
+		pageHist.pop();
+		pageOwners.pop();
 
 		/* Modify the PTE accordingly */
 		rmPage->flags[FI_PRESENT] = false;
@@ -152,13 +170,19 @@ void cPRFifo::clearPages(int numPages) {
 		}
 
 		FAPolicy.returnFrame(rmPage->frame);
+
+		++removed;
 	}
 	if ( numPages > 0)
-		fprintf(logStream, "##------ Finished Clearing %d Frames ------##\n\n", numPages);
+		fprintf(logStream, "###-------- Finished Clearing %d Frames --------###\n\n", numPages);
 
 	return;
 }
 
 void cPRFifo::unpinFrame(uint32_t frame) {
 	FAPolicy.unpin(frame);
+}
+
+void cPRFifo::returnFrame(uint32_t frame) {
+	FAPolicy.returnFrame(frame);
 }
