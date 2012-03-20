@@ -1050,6 +1050,7 @@ Scheduling I/O (input) for process 6
 	I/O will complete when VC = 481
 FA Policy: Pinning frame 20
 Scheduler: Blocking process 6
+
 ###-------- Cleaning Daemon Starting --------###
 Removing process 0's page from frame 0
 	Page is dirty. Scheduling page out.
@@ -1185,3 +1186,4 @@ MMU: *TLB MISS* Found Frame=0  PA=0
 Process 6 terminated
 Freed 14 frames that the terminating process was using
 
+Collecting/Recording resultsLogName: ./test_results/stats.log

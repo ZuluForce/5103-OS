@@ -18,6 +18,17 @@ cFixedAlloc::cFixedAlloc() {
 
 	pinned = dynamic_bitset<>(numFrames);
 	pinned.reset();
+
+	_printF = EXTRACTP(bool, Policy, print_frames);
+	if ( _printF ) {
+		printLoc = fopen(EXTRACTP(string, Policy, frame_log).c_str(), "w");
+		if ( printLoc == NULL ) {
+			cerr << "Couldn't open file for frame logging. Disabling frame logging." << endl;
+			_printF = false;
+		}
+	}
+
+	return;
 }
 
 cFixedAlloc::~cFixedAlloc() {
@@ -46,6 +57,7 @@ pair<bool,uint32_t> cFixedAlloc::getFrame() {
 
 	frames.set(firstFree);
 	--openFrames;
+	printFrames();
 
 	return make_pair(true, firstFree);
 }
@@ -62,6 +74,7 @@ bool cFixedAlloc::getFrame(uint32_t frame) {
 
 	frames.set(firstFree);
 	--openFrames;
+	printFrames();
 
 	return true;
 }
@@ -71,6 +84,7 @@ void cFixedAlloc::returnFrame(uint32_t frame) {
 
 	frames.set(frame, false);
 	++openFrames;
+	printFrames();
 
 	return;
 }
@@ -96,6 +110,8 @@ bool cFixedAlloc::pin(uint32_t frame) {
 
 	fprintf(logStream, "FA Policy: Pinning frame %d\n", frame);
 	pinned.set(frame);
+
+	//printFrames();
 	return true;
 }
 
@@ -107,5 +123,20 @@ bool cFixedAlloc::unpin(uint32_t frame) {
 
 	fprintf(logStream, "FA Policy: Unpinnig frame %d\n", frame);
 	pinned.flip(frame);
+
+	//printFrames();
 	return true;
+}
+
+void cFixedAlloc::printFrames() {
+	if ( !_printF ) return;
+
+	for ( int i = 0; i < frames.size(); ++i) {
+		fprintf(printLoc, "(%03d)---- %s ---- %s\n", i,
+				frames.test(i) ? "Alloc" : " Free", pinned.test(i) ? "Pinned" : "Unpin");
+	}
+
+	fprintf(printLoc, "\n\n");
+
+	return;
 }

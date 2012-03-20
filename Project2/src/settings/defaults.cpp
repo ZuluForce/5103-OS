@@ -25,6 +25,8 @@ void setDefaults(INIReader* settings) {
 	SETDP(Policy,PR,fifo);
 	SETDP(Policy,clean_min,10);
 	SETDP(Policy,cleanup_amnt,20);
+	SETDP(Policy,print_frames,0);
+	SETDP(Policy,frame_log, frames.trace);
 
 	/* ------ Results ------ */
 	SETDP(Results,file,stats.log);

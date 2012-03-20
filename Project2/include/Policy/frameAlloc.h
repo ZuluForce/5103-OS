@@ -21,6 +21,8 @@ class cFrameAllocPolicy {
 	private:
 		uint32_t numFrames;
 
+		virtual void printFrames() = 0;
+
 	public:
 		/** How many frames does the whole system have */
 		void setNumFrames(int frames) { numFrames = frames; };
@@ -59,6 +61,10 @@ class cFixedAlloc: public cFrameAllocPolicy {
 		uint32_t openFrames;
 
 		uint32_t findFirstOf(bool check, dynamic_bitset<>& bits);
+
+		bool _printF;
+		void printFrames();
+		FILE* printLoc;
 
 	public:
 		cFixedAlloc();

@@ -115,7 +115,7 @@ void cVMM::printResults() {
 
 	string logName = EXTRACTP(string, Results,file);
 	cout << "LogName: " << logName << endl;
-	fprintf(logStream, "LogName: %s\n", logName);
+	fprintf(logStream, "LogName: %s\n", logName.c_str());
 
 	if ( logName.compare("") == 0 ) {
 		cerr << "No results file indicated!!" << endl;
