@@ -1,0 +1,9 @@
+TARGET=main
+R1=./$(TARGET) -s settings.ini ./test_configs/T1/T1.ini
+R2= $(R1) Global:total_frames:10 Results:file:./test_results/T1/r2.log
+R3= $(R2) Global:total_frames:20 Results:file:./test_results/T1/r3.log
+
+all:
+	$(R1)
+	$(R2)
+	$(R3)
