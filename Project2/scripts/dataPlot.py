@@ -42,7 +42,7 @@ def sort(lst, newOrder, cmpfn, start = 0, end = -1):
 		return
 		
 	if (end - start) == 1:
-		if cmpfn(lst[start],lst[end]):
+		if cmpfn(int(lst[start]),int(lst[end])):
 			##Swap values
 			lst[start],lst[end] = lst[end],lst[start]
 			newOrder[start],newOrder[end] = newOrder[end],newOrder[start]
@@ -60,7 +60,7 @@ def sort(lst, newOrder, cmpfn, start = 0, end = -1):
 	_newOrder = list(newOrder) ##Copies the list
 	
 	while lindex < len(left) and rindex < len(right):
-		print(newOrder)
+		print(_newOrder)
 	
 		##Take from the right
 		if cmpfn(int(left[lindex]),int(right[rindex])):
@@ -74,7 +74,7 @@ def sort(lst, newOrder, cmpfn, start = 0, end = -1):
 			_newOrder[start + lindex + rindex] = newOrder[start + lindex]
 			lindex += 1
 	
-	print(newOrder)
+	print(_newOrder)
 	##Fill in any remaining
 	while lindex < len(left):
 		lst[start + lindex + rindex] = left[lindex]

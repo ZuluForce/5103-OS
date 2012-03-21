@@ -1,9 +1,6 @@
 CC=g++
 TARGET=main
 
-RUN_R1=-t main.trace -s settings.ini
-RUN_T1=-s settings.ini ./test_configs/T1/T1.ini
-
 SRCDIR=src
 INCDIR=include
 OBJDIR=obj
@@ -38,9 +35,6 @@ vpath %.o $(OBJDIR)
 
 all: $(TARGET)
 
-run_%: $(TARGET)
-	cd $(BINDIR) && ./$(TARGET) $(RUN_$*)
-
 $(TARGET): $(TARGET).cpp $(TARGET).h $(DEPS)
 	$(CC) $(CFLAGS) $(LFLAGS) $(_DEPS) $(SRCDIR)/$@.cpp -o $(BINDIR)/$@
 	
@@ -67,3 +61,13 @@ clean_docs:
 	rm -rf $(DOCDIR)/Doxygen/*
 	
 clean_all: clean clean_docs
+
+
+
+## ------------ Test Configurations ---------------- ##
+
+run_%: $(TARGET)
+	cd $(BINDIR) && make -f ./test_configs/$*/Make$*
+	
+run_all: $(TARGET)
+	./scripts/run_all.py $(BINDIR) ./test_configs

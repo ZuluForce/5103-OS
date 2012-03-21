@@ -140,10 +140,15 @@ void cPRFifo::clearPages(int numPages) {
 
 	if ( numPages > pageHist.size() ) {
 		cVMMExc ex;
-		ex.setErrorStr("Tried to clear more pages than are occupying frames");
+		stringstream stream;
+		stream << "Tried to clear more pages than are occupying frame" << endl;
+		stream << "Check that the threshold for the daemon is greater than the total frame cout" << endl;
+		ex.setErrorStr(stream.str());
 		ex.setFatality(false);
 
-		stringstream stream;
+		stream.str(std::string());
+		stream.clear();
+
 		stream << "Occupied Frames = " << pageHist.size() << " numPages (requested cleared) = " << numPages << endl;
 		ex.setDump(stream.str());
 		throw((cVMMExc) ex);

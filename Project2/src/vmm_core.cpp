@@ -117,7 +117,7 @@ void cVMM::tickController(int times) {
 
 void cVMM::printResults() {
 	cout << "Collecting/Recording results" << endl;
-	fprintf(logStream, "Collecting/Recording results");
+	fprintf(logStream, "Collecting/Recording resuts");
 
 	string logName = EXTRACTP(string, Results,file);
 	cout << "LogName: " << logName << endl;
