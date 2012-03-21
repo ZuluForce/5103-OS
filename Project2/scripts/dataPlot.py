@@ -24,12 +24,20 @@ prettyConfig = {'sps':"Page Size",\
 				'gcs':"Global context switches",\
 				'gpf':"Global page faults",\
 				'get':"Global exec time",\
+				'gpo':"Global Page Outs",\
+				'gpi':"Global Page Ins",\
+				'gtlbh':"Global TLB Hits",\
+				'gtlhm':"Global TLB Misses",\
 				'lcs':"Avg process context switches",\
 				'lpf':"Avg process page faults",\
 				'let':"Avg process exec time",\
+				'ltlbh':"Avg process TLB hits",\
+				'ltlbm':"Avg process TLB misses",\
 				'lcsp':"Per-Process context switches",\
 				'lpfp':"Per-Process page faults",\
 				'letp':"Per-Process exec time"}
+
+img_ext_re = re.compile("^.+\.(\w+)$")
 
 def merge(left,right,lorder,rorder):
 	result = []
@@ -213,6 +221,11 @@ def createGraph(config, tests):
 		autolabel(rectSet)
 
 	plt.show()
+	
+	m = img_ext_re.match(output)
+	if ( m == None or m.group(1) != gtype):
+		output += "." + gtype
+
 	print("Output File: " + output)
 	print("File Type: ." + gtype) 
 	plt.savefig(output, format=gtype)

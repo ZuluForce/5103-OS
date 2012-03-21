@@ -131,6 +131,9 @@ uint8_t cCPU::run() {
 			return CPU_PF;
 		}
 
+		if ( status == MMU_THIT ) ++(curProc->tlbhit);
+		if ( status == MMU_TMISS ) ++(curProc->tlbmiss);
+
 		if ( curProc->PC >= (curProc->maxPC - 1) )
 			return CPU_TERM;
 	}

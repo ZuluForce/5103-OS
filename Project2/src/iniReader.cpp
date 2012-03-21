@@ -146,7 +146,7 @@ int INIReader::addSection(string& line, bool modCurrSection, bool ignoreRules) {
         if ( open_bracket == line.npos ||
             close_bracket == line.npos ||
             open_bracket == close_bracket) {
-            fprintf(stderr, "Invalid section header in file: %s on line %d",ini_name.c_str(),lineNumber);
+            fprintf(stderr, "Invalid section header in file: %s on line %d\n",ini_name.c_str(),lineNumber);
             return -1;
         }
         line = line.substr(open_bracket+1, line.size() - 2);

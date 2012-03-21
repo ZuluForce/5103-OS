@@ -6,7 +6,7 @@ if ( len(sys.argv) < 3 ):
 	print("Usage: %s <bindir> <test_configs_dirname>" % (sys.argv[0]))
 	exit(-1)
 
-if not os.chdir(sys.argv[1]):
+if (not os.chdir(sys.argv[1])):
 	print("Failed to switch to directory: " + sys.argv[1])
 
 cwd = os.getcwd()
@@ -35,13 +35,15 @@ for dir in test_dirs:
 	for file in test_content:
 		print("Trying to match: " + str(file))
 		m = make_re.match(file)
-		print makefile
+
 		if (m != None):
 			makefile = m.group(0)
+			break
 
 	if (makefile == None):
 		print("Couldn't find makefile in test directory: %s" % (test_path))
 		continue
 
 	##Otherwise execute the makefile
+	print("Executing: " + "make -f " + os.path.join(test_path,makefile))
 	os.system("make -f %s" % (os.path.join(test_path, makefile)))

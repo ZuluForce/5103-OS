@@ -12,13 +12,13 @@ cVMM::cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM, cCleanDaemon& _cDaemon)
 : procs(_procs),PRModule(_PRM),cDaemon(_cDaemon) {
 
 	int page_bits = EXTRACTP(int,Global,page_bits);
-	int off_bits = EXTRACTP(int,Global,offset_bits);
+	int offset_bits = EXTRACTP(int,Global,offset_bits);
 	numFrames = EXTRACTP(uint32_t, Global, total_frames);
 
 	/* ---- Print Init Info to Screen ---- */
 	cout << "Virtual Memory Manager (VMM) started with settings:" << endl;
 	cout << "\tPage Bits: " << page_bits << endl;
-	cout << "\tOffset Bits: " << off_bits << endl;
+	cout << "\tOffset Bits: " << offset_bits << endl;
 	cout << "\t# Frames (Global): " << numFrames << endl;
 	cout << "\t# Processes: " << procs.size() << endl;
 
@@ -27,7 +27,7 @@ cVMM::cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM, cCleanDaemon& _cDaemon)
 		exit(0);
 	}
 
-	PS = 1 << off_bits;
+	PS = 1 << offset_bits;
 	PT_Size = 1 << page_bits;
 
 	VC = 0;
@@ -151,11 +151,11 @@ void cVMM::printResults() {
 
 	/* ---- Print Setting Info for Python Script ---- */
 	log << toBinary(options.to_ulong()) << endl;
-	log << PS << ":" <<numFrames << ":" << PRModule.name();
+	log << PS << ":" << numFrames << ":" << PRModule.name();
 	log << ":" << EXTRACTP(string, Results,title) << endl;
 
-	int g_cs, g_pf, g_et;
-	g_cs = g_pf = g_et = 0;
+	int g_cs, g_pf, g_et, g_tlbhit, g_tlbmiss;
+	g_cs = g_pf = g_et = g_tlbhit = g_tlbmiss = 0;
 
 	vector<sProc*>::iterator it;
 
@@ -174,6 +174,12 @@ void cVMM::printResults() {
 		if ( options.test(L_ET) )
 			log << "Execution Time: " << (*it)->clockTime << endl;
 
+		g_tlbhit += (*it)->tlbhit;
+		log << "TLB Hits: " << (*it)->tlbhit << endl;
+
+		g_tlbmiss += (*it)->tlbmiss;
+		log << "TLB Miss: " << (*it)->tlbmiss << endl;
+
 		log << endl; //For the python script to work
 	}
 
@@ -190,6 +196,12 @@ void cVMM::printResults() {
 	/* I haven't created any options for these yet */
 	log << "Page In: " << pageInCount << endl;
 	log << "Page Out: " << pageOutCount << endl;
+	log << "TLB Hits: " << g_tlbhit << endl;
+	log << "TLB Miss: " << g_tlbmiss << endl;
+
+	fprintf(logStream, "Test Parameters: \n");
+	fprintf(logStream, "\tPage Size: %d\n", PS);
+	fprintf(logStream, "\tFrame Count: %d", numFrames);
 }
 
 

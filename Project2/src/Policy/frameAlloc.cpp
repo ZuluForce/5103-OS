@@ -99,7 +99,10 @@ bool cFixedAlloc::checkAvailable(uint32_t frame, bool pinnedTaken) {
 	return !frames.test(frame);
 }
 
-uint32_t cFixedAlloc::checkOpen() {
+uint32_t cFixedAlloc::checkOpen(bool ignorePinned) {
+	if ( ignorePinned )
+		return openFrames + pinned.count();
+
 	return openFrames;
 }
 

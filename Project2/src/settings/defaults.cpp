@@ -4,7 +4,7 @@
 void setDefaults(INIReader* settings) {
 	/* ---- Globals ---- */
 	SETDP(Global,page_bits,20);
-	SETDP(Global,off_bits,12);
+	SETDP(Global,offset_bits,12);
 
 	SETDP(Global,total_frames,100);
 	SETDP(Global,max_proc_frames,20);

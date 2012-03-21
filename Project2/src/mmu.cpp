@@ -5,7 +5,8 @@ extern FILE* logStream;
 
 cMMU::cMMU() {
 	tlbSize = EXTRACTP(uint16_t, MMU, tlb_size);
-	off_bits = EXTRACTP(int,Global,off_bits);
+	off_bits = EXTRACTP(int,Global,offset_bits);
+
 	string addr_type = EXTRACTP(string,MMU,addr_type);
 	if ( addr_type.compare("hex") == 0 )
 		hexAddr = true;
@@ -28,6 +29,12 @@ cMMU::cMMU() {
 	cout << "\tTLB Size: " << tlbSize << endl;
 	cout << "\tPage Size: " << (1 << off_bits) << endl;
 	cout << "\tAddress Type: " << (hexAddr ? "hex" : "decimal") << endl;
+
+	fprintf(logStream, "MMU initialized with settings: \n");
+	fprintf(logStream, "TLB Size: %d\n", tlbSize);
+	fprintf(logStream, "Page Size: %d\n", pageSize);
+	fprintf(logStream, "Address Type: %s\n\n", (hexAddr ? "hex" : "decimal"));
+
 	/* ----------------------------------- */
 
 	return;
@@ -93,6 +100,7 @@ void cMMU::addTLB(uint32_t VPN, uint32_t frame, bool isWrite) {
 	replaceEntry->VPN = VPN;
 	replaceEntry->frame = frame;
 	replaceEntry->dirty = isWrite ? true : false;
+	replaceEntry->ref = true;
 
 	replaceIndex = ++replaceIndex % tlbSize;
 
@@ -143,6 +151,7 @@ uint32_t cMMU::getAddr(string& sVA, bool isWrite) {
 			fprintf(logStream, "MMU: *TLB HIT* Frame=%d PA=%d\n", FN, PA);
 
 			TLB[i].dirty = isWrite ? true : false;
+			TLB[i].ref = true;
 
 			++tlb_hits;
 			return PA;

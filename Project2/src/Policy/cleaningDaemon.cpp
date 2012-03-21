@@ -19,7 +19,7 @@ cCleanDaemon::~cCleanDaemon() {
 }
 
 uint32_t cCleanDaemon::checkClean() {
-	if ( FAPolicy.checkOpen() < min_thresh ) {
+	if ( FAPolicy.checkOpen(true) < min_thresh ) {
 		/* Time for some cleanup */
 		fprintf(logStream, "\n###-------- Cleaning Daemon Starting --------###\n");
 

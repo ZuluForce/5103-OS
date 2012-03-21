@@ -32,7 +32,7 @@ struct sPTE {
 struct sProc {
 	unsigned int pid;
 	uint16_t cswitches;
-	int pageFaults;
+	int pageFaults, tlbhit, tlbmiss;
 	int clockTime;
 
 	istringstream* data;

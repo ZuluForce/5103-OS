@@ -160,6 +160,7 @@ sProc* loadProc(string& filename) {
 	sProc* newProc = new sProc;
 	newProc->pid = pidGen->getID();
 	newProc->pageFaults = 0;
+	newProc->tlbhit = newProc->tlbmiss = 0;
 	newProc->clockTime = 0;
 	newProc->cswitches = 0;
 	newProc->restart = false;
@@ -210,9 +211,6 @@ int main(int argc, char** argv) {
 	settings = reader;
 	setDefaults(settings); //Add static defaults
 	settings->addOverwriteException("Processes");
-
-	initLog(EXTRACTP(string, Results, trace).c_str());
-	logStream = getStream();
 
 	pidGen = new cIDManager(0);
 
@@ -278,6 +276,11 @@ int main(int argc, char** argv) {
 
 	delete options;
 
+	/* Must initialize the log after all settings files
+	 * have been loaded. */
+	initLog(EXTRACTP(string, Results, trace).c_str());
+	logStream = getStream();
+
 	/* Start up the VMM */
 	try {
 		cPRPolicy* pr_policy;
@@ -294,13 +297,16 @@ int main(int argc, char** argv) {
 		cout << "\tError Msg: " << error.getErrorStr() << endl;
 		cout << "\tInfo Dump: " << error.getDump() << endl;
 
+		closeLog();
 		exit(-1);
 	} catch ( cException& error ) {
 		cout << "Caught Exception: " << endl;
 		cout << "\tErr Msg: " << error.getErrorStr() << endl;
 
+		closeLog();
 		exit(-1);
 	}
 
+	closeLog();
 	return 0;
 }

@@ -8,3 +8,29 @@ Kevin Mehlhaff
 Dylan Bettermann
 	x500: bett0159
 	ID#: 3966450
+	
+How to run:
+	Build - 'make' or 'make all'
+	Clean - 'make clean'
+	Run - 'make run_%' where % is a test number
+		- The tests are stored under ./bin/test_configs/ . For example, within this directory is the T1 test directory. To run this test you would use 'make run_T1'
+		
+		- Alternatively, to run all the tests execute 'make run_all'. This will execute a python script that runs through the test directory and executes all tests. This same script will try to start the graph generator to produce the graphs for the given test.
+		
+Test Outputs:
+	All tests output their results to a directory with the same name but stored under bin/test_results/<testname>/
+		
+
+Note on Python Scripts:
+	The python script for 'make run_all' is stored in the scripts directory and it expects the python interpreter to be located at /usr/bin/python. This script was tested using python 2.7 but it should work back to 2.5.
+	
+	The run_all script does not have any dependencies beyond a python interpreter but the graph generation script does. To generate graphs using makeGraphs.py and its associated packages will require the following packages.
+	
+	Numpy:
+		On Debian/Ubuntu you can get this using 'apt-get install python-numpy'
+		
+	Matplotlib:
+		Using apt again 'apt-get install python-matplotlib'
+		
+	This is not required for our project to work correctly, only so that the automated graph generation works correctly. We could have compiled but the project would become platform dependent and the smallest executable we could make was ~15MB.
+		

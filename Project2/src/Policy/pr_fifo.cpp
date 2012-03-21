@@ -142,7 +142,8 @@ void cPRFifo::clearPages(int numPages) {
 		cVMMExc ex;
 		stringstream stream;
 		stream << "Tried to clear more pages than are occupying frame" << endl;
-		stream << "Check that the threshold for the daemon is greater than the total frame cout" << endl;
+		stream << "Check that the threshold for the daemon is less than the total frame count" << endl;
+		stream << "and that the cleanup amount is less than total memory" << endl;
 		ex.setErrorStr(stream.str());
 		ex.setFatality(false);
 

@@ -4,10 +4,10 @@ configMap = {'x-axis':0,'order':1,'y-axis':2,'output':3,'type':4}
 
 class graphOutputs:
 	def __init__(self):
-		self.xy_re = re.compile("^(sps|sfc|sprt)(i|d)?:(lpf|lcs|let|lpfp|lcsp|letp|gpf|gcs|get):(.+?):?(?:(?<=:)(png|jpg|bmp)$|(?<!:)$)")
+		self.xy_re = re.compile("^(sps|sfc|sprt)(i|d)?:(lpf|lcs|let|ltlbh|ltlbm|lpfp|lcsp|letp|ltlbhp|ltlbmp|gpf|gcs|get|gpgo|gpgi|gtlbh|gtlbm):(.+?):?(?:(?<=:)(png|jpg|bmp)$|(?<!:)$)")
 
-		self.yaxis_lops = ['lpf','lcs','let'] ##lops - local options
-		self.yaxis_gops = ['gpf','gcs','get'] ##gops - global options
+		self.yaxis_lops = ['lpf','lcs','let','ltlbm','ltlbh'] ##lops - local options
+		self.yaxis_gops = ['gpf','gcs','get','gpgo','gpgi','gtlbh','gtlbm'] ##gops - global options
 		
 		self.comment = re.compile("^##.*$")
 		
@@ -72,16 +72,26 @@ class testRun:
 		self.cs_re		= re.compile("^Context Switches: (\d+)$")
 		self.pf_re		= re.compile("^Page Faults: (\d+)$")
 		self.et_re		= re.compile("^Execution Time: (\d+)$")
+		self.tlbh_re	= re.compile("^TLB Hits: (\d+)$")
+		self.tlbm_re	= re.compile("^TLB Miss: (\d+)$")
+		self.pgi_re		= re.compile("^Page In: (\d+)$")
+		self.pgo_re		= re.compile("^Page Out: (\d+)$")
 
 		self.proc_data = []
 		
-		self.global_cs = None
-		self.global_pf = None
-		self.global_et = None
+		self.global_cs		= None
+		self.global_pf		= None
+		self.global_et		= None
+		self.global_tlbh	= None
+		self.global_tlbm	= None
+		self.global_pgo		= None
+		self.global_pgi		= None
 
-		self.avgCS = None
-		self.avgPF = None
-		self.avgET = None
+		self.avgCS		= None
+		self.avgPF		= None
+		self.avgET		= None
+		self.avgTLBH	= None
+		self.avgTLBM	= None
 		
 		##Gets set after data is parsed
 		self.dataMap = {}
@@ -124,14 +134,18 @@ class testRun:
 			if ( match_proc ):
 				proc_num = int(match_proc.group(1)) # Save process number
 				
-				proc_cs = None
-				proc_pf = None
-				proc_et = None
+				proc_cs		= None
+				proc_pf		= None
+				proc_et		= None
+				proc_tlbh	= None
+				proc_tlbm	= None
 				
 				for proc_line in f:
-					match_cs = self.cs_re.match(proc_line)
-					match_pf = self.pf_re.match(proc_line)
-					match_et = self.et_re.match(proc_line)
+					match_cs	= self.cs_re.match(proc_line)
+					match_pf	= self.pf_re.match(proc_line)
+					match_et	= self.et_re.match(proc_line)
+					match_tlbh	= self.tlbh_re.match(proc_line)
+					match_tlbm	= self.tlbm_re.match(proc_line)
 					
 					if ( match_cs ):
 						proc_cs = match_cs.group(1)
@@ -142,8 +156,16 @@ class testRun:
 					elif ( match_et ):
 						proc_et = match_et.group(1)
 						match_et = None
+					elif ( match_tlbh ):
+						#print("Matched local tlb hit: " + match_tlbh.group(1))
+						proc_tlbh = match_tlbh.group(1)
+						match_tlbh = None
+					elif ( match_tlbm ):
+						#print("Matched local tlb miss: " + match_tlbm.group(1))
+						proc_tlbm = match_tlbm.group(1)
+						match_tlbm = None
 					else:
-						self.proc_data.append((proc_num,proc_cs,proc_pf,proc_et))
+						self.proc_data.append((proc_num,proc_cs,proc_pf,proc_et,proc_tlbh,proc_tlbm))
 						
 						##Check that all required params are there
 						if ( self.bitops[3] == '1' and not proc_cs ):
@@ -169,10 +191,15 @@ class testRun:
 			elif ( match_global ):
 				
 				for line in f:
-					match_cs = self.cs_re.match(line)
-					match_pf = self.pf_re.match(line)
-					match_et = self.et_re.match(line)
+					match_cs	= self.cs_re.match(line)
+					match_pf	= self.pf_re.match(line)
+					match_et	= self.et_re.match(line)
+					match_tlbh	= self.tlbh_re.match(line)
+					match_tlbm	= self.tlbm_re.match(line)
+					match_pgo	= self.pgo_re.match(line)
+					match_pgi	= self.pgi_re.match(line)
 				
+					print("Line: " + line)
 					if ( match_cs):
 						self.global_cs = match_cs.group(1)
 						match_cs = None
@@ -182,6 +209,20 @@ class testRun:
 					elif ( match_et ):
 						self.global_et = match_et.group(1)
 						match_et = None
+					elif ( match_tlbh ):
+						print("TLB Hit: " + match_tlbh.group(1))
+						self.global_tlbh = match_tlbh.group(1)
+						match_tlbh = None
+					elif ( match_tlbm ):
+						print("TLB Miss: " + match_tlbm.group(1))
+						self.global_tlbm = match_tlbm.group(1)
+						match_tlbm = None
+					elif ( match_pgo ):
+						self.global_pgo = match_pgo.group(1)
+						match_pgo = None
+					elif ( match_pgi ):
+						self.global_pgi = match_pgi.group(1)
+						match_pgi = None
 					else:
 						##Check that all required params are there
 						if ( self.bitops[0] == '1' and not proc_cs):
@@ -200,7 +241,7 @@ class testRun:
 		##End main for loop
 		
 		print("Global Data: ")
-		print(self.global_cs, self.global_pf, self.global_et)
+		print(self.global_cs, self.global_pf, self.global_et, self.global_tlbh, self.global_tlbm, self.global_pgo, self.global_pgi)
 		
 		print("Finished parsing results file: " + fn)
 		return True
@@ -229,35 +270,49 @@ class testRun:
 		cs_count = 0
 		pf_count = 0
 		et_count = 0
+		tlbh_count = 0
+		tlbm_count = 0
 		
 		## Mapping of the values in the process tuple
 		## Just in-case it changes later this will be
 		## easy to modify
-		tupMap = {'pn':0,'cs':1, 'pf':2, 'et':3}
+		tupMap = {'pn':0,'cs':1, 'pf':2, 'et':3, 'tlbh':4, 'tlbm':5}
 
-		self.dataMap['lcsp'] = []
-		self.dataMap['lpfp'] = []
-		self.dataMap['letp'] = []
+		self.dataMap['lcsp']	= []
+		self.dataMap['lpfp']	= []
+		self.dataMap['letp']	= []
+		self.dataMap['ltlbhp']	= []
+		self.dataMap['ltlbmp']	= []
 		
 		for proc in self.proc_data:
 			cs_count += int(proc[tupMap['cs']])
 			pf_count += int(proc[tupMap['pf']])
 			et_count += int(proc[tupMap['et']])
+			tlbh_count += int(proc[tupMap['tlbh']])
+			tlbm_count += int(proc[tupMap['tlbm']])
 			
 			self.dataMap['lcsp'].append(int(proc[tupMap['cs']]))
 			self.dataMap['lpfp'].append(int(proc[tupMap['pf']]))
 			self.dataMap['letp'].append(int(proc[tupMap['et']]))
+			self.dataMap['ltlbhp'].append(int(proc[tupMap['tlbh']]))
+			self.dataMap['ltlbmp'].append(int(proc[tupMap['tlbm']]))
 
 		self.dataMap['procNum'] = proc[tupMap['pn']]
 		##Take averages
 		self.dataMap['lcs'] = (float(cs_count) / len(self.proc_data),)
 		self.dataMap['lpf'] = (float(pf_count) / len(self.proc_data),)
 		self.dataMap['let'] = (float(et_count) / len(self.proc_data),)
+		self.dataMap['ltlbh'] = (float(tlbh_count) / len(self.proc_data),)
+		self.dataMap['ltlbm'] = (float(tlbm_count) / len(self.proc_data),)
 		
 		## Could just assign the value cs_count. In the future
 		## there may be data at the global level that does not
 		## correspond 1-1 with a local value so I want to keep
 		## them separate.
-		self.dataMap['gcs'] = (int(self.global_cs),)
-		self.dataMap['gpf'] = (int(self.global_pf),)
-		self.dataMap['get'] = (int(self.global_et),)
+		self.dataMap['gcs']		= (int(self.global_cs),  )
+		self.dataMap['gpf']		= (int(self.global_pf),  )
+		self.dataMap['get']		= (int(self.global_et),  )
+		self.dataMap['gpgo']	= (int(self.global_pgo), )
+		self.dataMap['gpgi']	= (int(self.global_pgi), )
+		self.dataMap['gtlbh']	= (int(self.global_tlbh),)
+		self.dataMap['gtlbm']	= (int(self.global_tlbm),)

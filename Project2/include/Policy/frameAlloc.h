@@ -45,7 +45,7 @@ class cFrameAllocPolicy {
 		 */
 		virtual void returnFrame(uint32_t frame) = 0;
 
-		virtual uint32_t checkOpen() = 0;
+		virtual uint32_t checkOpen(bool) = 0;
 
 		virtual bool pin(uint32_t frame) = 0;
 		virtual bool unpin(uint32_t frame) = 0;
@@ -81,7 +81,7 @@ class cFixedAlloc: public cFrameAllocPolicy {
 
 		void returnFrame(uint32_t frame);
 
-		uint32_t checkOpen();
+		uint32_t checkOpen(bool);
 
 		bool pin(uint32_t frame);
 		bool unpin(uint32_t frame);

@@ -50,9 +50,16 @@ if __name__ == '__main__':
 	getFiles(files, sys.argv[1])
 	print("Got filenames from dir: " + sys.argv[1])
 	
+	##Ignore file if it matches these
 	ext_re = re.compile(".+[.]conf$")
+	trace_re = re.compile("^.+\.trace")
+	img_re = re.compile("^.+\.(png|jpg|jpeg|bmp)$")
+	
 	for filename in files:
-		if ( ext_re.match(filename) ):
+		if ( ext_re.match(filename) or trace_re.match(filename)):
+			continue
+			
+		if ( img_re.match(filename) ):
 			continue
 		
 		newTest = testRun()
@@ -66,6 +73,10 @@ if __name__ == '__main__':
 	if ( len(sys.argv) > 2 ):
 		print("Switching to directory: " + sys.argv[2])
 		os.chdir(sys.argv[2])
+	else:
+		print("Switching to directory: " + sys.argv[1])
+		os.chdir(sys.argv[1])
+
 	##Create Results
 	for config in output_results:
 		createGraph(config,tests)
