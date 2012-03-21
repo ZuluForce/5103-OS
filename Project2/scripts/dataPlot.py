@@ -31,65 +31,43 @@ prettyConfig = {'sps':"Page Size",\
 				'lpfp':"Per-Process page faults",\
 				'letp':"Per-Process exec time"}
 
-## Simple merge-sort with the addition of keeping track
-## of how the items are reordered which is necessary if
-## you are going to make accurate graphs
-def sort(lst, newOrder, cmpfn, start = 0, end = -1):
-	if ( end == -1 ):
-		end = len(lst) - 1
+def merge(left,right,lorder,rorder):
+	result = []
+	i,j = 0,0
 	
-	if ( end - start ) <= 0:
-		return
-		
-	if (end - start) == 1:
-		if cmpfn(int(lst[start]),int(lst[end])):
-			##Swap values
-			lst[start],lst[end] = lst[end],lst[start]
-			newOrder[start],newOrder[end] = newOrder[end],newOrder[start]
-		
-		return
+	_newOrder = [None] * (len(lorder) + len(rorder))
 	
-	mid = (start + end) / 2
-	sort(lst, newOrder, cmpfn, start, mid)
-	sort(lst, newOrder, cmpfn, mid+1, end)
-	
-	left = lst[start:mid+1]
-	right = lst[mid+1:end + 1]
-	
-	lindex = rindex = 0
-	_newOrder = list(newOrder) ##Copies the list
-	
-	while lindex < len(left) and rindex < len(right):
-		print(_newOrder)
-	
-		##Take from the right
-		if cmpfn(int(left[lindex]),int(right[rindex])):
-			lst[start + lindex + rindex] = right[rindex]
-			_newOrder[start + lindex + rindex] = newOrder[mid + 1 + rindex]
-			rindex += 1
-			
+	while i < len(left) and j < len(right):
+		if int(left[i]) <= int(right[j]):
+			result.append(left[i])
+			_newOrder[i + j] = lorder[i]
+			i += 1
 		else:
-			##Take from the left side
-			lst[start + lindex + rindex] = left[lindex]
-			_newOrder[start + lindex + rindex] = newOrder[start + lindex]
-			lindex += 1
+			result.append(right[j])
+			_newOrder[i + j] = rorder[j]
+			j += 1
+			
+	result += left[i:]
+	_newOrder[i+j:] = lorder[i:]
+	i += len(left[i:])
 	
-	print(_newOrder)
-	##Fill in any remaining
-	while lindex < len(left):
-		lst[start + lindex + rindex] = left[lindex]
-		print("start + lindex = " + str(start + lindex))
-		print("newOrder[start + lindex] = " + str(newOrder[start + lindex]))
-		_newOrder[start + lindex + rindex] = newOrder[start + lindex]
-		lindex += 1
+	result += right[j:]
+	_newOrder[i+j:] = rorder[j:]
+	j += len(right[j:])
 
-	while rindex < len(right):
-		lst[start + lindex + rindex] = right[rindex]
-		_newOrder[start + lindex + rindex] = newOrder[mid + 1 + rindex]
-		rindex += 1
-		
-	newOrder = _newOrder
-	return
+	return (result,_newOrder)
+
+def mergesort(lst, order):
+	if len(lst) < 2:
+		return (lst,order)
+	
+	middle = len(lst) / 2
+	(left, left_order) = mergesort(lst[:middle],order[:middle])
+	(right, right_order) = mergesort(lst[middle:],order[middle:])
+	
+	#order[:middle] = left_order
+	#order[middle:] = right_order
+	return merge(left,right, left_order, right_order)
 		
 def createGraph(config, tests):
 	x_axis	= config[configMap['x-axis']]
@@ -132,9 +110,12 @@ def createGraph(config, tests):
 	x_reorder = range(len(x_list))
 	
 	if ( order == 'i' ):
-		sort(x_list,x_reorder, lambda a,b: a > b)
+		#sort(x_list,x_reorder, lambda a,b: a > b)
+		(x_list, x_reorder) = mergesort(x_list,x_reorder)
 	elif ( order == 'd' ):
-		sort(x_list,x_reorder, lambda a,b: a < b)
+		#sort(x_list,x_reorder, lambda a,b: a < b)
+		(x_list, x_reorder) = mergesort(x_list,x_reorder)
+		x_list.reverse()
 		
 	print x_list
 	print y_list
