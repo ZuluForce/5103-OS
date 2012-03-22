@@ -71,4 +71,4 @@ run_%: $(TARGET)
 	cd $(BINDIR) && make -f ./test_configs/$*/Make$*
 	
 run_all: $(TARGET)
-	./scripts/run_all.py $(BINDIR) ./test_configs
+	./scripts/run_all.py $(BINDIR) ./test_configs ./test_results
