@@ -29,6 +29,11 @@ struct sPTE {
 	uint8_t time;
 };
 
+struct sPTEOwner {
+	uint32_t pid;
+	sPTE* page;
+};
+
 struct sProc {
 	unsigned int pid;
 	uint16_t cswitches;
