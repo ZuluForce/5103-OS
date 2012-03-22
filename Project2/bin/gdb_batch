@@ -1,1 +1,1 @@
-run -t main.trace -s settings.ini
+run -t traces/main.trace -s settings.ini

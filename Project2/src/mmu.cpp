@@ -17,9 +17,11 @@ cMMU::cMMU() {
 		cerr << "Warning, MMU started with tlb size 0" << endl;
 	}
 
+	ptbr = NULL;
+
 	TLB = (sTLBE*) malloc( sizeof(sTLBE) * tlbSize );
 	memset(TLB, '\0', tlbSize * sizeof(sTLBE));
-	flushTLB();
+	//flushTLB();
 
 	replaceIndex = 0;
 
@@ -49,6 +51,7 @@ void cMMU::flushTLB(bool sync) {
 	/* Flush it */
 	for ( int i = 0; i < tlbSize; ++i) {
 		if ( sync && TLB[i].valid && (TLB[i].dirty || TLB[i].ref)) {
+			assert(ptbr != NULL); //Remove this before handing in.
 			cout << "Syncing TLB entry " << i << " back to page table (page:" << TLB[i].VPN << ")" << endl;
 			ptbr[TLB[i].VPN].flags[FI_DIRTY] = TLB[i].dirty;
 			ptbr[TLB[i].VPN].flags[FI_REF] = TLB[i].ref;
