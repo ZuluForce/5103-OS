@@ -297,6 +297,7 @@ int main(int argc, char** argv) {
 			exit(-1);
 		}
 
+		assert(fa_policy != NULL);
 
 		if ( PR_Type.compare("fifo") == 0 ) {
 			pr_policy = new cPRFifo(*fa_policy);
@@ -306,6 +307,8 @@ int main(int argc, char** argv) {
 			cerr << "Invalid Page Replacement Type: " << PR_Type << endl;
 			exit(-1);
 		}
+
+		assert(pr_policy != NULL);
 
 		cDaemon = new cCleanDaemon(*fa_policy);
 		cVMM* manager = new cVMM(processes, *pr_policy, *cDaemon);

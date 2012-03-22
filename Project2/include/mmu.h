@@ -2,6 +2,7 @@
 #define MMU_CPP_INCLUDED
 
 #include <cassert>
+#include <string.h>
 #include <inttypes.h>
 
 #include "data_structs.h"

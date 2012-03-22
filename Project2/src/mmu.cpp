@@ -18,6 +18,7 @@ cMMU::cMMU() {
 	}
 
 	TLB = (sTLBE*) malloc( sizeof(sTLBE) * tlbSize );
+	memset(TLB, '\0', tlbSize * sizeof(sTLBE));
 	flushTLB();
 
 	replaceIndex = 0;
