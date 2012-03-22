@@ -288,7 +288,18 @@ int main(int argc, char** argv) {
 		cCleanDaemon* cDaemon;
 
 		fa_policy = new cFixedAlloc();
-		pr_policy = new cPRFifo(*fa_policy);
+
+		string prPolicy = EXTRACTP(string,Policy,PR);
+		if (prPolicy.compare("fifo") == 0){
+		    pr_policy = new cPRFifo(*fa_policy);
+        } else if (prPolicy.compare("lru_approx") == 0){
+            pr_policy = new cPRLruApprox(*fa_policy);
+        } else {
+            cout << "Invalid PR policy" << prPolicy << endl;
+            exit(-1);
+        }
+
+
 		cDaemon = new cCleanDaemon(*fa_policy);
 		cVMM* manager = new cVMM(processes, *pr_policy, *cDaemon);
 		manager->start();

@@ -23,7 +23,7 @@ class cPRLruApprox: public cPRPolicy {
 
 	public:
 		cPRLruApprox(cFrameAllocPolicy& _FAPolicy);
-		~cPRFifo();
+		~cPRLruApprox();
 
 		const char* name() { return "lru_approx"; };
 

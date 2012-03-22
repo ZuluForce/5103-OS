@@ -3,5 +3,6 @@
 
 #include "Policy/pageReplace.h"
 #include "Policy/pr_fifo.h"
+#include "Policy/pr_lruApprox.h"
 
 #endif // ALLPR_H_INCLUDED

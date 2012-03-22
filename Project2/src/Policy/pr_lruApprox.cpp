@@ -4,6 +4,19 @@ extern INIReader* settings;
 extern cVMM* VMMCore;
 extern FILE* logStream;
 
+bool compare_times (sPTEOwner *first, sPTEOwner *second){
+    if (first->page == NULL){
+        cVMMExc ex;
+        ex.setErrorStr("PR_IRU_APPROX: Found a null page during daemon cleaning");
+        ex.setDump("--");
+        throw((cVMMExc) ex);
+    }
+    if (first->page->time <= second->page->time){
+        return true;
+    }
+    return false;
+}
+
 cPRLruApprox::cPRLruApprox(cFrameAllocPolicy& _FAPolicy)
 : cPRPolicy(_FAPolicy), FAPolicy(_FAPolicy) {
 
@@ -64,12 +77,15 @@ void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
 
 	//Get the page_owner to replace
 
-	uint_8 min = 255;
+
+	uint8_t min = 255;
 	list<sPTEOwner*>::iterator it, min_it;
 	min_it = pageHist.begin();
     sPTEOwner *curPTEOwner;
     sPTEOwner *minPTEOwner = pageHist.front();
-    for ( it=pageHist.begin() ; it < pageHist.end(); it++ ){
+    min_it = pageHist.begin();
+    it = pageHist.begin();
+    while (it != pageHist.end()){
         curPTEOwner = *it;
 
         if ( curPTEOwner->page == NULL ) {
@@ -80,7 +96,7 @@ void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
 		}
         if (!(curPTEOwner->page->flags[FI_PRESENT])){
 		    cout << "Owner: " << curPTEOwner->pid << " Frame: " << curPTEOwner->page->frame << endl;
-		    pageHist.erase(it);
+		    pageHist.erase(it++);;
 		    continue;
 		}
 
@@ -89,6 +105,7 @@ void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
             min = curPTEOwner->page->time;
             min_it = it;
         }
+        ++it;
     }
 
     // The entire list consisted of pages with non-present frames.
@@ -101,7 +118,7 @@ void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
 
 	pageHist.erase(min_it);
     sPTE *minPTE = minPTEOwner->page;
-    unsigned int minOwner = minPTEOwner->pidl
+    unsigned int minOwner = minPTEOwner->pid;
 
 	proc->PTptr[page].frame = minPTE->frame;
 	FAPolicy.pin(minPTE->frame);
@@ -112,11 +129,11 @@ void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
 	//Check if the page is dirty
 	if ( minPTE->flags[FI_DIRTY] ) {
 		cout << "Spilling frame " << minPTE->frame << " containing a dirty page belonging to Process " << minOwner << endl;
-		fprintf(logStream, "PR_LRU_APPROX: Spilling frame %d contianing a dirty page belonging to Process %d\n", minPTE->frame, minOwner);
+		fprintf(logStream, "PR_LRU_APPROX: Spilling frame %d containing a dirty page belonging to Process %d\n", minPTE->frame, minOwner);
 		sProc* owner = VMMCore->getProcess(minOwner);
 
 		/* Spill old page */
-		minPage->flags[FI_DIRTY] = false;
+		minPTE->flags[FI_DIRTY] = false;
 
 		/* Schedule the desired page to be read in after the
 		 * frame's current page is spilled. */
@@ -147,20 +164,20 @@ void cPRLruApprox::finishedIO(sProc* proc, sPTE* page) {
 }
 
 void cPRLruApprox::updateTime(){
-    vector<sPTEOwner*>::iterator it;
+    list<sPTEOwner*>::iterator it;
     sPTEOwner *curPTEOwner;
     sPTE* curPTE;
-    for ( it=pageHist.begin() ; it < pageHist.end(); it++ ){
+    for ( it=pageHist.begin() ; it != pageHist.end(); it++ ){
         curPTEOwner = *it;
         curPTE = curPTEOwner->page;
         curPTE->time = curPTE->time >> 1;
         if (curPTE->flags[FI_REF]){
-            uint_8 toAdd = 1 << (sizeof(uint_8) - 1);
+            uint8_t toAdd = 1 << (sizeof(uint8_t) * 8 - 1);
             curPTE->time |= toAdd;
         }
         curPTE->flags[FI_REF] = false;
     }
-}s
+}
 
 
 
@@ -171,19 +188,6 @@ void cPRLruApprox::finishedQuanta(sProc* proc) {
     updateTime();
 
 	return;
-}
-
-bool compare_times (sPTEOwner *first, sPTEOwner *second){
-    if (first->page == NULL){
-        cVMMExc ex;
-        ex.setErrorStr("PR_IRU_APPROX: Found a null page during daemon cleaning");
-        ex.setDump("--");
-        throw((cVMMExc) ex);
-    }
-    if (first->page->time <= second->page->time){
-        return true;
-    }
-    return false;
 }
 
 void cPRLruApprox::clearPages(int numPages) {
