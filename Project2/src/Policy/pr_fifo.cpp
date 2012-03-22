@@ -92,7 +92,7 @@ void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
 	//Check if the page is dirty
 	if ( rPage->flags[FI_DIRTY] ) {
 		cout << "Spilling frame " << rPage->frame << " containing a dirty page belonging to Process " << ownerid << endl;
-		fprintf(logStream, "PR_FIFO: Spilling frame %d contianing a dirty page belonging to Process %d\n", rPage->frame, ownerid);
+		fprintf(logStream, "PR_FIFO: Spilling frame %d containing a dirty page belonging to Process %d\n", rPage->frame, ownerid);
 		sProc* owner = VMMCore->getProcess(ownerid);
 
 		/* Spill old page */

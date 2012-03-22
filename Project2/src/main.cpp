@@ -300,6 +300,8 @@ int main(int argc, char** argv) {
 
 		if ( PR_Type.compare("fifo") == 0 ) {
 			pr_policy = new cPRFifo(*fa_policy);
+		} else if ( PR_Type.compare("lru_approx") == 0 ) {
+			pr_policy = new cPRLruApprox(*fa_policy);
 		} else {
 			cerr << "Invalid Page Replacement Type: " << PR_Type << endl;
 			exit(-1);
