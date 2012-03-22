@@ -283,12 +283,28 @@ int main(int argc, char** argv) {
 
 	/* Start up the VMM */
 	try {
-		cPRPolicy* pr_policy;
-		cFrameAllocPolicy* fa_policy;
-		cCleanDaemon* cDaemon;
+		cPRPolicy* pr_policy = NULL;
+		cFrameAllocPolicy* fa_policy = NULL;
+		cCleanDaemon* cDaemon = NULL;
 
-		fa_policy = new cFixedAlloc();
-		pr_policy = new cPRFifo(*fa_policy);
+		string FA_Type = EXTRACTP(string, Policy, FA);
+		string PR_Type = EXTRACTP(string, Policy, PR);
+
+		if ( FA_Type.compare("fixed") == 0 ) {
+			fa_policy = new cFixedAlloc();
+		} else {
+			cerr << "Invalid Frame Allocator Type: " << FA_Type << endl;
+			exit(-1);
+		}
+
+
+		if ( PR_Type.compare("fifo") == 0 ) {
+			pr_policy = new cPRFifo(*fa_policy);
+		} else {
+			cerr << "Invalid Page Replacement Type: " << PR_Type << endl;
+			exit(-1);
+		}
+
 		cDaemon = new cCleanDaemon(*fa_policy);
 		cVMM* manager = new cVMM(processes, *pr_policy, *cDaemon);
 		manager->start();
