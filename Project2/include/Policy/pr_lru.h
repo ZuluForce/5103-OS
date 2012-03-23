@@ -1,14 +1,15 @@
-#ifndef PR_LRUAPPROX_H_INCLUDED
-#define PR_LRUAPPROX_H_INCLUDED
+#ifndef PR_LRU_H_INCLUDED
+#define PR_LRU_H_INCLUDED
 
 #include <list>
 #include <queue>
 #include <sstream>
 #include "vmm_core.h"
+#include <limits.h>
 
 using namespace std;
 
-class cPRLruApprox: public cPRPolicy {
+class cPRLru: public cPRPolicy {
 	private:
 		//history of the pages
 		list<sPTEOwner*> pageHist;
@@ -17,14 +18,12 @@ class cPRLruApprox: public cPRPolicy {
 		cFrameAllocPolicy& FAPolicy;
 
 		uint32_t PTSize;
-
-		void updateTime();
 		sPTEOwner* getPTEOwner();
 		void returnPTEOwner(sPTEOwner* pteOwner);
 
 	public:
-		cPRLruApprox(cFrameAllocPolicy& _FAPolicy);
-		~cPRLruApprox();
+		cPRLru(cFrameAllocPolicy& _FAPolicy);
+		~cPRLru();
 
 		const char* name() { return "lru_approx"; };
 
@@ -49,4 +48,4 @@ class cPRLruApprox: public cPRPolicy {
 		void returnFrame(uint32_t frame);
 };
 
-#endif // PR_LRUAPPROX_H_INCLUDED
+#endif // PR_LRU_H_INCLUDED

@@ -20,6 +20,8 @@ struct sTLBE {
 	uint32_t VPN;
 	uint32_t frame;
 
+	int timestamp;
+
 	/** Is this a valid translation?
 	 *
 	 *	If false, the MMU will ignore any cache
@@ -46,6 +48,8 @@ class cMMU {
 		 *	where new entries are being placed */
 		uint32_t replaceIndex;
 
+		int* VC;
+
 		/* -- Page Table Info --*/
 		sPTE* ptbr;
 
@@ -66,6 +70,8 @@ class cMMU {
 		~cMMU();
 
 		void setPTBR(sPTE* _ptbr) { ptbr = _ptbr; };
+
+		void addVC(int* VC);
 
 		void flushTLB(bool sync = true);
 		void syncTLB();
