@@ -4,20 +4,20 @@ extern INIReader* settings;
 extern cVMM* VMMCore;
 extern FILE* logStream;
 
-bool compare_times (sPTEOwner *first, sPTEOwner *second){
+bool compare_timestamps (sPTEOwner *first, sPTEOwner *second){
     if (first->page == NULL){
         cVMMExc ex;
-        ex.setErrorStr("PR_LRU_APPROX: Found a null page during daemon cleaning");
+        ex.setErrorStr("PR_LRU: Found a null page during daemon cleaning");
         ex.setDump("--");
         throw((cVMMExc) ex);
     }
-    if (first->page->time <= second->page->time){
+    if (first->page->timestamp <= second->page->timestamp){
         return true;
     }
     return false;
 }
 
-cPRLruApprox::cPRLruApprox(cFrameAllocPolicy& _FAPolicy)
+cPRLru::cPRLru(cFrameAllocPolicy& _FAPolicy)
 : cPRPolicy(_FAPolicy), FAPolicy(_FAPolicy) {
 
 	PTSize = EXTRACTP(int, Global, page_bits);
@@ -26,12 +26,12 @@ cPRLruApprox::cPRLruApprox(cFrameAllocPolicy& _FAPolicy)
 	return;
 }
 
-cPRLruApprox::~cPRLruApprox() {
+cPRLru::~cPRLru() {
 
 	return;
 }
 
-sPTEOwner* cPRLruApprox::getPTEOwner() {
+sPTEOwner* cPRLru::getPTEOwner() {
 	sPTEOwner* newPTEOwner;
 	if ( pteowner_cache.size() ) {
 		newPTEOwner = pteowner_cache.front();
@@ -43,23 +43,21 @@ sPTEOwner* cPRLruApprox::getPTEOwner() {
 	return newPTEOwner;
 }
 
-void cPRLruApprox::returnPTEOwner(sPTEOwner* pteOwner){
+void cPRLru::returnPTEOwner(sPTEOwner* pteOwner){
     assert(pteOwner!= NULL);
     pteOwner->pid = 0;
     pteOwner->page = 0;
     pteowner_cache.push(pteOwner);
 }
 
-void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
-
-    updateTime();
+void cPRLru::resolvePageFault(sProc* proc, uint32_t page) {
 
 	//Check for any open frames
 	pair<bool,uint32_t> freeFrame = FAPolicy.getFrame(proc);
 
 	if ( freeFrame.first ) {
-		cout << "PR_LRU_APPROX: Found free frame (" << freeFrame.second << ") for page" << endl;
-		fprintf(logStream, "PR_LRU_APPROX: Found Free Frame (%d) for page\n", freeFrame.second);
+		cout << "PR_LRU: Found free frame (" << freeFrame.second << ") for page" << endl;
+		fprintf(logStream, "PR_LRU: Found Free Frame (%d) for page\n", freeFrame.second);
 
 		/* Update the page table entry */
 		proc->PTptr[page].frame = freeFrame.second;
@@ -85,7 +83,7 @@ void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
 	//Get the page_owner to replace
 
 
-	uint8_t min = 255;
+	int min = INT_MAX;
 	list<sPTEOwner*>::iterator it, min_it;
 	min_it = pageHist.begin();
     sPTEOwner *curPTEOwner;
@@ -97,7 +95,7 @@ void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
 
         if ( curPTEOwner->page == NULL ) {
 			cVMMExc ex;
-			ex.setErrorStr("PR_LRU_APPROX: Extracted NULL PTE from list");
+			ex.setErrorStr("PR_LRU: Extracted NULL PTE from list");
 			ex.setDump("--");
 			throw((cVMMExc) ex);
 		}
@@ -108,11 +106,9 @@ void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
 		    continue;
 		}
 
-		cout << "Timestamp: " << curPTEOwner->page->timestamp << endl;
-
-        if (curPTEOwner->page->time < min){
+        if (curPTEOwner->page->timestamp < min){
             minPTEOwner = curPTEOwner;
-            min = curPTEOwner->page->time;
+            min = curPTEOwner->page->timestamp;
             min_it = it;
         }
         ++it;
@@ -121,7 +117,7 @@ void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
     // The entire list consisted of pages with non-present frames.
     if (!(minPTEOwner->page->flags[FI_PRESENT])){
         cVMMExc ex;
-        ex.setErrorStr("PR_LRU_APPROX: No valid frames for replacement in list");
+        ex.setErrorStr("PR_LRU: No valid frames for replacement in list");
         ex.setDump("--");
         throw((cVMMExc) ex);
     }
@@ -160,7 +156,7 @@ void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
 	return;
 }
 
-void cPRLruApprox::finishedIO(sProc* proc, sPTE* page) {
+void cPRLru::finishedIO(sProc* proc, sPTE* page) {
 	assert(proc != NULL);
 	assert(page != NULL);
     sPTEOwner *hist = getPTEOwner();
@@ -173,34 +169,12 @@ void cPRLruApprox::finishedIO(sProc* proc, sPTE* page) {
 	return;
 }
 
-void cPRLruApprox::updateTime(){
-    list<sPTEOwner*>::iterator it;
-    sPTEOwner *curPTEOwner;
-    sPTE* curPTE;
-    for ( it=pageHist.begin() ; it != pageHist.end(); it++ ){
-        curPTEOwner = *it;
-        curPTE = curPTEOwner->page;
-        curPTE->time = curPTE->time >> 1;
-        if (curPTE->flags[FI_REF]){
-            uint8_t toAdd = 1 << (sizeof(uint8_t) * 8 - 1);
-            curPTE->time |= toAdd;
-        }
-        curPTE->flags[FI_REF] = false;
-    }
-}
-
-
-
-void cPRLruApprox::finishedQuanta(sProc* proc) {
+void cPRLru::finishedQuanta(sProc* proc) {
 	assert(proc != NULL);
-	/* For LRU you would want to do something with
-	 * the reference bit here */
-    updateTime();
-
 	return;
 }
 
-void cPRLruApprox::clearPages(int numPages) {
+void cPRLru::clearPages(int numPages) {
 	assert(numPages >= 0);
 
 	if ( numPages > pageHist.size() ) {
@@ -219,8 +193,8 @@ void cPRLruApprox::clearPages(int numPages) {
 		throw((cVMMExc) ex);
 	}
 
-	// Sort the list by time
-    pageHist.sort(compare_times);
+	// Sort the list by time so minimum times are at the front
+    pageHist.sort(compare_timestamps);
 
 	sPTE* rmPage;
 	unsigned int owner;
@@ -254,10 +228,10 @@ void cPRLruApprox::clearPages(int numPages) {
 	return;
 }
 
-void cPRLruApprox::unpinFrame(uint32_t frame) {
+void cPRLru::unpinFrame(uint32_t frame) {
 	FAPolicy.unpin(frame);
 }
 
-void cPRLruApprox::returnFrame(uint32_t frame) {
+void cPRLru::returnFrame(uint32_t frame) {
 	FAPolicy.returnFrame(frame);
 }

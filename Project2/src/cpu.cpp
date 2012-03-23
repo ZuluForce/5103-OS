@@ -28,6 +28,7 @@ cCPU::~cCPU() {
 
 void cCPU::addVC(int* VC) {
 	this->VC = VC;
+	mmu.addVC(VC);
 }
 
 void cCPU::incVC(int amnt) {

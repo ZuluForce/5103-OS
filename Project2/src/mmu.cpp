@@ -47,6 +47,10 @@ cMMU::~cMMU() {
 	free(TLB);
 }
 
+void cMMU::addVC(int* VC) {
+	this->VC = VC;
+}
+
 void cMMU::flushTLB(bool sync) {
 	/* Flush it */
 	for ( int i = 0; i < tlbSize; ++i) {
@@ -55,11 +59,13 @@ void cMMU::flushTLB(bool sync) {
 			cout << "Syncing TLB entry " << i << " back to page table (page:" << TLB[i].VPN << ")" << endl;
 			ptbr[TLB[i].VPN].flags[FI_DIRTY] = TLB[i].dirty;
 			ptbr[TLB[i].VPN].flags[FI_REF] = TLB[i].ref;
+			ptbr[TLB[i].VPN].timestamp = TLB[i].timestamp;
 		}
 
 		TLB[i].valid = false;
 		TLB[i].dirty = false;
 		TLB[i].ref = false;
+		TLB[i].timestamp = 0;
 	}
 
 	replaceIndex = 0;
@@ -75,6 +81,8 @@ void cMMU::syncTLB() {
 			cout << "Syncing TLB entry " << i << " to the page table (page:" << TLB[i].VPN << ")" << endl;
 			ptbr[TLB[i].VPN].flags[FI_DIRTY] = TLB[i].dirty;
 			ptbr[TLB[i].VPN].flags[FI_REF] = TLB[i].ref;
+			ptbr[TLB[i].VPN].timestamp = TLB[i].timestamp;
+			
 			//TLB[i].dirty = false;
 			//TLB[i].ref = false;
 		}
@@ -105,6 +113,7 @@ void cMMU::addTLB(uint32_t VPN, uint32_t frame, bool isWrite) {
 	replaceEntry->frame = frame;
 	replaceEntry->dirty = isWrite ? true : false;
 	replaceEntry->ref = true;
+	replaceEntry->timestamp = *VC;
 
 	replaceIndex = ++replaceIndex % tlbSize;
 
@@ -156,6 +165,7 @@ uint32_t cMMU::getAddr(string& sVA, bool isWrite) {
 
 			TLB[i].dirty = isWrite ? true : false;
 			TLB[i].ref = true;
+			TLB[i].timestamp = *VC;
 
 			++tlb_hits;
 			return PA;

@@ -60,7 +60,7 @@ for dir in test_dirs:
 	if ( error > 0 ):
 		print("Error Executing: " + exec_str)
 		print("Return Code: " + str(error))
-		input("Press <enter> to continue")
+		raw_input("Press <enter> to continue")
 
 if output_dirs == None:
 	exit(0)

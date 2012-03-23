@@ -12,7 +12,7 @@ LFLAGS=-L/usr/lib/
 
 DEPS= vmm_core.o iniReader.o mmu.o cpu.o round_robin.o frameAlloc.o pageReplace.o\
 	pr_fifo.o defaults.o id.o strConv.o io_control.o logger.o cleaningDaemon.o\
-	pr_lruApprox.o
+	pr_lruApprox.o pr_lru.o
 ##Dependencies with obj directory appended
 _DEPS=$(patsubst %,$(OBJDIR)/%,$(DEPS))
 

@@ -18,6 +18,9 @@ enum eFlagIndex {
 struct sPTE {
 	uint32_t frame;
 
+    // This gets set in hardware by the MMU
+	int timestamp;
+
 	/** Page Table Entry (PTE) VM flags
 	 *
 	 *	flags[0]: Present/absent
@@ -26,6 +29,8 @@ struct sPTE {
 	 */
 	bool flags[3];
 
+    // This is set in software by the pr_lruApprox after each quanta
+    //  or on a page fault.
 	uint8_t time;
 };
 
