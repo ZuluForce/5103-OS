@@ -53,8 +53,14 @@ for dir in test_dirs:
 		continue
 
 	##Otherwise execute the makefile
-	print("Executing: " + "make -f " + os.path.join(test_path,makefile))
-	os.system("make -f %s" % (os.path.join(test_path, makefile)))
+	exec_str = "make -f %s" % (os.path.join(test_path, makefile))
+	print("Executing: " + exec_str)
+	error = os.system(exec_str)
+	
+	if ( error > 0 ):
+		print("Error Executing: " + exec_str)
+		print("Return Code: " + str(error))
+		input("Press <enter> to continue")
 
 if output_dirs == None:
 	exit(0)

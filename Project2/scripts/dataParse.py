@@ -199,7 +199,7 @@ class testRun:
 					match_pgo	= self.pgo_re.match(line)
 					match_pgi	= self.pgi_re.match(line)
 				
-					print("Line: " + line)
+					#print("Line: " + line)
 					if ( match_cs):
 						self.global_cs = match_cs.group(1)
 						match_cs = None

@@ -75,8 +75,8 @@ void cMMU::syncTLB() {
 			cout << "Syncing TLB entry " << i << " to the page table (page:" << TLB[i].VPN << ")" << endl;
 			ptbr[TLB[i].VPN].flags[FI_DIRTY] = TLB[i].dirty;
 			ptbr[TLB[i].VPN].flags[FI_REF] = TLB[i].ref;
-			TLB[i].dirty = false;
-			TLB[i].ref = false;
+			//TLB[i].dirty = false;
+			//TLB[i].ref = false;
 		}
 	}
 
