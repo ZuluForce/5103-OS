@@ -135,22 +135,7 @@ void cVMM::printResults() {
 		cerr << "Error opening result log file " << logName << endl;
 	}
 
-	/* Gather all the potential opitons */
-	dynamic_bitset<> options(1 << (sizeof(eResOptions) + 1));
-	options.none();
-
-	/* Global Options */
-	options.set(G_CS, EXTRACTP(bool, Results, g_cs));
-	options.set(G_PF, EXTRACTP(bool, Results, g_pf));
-	options.set(G_ET, EXTRACTP(bool, Results, g_et));
-
-	/* Local per-process options */
-	options.set(L_CS, EXTRACTP(bool, Results, l_cs));
-	options.set(L_PF, EXTRACTP(bool, Results, l_pf));
-	options.set(L_ET, EXTRACTP(bool, Results, l_et));
-
 	/* ---- Print Setting Info for Python Script ---- */
-	log << toBinary(options.to_ulong()) << endl;
 	log << PS << ":" << numFrames << ":" << PRModule.name();
 	log << ":" << EXTRACTP(string, Results,title) << endl;
 
@@ -163,16 +148,13 @@ void cVMM::printResults() {
 		log << "Process " << (*it)->pid << ":" << endl;
 
 		g_cs += (*it)->cswitches;
-		if ( options.test(L_CS) )
-			log << "Context Switches: " << (*it)->cswitches << endl;
+		log << "Context Switches: " << (*it)->cswitches << endl;
 
 		g_pf += (*it)->pageFaults;
-		if ( options.test(L_PF) )
-			log << "Page Faults: " << (*it)->pageFaults << endl;
+		log << "Page Faults: " << (*it)->pageFaults << endl;
 
 		g_et += (*it)->clockTime;
-		if ( options.test(L_ET) )
-			log << "Execution Time: " << (*it)->clockTime << endl;
+		log << "Execution Time: " << (*it)->clockTime << endl;
 
 		g_tlbhit += (*it)->tlbhit;
 		log << "TLB Hits: " << (*it)->tlbhit << endl;
@@ -184,16 +166,9 @@ void cVMM::printResults() {
 	}
 
 	log << "\nGlobal VMM info:" << endl;
-	if ( options.test(G_CS) )
-		log << "Context Switches: " << g_cs << endl;
-
-	if ( options.test(G_PF) )
-		log << "Page Faults: " << g_pf << endl;
-
-	if ( options.test(G_ET) )
-		log << "Execution Time: " << g_et << endl;
-
-	/* I haven't created any options for these yet */
+	log << "Context Switches: " << g_cs << endl;
+	log << "Page Faults: " << g_pf << endl;
+	log << "Execution Time: " << g_et << endl;
 	log << "Page In: " << pageInCount << endl;
 	log << "Page Out: " << pageOutCount << endl;
 	log << "TLB Hits: " << g_tlbhit << endl;
@@ -202,6 +177,7 @@ void cVMM::printResults() {
 	fprintf(logStream, "Test Parameters: \n");
 	fprintf(logStream, "\tPage Size: %d\n", PS);
 	fprintf(logStream, "\tFrame Count: %d", numFrames);
+	fprintf(logStream, "\tPR Module: %s\n", PRModule.name());
 }
 
 

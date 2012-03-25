@@ -14,7 +14,12 @@ class graphOutputs:
 		self.outputs = []
 		
 	def loadOutputs(self, filename):
-		f = open(filename,"r")
+		try:
+			f = open(filename,"r")
+		except IOError,e:
+			print("Failed to open configuration file: " + filename)
+			print("\tError: " + str(e))
+			exit(-1)
 		
 		match = None
 		
@@ -64,7 +69,7 @@ class testRun:
 		self.bits_re = re.compile("^[01]+$")
 		
 		#Options PS:FN
-		self.test_params = re.compile("^(\d+):(\d+):([a-zA-Z0-9 -]+):([a-zA-z0-9]+$)")
+		self.test_params = re.compile("^(\d+):(\d+):([a-zA-Z0-9-_]+):([a-zA-z0-9_-]+)$")
 		
 		##Match a process
 		self.proc_re	= re.compile("^Process (\d+):$")
@@ -107,16 +112,6 @@ class testRun:
 		self.filename = fn
 		
 		f = open(fn,"r")
-		
-		line = f.readline()
-		
-		match = self.bits_re.match(line)
-		if ( match == None ):
-			print("Test results %s is missing option bitstring" % (fn))
-			return False
-			
-		self.bitops = match.group(0)
-		print(self.bitops)
 		
 		match = None
 		line = f.readline()
@@ -164,22 +159,8 @@ class testRun:
 						#print("Matched local tlb miss: " + match_tlbm.group(1))
 						proc_tlbm = match_tlbm.group(1)
 						match_tlbm = None
-					else:
+					else:	
 						self.proc_data.append((proc_num,proc_cs,proc_pf,proc_et,proc_tlbh,proc_tlbm))
-						
-						##Check that all required params are there
-						if ( self.bitops[3] == '1' and not proc_cs ):
-							print("Missing context switch data for process %d in file %s"\
-							% (proc_num,fn))
-							return False
-						if ( self.bitops[4] == '1' and not proc_pf ):
-							print("Missing page fault data for process %d in file %s"\
-							% (proc_num,fn))
-							return False
-						if ( self.bitops[5] == '1' and not proc_et ):
-							print("Missing exec time data for process %d in file %s"\
-							% (proc_num,fn))
-							return False
 
 						print("Finished parsing process data:")
 						print("\t" + str(self.proc_data[-1])) ##Print out tuple
@@ -224,17 +205,7 @@ class testRun:
 						self.global_pgi = match_pgi.group(1)
 						match_pgi = None
 					else:
-						##Check that all required params are there
-						if ( self.bitops[0] == '1' and not proc_cs):
-							print("Missing global context switch data in %s" % (fn))
-							return False
-						if ( self.bitops[1] == '1' and not proc_pf ):
-							print("Missing global page fault data in %s" % (fn))
-							return False
-						if ( self.bitops[2] == '1' and not proc_et ):
-							print("Missing global exec time data in %s"	% (fn))
-							return False
-
+						print("Invalid line in global data results: " + line)
 						break
 				##End global data for loop
 			##End global data if statement
@@ -285,11 +256,11 @@ class testRun:
 		self.dataMap['ltlbmp']	= []
 		
 		for proc in self.proc_data:
-			cs_count += int(proc[tupMap['cs']])
-			pf_count += int(proc[tupMap['pf']])
-			et_count += int(proc[tupMap['et']])
-			tlbh_count += int(proc[tupMap['tlbh']])
-			tlbm_count += int(proc[tupMap['tlbm']])
+			cs_count	+= int(proc[tupMap['cs']])
+			pf_count	+= int(proc[tupMap['pf']])
+			et_count	+= int(proc[tupMap['et']])
+			tlbh_count	+= int(proc[tupMap['tlbh']])
+			tlbm_count	+= int(proc[tupMap['tlbm']])
 			
 			self.dataMap['lcsp'].append(int(proc[tupMap['cs']]))
 			self.dataMap['lpfp'].append(int(proc[tupMap['pf']]))
@@ -299,11 +270,11 @@ class testRun:
 
 		self.dataMap['procNum'] = proc[tupMap['pn']]
 		##Take averages
-		self.dataMap['lcs'] = (float(cs_count) / len(self.proc_data),)
-		self.dataMap['lpf'] = (float(pf_count) / len(self.proc_data),)
-		self.dataMap['let'] = (float(et_count) / len(self.proc_data),)
-		self.dataMap['ltlbh'] = (float(tlbh_count) / len(self.proc_data),)
-		self.dataMap['ltlbm'] = (float(tlbm_count) / len(self.proc_data),)
+		self.dataMap['lcs']		= (float(cs_count) / len(self.proc_data),)
+		self.dataMap['lpf']		= (float(pf_count) / len(self.proc_data),)
+		self.dataMap['let']		= (float(et_count) / len(self.proc_data),)
+		self.dataMap['ltlbh']	= (float(tlbh_count) / len(self.proc_data),)
+		self.dataMap['ltlbm']	= (float(tlbm_count) / len(self.proc_data),)
 		
 		## Could just assign the value cs_count. In the future
 		## there may be data at the global level that does not

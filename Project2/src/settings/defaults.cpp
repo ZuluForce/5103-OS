@@ -33,14 +33,6 @@ void setDefaults(INIReader* settings) {
 	SETDP(Results,title,default);
 	SETDP(Results,trace,results.trace);
 
-	SETDP(Results,g_cs,1);
-	SETDP(Results,g_pf,1);
-	SETDP(Results,g_et,1);
-
-	SETDP(Results,l_cs,1);
-	SETDP(Results,l_pf,1);
-	SETDP(Results,l_et,1);
-
 	// Modules that are not known at compile time such as
 	// the frame allocation and page replacement policies
 	// should add their defualt settings at object creation
