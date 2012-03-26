@@ -23,13 +23,13 @@ class cPRFifo: public cPRPolicy {
 
 		const char* name() { return "fifo"; };
 
-		void resolvePageFault(sProc* proc, uint32_t page);
+		ePRStatus resolvePageFault(sProc* proc, uint32_t page);
 
 		void finishedQuanta(sProc* proc);
 
 		void finishedIO(sProc* proc, sPTE* page);
 
-		void clearPages(int numPages);
+		bool clearPages(int numPages);
 
 		void unpinFrame(uint32_t frame);
 

@@ -40,6 +40,24 @@ cVMM::cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM, cCleanDaemon& _cDaemon)
 
 	VMMCore = this;
 
+	int io_time = EXTRACTP(int, Timings, pf_time);
+	int cs_time = EXTRACTP(int, Timings, cs_time);
+
+	//This is the time to context switch and execute/pf all but the first process
+	//+2: one is for cpu instruction time and the other for io_req time
+	int timeCheck = ((procs.size() - 2) * (cs_time + 2));
+
+	/* Precheck for potential circular faults */
+	if ( numFrames < procs.size() &&
+		io_time <= timeCheck) {
+		cout << endl;
+		cout << "!!!! Detected potential circular fault before starting !!!!" << endl;
+		cout << "First page-in would be replaced before process 0 executes again" << endl << endl;
+
+		if ( !EXTRACTP(bool, Policy, ignore_circular_fault_warn) )
+			exit(-1);
+	}
+
 	return;
 }
 
@@ -101,6 +119,25 @@ void cVMM::cleanupProcess(sProc* proc) {
 
 	/* Free page table memory */
 	//free(proc->PTptr);
+
+	return;
+}
+
+/* Any time page/s are removed outside of the normal demand
+ * paging and PR policy this should be called to prevent
+ * false positives on the circular fault check.
+ *
+ * For example, when the cleaning daemon comes through this
+ * should be called so the cpu doesn't think that the process
+ * execution order caused a circular fault when in fact it was
+ * an unfortunate circumstance of the cleaning daemon.
+ */
+void cVMM::clearCircChecks() {
+	vector<sProc*>::iterator it;
+
+	for ( it = procs.begin(); it != procs.end(); ++it) {
+		(*it)->circularFaultCheck = false;
+	}
 
 	return;
 }
@@ -260,23 +297,64 @@ int cVMM::start() {
 			cleanupProcess(runningProc);
 
 			runningProc = NULL;
-		} else if ( result & CPU_PF ) {
+		} else if ( result & CPU_PF || result & CPU_CIRC_PF) {
 			cout << "**Process "<< runningProc->pid << " Page Faulted**" << endl;
 			fprintf(logStream, "**Process %d page faulted**\n", runningProc->pid);
 
 			++runningProc->pageFaults;
 
-			PRModule.resolvePageFault(runningProc, cpu.getFaultPage());
+			ePRStatus result;
 
-			cout << "Blocking process" << endl;
-			scheduler.setBlocked(runningProc);
+			if ( result & CPU_CIRC_PF ) {
+				cout << "CPU thinks there may be a circular fault" << endl;
+				fprintf(logStream, "CPU thinks there may be a circular fault\n");
+
+				result = PRModule.resolveCircularPF(runningProc, cpu.getFaultPage());
+
+				switch ( result ) {
+				case PR_NO_AVAIL:
+				case PR_NO_ACTION:
+					//So we don't get future false positives
+					runningProc->circularFaultCheck = false;
+
+					break;
+
+				case PR_SERVICED:
+				case PR_SERVICED_IO:
+					cout << "Blocking process" << endl;
+					scheduler.setBlocked(runningProc);
+					break;
+
+				default:
+					cout << "Invalid result value from PRModule: " << result << endl;
+					break;
+				}
+			} else {
+				result = PRModule.resolvePageFault(runningProc, cpu.getFaultPage());
+
+				switch( result ) {
+				case PR_SERVICED:
+				case PR_SERVICED_IO:
+					cout << "Blocking process" << endl;
+					scheduler.setBlocked(runningProc);
+					break;
+
+				case PR_NO_AVAIL:
+				case PR_NO_ACTION:
+					runningProc->circularFaultCheck = false;
+					break;
+				}
+			}
+
 		} else {
 			PRModule.finishedQuanta(runningProc);
 		}
 
 		/* Cleaning Daemon checks if cleaning is needed and
 		 * notifies the PR module how many to clean, if any */
-		PRModule.clearPages(cDaemon.checkClean());
+		if ( PRModule.clearPages(cDaemon.checkClean()) )
+			clearCircChecks();
+
 		cout << endl;
 		fprintf(logStream, "\n");
 	}

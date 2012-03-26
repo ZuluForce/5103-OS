@@ -58,6 +58,7 @@ class cVMM {
 
 		void initProcesses();
 		void cleanupProcess(sProc* proc);
+		void clearCircChecks();
 
 		void printResults();
 

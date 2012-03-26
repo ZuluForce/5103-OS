@@ -4,10 +4,6 @@ extern INIReader* settings;
 extern FILE* logStream;
 
 cRoundRobin::cRoundRobin(): blockedID(0) {
-	/* ---- Set Defaults ---- */
-	settings->addDefault("R-R", "quanta", "5");
-
-	quantum = EXTRACTP(int, R-R, quanta);
 
 	runningProc = NULL;
 	clockTicksUsed = 0;
@@ -66,9 +62,6 @@ void cRoundRobin::setBlocked(sProc* proc) {
 	++totalBlocked;
 	runningProc = NULL;
 
-	// Reset the clock ticks since we will be picking a new process to run.
-	clockTicksUsed = 0;
-
 	return;
 }
 
@@ -119,10 +112,6 @@ sProc* cRoundRobin::getNextToRun() {
 	assert(toRun != NULL);
 
 	runningProc = toRun;
-	//clockTicksUsed++;
-
-	//pthread_mutex_unlock(&blockedLock);
-
 
 	return toRun;
 }

@@ -1,0 +1,9 @@
+TARGET=main
+R1=./$(TARGET) -s settings.ini ./test_configs/LowMem2/LowMem2.ini
+R2=$(R1) Results:file:./test_results/LowMem2/r2.log	Results:trace:./test_results/LowMem2/r2.trace
+R3=$(R1) Results:file:./test_results/LowMem2/r3.log	Results:trace:./test_results/LowMem2/r3.trace
+
+all:
+	$(R1)
+	$(R2)
+	$(R3)
