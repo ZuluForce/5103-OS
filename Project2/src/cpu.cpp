@@ -125,6 +125,7 @@ uint8_t cCPU::run() {
 			/* Save instruction */
 			curProc->restart = true;
 			curProc->rline = line;
+			++(curProc->repeatedFaults);
 
 			/* Sync the tlb with the page table */
 			mmu.syncTLB();
@@ -139,6 +140,7 @@ uint8_t cCPU::run() {
 			return CPU_TERM;
 	}
 
+	curProc->repeatedFaults = 0;
 	mmu.syncTLB();
 	return CPU_OK;
 }

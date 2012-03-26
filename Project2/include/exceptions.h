@@ -63,4 +63,12 @@ class cIOExc: public cException {
 		string& getTrace() { return IO_Data_Trace; };
 };
 
+class cPRExc: public cException {
+	private:
+		string name;
+
+	public:
+		void setName(const string& _name) { name = _name; };
+};
+
 #endif // EXCEPTIONS_H_INCLUDED

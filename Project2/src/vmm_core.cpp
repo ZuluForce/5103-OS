@@ -76,6 +76,8 @@ void cVMM::initProcesses() {
 }
 
 void cVMM::cleanupProcess(sProc* proc) {
+	assert(proc != NULL);
+
 	/* We hold on to the process struct to print out stats
 	 * in the end so we use PC values = -1 as a sentinel of
 	 * a terminated process
@@ -104,11 +106,15 @@ void cVMM::cleanupProcess(sProc* proc) {
 }
 
 sIOContext* cVMM::pageOut(sProc* proc, uint32_t page, sIOContext* ctx) {
+	assert(proc != NULL);
+
 	ioCtrl->scheduleIO(proc, page, IO_OUT, ctx);
 	++pageOutCount;
 }
 
 sIOContext* cVMM::pageIn(sProc* proc, uint32_t page, eIOType iotype, sIOContext* ctx) {
+	assert(proc != NULL);
+
 	ioCtrl->scheduleIO(proc, page, iotype, ctx);
 	++pageInCount;
 }

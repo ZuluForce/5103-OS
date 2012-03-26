@@ -44,7 +44,21 @@ void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
 	if ( pageHist.size() == 0 ) {
 		cerr << "An error has occured!!" << endl;
 		cerr << "There are no open frames and none to spill. ";
-		cerr << "Was the VMM initialized with 0 global frames?" << endl;
+
+		stringstream stream;
+		stream << "No open frames and none to spill" << endl;
+		cPRExc ex;
+		ex.setErrorStr(stream.str());
+		ex.setFatality(true);
+
+		stream.str(std::string());
+		stream.clear();
+
+		stream << "PRModule: " << name() << endl;
+		ex.setName(stream.str());
+
+		exit(-1);
+		throw((cPRExc) ex);
 	}
 
 	//Get the page to replace and its owner's pid

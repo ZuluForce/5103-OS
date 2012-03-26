@@ -56,6 +56,7 @@ struct sProc {
 	int maxPC;						/**< Max PC. Based on size of process file */
 
 	bool restart;					/**< Used to flag an instruction restart */
+	int repeatedFaults;				/**< Number of repeated page faults */
 	string rline;					/**< Process instruction for the restart */
 
 	sPTE* PTptr;					/**< Pointer to process' page table */

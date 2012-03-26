@@ -25,7 +25,7 @@ class cPRLru: public cPRPolicy {
 		cPRLru(cFrameAllocPolicy& _FAPolicy);
 		~cPRLru();
 
-		const char* name() { return "lru_approx"; };
+		const char* name() { return "lru"; };
 
 		void resolvePageFault(sProc* proc, uint32_t page);
 
