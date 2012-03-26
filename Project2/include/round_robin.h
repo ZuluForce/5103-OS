@@ -12,7 +12,12 @@
 
 using namespace std;
 
-/** Round Robin Scheduler */
+/** Round Robin Scheduler
+ *
+ *	Nothing too much different here from project1 and since it
+ *	isn't a core piece to this project it won't be documented in
+ *	detail.
+ */
 class cRoundRobin {
 	private:
         /* Internal Datastructures */

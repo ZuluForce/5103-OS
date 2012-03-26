@@ -1,9 +1,23 @@
 #ifndef EXCEPTIONS_H_INCLUDED
 #define EXCEPTIONS_H_INCLUDED
 
+/** @file */
+
+/** Distinguish between exceptions in a generic class
+ *
+ *	Since we didn't really have time to expand the
+ *	exception system for this project this never really
+ *	expanded.
+ */
 enum eExType {
-	PR_NO_FRAMES_AVAIL,
+	PR_NO_FRAMES_AVAIL, /**< No frames are available. Thrown by PRModule */
 };
+
+/** Generic exception class
+ *
+ *	These exceptions are caught in main and their
+ *	error messages are printed out.
+ */
 
 class cException {
 	private:
@@ -26,7 +40,7 @@ class cException {
 		bool isFatal() { return fatal; };
 };
 
-/**< A class handling exceptions in the VMM Core */
+/** A class handling exceptions in the VMM Core */
 class cVMMExc: public cException {
 	private:
 		string dumpInfo;
@@ -39,6 +53,7 @@ class cVMMExc: public cException {
 		void setType(eExType _type) { type = _type; };
 };
 
+/** Class handling exceptions in the I/O system */
 class cIOExc: public cException {
 	private:
 		string IO_Data_Trace;

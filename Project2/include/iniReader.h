@@ -1,6 +1,8 @@
 #ifndef INIREADER_H_INCLUDED
 #define INIREADER_H_INCLUDED
 
+/** @file */
+
 #include <stdlib.h>
 #include <string>
 #include <map>
@@ -27,6 +29,7 @@ typedef map<string,DefaultKeyMap> DefaultMap;
 #define EXTRACT_(obj,type,sec,opt) settings.extractValue<type>(STR(sec),STR(opt))
 #define EXTRACTP_(obj,type,sec,opt) settings->extractValue<type>(STR(sec),STR(opt))
 
+/** Struct for holding a single settings key and its value */
 struct KeyRecord {
     protected:
         string value;
@@ -54,6 +57,13 @@ struct KeyRecord {
         }
 };
 
+/** Class for parsing and storing contents of .ini files
+ *
+ *	This was taken from another project I was working on with
+ *	some small addiitions (overriding settings). There is a lot
+ *	here and because it is not central to this project it won't
+ *	be documented in detail.
+ */
 class INIReader {
     protected:
         fstream ini_file;
@@ -82,6 +92,7 @@ class INIReader {
 
         DefaultKeyMap *def_temp_map;
 
+		//These sections do not allow settings to be overwritten
         vector<string> noOverwriteSection;
 
         //Loads the sections and (key,value) pairs from the ini file
@@ -137,6 +148,7 @@ __attribute__((unused)) static bool strEq(const string& s1, const string& s2) {
 	return false;
 }
 
+//Find item in vector using comp_fn for comparison. Only returns true/false, not location
 template<class T>
 bool findInVector(vector<T>& vec, const T& item, bool (*comp_fn) (const T&,const T&)) {
 	typename std::vector<T>::iterator it;

@@ -2,6 +2,28 @@
 
 import os,re,sys
 
+#########################################################################
+# How to use this testing harness
+# Use: run_all.py <bindir> <test_configs_dir> <optional: output_dir>
+#
+# The script will first try to chdir to <bindir>
+#
+# This script will treat each subdirectory of <test_configs_dir> as
+# a single test. It will try and execute a makefile contained within
+# each of these directories. In order for this to work the makefile
+# must be of the form (m|M)ake*.
+#
+# After executing all tests, if the optional output_dir was named the
+# script tries to invoke makeGraphs.py on each of these output directories.
+# This script uses a fixed path for makeGraphs.py. It should be in the
+# Project2/scripts/ directory while this script should be executing in
+# the bin directory.
+#
+# If execution of a test fails the script will wait for user input to
+# continue. This is necessary because when running many tests it would
+# be difficult to read through terminal output for test status.
+############################################################################
+
 if ( len(sys.argv) < 3 ):
 	print("Usage: %s <bindir> <test_configs_dirname> <optional: output_dir>" % (sys.argv[0]))
 	exit(-1)
@@ -54,7 +76,7 @@ for dir in test_dirs:
 
 	##Otherwise execute the makefile
 	exec_str = "make -f %s" % (os.path.join(test_path, makefile))
-	print("Executing: " + exec_str)
+	print("\nExecuting: " + exec_str)
 	error = os.system(exec_str)
 	
 	if ( error > 0 ):
@@ -74,7 +96,7 @@ for dir in output_dirs:
 	out_contents = os.listdir(out_path)
 	
 	graphMaker = "../scripts/makeGraphs.py"
-	print("Executing: " + "python %s %s" % (graphMaker, out_path))
+	print("\nExecuting: " + "python %s %s" % (graphMaker, out_path))
 	os.system("python %s %s" % (graphMaker,out_path))
 	
 	

@@ -1,10 +1,13 @@
 #ifndef PAGEREPLACE_H_INCLUDED
 #define PAGEREPLACE_H_INCLUDED
 
+/** @file */
+
 #include "iniReader.h"
 #include "utility/logger.h"
 #include "Policy/frameAlloc.h"
 
+/** Abstract Page Replacement Policy */
 class cPRPolicy {
 	private:
 
@@ -52,22 +55,34 @@ class cPRPolicy {
  *	notification point for the PR module to update its data structs.
  */
 
-/** @fn cPRPolicy::clearPages(vector<sPTE*>&)
+/** @fn cPRPolicy::clearPages(int)
+ *	Remove this many pages from memory.
  *
- *	This is currently only called by the cleaning daemon to notify the
- *	PR module that it has cleaned out this vector of pages and it should
- *	update its structs. The PR module need not call the FA module to release
- *	the frames that these pages occupied because the calling party (cleaning daemon)
- *	will do that.
+ *	If the cleaning daemon decides that pages need to be cleaned it will
+ *	determine how many from its policy and call the PR module to clean
+ *	that many. This method keeps the PR policy separate from the decision
+ *	on how many pages to clean and when.
  *
- *	@param vector<sPTE*>& A vector of page table entries that have been
- *	cleared from main memory.
+ *	@param int Number of pages to clear.
  */
 
 
-/** @fn cPRPolicy::unpinFrame(uint32_t frame)
+/** @fn cPRPolicy::unpinFrame(uint32_t)
  *	This is typically called after ::finishedIO so that the PR module
  *	unpins the frame in the frame allocation module.
  */
 
+/** @fn cPRPolicy::returnFrame(uint32_t)
+ *	Return this frame to the system.
+ *
+ *	This is called when a process exits and its frames are being
+ *	returned to the system. This is usually a wrapper to the
+ *	FA policy return frame function but it gives the PR module
+ *	a chance to update its datastructures if necessary.
+ *
+ *	Since we have made the assumption that this is only called on
+ *	process exit, it is not necessary to do any I/O on the page.
+ *
+ *	@param uint32_t Number of the frame to clear/return.
+ */
 #endif // PAGEREPLACE_H_INCLUDED
