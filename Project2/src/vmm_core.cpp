@@ -98,7 +98,7 @@ void cVMM::cleanupProcess(sProc* proc) {
 	fprintf(logStream, "Freed %d frames that the terminating process was using\n", cleanupCount);
 
 	/* Free page table memory */
-	free(proc->PTptr);
+	//free(proc->PTptr);
 
 	return;
 }
