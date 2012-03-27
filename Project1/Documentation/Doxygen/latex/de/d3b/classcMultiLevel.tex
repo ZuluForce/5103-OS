@@ -1,0 +1,306 @@
+\hypertarget{classcMultiLevel}{\section{c\-Multi\-Level \-Class \-Reference}
+\label{de/d3b/classcMultiLevel}\index{c\-Multi\-Level@{c\-Multi\-Level}}
+}
+
+
+\-Multi-\/\-Level \-Queue \-Scheduler.  
+
+
+
+
+{\ttfamily \#include $<$multi\-\_\-level.\-h$>$}
+
+
+
+\-Inheritance diagram for c\-Multi\-Level\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=146pt]{dd/d50/classcMultiLevel__inherit__graph}
+\end{center}
+\end{figure}
+
+
+\-Collaboration diagram for c\-Multi\-Level\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{df/d50/classcMultiLevel__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcMultiLevel_ad403c4589bcd66289aa0c9f6a78a7a1b}{init\-Proc\-Schedule\-Info} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Initialize scheduler specific information within the \hyperlink{structProcessInfo}{\-Process\-Info} struct. \end{DoxyCompactList}\item 
+void \hyperlink{classcMultiLevel_af34029dd10cbd0b97d5c9f026e7c3838}{add\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Transfer control of process state and scheduling. \end{DoxyCompactList}\item 
+void \hyperlink{classcMultiLevel_a2d3f9e5013d5ef2777c64aa662f98fbd}{set\-Blocked} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Set a process into a \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}{blocked} state. \end{DoxyCompactList}\item 
+void \hyperlink{classcMultiLevel_abe3cfe3c2a5828505ea5c52fb12f7d09}{unblock\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Unblock a process and make it ready. \end{DoxyCompactList}\item 
+void \hyperlink{classcMultiLevel_a862a0b03ba06e25021486aa396446895}{remove\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Remove a process from the control of the scheduler. \end{DoxyCompactList}\item 
+\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ \hyperlink{classcMultiLevel_af653d9a0d370d95c5d27914bae976628}{get\-Next\-To\-Run} ()
+\begin{DoxyCompactList}\small\item\em \-Query the scheduler for next process to run. \end{DoxyCompactList}\item 
+pid\-Type \hyperlink{classcMultiLevel_ab36db79f48f6dd388eb8504af261d3e4}{num\-Processes} ()
+\begin{DoxyCompactList}\small\item\em \-How many processes are in the scheduler. \end{DoxyCompactList}\item 
+void \hyperlink{classcMultiLevel_aa26aafd1e6a4582d16b47df72ca68601}{add\-Logger} (\-F\-I\-L\-E $\ast$\-\_\-log\-Stream)
+\begin{DoxyCompactList}\small\item\em \-Add an instance of the trace logger to the scheduler. \end{DoxyCompactList}\item 
+void \hyperlink{classcMultiLevel_ad87a35e7828a916b4542c0fdd6301323}{add\-Proc\-Logger} (\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$\-\_\-proc\-Logger)
+\begin{DoxyCompactList}\small\item\em \-Add instance of process logger to the scheduler. \end{DoxyCompactList}\item 
+void \hyperlink{classcMultiLevel_a3e20033afe7915530ad5fc4c9baf0a70}{print\-Unblocked} ()
+\begin{DoxyCompactList}\small\item\em \-Prints at once all processes that may have become unblocked asynchronously. \end{DoxyCompactList}\item 
+\hypertarget{classcMultiLevel_a993eefedc918f1b03656a2e35df1e2e4}{void {\bfseries print\-Levels} ()}\label{de/d3b/classcMultiLevel_a993eefedc918f1b03656a2e35df1e2e4}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Private \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcMultiLevel_afa779bba53744f5b3f7163c8558635ec}{int {\bfseries current\-Level}}\label{de/d3b/classcMultiLevel_afa779bba53744f5b3f7163c8558635ec}
+
+\item 
+\hypertarget{classcMultiLevel_a724793a54bbd81500c11b42e7401cf58}{int {\bfseries quanta\-Used}}\label{de/d3b/classcMultiLevel_a724793a54bbd81500c11b42e7401cf58}
+
+\item 
+\hypertarget{classcMultiLevel_a061f23961e8fea0ecff4637fe67eda8e}{int {\bfseries total\-Ready}}\label{de/d3b/classcMultiLevel_a061f23961e8fea0ecff4637fe67eda8e}
+
+\item 
+\hypertarget{classcMultiLevel_ab595c291be1900888cca01f4997604e2}{int {\bfseries total\-Blocked}}\label{de/d3b/classcMultiLevel_ab595c291be1900888cca01f4997604e2}
+
+\item 
+\hypertarget{classcMultiLevel_a3da9fc1a47e57108bb1d7113ba98a65e}{vector$<$ queue$<$ \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ $>$ $>$ {\bfseries ready\-Queues}}\label{de/d3b/classcMultiLevel_a3da9fc1a47e57108bb1d7113ba98a65e}
+
+\item 
+\hypertarget{classcMultiLevel_a97a462fada5134b60ccf0164f5ba223b}{vector$<$ int $>$ {\bfseries level\-Quantas}}\label{de/d3b/classcMultiLevel_a97a462fada5134b60ccf0164f5ba223b}
+
+\item 
+\hypertarget{classcMultiLevel_a753d5da86a2239e8fe9cfdb1976b909e}{vector$<$ \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ $>$ {\bfseries blocked\-Vector}}\label{de/d3b/classcMultiLevel_a753d5da86a2239e8fe9cfdb1976b909e}
+
+\item 
+\hypertarget{classcMultiLevel_a0d8dc829bd64d83eaab425e8efa6c0d0}{queue$<$ pid\-Type $>$ {\bfseries trace\-Unblocked}}\label{de/d3b/classcMultiLevel_a0d8dc829bd64d83eaab425e8efa6c0d0}
+
+\item 
+\hypertarget{classcMultiLevel_a04c6da4fccc3d26389e59dc2a226299a}{\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ {\bfseries running\-Proc}}\label{de/d3b/classcMultiLevel_a04c6da4fccc3d26389e59dc2a226299a}
+
+\item 
+\hypertarget{classcMultiLevel_acc241d24fe09fe165d28a4582ecfd77d}{pthread\-\_\-mutex\-\_\-t {\bfseries blocked\-Lock}}\label{de/d3b/classcMultiLevel_acc241d24fe09fe165d28a4582ecfd77d}
+
+\item 
+\hypertarget{classcMultiLevel_a9a416084db866dc1b3412670247b185e}{pthread\-\_\-cond\-\_\-t {\bfseries all\-Blocked}}\label{de/d3b/classcMultiLevel_a9a416084db866dc1b3412670247b185e}
+
+\item 
+\hypertarget{classcMultiLevel_a7987f235952c87fe99bf151b0fc6dbb2}{\hyperlink{classcIDManager}{c\-I\-D\-Manager} {\bfseries blocked\-I\-D}}\label{de/d3b/classcMultiLevel_a7987f235952c87fe99bf151b0fc6dbb2}
+
+\item 
+\hypertarget{classcMultiLevel_a2794f21c2e03856f839cb28785ec540e}{\-F\-I\-L\-E $\ast$ {\bfseries log\-Stream}}\label{de/d3b/classcMultiLevel_a2794f21c2e03856f839cb28785ec540e}
+
+\item 
+\hypertarget{classcMultiLevel_a6e2c9470e8a4751da72eafb3c4c683b4}{\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$ {\bfseries proc\-Logger}}\label{de/d3b/classcMultiLevel_a6e2c9470e8a4751da72eafb3c4c683b4}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcMultiLevel_aa26aafd1e6a4582d16b47df72ca68601}{\index{c\-Multi\-Level@{c\-Multi\-Level}!add\-Logger@{add\-Logger}}
+\index{add\-Logger@{add\-Logger}!cMultiLevel@{c\-Multi\-Level}}
+\subsubsection[{add\-Logger}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Multi\-Level\-::add\-Logger} (
+\begin{DoxyParamCaption}
+\item[{\-F\-I\-L\-E $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{de/d3b/classcMultiLevel_aa26aafd1e6a4582d16b47df72ca68601}
+\-The kernel passes a file stream pointer for the scheduler to print trace info such as blocking/unblocking events.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-F\-I\-L\-E$\ast$} & \-File stream for trace log \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{logger_8h_acf2f61176acdfe03ac9f73ec56fb3bd6}{init\-Log(const char$\ast$ filename)} 
+
+\hyperlink{logger_8h_af756a6a1097f12014f446b298d8a266f}{get\-Stream()} 
+\end{DoxySeeAlso}
+
+
+\-Implements \hyperlink{classcScheduler_a7b29af7eab1a9cbe383d98a44693be69}{c\-Scheduler}.
+
+\hypertarget{classcMultiLevel_af34029dd10cbd0b97d5c9f026e7c3838}{\index{c\-Multi\-Level@{c\-Multi\-Level}!add\-Process@{add\-Process}}
+\index{add\-Process@{add\-Process}!cMultiLevel@{c\-Multi\-Level}}
+\subsubsection[{add\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Multi\-Level\-::add\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{de/d3b/classcMultiLevel_af34029dd10cbd0b97d5c9f026e7c3838}
+\-After this is called, the kernel core no longer keeps track of the given process. \-Once the process is created and deemed \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready} by the kernel it is handed off here. \-The scheduler is then in charge of state transitions when the kernel gives it appropriate notifications.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Store the process in some location. \-It should be recognized as ready given its location but the datastructures and organization are implementation specific.\end{DoxyItemize}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Process\-Info$\ast$} & \-Process to add under scheduler's control \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classcScheduler_aeae779c5c160a441e725dfc72656e6dc}{c\-Scheduler}.
+
+\hypertarget{classcMultiLevel_ad87a35e7828a916b4542c0fdd6301323}{\index{c\-Multi\-Level@{c\-Multi\-Level}!add\-Proc\-Logger@{add\-Proc\-Logger}}
+\index{add\-Proc\-Logger@{add\-Proc\-Logger}!cMultiLevel@{c\-Multi\-Level}}
+\subsubsection[{add\-Proc\-Logger}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Multi\-Level\-::add\-Proc\-Logger} (
+\begin{DoxyParamCaption}
+\item[{{\bf c\-Process\-Logger} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{de/d3b/classcMultiLevel_ad87a35e7828a916b4542c0fdd6301323}
+\-The kernel passes this pointer so the scheduler can update process info upon process addition, state change and termination. \-This updates the information presented to the top process.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em c\-Process\-Logger$\ast$} & \-Process logger class \\
+\hline
+\end{DoxyParams}
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classcProcessLogger}{c\-Process\-Logger} 
+\end{DoxySeeAlso}
+
+
+\-Implements \hyperlink{classcScheduler_a3e7865112718057fcdc277db0a85c21c}{c\-Scheduler}.
+
+\hypertarget{classcMultiLevel_af653d9a0d370d95c5d27914bae976628}{\index{c\-Multi\-Level@{c\-Multi\-Level}!get\-Next\-To\-Run@{get\-Next\-To\-Run}}
+\index{get\-Next\-To\-Run@{get\-Next\-To\-Run}!cMultiLevel@{c\-Multi\-Level}}
+\subsubsection[{get\-Next\-To\-Run}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Process\-Info} $\ast$ {\bf c\-Multi\-Level\-::get\-Next\-To\-Run} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{de/d3b/classcMultiLevel_af653d9a0d370d95c5d27914bae976628}
+\-After this function is called, it should be assumed by any scheduler implementation that the kernel will run the given process (unless otherwise notified). \-The currently running process should implicitly be considered for running next (again).
+
+\-If there are processes left but all are blocked. \-This function should block until it receives a signal that a process is unblocked.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Call \hyperlink{classcMultiLevel_a3e20033afe7915530ad5fc4c9baf0a70}{print\-Unblocked()} to update the trace log after a clock step. \item \-Block if there are $>$ 0 processes but none can run. \item \-A process listed as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} within the scheduler should be treated as ready when this method is called. \item \-A process returned as the 'next to run' should be marked as being in a \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} state before returning. \item \-If there are no more remaining processes this should return \-N\-U\-L\-L.\end{DoxyItemize}
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{structProcessInfo}{\-Process\-Info}$\ast$ \-Ready process to run next. \-May be the same as the currenlty running one.
+\end{DoxyReturn}
+\begin{DoxyWarning}{\-Warning}
+\-Must be thread safe with block and unblock methods. 
+\end{DoxyWarning}
+
+
+\-Implements \hyperlink{classcScheduler_a350ad7c55ddcdd17005778b0da241956}{c\-Scheduler}.
+
+\hypertarget{classcMultiLevel_ad403c4589bcd66289aa0c9f6a78a7a1b}{\index{c\-Multi\-Level@{c\-Multi\-Level}!init\-Proc\-Schedule\-Info@{init\-Proc\-Schedule\-Info}}
+\index{init\-Proc\-Schedule\-Info@{init\-Proc\-Schedule\-Info}!cMultiLevel@{c\-Multi\-Level}}
+\subsubsection[{init\-Proc\-Schedule\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Multi\-Level\-::init\-Proc\-Schedule\-Info} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{de/d3b/classcMultiLevel_ad403c4589bcd66289aa0c9f6a78a7a1b}
+\-This method is called after the kernel has initialized all process data but before it is marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready}. \-This gives the scheduler an oportunity to initialize any scheduler specific data and assign it to the \hyperlink{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{\-Process\-Info\-::schedule\-Data} member.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-No required actions. \end{DoxyItemize}
+
+
+\-Implements \hyperlink{classcScheduler_a8782803287dce0352623142643eee01a}{c\-Scheduler}.
+
+\hypertarget{classcMultiLevel_ab36db79f48f6dd388eb8504af261d3e4}{\index{c\-Multi\-Level@{c\-Multi\-Level}!num\-Processes@{num\-Processes}}
+\index{num\-Processes@{num\-Processes}!cMultiLevel@{c\-Multi\-Level}}
+\subsubsection[{num\-Processes}]{\setlength{\rightskip}{0pt plus 5cm}pid\-Type {\bf c\-Multi\-Level\-::num\-Processes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{de/d3b/classcMultiLevel_ab36db79f48f6dd388eb8504af261d3e4}
+\-This returns how many processes, both running and blocked, are being handled by the scheduler.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Return how many processes, running and blocked, are in the scheduler.\end{DoxyItemize}
+\begin{DoxyReturn}{\-Returns}
+pid\-Type 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{classcScheduler_a025532a943093ae7e8d6dc0cdaf60f12}{c\-Scheduler}.
+
+\hypertarget{classcMultiLevel_a3e20033afe7915530ad5fc4c9baf0a70}{\index{c\-Multi\-Level@{c\-Multi\-Level}!print\-Unblocked@{print\-Unblocked}}
+\index{print\-Unblocked@{print\-Unblocked}!cMultiLevel@{c\-Multi\-Level}}
+\subsubsection[{print\-Unblocked}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Multi\-Level\-::print\-Unblocked} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{de/d3b/classcMultiLevel_a3e20033afe7915530ad5fc4c9baf0a70}
+\-This method is needed to avoid mixed output in the trace logger. 
+
+\-Implements \hyperlink{classcScheduler_a27258d070a59a61a0b0ecbb35c514417}{c\-Scheduler}.
+
+
+
+\-Referenced by get\-Next\-To\-Run().
+
+\hypertarget{classcMultiLevel_a862a0b03ba06e25021486aa396446895}{\index{c\-Multi\-Level@{c\-Multi\-Level}!remove\-Process@{remove\-Process}}
+\index{remove\-Process@{remove\-Process}!cMultiLevel@{c\-Multi\-Level}}
+\subsubsection[{remove\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Multi\-Level\-::remove\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{de/d3b/classcMultiLevel_a862a0b03ba06e25021486aa396446895}
+\-When a process terminates, either through normal means or an exception, the kernel will call this function to release a process from the scheduler's control. \-The scheduler should clean up any internal state for the process. \-Deallocation of process resources is left to the kernel.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Scheduler should deallocate any resources it assigned to the process within the \hyperlink{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{\-Process\-Info\-::schedule\-Data} member. \item \-The \-Scheduler should remove any pointers to the give process to avoid dereferncing a dead pointer. \item \-Implementations must not deallocate any memory except that mentioned above. \-This is handled by the kernel. \item \-Implementations should mark the process as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd}{terminated}.\end{DoxyItemize}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Process\-Info$\ast$} & \-Process to remove from scheduler \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classcScheduler_a5632ffa597e9567d475c808070c4e3bb}{c\-Scheduler}.
+
+\hypertarget{classcMultiLevel_a2d3f9e5013d5ef2777c64aa662f98fbd}{\index{c\-Multi\-Level@{c\-Multi\-Level}!set\-Blocked@{set\-Blocked}}
+\index{set\-Blocked@{set\-Blocked}!cMultiLevel@{c\-Multi\-Level}}
+\subsubsection[{set\-Blocked}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Multi\-Level\-::set\-Blocked} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{de/d3b/classcMultiLevel_a2d3f9e5013d5ef2777c64aa662f98fbd}
+\-The kernel will call the scheduler with this function when the process has done an operation which causes it to block (\-I).
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Process must be marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}{blocked} and scheduler state should be changed accordingly. \item \-After this call a process should not be considered for a scheduling decision\end{DoxyItemize}
+\begin{DoxyWarning}{\-Warning}
+\-Must be thread safe. \-Signal handler/s may block during schedule decision. 
+\end{DoxyWarning}
+
+
+\-Implements \hyperlink{classcScheduler_ae6119e940a3bf58a00e7dbcea04b5b6a}{c\-Scheduler}.
+
+\hypertarget{classcMultiLevel_abe3cfe3c2a5828505ea5c52fb12f7d09}{\index{c\-Multi\-Level@{c\-Multi\-Level}!unblock\-Process@{unblock\-Process}}
+\index{unblock\-Process@{unblock\-Process}!cMultiLevel@{c\-Multi\-Level}}
+\subsubsection[{unblock\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Multi\-Level\-::unblock\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{de/d3b/classcMultiLevel_abe3cfe3c2a5828505ea5c52fb12f7d09}
+\-When a process has completed a blocking call the kernel will notify the scheduler that it should be unblocked. \-This operation should be very fast since it will likely be called from a signal handler.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-The process must be unblocked and marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready}. \-It must be available for scheduling with the next call to \-::get\-Next\-To\-Run\end{DoxyItemize}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Process\-Info$\ast$} & \-Process to unblock\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{\-Warning}
+\-Must be thread safe. \-Signal handler/s may unblock during schedule decision. 
+\end{DoxyWarning}
+
+
+\-Implements \hyperlink{classcScheduler_a81fe2e5e5e2334e36db1cbf491e3fa57}{c\-Scheduler}.
+
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/scheduler/multi\-\_\-level.\-h\item 
+src/scheduler/multi\-\_\-level.\-cpp\end{DoxyCompactItemize}

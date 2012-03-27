@@ -1,0 +1,8 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$d0/d21/classcScheduler.xhtml" title="Abstract Interface for Schedulers." alt="" coords="821,5,907,32"/>
+<area shape="rect" id="node4" href="$dd/dc8/structProcessInfo.xhtml" title="Structure for containing process state and data." alt="" coords="534,119,626,145"/>
+<area shape="rect" id="node11" href="$de/dd4/classcIDManager.xhtml" title="A class for managing unique IDs." alt="" coords="533,341,627,368"/>
+<area shape="rect" id="node18" href="$db/d63/classcProcessLogger.xhtml" title="Class specifically for logging process state information." alt="" coords="806,271,922,297"/>
+<area shape="rect" id="node22" title="STL class." alt="" coords="273,260,353,287"/>
+<area shape="rect" id="node24" title="STL class." alt="" coords="6,260,173,287"/>
+</map>

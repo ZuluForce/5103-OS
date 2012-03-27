@@ -1,0 +1,100 @@
+\hypertarget{kernel_8h}{\section{include/kernel.h \-File \-Reference}
+\label{d0/daa/kernel_8h}\index{include/kernel.\-h@{include/kernel.\-h}}
+}
+{\ttfamily \#include $<$vector$>$}\*
+{\ttfamily \#include $<$sys/stat.\-h$>$}\*
+{\ttfamily \#include $<$semaphore.\-h$>$}\*
+{\ttfamily \#include \char`\"{}cpu.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}devices/char\-\_\-device.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}devices/block\-\_\-device.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}devices/clock\-\_\-device.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}scheduler/all\-Schedulers.\-h\char`\"{}}\*
+\-Include dependency graph for kernel.\-h\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d4/d0f/kernel_8h__incl}
+\end{center}
+\end{figure}
+\-This graph shows which files directly or indirectly include this file\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=164pt]{de/df8/kernel_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{\-Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcKernel}{c\-Kernel}
+\begin{DoxyCompactList}\small\item\em \-Core managing class for this simulated \-O\-S. \end{DoxyCompactList}\item 
+struct \hyperlink{structkernelError}{kernel\-Error}
+\begin{DoxyCompactList}\small\item\em \-Struct containing kernel crash information. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}{\#define \hyperlink{kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R}~250000}\label{d0/daa/kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}
+
+\begin{DoxyCompactList}\small\item\em \-Default timer for clock interrupt. \end{DoxyCompactList}\item 
+\hypertarget{kernel_8h_a86bf0ae1dfeb0e17630ff1db96b6f529}{\#define \hyperlink{kernel_8h_a86bf0ae1dfeb0e17630ff1db96b6f529}{\-C\-D\-E\-V\-I\-C\-E\-\_\-\-S\-C\-A\-L\-E}~4}\label{d0/daa/kernel_8h_a86bf0ae1dfeb0e17630ff1db96b6f529}
+
+\begin{DoxyCompactList}\small\item\em \-Time scale for character devices relative to default clock. \end{DoxyCompactList}\item 
+\hypertarget{kernel_8h_a49545b4c5ba74e199513066a27c60384}{\#define \hyperlink{kernel_8h_a49545b4c5ba74e199513066a27c60384}{\-B\-D\-E\-V\-I\-C\-E\-\_\-\-S\-C\-A\-L\-E}~8}\label{d0/daa/kernel_8h_a49545b4c5ba74e199513066a27c60384}
+
+\begin{DoxyCompactList}\small\item\em \-Time scale for block devices relative to default clock. \end{DoxyCompactList}\item 
+\hypertarget{kernel_8h_a147011735466a162c94a8e8c4a2b5b80}{\#define \hyperlink{kernel_8h_a147011735466a162c94a8e8c4a2b5b80}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-C\-T\-I\-M\-E\-R}~(\hyperlink{kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R} $\ast$ \hyperlink{kernel_8h_a86bf0ae1dfeb0e17630ff1db96b6f529}{\-C\-D\-E\-V\-I\-C\-E\-\_\-\-S\-C\-A\-L\-E})}\label{d0/daa/kernel_8h_a147011735466a162c94a8e8c4a2b5b80}
+
+\begin{DoxyCompactList}\small\item\em \-Complete time for \-C \-Devices after scaling. \end{DoxyCompactList}\item 
+\hypertarget{kernel_8h_ab56a54ded3376551a1595734b74f799c}{\#define \hyperlink{kernel_8h_ab56a54ded3376551a1595734b74f799c}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-B\-T\-I\-M\-E\-R}~(\hyperlink{kernel_8h_ac91bd56eef3f2b82894a058b7f136a21}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-T\-I\-M\-E\-R} $\ast$ \hyperlink{kernel_8h_a49545b4c5ba74e199513066a27c60384}{\-B\-D\-E\-V\-I\-C\-E\-\_\-\-S\-C\-A\-L\-E})}\label{d0/daa/kernel_8h_ab56a54ded3376551a1595734b74f799c}
+
+\begin{DoxyCompactList}\small\item\em \-Complete time for \-B \-Devices after scaling. \end{DoxyCompactList}\item 
+\#define \hyperlink{kernel_8h_a0756f011ef667460d583017366823244}{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}~5
+\begin{DoxyCompactList}\small\item\em \-Default priority assigned to newly created processes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Variables}
+\begin{DoxyCompactItemize}
+\item 
+static const char \hyperlink{kernel_8h_a9bd73e11b6d2b66703cd822d0c2ecd32}{init\-Process\-Name} \mbox{[}$\,$\mbox{]} = \char`\"{}main.\-trace\char`\"{}
+\begin{DoxyCompactList}\small\item\em \-Name of the first program to run on the system. \end{DoxyCompactList}\item 
+static const char \hyperlink{kernel_8h_a3240a1d31589eda6a931467978d543ff}{trace\-Log\-File} \mbox{[}$\,$\mbox{]} = \char`\"{}trace.\-log\char`\"{}
+\begin{DoxyCompactList}\small\item\em \-Name of trace log file. \end{DoxyCompactList}\item 
+static const char \hyperlink{kernel_8h_a0f6aaca759010c72cd7fce9456136e91}{proc\-Log\-File} \mbox{[}$\,$\mbox{]} = \char`\"{}proc.\-log\char`\"{}
+\begin{DoxyCompactList}\small\item\em \-Name of log file for process info. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{kernel_8h_a0756f011ef667460d583017366823244}{\index{kernel.\-h@{kernel.\-h}!\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y@{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}}
+\index{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y@{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}!kernel.h@{kernel.\-h}}
+\subsubsection[{\-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-D\-E\-F\-A\-U\-L\-T\-\_\-\-P\-R\-I\-O\-R\-I\-T\-Y}~5}}\label{d0/daa/kernel_8h_a0756f011ef667460d583017366823244}
+\-Only used if no other priority is provided. 
+
+\subsection{\-Variable \-Documentation}
+\hypertarget{kernel_8h_a9bd73e11b6d2b66703cd822d0c2ecd32}{\index{kernel.\-h@{kernel.\-h}!init\-Process\-Name@{init\-Process\-Name}}
+\index{init\-Process\-Name@{init\-Process\-Name}!kernel.h@{kernel.\-h}}
+\subsubsection[{init\-Process\-Name}]{\setlength{\rightskip}{0pt plus 5cm}static const char {\bf init\-Process\-Name}\mbox{[}$\,$\mbox{]} = \char`\"{}main.\-trace\char`\"{}\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{d0/daa/kernel_8h_a9bd73e11b6d2b66703cd822d0c2ecd32}
+\-When the kernel object is created, this program is loaded. \-It is run once \hyperlink{classcKernel_a0ce9a2721bb1ea4d7f999198634f702d}{c\-Kernel\-::boot} is called. 
+
+\-Referenced by c\-Kernel\-::c\-Kernel().
+
+\hypertarget{kernel_8h_a0f6aaca759010c72cd7fce9456136e91}{\index{kernel.\-h@{kernel.\-h}!proc\-Log\-File@{proc\-Log\-File}}
+\index{proc\-Log\-File@{proc\-Log\-File}!kernel.h@{kernel.\-h}}
+\subsubsection[{proc\-Log\-File}]{\setlength{\rightskip}{0pt plus 5cm}static const char {\bf proc\-Log\-File}\mbox{[}$\,$\mbox{]} = \char`\"{}proc.\-log\char`\"{}\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{d0/daa/kernel_8h_a0f6aaca759010c72cd7fce9456136e91}
+\-This file is created by the process logger and it is where top gathers most of its process info.
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classcProcessLogger}{c\-Process\-Logger} 
+\end{DoxySeeAlso}
+\hypertarget{kernel_8h_a3240a1d31589eda6a931467978d543ff}{\index{kernel.\-h@{kernel.\-h}!trace\-Log\-File@{trace\-Log\-File}}
+\index{trace\-Log\-File@{trace\-Log\-File}!kernel.h@{kernel.\-h}}
+\subsubsection[{trace\-Log\-File}]{\setlength{\rightskip}{0pt plus 5cm}static const char {\bf trace\-Log\-File}\mbox{[}$\,$\mbox{]} = \char`\"{}trace.\-log\char`\"{}\hspace{0.3cm}{\ttfamily  \mbox{[}static\mbox{]}}}}\label{d0/daa/kernel_8h_a3240a1d31589eda6a931467978d543ff}
+\-Per clocktick informatino is logged here.
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{logger_8h_acf2f61176acdfe03ac9f73ec56fb3bd6}{init\-Log(const char$\ast$ filename)} 
+\end{DoxySeeAlso}
+
+
+\-Referenced by c\-Kernel\-::c\-Kernel().
+

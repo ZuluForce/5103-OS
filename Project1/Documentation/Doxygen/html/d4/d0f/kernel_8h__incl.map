@@ -1,0 +1,18 @@
+<map id="G" name="G">
+<area shape="rect" id="node9" href="$dc/da7/cpu_8h.xhtml" title="cpu.h" alt="" coords="232,229,286,256"/>
+<area shape="rect" id="node26" href="$d7/d59/char__device_8h.xhtml" title="devices/char_device.h" alt="" coords="1290,229,1442,256"/>
+<area shape="rect" id="node49" href="$db/d9a/block__device_8h.xhtml" title="devices/block_device.h" alt="" coords="1645,229,1803,256"/>
+<area shape="rect" id="node53" href="$df/d8f/clock__device_8h.xhtml" title="devices/clock_device.h" alt="" coords="1828,229,1986,256"/>
+<area shape="rect" id="node63" href="$d5/d8b/allSchedulers_8h_source.xhtml" title="scheduler/allSchedulers.h" alt="" coords="759,80,930,107"/>
+<area shape="rect" id="node19" href="$d1/d8c/logger_8h.xhtml" title="utility/logger.h" alt="" coords="164,304,266,331"/>
+<area shape="rect" id="node29" href="$dd/d9e/queued__device_8h.xhtml" title="devices/queued_device.h" alt="" coords="1404,304,1572,331"/>
+<area shape="rect" id="node46" href="$da/d42/process_8h.xhtml" title="process.h" alt="" coords="1046,379,1124,405"/>
+<area shape="rect" id="node59" href="$d0/d8f/abstract__device_8h_source.xhtml" title="devices/abstract_device.h" alt="" coords="1848,304,2022,331"/>
+<area shape="rect" id="node65" href="$db/d41/fcfs_8h.xhtml" title="scheduler/fcfs.h" alt="" coords="626,155,740,181"/>
+<area shape="rect" id="node103" href="$db/dc3/lottery_8h.xhtml" title="scheduler/lottery.h" alt="" coords="1126,155,1255,181"/>
+<area shape="rect" id="node110" href="$d9/dd2/round__robin_8h.xhtml" title="scheduler/round_robin.h" alt="" coords="764,155,923,181"/>
+<area shape="rect" id="node114" href="$de/da3/multi__level_8h_source.xhtml" title="scheduler/multi_level.h" alt="" coords="948,155,1102,181"/>
+<area shape="rect" id="node68" href="$d2/dd8/scheduler_8h_source.xhtml" title="scheduler/scheduler.h" alt="" coords="770,229,918,256"/>
+<area shape="rect" id="node74" href="$dd/d00/process__logger_8h.xhtml" title="utility/process_logger.h" alt="" coords="845,304,1000,331"/>
+<area shape="rect" id="node95" href="$df/db9/id_8h.xhtml" title="utility/id.h" alt="" coords="1149,379,1227,405"/>
+</map>

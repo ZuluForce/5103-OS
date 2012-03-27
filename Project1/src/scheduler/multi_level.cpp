@@ -45,7 +45,24 @@ void cMultiLevel::initProcScheduleInfo(ProcessInfo* proc) {
 void cMultiLevel::addProcess(ProcessInfo* proc) {
 	assert( proc != NULL );
 	assert( proc->state == ready );
-	readyQueues.at(0).push(proc);
+
+	sMultiInfo* info = (sMultiInfo*) proc->scheduleData;
+
+	/* Queue level determined by priority level */
+	switch( proc->priority ) {
+		case 0:
+		case 1:
+		case 2:
+		case 3:
+			readyQueues.at(proc->priority).push(proc);
+			info->level = proc->priority;
+			break;
+
+		default:
+			readyQueues.at(3).push(proc);
+			info->level = 3;
+			break;
+	}
 
 	++totalReady;
 
@@ -197,7 +214,7 @@ ProcessInfo* cMultiLevel::getNextToRun() {
 
 	if ( runningProc != NULL) {
 
-		/* Continue running the current process if it hasn't used it quanta
+		/* Continue running the current process if it hasn't used its quanta
 		 * or there are no other processes to choose from
 		 */
 		if ( quantaUsed < levelQuantas[currentLevel]) {

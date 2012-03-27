@@ -1,0 +1,148 @@
+\hypertarget{classcRoundRobin}{\section{c\-Round\-Robin \-Class \-Reference}
+\label{dc/dcc/classcRoundRobin}\index{c\-Round\-Robin@{c\-Round\-Robin}}
+}
+
+
+\-Round \-Robin \-Scheduler.  
+
+
+
+
+{\ttfamily \#include $<$round\-\_\-robin.\-h$>$}
+
+
+
+\-Inheritance diagram for c\-Round\-Robin\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=156pt]{d7/de9/classcRoundRobin__inherit__graph}
+\end{center}
+\end{figure}
+
+
+\-Collaboration diagram for c\-Round\-Robin\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{de/d42/classcRoundRobin__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcRoundRobin_aadb221df9b12f61c3151996ea5c09741}{void \hyperlink{classcRoundRobin_aadb221df9b12f61c3151996ea5c09741}{init\-Proc\-Schedule\-Info} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)}\label{dc/dcc/classcRoundRobin_aadb221df9b12f61c3151996ea5c09741}
+
+\begin{DoxyCompactList}\small\item\em \-Initializes a new \hyperlink{structroundRobinInfo}{round\-Robin\-Info} struct. \end{DoxyCompactList}\item 
+\hypertarget{classcRoundRobin_a3571d05a8daebccb758d63b8327f8a22}{void \hyperlink{classcRoundRobin_a3571d05a8daebccb758d63b8327f8a22}{add\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)}\label{dc/dcc/classcRoundRobin_a3571d05a8daebccb758d63b8327f8a22}
+
+\begin{DoxyCompactList}\small\item\em \-Adds a process to the back of the ready\-Queue. \end{DoxyCompactList}\item 
+void \hyperlink{classcRoundRobin_a13609de0f36c81a780072f9c0730f963}{set\-Blocked} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Adds a process to the blocked vector using an id created with the \-I\-D \-Manager. \end{DoxyCompactList}\item 
+void \hyperlink{classcRoundRobin_a278d541c78f034020f6921b22a7d37af}{unblock\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Sets the process to be ready again and adds it to the back of the queue. \end{DoxyCompactList}\item 
+void \hyperlink{classcRoundRobin_a1bc7bfc4c36bdbe3f3938810817d885e}{remove\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Sets the process state to be terminated and resets clock\-Ticks\-Used to 0. \end{DoxyCompactList}\item 
+\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ \hyperlink{classcRoundRobin_a1979ff71bb2320bdb00eae5feb2b2688}{get\-Next\-To\-Run} ()
+\begin{DoxyCompactList}\small\item\em \-If a proces is currently executing and clock\-Ticks\-Used is greater than the \-Q\-U\-A\-N\-T\-U\-M, stop the current process from executing futher and add it to the back of the ready queue. \end{DoxyCompactList}\item 
+\hypertarget{classcRoundRobin_afa0cdfcfc0b8222d39ad5e9c23db1f25}{pid\-Type \hyperlink{classcRoundRobin_afa0cdfcfc0b8222d39ad5e9c23db1f25}{num\-Processes} ()}\label{dc/dcc/classcRoundRobin_afa0cdfcfc0b8222d39ad5e9c23db1f25}
+
+\begin{DoxyCompactList}\small\item\em \-Count up the number of processes in the ready\-Queue, proceses that are blocked, and add 1 if a process is currently running. \end{DoxyCompactList}\item 
+\hypertarget{classcRoundRobin_a6e0d0ec272a4f7ffe03166b1ff08276b}{void \hyperlink{classcRoundRobin_a6e0d0ec272a4f7ffe03166b1ff08276b}{add\-Logger} (\-F\-I\-L\-E $\ast$\-\_\-log\-Stream)}\label{dc/dcc/classcRoundRobin_a6e0d0ec272a4f7ffe03166b1ff08276b}
+
+\begin{DoxyCompactList}\small\item\em \-Assign the file pointer to the log\-Stream data field. \end{DoxyCompactList}\item 
+\hypertarget{classcRoundRobin_a728fa415647d6c71b32ee8d4a04580e1}{void \hyperlink{classcRoundRobin_a728fa415647d6c71b32ee8d4a04580e1}{add\-Proc\-Logger} (\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$\-\_\-proc\-Logger)}\label{dc/dcc/classcRoundRobin_a728fa415647d6c71b32ee8d4a04580e1}
+
+\begin{DoxyCompactList}\small\item\em \-Assign the \hyperlink{classcProcessLogger}{c\-Process\-Logger} pointer to the proc\-Logger data field. \end{DoxyCompactList}\item 
+\hypertarget{classcRoundRobin_a3df89085fb98c328b7db6bfc0ee9f9f9}{void \hyperlink{classcRoundRobin_a3df89085fb98c328b7db6bfc0ee9f9f9}{print\-Unblocked} ()}\label{dc/dcc/classcRoundRobin_a3df89085fb98c328b7db6bfc0ee9f9f9}
+
+\begin{DoxyCompactList}\small\item\em \-Removes each \-P\-I\-D from the trace\-Unblocked queue and prints it to the trace logger. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Private \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcRoundRobin_af8667fa086a7562c2523d5b5cd783d75}{queue$<$ \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ $>$ {\bfseries ready\-Queue}}\label{dc/dcc/classcRoundRobin_af8667fa086a7562c2523d5b5cd783d75}
+
+\item 
+\hypertarget{classcRoundRobin_a2816611cab817668edbeceff1a17ccca}{vector$<$ \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ $>$ {\bfseries blocked\-Vector}}\label{dc/dcc/classcRoundRobin_a2816611cab817668edbeceff1a17ccca}
+
+\item 
+\hypertarget{classcRoundRobin_a39d20da5b1f573e79834e60d1bebaff2}{queue$<$ pid\-Type $>$ {\bfseries trace\-Unblocked}}\label{dc/dcc/classcRoundRobin_a39d20da5b1f573e79834e60d1bebaff2}
+
+\item 
+\hypertarget{classcRoundRobin_a2068152f0b3d1592dc031ecf7b0d7d5f}{int {\bfseries total\-Blocked}}\label{dc/dcc/classcRoundRobin_a2068152f0b3d1592dc031ecf7b0d7d5f}
+
+\item 
+\hypertarget{classcRoundRobin_a8779f8cb28be168316b485c77d09b210}{int {\bfseries clock\-Ticks\-Used}}\label{dc/dcc/classcRoundRobin_a8779f8cb28be168316b485c77d09b210}
+
+\item 
+\hypertarget{classcRoundRobin_a58ea813b29ddc7ca0da1428a1fcb7693}{\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ {\bfseries running\-Proc}}\label{dc/dcc/classcRoundRobin_a58ea813b29ddc7ca0da1428a1fcb7693}
+
+\item 
+\hypertarget{classcRoundRobin_a3b5a8047d5522b85a486f1caeeaca9f6}{pthread\-\_\-mutex\-\_\-t {\bfseries blocked\-Lock}}\label{dc/dcc/classcRoundRobin_a3b5a8047d5522b85a486f1caeeaca9f6}
+
+\item 
+\hypertarget{classcRoundRobin_ac9f22c160b4e3cb118723a1e780575ad}{pthread\-\_\-cond\-\_\-t {\bfseries all\-Blocked}}\label{dc/dcc/classcRoundRobin_ac9f22c160b4e3cb118723a1e780575ad}
+
+\item 
+\hypertarget{classcRoundRobin_a15ca5ec15a4ae935706b55ac71d6bee2}{\hyperlink{classcIDManager}{c\-I\-D\-Manager} {\bfseries blocked\-I\-D}}\label{dc/dcc/classcRoundRobin_a15ca5ec15a4ae935706b55ac71d6bee2}
+
+\item 
+\hypertarget{classcRoundRobin_a2a2f87f637cb0cbfd9d2bfe69bc91de2}{\-F\-I\-L\-E $\ast$ {\bfseries log\-Stream}}\label{dc/dcc/classcRoundRobin_a2a2f87f637cb0cbfd9d2bfe69bc91de2}
+
+\item 
+\hypertarget{classcRoundRobin_aa740c249a96cdc04f04a93ae039a6551}{\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$ {\bfseries proc\-Logger}}\label{dc/dcc/classcRoundRobin_aa740c249a96cdc04f04a93ae039a6551}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcRoundRobin_a1979ff71bb2320bdb00eae5feb2b2688}{\index{c\-Round\-Robin@{c\-Round\-Robin}!get\-Next\-To\-Run@{get\-Next\-To\-Run}}
+\index{get\-Next\-To\-Run@{get\-Next\-To\-Run}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{get\-Next\-To\-Run}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Process\-Info} $\ast$ {\bf c\-Round\-Robin\-::get\-Next\-To\-Run} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_a1979ff71bb2320bdb00eae5feb2b2688}
+\-If clock\-Ticks\-Used is less than the \-Q\-U\-A\-N\-T\-U\-M, increment clock\-Ticks\-Used and return the currently executing process to the kernel to keep running. \-If a new process needs to be scheduled, grab the top of the ready queue and increment clock\-Ticks\-Used. 
+
+\-Implements \hyperlink{classcScheduler_a350ad7c55ddcdd17005778b0da241956}{c\-Scheduler}.
+
+\hypertarget{classcRoundRobin_a1bc7bfc4c36bdbe3f3938810817d885e}{\index{c\-Round\-Robin@{c\-Round\-Robin}!remove\-Process@{remove\-Process}}
+\index{remove\-Process@{remove\-Process}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{remove\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Round\-Robin\-::remove\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{proc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_a1bc7bfc4c36bdbe3f3938810817d885e}
+\-Frees the \hyperlink{structroundRobinInfo}{round\-Robin\-Info} struct 
+
+\-Implements \hyperlink{classcScheduler_a5632ffa597e9567d475c808070c4e3bb}{c\-Scheduler}.
+
+\hypertarget{classcRoundRobin_a13609de0f36c81a780072f9c0730f963}{\index{c\-Round\-Robin@{c\-Round\-Robin}!set\-Blocked@{set\-Blocked}}
+\index{set\-Blocked@{set\-Blocked}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{set\-Blocked}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Round\-Robin\-::set\-Blocked} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{proc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_a13609de0f36c81a780072f9c0730f963}
+\-Sets running\-Proc to \-N\-U\-L\-L and the state of the process to blocked. \-Sets clock\-Ticks\-Used to 0 as a new process will be picked to run. \-Increment the count of blocked processes. 
+
+\-Implements \hyperlink{classcScheduler_ae6119e940a3bf58a00e7dbcea04b5b6a}{c\-Scheduler}.
+
+\hypertarget{classcRoundRobin_a278d541c78f034020f6921b22a7d37af}{\index{c\-Round\-Robin@{c\-Round\-Robin}!unblock\-Process@{unblock\-Process}}
+\index{unblock\-Process@{unblock\-Process}!cRoundRobin@{c\-Round\-Robin}}
+\subsubsection[{unblock\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Round\-Robin\-::unblock\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{proc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dc/dcc/classcRoundRobin_a278d541c78f034020f6921b22a7d37af}
+\-Returns the blocked index id back to the \-I\-D \-Manager for future reuse. \-Decrement the count of blocked processes. \-Add the blocked process id to the trace\-Unblocked queue. 
+
+\-Implements \hyperlink{classcScheduler_a81fe2e5e5e2334e36db1cbf491e3fa57}{c\-Scheduler}.
+
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/scheduler/\hyperlink{round__robin_8h}{round\-\_\-robin.\-h}\item 
+src/scheduler/round\-\_\-robin.\-cpp\end{DoxyCompactItemize}

@@ -1,0 +1,84 @@
+\hypertarget{cpu_8h}{\section{include/cpu.h \-File \-Reference}
+\label{dc/da7/cpu_8h}\index{include/cpu.\-h@{include/cpu.\-h}}
+}
+{\ttfamily \#include $<$cstdio$>$}\*
+{\ttfamily \#include $<$cstdlib$>$}\*
+{\ttfamily \#include $<$assert.\-h$>$}\*
+{\ttfamily \#include $<$inttypes.\-h$>$}\*
+{\ttfamily \#include \char`\"{}utility/logger.\-h\char`\"{}}\*
+\-Include dependency graph for cpu.\-h\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d4/d37/cpu_8h__incl}
+\end{center}
+\end{figure}
+\-This graph shows which files directly or indirectly include this file\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=164pt]{d8/de6/cpu_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{\-Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcCPU}{c\-C\-P\-U}
+\begin{DoxyCompactList}\small\item\em \-A class for emulating a simple cpu. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{cpu_8h_a885a6481fc6d474d0be18bc0facf648d}{\#define \hyperlink{cpu_8h_a885a6481fc6d474d0be18bc0facf648d}{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-S}~2}\label{dc/da7/cpu_8h_a885a6481fc6d474d0be18bc0facf648d}
+
+\begin{DoxyCompactList}\small\item\em \-Max number of execution parameters for any \-Opcode. \end{DoxyCompactList}\item 
+\#define \hyperlink{cpu_8h_a9e34e5196b1f8e4c96f229d062c73fe0}{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E}~256
+\begin{DoxyCompactList}\small\item\em \-Maximum size in bytes for an execution parameter. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{cpu_8h_a1c804f1220f3edf8f809fa0ccfb7643f}{typedef unsigned int {\bfseries pid\-Type}}\label{dc/da7/cpu_8h_a1c804f1220f3edf8f809fa0ccfb7643f}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9}{e\-P\-S\-W} \{ \*
+\hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9a5f0829985f41a81da1a46db3501075f1}{\-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N} =  0x1, 
+\hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9a45657e0129f354aef59ae454ef5443fd}{\-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E} =  \-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N $<$$<$ 1, 
+\hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9a8c8ee347805cce90f5544ec61d6bf21e}{\-P\-S\-\_\-\-A\-B\-N\-O\-R\-M\-A\-L} =  \-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E $<$$<$ 1, 
+\hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee}{\-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L} =  \-P\-S\-\_\-\-A\-B\-N\-O\-R\-M\-A\-L $<$$<$ 1, 
+\*
+\hyperlink{cpu_8h_ade10811b11f1c647313bf0a60797a9f9ac4bd92270ab58449a1752f67ec9e7090}{\-P\-S\-\_\-\-F\-I\-N\-I\-S\-H\-E\-D} =  \-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L $<$$<$ 1
+ \}
+\begin{DoxyCompactList}\small\item\em \-Enumeration of \-Program \-Status \-Word \-Flags. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\subsection{\-Define \-Documentation}
+\hypertarget{cpu_8h_a9e34e5196b1f8e4c96f229d062c73fe0}{\index{cpu.\-h@{cpu.\-h}!\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E@{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E}}
+\index{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E@{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E}!cpu.h@{cpu.\-h}}
+\subsubsection[{\-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E}]{\setlength{\rightskip}{0pt plus 5cm}\#define {\bf \-M\-A\-X\-\_\-\-P\-A\-R\-A\-M\-\_\-\-S\-I\-Z\-E}~256}}\label{dc/da7/cpu_8h_a9e34e5196b1f8e4c96f229d062c73fe0}
+\-Creates exception if exceeded. 
+
+\subsection{\-Enumeration \-Type \-Documentation}
+\hypertarget{cpu_8h_ade10811b11f1c647313bf0a60797a9f9}{\index{cpu.\-h@{cpu.\-h}!e\-P\-S\-W@{e\-P\-S\-W}}
+\index{e\-P\-S\-W@{e\-P\-S\-W}!cpu.h@{cpu.\-h}}
+\subsubsection[{e\-P\-S\-W}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf e\-P\-S\-W}}}\label{dc/da7/cpu_8h_ade10811b11f1c647313bf0a60797a9f9}
+\-The program status word is a bit vector and this enumeration defines the meaning of particular bits. \-This is used in the interpretation of execution status. \begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N@{\-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N}!cpu.\-h@{cpu.\-h}}\index{cpu.\-h@{cpu.\-h}!\-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N@{\-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N}}\item[{\em 
+\hypertarget{cpu_8h_ade10811b11f1c647313bf0a60797a9f9a5f0829985f41a81da1a46db3501075f1}{\-P\-S\-\_\-\-E\-X\-C\-E\-P\-T\-I\-O\-N}\label{dc/da7/cpu_8h_ade10811b11f1c647313bf0a60797a9f9a5f0829985f41a81da1a46db3501075f1}
+}]\-Executing process has created an exception. \index{\-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E@{\-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E}!cpu.\-h@{cpu.\-h}}\index{cpu.\-h@{cpu.\-h}!\-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E@{\-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E}}\item[{\em 
+\hypertarget{cpu_8h_ade10811b11f1c647313bf0a60797a9f9a45657e0129f354aef59ae454ef5443fd}{\-P\-S\-\_\-\-T\-E\-R\-M\-I\-N\-A\-T\-E}\label{dc/da7/cpu_8h_ade10811b11f1c647313bf0a60797a9f9a45657e0129f354aef59ae454ef5443fd}
+}]\-Executing process has finished. \index{\-P\-S\-\_\-\-A\-B\-N\-O\-R\-M\-A\-L@{\-P\-S\-\_\-\-A\-B\-N\-O\-R\-M\-A\-L}!cpu.\-h@{cpu.\-h}}\index{cpu.\-h@{cpu.\-h}!\-P\-S\-\_\-\-A\-B\-N\-O\-R\-M\-A\-L@{\-P\-S\-\_\-\-A\-B\-N\-O\-R\-M\-A\-L}}\item[{\em 
+\hypertarget{cpu_8h_ade10811b11f1c647313bf0a60797a9f9a8c8ee347805cce90f5544ec61d6bf21e}{\-P\-S\-\_\-\-A\-B\-N\-O\-R\-M\-A\-L}\label{dc/da7/cpu_8h_ade10811b11f1c647313bf0a60797a9f9a8c8ee347805cce90f5544ec61d6bf21e}
+}]\-Process raised an exception by exiting abnormally. \-No '\-E' instruction. \index{\-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L@{\-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L}!cpu.\-h@{cpu.\-h}}\index{cpu.\-h@{cpu.\-h}!\-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L@{\-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L}}\item[{\em 
+\hypertarget{cpu_8h_ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee}{\-P\-S\-\_\-\-S\-Y\-S\-C\-A\-L\-L}\label{dc/da7/cpu_8h_ade10811b11f1c647313bf0a60797a9f9aa95675f79e2e3167dc1622eaf4733cee}
+}]\-Executing process has made a system call. \index{\-P\-S\-\_\-\-F\-I\-N\-I\-S\-H\-E\-D@{\-P\-S\-\_\-\-F\-I\-N\-I\-S\-H\-E\-D}!cpu.\-h@{cpu.\-h}}\index{cpu.\-h@{cpu.\-h}!\-P\-S\-\_\-\-F\-I\-N\-I\-S\-H\-E\-D@{\-P\-S\-\_\-\-F\-I\-N\-I\-S\-H\-E\-D}}\item[{\em 
+\hypertarget{cpu_8h_ade10811b11f1c647313bf0a60797a9f9ac4bd92270ab58449a1752f67ec9e7090}{\-P\-S\-\_\-\-F\-I\-N\-I\-S\-H\-E\-D}\label{dc/da7/cpu_8h_ade10811b11f1c647313bf0a60797a9f9ac4bd92270ab58449a1752f67ec9e7090}
+}]\-Executing process finished an instruction. \-No problems \end{description}
+\end{Desc}
+

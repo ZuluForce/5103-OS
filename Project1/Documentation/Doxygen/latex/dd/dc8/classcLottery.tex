@@ -1,0 +1,244 @@
+\hypertarget{classcLottery}{\section{c\-Lottery \-Class \-Reference}
+\label{dd/dc8/classcLottery}\index{c\-Lottery@{c\-Lottery}}
+}
+
+
+\-Lottery \-Scheduler.  
+
+
+
+
+{\ttfamily \#include $<$lottery.\-h$>$}
+
+
+
+\-Inheritance diagram for c\-Lottery\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=144pt]{dd/df5/classcLottery__inherit__graph}
+\end{center}
+\end{figure}
+
+
+\-Collaboration diagram for c\-Lottery\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/ded/classcLottery__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcLottery_a04e2ae003310bf45f0db0d3017e308e2}{init\-Proc\-Schedule\-Info} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Initialize scheduler specific information within the \hyperlink{structProcessInfo}{\-Process\-Info} struct. \end{DoxyCompactList}\item 
+void \hyperlink{classcLottery_ae250b46d5d3032d40f49b8539cbd9faf}{add\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Transfer control of process state and scheduling. \end{DoxyCompactList}\item 
+void \hyperlink{classcLottery_afa726859adb7b98f1ad80a41c196e488}{set\-Blocked} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Set a process into a \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}{blocked} state. \end{DoxyCompactList}\item 
+void \hyperlink{classcLottery_a86bf3ddc6da1a45ffb073a843d744c60}{unblock\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Unblock a process and make it ready. \end{DoxyCompactList}\item 
+void \hyperlink{classcLottery_aa995fc5a68b398aa526e504fed2f7a59}{remove\-Process} (\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$)
+\begin{DoxyCompactList}\small\item\em \-Remove a process from the control of the scheduler. \end{DoxyCompactList}\item 
+\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ \hyperlink{classcLottery_a81195e7055070fa9743497621898c441}{get\-Next\-To\-Run} ()
+\begin{DoxyCompactList}\small\item\em \-Query the scheduler for next process to run. \end{DoxyCompactList}\item 
+pid\-Type \hyperlink{classcLottery_a4f77d186c1f4cbb82d3fff077bba7736}{num\-Processes} ()
+\begin{DoxyCompactList}\small\item\em \-How many processes are in the scheduler. \end{DoxyCompactList}\item 
+\hypertarget{classcLottery_ad9b5803ea8dabd0df69d8063173b95a5}{void \hyperlink{classcLottery_ad9b5803ea8dabd0df69d8063173b95a5}{add\-Logger} (\-F\-I\-L\-E $\ast$\-\_\-log\-Stream)}\label{dd/dc8/classcLottery_ad9b5803ea8dabd0df69d8063173b95a5}
+
+\begin{DoxyCompactList}\small\item\em \-Assign the file pointer to the log\-Stream data field. \end{DoxyCompactList}\item 
+\hypertarget{classcLottery_a3181bce7c9e3464215fdd9c328851787}{void \hyperlink{classcLottery_a3181bce7c9e3464215fdd9c328851787}{add\-Proc\-Logger} (\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$\-\_\-proc\-Logger)}\label{dd/dc8/classcLottery_a3181bce7c9e3464215fdd9c328851787}
+
+\begin{DoxyCompactList}\small\item\em \-Assign the \hyperlink{classcProcessLogger}{c\-Process\-Logger} pointer to the proc\-Logger data field. \end{DoxyCompactList}\item 
+\hypertarget{classcLottery_ab878165e4106b7e09cfa1fbc87d33d1b}{void \hyperlink{classcLottery_ab878165e4106b7e09cfa1fbc87d33d1b}{print\-Unblocked} ()}\label{dd/dc8/classcLottery_ab878165e4106b7e09cfa1fbc87d33d1b}
+
+\begin{DoxyCompactList}\small\item\em \-Removes each \-P\-I\-D from the trace\-Unblocked queue and prints it to the trace logger. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Private \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcLottery_a930e7485c542c8fad39340a6c76b81b4}{vector$<$ \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ $>$ {\bfseries ready\-Vector}}\label{dd/dc8/classcLottery_a930e7485c542c8fad39340a6c76b81b4}
+
+\item 
+\hypertarget{classcLottery_a58409db56629d3aa331c17478f9d3dc0}{vector$<$ \hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ $>$ {\bfseries blocked\-Vector}}\label{dd/dc8/classcLottery_a58409db56629d3aa331c17478f9d3dc0}
+
+\item 
+\hypertarget{classcLottery_ac2148d920257e2d01a0760830986925e}{queue$<$ pid\-Type $>$ {\bfseries trace\-Unblocked}}\label{dd/dc8/classcLottery_ac2148d920257e2d01a0760830986925e}
+
+\item 
+\hypertarget{classcLottery_a05b33ad3e505d884e6e06b9a4a248306}{int {\bfseries total\-Ready}}\label{dd/dc8/classcLottery_a05b33ad3e505d884e6e06b9a4a248306}
+
+\item 
+\hypertarget{classcLottery_a13d6714808cc0a89b74773f1c3070ee7}{int {\bfseries total\-Blocked}}\label{dd/dc8/classcLottery_a13d6714808cc0a89b74773f1c3070ee7}
+
+\item 
+\hypertarget{classcLottery_a30adf681c7dd74aa73d8af349db0bc55}{int {\bfseries total\-Tickets}}\label{dd/dc8/classcLottery_a30adf681c7dd74aa73d8af349db0bc55}
+
+\item 
+\hypertarget{classcLottery_aca8eb62eb83b54b0fccd68350a90d57c}{\hyperlink{structProcessInfo}{\-Process\-Info} $\ast$ {\bfseries running\-Proc}}\label{dd/dc8/classcLottery_aca8eb62eb83b54b0fccd68350a90d57c}
+
+\item 
+\hypertarget{classcLottery_a789086be59ccc718e10575c9b0d57ce6}{pthread\-\_\-mutex\-\_\-t {\bfseries blocked\-Lock}}\label{dd/dc8/classcLottery_a789086be59ccc718e10575c9b0d57ce6}
+
+\item 
+\hypertarget{classcLottery_a1af5754b5f4b4dd73c2052d14fb704d8}{pthread\-\_\-cond\-\_\-t {\bfseries all\-Blocked}}\label{dd/dc8/classcLottery_a1af5754b5f4b4dd73c2052d14fb704d8}
+
+\item 
+\hypertarget{classcLottery_a0150bb81cf13ebf1da2f95b5c5da964f}{\hyperlink{classcIDManager}{c\-I\-D\-Manager} {\bfseries blocked\-I\-D}}\label{dd/dc8/classcLottery_a0150bb81cf13ebf1da2f95b5c5da964f}
+
+\item 
+\hypertarget{classcLottery_a721fe067285131053bddea175b1a7bab}{\hyperlink{classcIDManager}{c\-I\-D\-Manager} {\bfseries ready\-I\-D}}\label{dd/dc8/classcLottery_a721fe067285131053bddea175b1a7bab}
+
+\item 
+\hypertarget{classcLottery_a31c0800ce4ae7c292080f347e7758df6}{\-F\-I\-L\-E $\ast$ {\bfseries log\-Stream}}\label{dd/dc8/classcLottery_a31c0800ce4ae7c292080f347e7758df6}
+
+\item 
+\hypertarget{classcLottery_ac10eda0b2a997c53b5c894fd7d15dbb4}{\hyperlink{classcProcessLogger}{c\-Process\-Logger} $\ast$ {\bfseries proc\-Logger}}\label{dd/dc8/classcLottery_ac10eda0b2a997c53b5c894fd7d15dbb4}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcLottery_ae250b46d5d3032d40f49b8539cbd9faf}{\index{c\-Lottery@{c\-Lottery}!add\-Process@{add\-Process}}
+\index{add\-Process@{add\-Process}!cLottery@{c\-Lottery}}
+\subsubsection[{add\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Lottery\-::add\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dd/dc8/classcLottery_ae250b46d5d3032d40f49b8539cbd9faf}
+\-After this is called, the kernel core no longer keeps track of the given process. \-Once the process is created and deemed \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready} by the kernel it is handed off here. \-The scheduler is then in charge of state transitions when the kernel gives it appropriate notifications.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Store the process in some location. \-It should be recognized as ready given its location but the datastructures and organization are implementation specific.\end{DoxyItemize}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Process\-Info$\ast$} & \-Process to add under scheduler's control \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classcScheduler_aeae779c5c160a441e725dfc72656e6dc}{c\-Scheduler}.
+
+\hypertarget{classcLottery_a81195e7055070fa9743497621898c441}{\index{c\-Lottery@{c\-Lottery}!get\-Next\-To\-Run@{get\-Next\-To\-Run}}
+\index{get\-Next\-To\-Run@{get\-Next\-To\-Run}!cLottery@{c\-Lottery}}
+\subsubsection[{get\-Next\-To\-Run}]{\setlength{\rightskip}{0pt plus 5cm}{\bf \-Process\-Info} $\ast$ {\bf c\-Lottery\-::get\-Next\-To\-Run} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dd/dc8/classcLottery_a81195e7055070fa9743497621898c441}
+\-After this function is called, it should be assumed by any scheduler implementation that the kernel will run the given process (unless otherwise notified). \-The currently running process should implicitly be considered for running next (again).
+
+\-If there are processes left but all are blocked. \-This function should block until it receives a signal that a process is unblocked.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Call \hyperlink{classcLottery_ab878165e4106b7e09cfa1fbc87d33d1b}{print\-Unblocked()} to update the trace log after a clock step. \item \-Block if there are $>$ 0 processes but none can run. \item \-A process listed as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} within the scheduler should be treated as ready when this method is called. \item \-A process returned as the 'next to run' should be marked as being in a \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821faf9ccc71a0c4e71cc139d2c885154b243}{running} state before returning. \item \-If there are no more remaining processes this should return \-N\-U\-L\-L.\end{DoxyItemize}
+\begin{DoxyReturn}{\-Returns}
+\hyperlink{structProcessInfo}{\-Process\-Info}$\ast$ \-Ready process to run next. \-May be the same as the currenlty running one.
+\end{DoxyReturn}
+\begin{DoxyWarning}{\-Warning}
+\-Must be thread safe with block and unblock methods. 
+\end{DoxyWarning}
+
+
+\-Implements \hyperlink{classcScheduler_a350ad7c55ddcdd17005778b0da241956}{c\-Scheduler}.
+
+\hypertarget{classcLottery_a04e2ae003310bf45f0db0d3017e308e2}{\index{c\-Lottery@{c\-Lottery}!init\-Proc\-Schedule\-Info@{init\-Proc\-Schedule\-Info}}
+\index{init\-Proc\-Schedule\-Info@{init\-Proc\-Schedule\-Info}!cLottery@{c\-Lottery}}
+\subsubsection[{init\-Proc\-Schedule\-Info}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Lottery\-::init\-Proc\-Schedule\-Info} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dd/dc8/classcLottery_a04e2ae003310bf45f0db0d3017e308e2}
+\-This method is called after the kernel has initialized all process data but before it is marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready}. \-This gives the scheduler an oportunity to initialize any scheduler specific data and assign it to the \hyperlink{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{\-Process\-Info\-::schedule\-Data} member.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-No required actions. \end{DoxyItemize}
+
+
+\-Implements \hyperlink{classcScheduler_a8782803287dce0352623142643eee01a}{c\-Scheduler}.
+
+\hypertarget{classcLottery_a4f77d186c1f4cbb82d3fff077bba7736}{\index{c\-Lottery@{c\-Lottery}!num\-Processes@{num\-Processes}}
+\index{num\-Processes@{num\-Processes}!cLottery@{c\-Lottery}}
+\subsubsection[{num\-Processes}]{\setlength{\rightskip}{0pt plus 5cm}pid\-Type {\bf c\-Lottery\-::num\-Processes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dd/dc8/classcLottery_a4f77d186c1f4cbb82d3fff077bba7736}
+\-This returns how many processes, both running and blocked, are being handled by the scheduler.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Return how many processes, running and blocked, are in the scheduler.\end{DoxyItemize}
+\begin{DoxyReturn}{\-Returns}
+pid\-Type 
+\end{DoxyReturn}
+
+
+\-Implements \hyperlink{classcScheduler_a025532a943093ae7e8d6dc0cdaf60f12}{c\-Scheduler}.
+
+\hypertarget{classcLottery_aa995fc5a68b398aa526e504fed2f7a59}{\index{c\-Lottery@{c\-Lottery}!remove\-Process@{remove\-Process}}
+\index{remove\-Process@{remove\-Process}!cLottery@{c\-Lottery}}
+\subsubsection[{remove\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Lottery\-::remove\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dd/dc8/classcLottery_aa995fc5a68b398aa526e504fed2f7a59}
+\-When a process terminates, either through normal means or an exception, the kernel will call this function to release a process from the scheduler's control. \-The scheduler should clean up any internal state for the process. \-Deallocation of process resources is left to the kernel.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Scheduler should deallocate any resources it assigned to the process within the \hyperlink{structProcessInfo_aea1c50ae92f6421ae5c94ac674c1877a}{\-Process\-Info\-::schedule\-Data} member. \item \-The \-Scheduler should remove any pointers to the give process to avoid dereferncing a dead pointer. \item \-Implementations must not deallocate any memory except that mentioned above. \-This is handled by the kernel. \item \-Implementations should mark the process as \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa21b6f86c6d8b11d4a9c163130f55c5dd}{terminated}.\end{DoxyItemize}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Process\-Info$\ast$} & \-Process to remove from scheduler \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classcScheduler_a5632ffa597e9567d475c808070c4e3bb}{c\-Scheduler}.
+
+\hypertarget{classcLottery_afa726859adb7b98f1ad80a41c196e488}{\index{c\-Lottery@{c\-Lottery}!set\-Blocked@{set\-Blocked}}
+\index{set\-Blocked@{set\-Blocked}!cLottery@{c\-Lottery}}
+\subsubsection[{set\-Blocked}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Lottery\-::set\-Blocked} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dd/dc8/classcLottery_afa726859adb7b98f1ad80a41c196e488}
+\-The kernel will call the scheduler with this function when the process has done an operation which causes it to block (\-I).
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-Process must be marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa035732e2026cb263f1bd9eee6ca6ae01}{blocked} and scheduler state should be changed accordingly. \item \-After this call a process should not be considered for a scheduling decision\end{DoxyItemize}
+\begin{DoxyWarning}{\-Warning}
+\-Must be thread safe. \-Signal handler/s may block during schedule decision. 
+\end{DoxyWarning}
+
+
+\-Implements \hyperlink{classcScheduler_ae6119e940a3bf58a00e7dbcea04b5b6a}{c\-Scheduler}.
+
+\hypertarget{classcLottery_a86bf3ddc6da1a45ffb073a843d744c60}{\index{c\-Lottery@{c\-Lottery}!unblock\-Process@{unblock\-Process}}
+\index{unblock\-Process@{unblock\-Process}!cLottery@{c\-Lottery}}
+\subsubsection[{unblock\-Process}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Lottery\-::unblock\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf \-Process\-Info} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{dd/dc8/classcLottery_a86bf3ddc6da1a45ffb073a843d744c60}
+\-When a process has completed a blocking call the kernel will notify the scheduler that it should be unblocked. \-This operation should be very fast since it will likely be called from a signal handler.
+
+\-Implementation \-Requirements\-: \begin{DoxyItemize}
+\item \-The process must be unblocked and marked \hyperlink{process_8h_a2c72cb00af5be695c1f898162350821fa3d4001ca586c857718be397374082d76}{ready}. \-It must be available for scheduling with the next call to \-::get\-Next\-To\-Run\end{DoxyItemize}
+
+\begin{DoxyParams}{\-Parameters}
+{\em \-Process\-Info$\ast$} & \-Process to unblock\\
+\hline
+\end{DoxyParams}
+\begin{DoxyWarning}{\-Warning}
+\-Must be thread safe. \-Signal handler/s may unblock during schedule decision. 
+\end{DoxyWarning}
+
+
+\-Implements \hyperlink{classcScheduler_a81fe2e5e5e2334e36db1cbf491e3fa57}{c\-Scheduler}.
+
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/scheduler/\hyperlink{lottery_8h}{lottery.\-h}\item 
+src/scheduler/lottery.\-cpp\end{DoxyCompactItemize}

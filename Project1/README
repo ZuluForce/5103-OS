@@ -9,6 +9,23 @@ Dylan Bettermann
 	x500: bett0159
 	ID#: 3966450
 	
+Instructions to Run:
+	make or make all	- Builds the OS
+	make run			- Defaults to FCFS scheduler
+	make run_fcfs 		- First-Come-First-Serve scheduler
+	make run_rr			- Round Robin scheduler
+	make run_lottery	- Lottery scheduler
+	make run_multi		- Multi-Level Queue scheduler
+	
+	make top			- Builds top
+	make run_top		- Builds and executes the top program
+	
+Documentation:
+	We used Doxygen to build html and pdf documentation based on the source files and comments within. Included in the main project directory is a symlink to the index file for the html docs. This is the preferred way to view the documentation. If the link doesn't work you can find it in ./Documentation/Doxygen/hmtl. If this doesn't work you can view the generated pdf ./Documentation/ folder.
+
+Note on Extra Credit:
+	We did write an implementation for the extra-credit. It has 4 queue levels and new processes are assigned a queue according to their priority. Since the interpretation of priorities is inverted (0 is the highest), our test trace files behave differently (in a scheduling priority sense) than with the other schedulers.
+	
 Notes on Implementation and Possible Improvements:
 	For this project we implemented devices in the kernel as individual and static objects. We do have a design for supporting more devices (and multiple of the same type) but it would have broken the operating syntax for this machine language. Our idea was rather than using explicit classes such as 'B' or 'C', each device would be assigned an integer id using the standard id manager used in our code. It is up to the kernel/cpu design if certain characters like 'B' or 'C' should always map to a specific id. If you still want a sense of separate device classes then these could be conceived by the OS designer and each registered device would have to be assigned to a class. Then processes could request a listing of all 'B' class devices in order to make a request to the proper one using its unique ID.
 	

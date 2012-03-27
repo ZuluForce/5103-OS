@@ -1,0 +1,1 @@
+This test is just to make sure the VMM can read in addresses in base 10. In order for this to work it must be specified in the settings file.

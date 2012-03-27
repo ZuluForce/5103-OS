@@ -1,0 +1,175 @@
+\contentsline {chapter}{\numberline {1}\discretionary {-}{}{}Class \discretionary {-}{}{}Index}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}\discretionary {-}{}{}Class \discretionary {-}{}{}Hierarchy}{1}{section.1.1}
+\contentsline {chapter}{\numberline {2}\discretionary {-}{}{}Class \discretionary {-}{}{}Index}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}\discretionary {-}{}{}Class \discretionary {-}{}{}List}{3}{section.2.1}
+\contentsline {chapter}{\numberline {3}\discretionary {-}{}{}File \discretionary {-}{}{}Index}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}\discretionary {-}{}{}File \discretionary {-}{}{}List}{5}{section.3.1}
+\contentsline {chapter}{\numberline {4}\discretionary {-}{}{}Class \discretionary {-}{}{}Documentation}{7}{chapter.4}
+\contentsline {section}{\numberline {4.1}\discretionary {-}{}{}Abstract\discretionary {-}{}{}Device \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{7}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{8}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{8}{subsection.4.1.2}
+\contentsline {subsubsection}{\numberline {4.1.2.1}set\discretionary {-}{}{}Timer}{8}{subsubsection.4.1.2.1}
+\contentsline {section}{\numberline {4.2}c\discretionary {-}{}{}Abs\discretionary {-}{}{}Queued\discretionary {-}{}{}Device \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{8}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{9}{subsection.4.2.1}
+\contentsline {subsubsection}{\numberline {4.2.1.1}schedule\discretionary {-}{}{}Device}{9}{subsubsection.4.2.1.1}
+\contentsline {subsubsection}{\numberline {4.2.1.2}set\discretionary {-}{}{}Default\discretionary {-}{}{}Time}{9}{subsubsection.4.2.1.2}
+\contentsline {subsubsection}{\numberline {4.2.1.3}timer\discretionary {-}{}{}Finished}{9}{subsubsection.4.2.1.3}
+\contentsline {section}{\numberline {4.3}c\discretionary {-}{}{}Block\discretionary {-}{}{}Device \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{10}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{11}{subsection.4.3.1}
+\contentsline {subsubsection}{\numberline {4.3.1.1}schedule\discretionary {-}{}{}Device}{11}{subsubsection.4.3.1.1}
+\contentsline {subsubsection}{\numberline {4.3.1.2}set\discretionary {-}{}{}Default\discretionary {-}{}{}Time}{12}{subsubsection.4.3.1.2}
+\contentsline {subsubsection}{\numberline {4.3.1.3}timer\discretionary {-}{}{}Finished}{12}{subsubsection.4.3.1.3}
+\contentsline {section}{\numberline {4.4}c\discretionary {-}{}{}Char\discretionary {-}{}{}Device \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{13}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{14}{subsection.4.4.1}
+\contentsline {subsubsection}{\numberline {4.4.1.1}schedule\discretionary {-}{}{}Device}{14}{subsubsection.4.4.1.1}
+\contentsline {subsubsection}{\numberline {4.4.1.2}set\discretionary {-}{}{}Default\discretionary {-}{}{}Time}{14}{subsubsection.4.4.1.2}
+\contentsline {subsubsection}{\numberline {4.4.1.3}timer\discretionary {-}{}{}Finished}{15}{subsubsection.4.4.1.3}
+\contentsline {section}{\numberline {4.5}c\discretionary {-}{}{}C\discretionary {-}{}{}P\discretionary {-}{}{}U \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{15}{section.4.5}
+\contentsline {subsection}{\numberline {4.5.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{17}{subsection.4.5.1}
+\contentsline {subsection}{\numberline {4.5.2}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{17}{subsection.4.5.2}
+\contentsline {subsubsection}{\numberline {4.5.2.1}execute\discretionary {-}{}{}Priv\discretionary {-}{}{}Set}{17}{subsubsection.4.5.2.1}
+\contentsline {subsubsection}{\numberline {4.5.2.2}get\discretionary {-}{}{}Opcode}{17}{subsubsection.4.5.2.2}
+\contentsline {subsubsection}{\numberline {4.5.2.3}get\discretionary {-}{}{}Param}{17}{subsubsection.4.5.2.3}
+\contentsline {subsubsection}{\numberline {4.5.2.4}get\discretionary {-}{}{}P\discretionary {-}{}{}S\discretionary {-}{}{}W}{17}{subsubsection.4.5.2.4}
+\contentsline {subsubsection}{\numberline {4.5.2.5}get\discretionary {-}{}{}Set\discretionary {-}{}{}P\discretionary {-}{}{}C}{18}{subsubsection.4.5.2.5}
+\contentsline {subsubsection}{\numberline {4.5.2.6}get\discretionary {-}{}{}Set\discretionary {-}{}{}P\discretionary {-}{}{}S\discretionary {-}{}{}W}{18}{subsubsection.4.5.2.6}
+\contentsline {subsubsection}{\numberline {4.5.2.7}get\discretionary {-}{}{}Set\discretionary {-}{}{}V\discretionary {-}{}{}C}{18}{subsubsection.4.5.2.7}
+\contentsline {subsubsection}{\numberline {4.5.2.8}run}{18}{subsubsection.4.5.2.8}
+\contentsline {subsubsection}{\numberline {4.5.2.9}set\discretionary {-}{}{}Max\discretionary {-}{}{}P\discretionary {-}{}{}C}{18}{subsubsection.4.5.2.9}
+\contentsline {subsubsection}{\numberline {4.5.2.10}set\discretionary {-}{}{}P\discretionary {-}{}{}S\discretionary {-}{}{}W}{18}{subsubsection.4.5.2.10}
+\contentsline {subsubsection}{\numberline {4.5.2.11}set\discretionary {-}{}{}Text}{19}{subsubsection.4.5.2.11}
+\contentsline {subsubsection}{\numberline {4.5.2.12}set\discretionary {-}{}{}User\discretionary {-}{}{}Mode}{19}{subsubsection.4.5.2.12}
+\contentsline {subsection}{\numberline {4.5.3}\discretionary {-}{}{}Member \discretionary {-}{}{}Data \discretionary {-}{}{}Documentation}{19}{subsection.4.5.3}
+\contentsline {subsubsection}{\numberline {4.5.3.1}\discretionary {-}{}{}K\discretionary {-}{}{}Mode}{19}{subsubsection.4.5.3.1}
+\contentsline {section}{\numberline {4.6}c\discretionary {-}{}{}F\discretionary {-}{}{}C\discretionary {-}{}{}F\discretionary {-}{}{}S \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{19}{section.4.6}
+\contentsline {subsection}{\numberline {4.6.1}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{21}{subsection.4.6.1}
+\contentsline {subsubsection}{\numberline {4.6.1.1}add\discretionary {-}{}{}Logger}{21}{subsubsection.4.6.1.1}
+\contentsline {subsubsection}{\numberline {4.6.1.2}add\discretionary {-}{}{}Process}{21}{subsubsection.4.6.1.2}
+\contentsline {subsubsection}{\numberline {4.6.1.3}add\discretionary {-}{}{}Proc\discretionary {-}{}{}Logger}{22}{subsubsection.4.6.1.3}
+\contentsline {subsubsection}{\numberline {4.6.1.4}get\discretionary {-}{}{}Next\discretionary {-}{}{}To\discretionary {-}{}{}Run}{22}{subsubsection.4.6.1.4}
+\contentsline {subsubsection}{\numberline {4.6.1.5}init\discretionary {-}{}{}Proc\discretionary {-}{}{}Schedule\discretionary {-}{}{}Info}{23}{subsubsection.4.6.1.5}
+\contentsline {subsubsection}{\numberline {4.6.1.6}num\discretionary {-}{}{}Processes}{23}{subsubsection.4.6.1.6}
+\contentsline {subsubsection}{\numberline {4.6.1.7}print\discretionary {-}{}{}Unblocked}{23}{subsubsection.4.6.1.7}
+\contentsline {subsubsection}{\numberline {4.6.1.8}remove\discretionary {-}{}{}Process}{24}{subsubsection.4.6.1.8}
+\contentsline {subsubsection}{\numberline {4.6.1.9}set\discretionary {-}{}{}Blocked}{24}{subsubsection.4.6.1.9}
+\contentsline {subsubsection}{\numberline {4.6.1.10}unblock\discretionary {-}{}{}Process}{24}{subsubsection.4.6.1.10}
+\contentsline {section}{\numberline {4.7}c\discretionary {-}{}{}I\discretionary {-}{}{}D\discretionary {-}{}{}Manager \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{25}{section.4.7}
+\contentsline {subsection}{\numberline {4.7.1}\discretionary {-}{}{}Constructor \& \discretionary {-}{}{}Destructor \discretionary {-}{}{}Documentation}{26}{subsection.4.7.1}
+\contentsline {subsubsection}{\numberline {4.7.1.1}c\discretionary {-}{}{}I\discretionary {-}{}{}D\discretionary {-}{}{}Manager}{26}{subsubsection.4.7.1.1}
+\contentsline {subsection}{\numberline {4.7.2}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{26}{subsection.4.7.2}
+\contentsline {subsubsection}{\numberline {4.7.2.1}get\discretionary {-}{}{}I\discretionary {-}{}{}D}{26}{subsubsection.4.7.2.1}
+\contentsline {subsubsection}{\numberline {4.7.2.2}get\discretionary {-}{}{}Low\discretionary {-}{}{}I\discretionary {-}{}{}D}{27}{subsubsection.4.7.2.2}
+\contentsline {subsubsection}{\numberline {4.7.2.3}next\discretionary {-}{}{}Low\discretionary {-}{}{}I\discretionary {-}{}{}D}{27}{subsubsection.4.7.2.3}
+\contentsline {subsubsection}{\numberline {4.7.2.4}reserved\discretionary {-}{}{}I\discretionary {-}{}{}Ds}{27}{subsubsection.4.7.2.4}
+\contentsline {subsubsection}{\numberline {4.7.2.5}return\discretionary {-}{}{}I\discretionary {-}{}{}D}{27}{subsubsection.4.7.2.5}
+\contentsline {section}{\numberline {4.8}c\discretionary {-}{}{}Kernel \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{27}{section.4.8}
+\contentsline {subsection}{\numberline {4.8.1}\discretionary {-}{}{}Constructor \& \discretionary {-}{}{}Destructor \discretionary {-}{}{}Documentation}{29}{subsection.4.8.1}
+\contentsline {subsubsection}{\numberline {4.8.1.1}c\discretionary {-}{}{}Kernel}{29}{subsubsection.4.8.1.1}
+\contentsline {subsection}{\numberline {4.8.2}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{30}{subsection.4.8.2}
+\contentsline {subsubsection}{\numberline {4.8.2.1}boot}{30}{subsubsection.4.8.2.1}
+\contentsline {subsubsection}{\numberline {4.8.2.2}cleanup\discretionary {-}{}{}Process}{30}{subsubsection.4.8.2.2}
+\contentsline {subsubsection}{\numberline {4.8.2.3}cleanup\discretionary {-}{}{}Process}{30}{subsubsection.4.8.2.3}
+\contentsline {subsubsection}{\numberline {4.8.2.4}init\discretionary {-}{}{}Process}{30}{subsubsection.4.8.2.4}
+\contentsline {subsubsection}{\numberline {4.8.2.5}sig\discretionary {-}{}{}Handler}{30}{subsubsection.4.8.2.5}
+\contentsline {subsubsection}{\numberline {4.8.2.6}swap\discretionary {-}{}{}Processes}{31}{subsubsection.4.8.2.6}
+\contentsline {subsection}{\numberline {4.8.3}\discretionary {-}{}{}Friends \discretionary {-}{}{}And \discretionary {-}{}{}Related \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{31}{subsection.4.8.3}
+\contentsline {subsubsection}{\numberline {4.8.3.1}device\discretionary {-}{}{}Handle}{31}{subsubsection.4.8.3.1}
+\contentsline {section}{\numberline {4.9}\discretionary {-}{}{}Clock\discretionary {-}{}{}Device \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{31}{section.4.9}
+\contentsline {subsection}{\numberline {4.9.1}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{32}{subsection.4.9.1}
+\contentsline {subsubsection}{\numberline {4.9.1.1}disarm}{33}{subsubsection.4.9.1.1}
+\contentsline {subsubsection}{\numberline {4.9.1.2}get\discretionary {-}{}{}Time}{33}{subsubsection.4.9.1.2}
+\contentsline {subsubsection}{\numberline {4.9.1.3}set\discretionary {-}{}{}Timer}{33}{subsubsection.4.9.1.3}
+\contentsline {section}{\numberline {4.10}c\discretionary {-}{}{}Lottery \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{33}{section.4.10}
+\contentsline {subsection}{\numberline {4.10.1}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{35}{subsection.4.10.1}
+\contentsline {subsubsection}{\numberline {4.10.1.1}add\discretionary {-}{}{}Process}{35}{subsubsection.4.10.1.1}
+\contentsline {subsubsection}{\numberline {4.10.1.2}get\discretionary {-}{}{}Next\discretionary {-}{}{}To\discretionary {-}{}{}Run}{36}{subsubsection.4.10.1.2}
+\contentsline {subsubsection}{\numberline {4.10.1.3}init\discretionary {-}{}{}Proc\discretionary {-}{}{}Schedule\discretionary {-}{}{}Info}{36}{subsubsection.4.10.1.3}
+\contentsline {subsubsection}{\numberline {4.10.1.4}num\discretionary {-}{}{}Processes}{36}{subsubsection.4.10.1.4}
+\contentsline {subsubsection}{\numberline {4.10.1.5}remove\discretionary {-}{}{}Process}{37}{subsubsection.4.10.1.5}
+\contentsline {subsubsection}{\numberline {4.10.1.6}set\discretionary {-}{}{}Blocked}{37}{subsubsection.4.10.1.6}
+\contentsline {subsubsection}{\numberline {4.10.1.7}unblock\discretionary {-}{}{}Process}{38}{subsubsection.4.10.1.7}
+\contentsline {section}{\numberline {4.11}c\discretionary {-}{}{}Multi\discretionary {-}{}{}Level \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{38}{section.4.11}
+\contentsline {subsection}{\numberline {4.11.1}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{40}{subsection.4.11.1}
+\contentsline {subsubsection}{\numberline {4.11.1.1}add\discretionary {-}{}{}Logger}{40}{subsubsection.4.11.1.1}
+\contentsline {subsubsection}{\numberline {4.11.1.2}add\discretionary {-}{}{}Process}{41}{subsubsection.4.11.1.2}
+\contentsline {subsubsection}{\numberline {4.11.1.3}add\discretionary {-}{}{}Proc\discretionary {-}{}{}Logger}{41}{subsubsection.4.11.1.3}
+\contentsline {subsubsection}{\numberline {4.11.1.4}get\discretionary {-}{}{}Next\discretionary {-}{}{}To\discretionary {-}{}{}Run}{41}{subsubsection.4.11.1.4}
+\contentsline {subsubsection}{\numberline {4.11.1.5}init\discretionary {-}{}{}Proc\discretionary {-}{}{}Schedule\discretionary {-}{}{}Info}{42}{subsubsection.4.11.1.5}
+\contentsline {subsubsection}{\numberline {4.11.1.6}num\discretionary {-}{}{}Processes}{42}{subsubsection.4.11.1.6}
+\contentsline {subsubsection}{\numberline {4.11.1.7}print\discretionary {-}{}{}Unblocked}{43}{subsubsection.4.11.1.7}
+\contentsline {subsubsection}{\numberline {4.11.1.8}remove\discretionary {-}{}{}Process}{43}{subsubsection.4.11.1.8}
+\contentsline {subsubsection}{\numberline {4.11.1.9}set\discretionary {-}{}{}Blocked}{43}{subsubsection.4.11.1.9}
+\contentsline {subsubsection}{\numberline {4.11.1.10}unblock\discretionary {-}{}{}Process}{44}{subsubsection.4.11.1.10}
+\contentsline {section}{\numberline {4.12}c\discretionary {-}{}{}Process\discretionary {-}{}{}Logger \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{44}{section.4.12}
+\contentsline {subsection}{\numberline {4.12.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{46}{subsection.4.12.1}
+\contentsline {section}{\numberline {4.13}c\discretionary {-}{}{}Round\discretionary {-}{}{}Robin \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{46}{section.4.13}
+\contentsline {subsection}{\numberline {4.13.1}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{48}{subsection.4.13.1}
+\contentsline {subsubsection}{\numberline {4.13.1.1}get\discretionary {-}{}{}Next\discretionary {-}{}{}To\discretionary {-}{}{}Run}{48}{subsubsection.4.13.1.1}
+\contentsline {subsubsection}{\numberline {4.13.1.2}remove\discretionary {-}{}{}Process}{48}{subsubsection.4.13.1.2}
+\contentsline {subsubsection}{\numberline {4.13.1.3}set\discretionary {-}{}{}Blocked}{48}{subsubsection.4.13.1.3}
+\contentsline {subsubsection}{\numberline {4.13.1.4}unblock\discretionary {-}{}{}Process}{48}{subsubsection.4.13.1.4}
+\contentsline {section}{\numberline {4.14}c\discretionary {-}{}{}Scheduler \discretionary {-}{}{}Class \discretionary {-}{}{}Reference}{49}{section.4.14}
+\contentsline {subsection}{\numberline {4.14.1}\discretionary {-}{}{}Member \discretionary {-}{}{}Function \discretionary {-}{}{}Documentation}{50}{subsection.4.14.1}
+\contentsline {subsubsection}{\numberline {4.14.1.1}add\discretionary {-}{}{}Logger}{50}{subsubsection.4.14.1.1}
+\contentsline {subsubsection}{\numberline {4.14.1.2}add\discretionary {-}{}{}Process}{50}{subsubsection.4.14.1.2}
+\contentsline {subsubsection}{\numberline {4.14.1.3}add\discretionary {-}{}{}Proc\discretionary {-}{}{}Logger}{50}{subsubsection.4.14.1.3}
+\contentsline {subsubsection}{\numberline {4.14.1.4}get\discretionary {-}{}{}Next\discretionary {-}{}{}To\discretionary {-}{}{}Run}{51}{subsubsection.4.14.1.4}
+\contentsline {subsubsection}{\numberline {4.14.1.5}init\discretionary {-}{}{}Proc\discretionary {-}{}{}Schedule\discretionary {-}{}{}Info}{52}{subsubsection.4.14.1.5}
+\contentsline {subsubsection}{\numberline {4.14.1.6}num\discretionary {-}{}{}Processes}{52}{subsubsection.4.14.1.6}
+\contentsline {subsubsection}{\numberline {4.14.1.7}print\discretionary {-}{}{}Unblocked}{52}{subsubsection.4.14.1.7}
+\contentsline {subsubsection}{\numberline {4.14.1.8}remove\discretionary {-}{}{}Process}{52}{subsubsection.4.14.1.8}
+\contentsline {subsubsection}{\numberline {4.14.1.9}set\discretionary {-}{}{}Blocked}{53}{subsubsection.4.14.1.9}
+\contentsline {subsubsection}{\numberline {4.14.1.10}unblock\discretionary {-}{}{}Process}{53}{subsubsection.4.14.1.10}
+\contentsline {section}{\numberline {4.15}fcfs\discretionary {-}{}{}Info \discretionary {-}{}{}Struct \discretionary {-}{}{}Reference}{54}{section.4.15}
+\contentsline {section}{\numberline {4.16}kernel\discretionary {-}{}{}Error \discretionary {-}{}{}Struct \discretionary {-}{}{}Reference}{54}{section.4.16}
+\contentsline {subsection}{\numberline {4.16.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{55}{subsection.4.16.1}
+\contentsline {section}{\numberline {4.17}lottery\discretionary {-}{}{}Info \discretionary {-}{}{}Struct \discretionary {-}{}{}Reference}{55}{section.4.17}
+\contentsline {section}{\numberline {4.18}\discretionary {-}{}{}Process\discretionary {-}{}{}Info \discretionary {-}{}{}Struct \discretionary {-}{}{}Reference}{56}{section.4.18}
+\contentsline {subsection}{\numberline {4.18.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{56}{subsection.4.18.1}
+\contentsline {subsection}{\numberline {4.18.2}\discretionary {-}{}{}Member \discretionary {-}{}{}Data \discretionary {-}{}{}Documentation}{56}{subsection.4.18.2}
+\contentsline {subsubsection}{\numberline {4.18.2.1}schedule\discretionary {-}{}{}Data}{56}{subsubsection.4.18.2.1}
+\contentsline {section}{\numberline {4.19}round\discretionary {-}{}{}Robin\discretionary {-}{}{}Info \discretionary {-}{}{}Struct \discretionary {-}{}{}Reference}{57}{section.4.19}
+\contentsline {section}{\numberline {4.20}s\discretionary {-}{}{}Multi\discretionary {-}{}{}Info \discretionary {-}{}{}Struct \discretionary {-}{}{}Reference}{57}{section.4.20}
+\contentsline {chapter}{\numberline {5}\discretionary {-}{}{}File \discretionary {-}{}{}Documentation}{59}{chapter.5}
+\contentsline {section}{\numberline {5.1}include/cpu.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{59}{section.5.1}
+\contentsline {subsection}{\numberline {5.1.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{61}{subsection.5.1.1}
+\contentsline {subsection}{\numberline {5.1.2}\discretionary {-}{}{}Define \discretionary {-}{}{}Documentation}{61}{subsection.5.1.2}
+\contentsline {subsubsection}{\numberline {5.1.2.1}\discretionary {-}{}{}M\discretionary {-}{}{}A\discretionary {-}{}{}X\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}P\discretionary {-}{}{}A\discretionary {-}{}{}R\discretionary {-}{}{}A\discretionary {-}{}{}M\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}S\discretionary {-}{}{}I\discretionary {-}{}{}Z\discretionary {-}{}{}E}{61}{subsubsection.5.1.2.1}
+\contentsline {subsection}{\numberline {5.1.3}\discretionary {-}{}{}Enumeration \discretionary {-}{}{}Type \discretionary {-}{}{}Documentation}{61}{subsection.5.1.3}
+\contentsline {subsubsection}{\numberline {5.1.3.1}e\discretionary {-}{}{}P\discretionary {-}{}{}S\discretionary {-}{}{}W}{61}{subsubsection.5.1.3.1}
+\contentsline {section}{\numberline {5.2}include/devices/block\discretionary {-}{}{}\_\discretionary {-}{}{}device.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{61}{section.5.2}
+\contentsline {subsection}{\numberline {5.2.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{62}{subsection.5.2.1}
+\contentsline {section}{\numberline {5.3}include/devices/char\discretionary {-}{}{}\_\discretionary {-}{}{}device.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{62}{section.5.3}
+\contentsline {subsection}{\numberline {5.3.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{64}{subsection.5.3.1}
+\contentsline {section}{\numberline {5.4}include/devices/clock\discretionary {-}{}{}\_\discretionary {-}{}{}device.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{64}{section.5.4}
+\contentsline {subsection}{\numberline {5.4.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{65}{subsection.5.4.1}
+\contentsline {section}{\numberline {5.5}include/devices/queued\discretionary {-}{}{}\_\discretionary {-}{}{}device.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{65}{section.5.5}
+\contentsline {subsection}{\numberline {5.5.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{66}{subsection.5.5.1}
+\contentsline {section}{\numberline {5.6}include/kernel.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{66}{section.5.6}
+\contentsline {subsection}{\numberline {5.6.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{68}{subsection.5.6.1}
+\contentsline {subsection}{\numberline {5.6.2}\discretionary {-}{}{}Define \discretionary {-}{}{}Documentation}{68}{subsection.5.6.2}
+\contentsline {subsubsection}{\numberline {5.6.2.1}\discretionary {-}{}{}D\discretionary {-}{}{}E\discretionary {-}{}{}F\discretionary {-}{}{}A\discretionary {-}{}{}U\discretionary {-}{}{}L\discretionary {-}{}{}T\discretionary {-}{}{}\_\discretionary {-}{}{}\discretionary {-}{}{}P\discretionary {-}{}{}R\discretionary {-}{}{}I\discretionary {-}{}{}O\discretionary {-}{}{}R\discretionary {-}{}{}I\discretionary {-}{}{}T\discretionary {-}{}{}Y}{68}{subsubsection.5.6.2.1}
+\contentsline {subsection}{\numberline {5.6.3}\discretionary {-}{}{}Variable \discretionary {-}{}{}Documentation}{68}{subsection.5.6.3}
+\contentsline {subsubsection}{\numberline {5.6.3.1}init\discretionary {-}{}{}Process\discretionary {-}{}{}Name}{68}{subsubsection.5.6.3.1}
+\contentsline {subsubsection}{\numberline {5.6.3.2}proc\discretionary {-}{}{}Log\discretionary {-}{}{}File}{68}{subsubsection.5.6.3.2}
+\contentsline {subsubsection}{\numberline {5.6.3.3}trace\discretionary {-}{}{}Log\discretionary {-}{}{}File}{69}{subsubsection.5.6.3.3}
+\contentsline {section}{\numberline {5.7}include/process.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{69}{section.5.7}
+\contentsline {subsection}{\numberline {5.7.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{70}{subsection.5.7.1}
+\contentsline {subsection}{\numberline {5.7.2}\discretionary {-}{}{}Enumeration \discretionary {-}{}{}Type \discretionary {-}{}{}Documentation}{70}{subsection.5.7.2}
+\contentsline {subsubsection}{\numberline {5.7.2.1}e\discretionary {-}{}{}Proc\discretionary {-}{}{}State}{70}{subsubsection.5.7.2.1}
+\contentsline {section}{\numberline {5.8}include/scheduler/fcfs.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{71}{section.5.8}
+\contentsline {subsection}{\numberline {5.8.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{72}{subsection.5.8.1}
+\contentsline {section}{\numberline {5.9}include/scheduler/lottery.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{72}{section.5.9}
+\contentsline {subsection}{\numberline {5.9.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{74}{subsection.5.9.1}
+\contentsline {section}{\numberline {5.10}include/scheduler/round\discretionary {-}{}{}\_\discretionary {-}{}{}robin.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{74}{section.5.10}
+\contentsline {subsection}{\numberline {5.10.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{75}{subsection.5.10.1}
+\contentsline {section}{\numberline {5.11}include/utility/id.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{75}{section.5.11}
+\contentsline {subsection}{\numberline {5.11.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{76}{subsection.5.11.1}
+\contentsline {section}{\numberline {5.12}include/utility/logger.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{76}{section.5.12}
+\contentsline {subsection}{\numberline {5.12.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{78}{subsection.5.12.1}
+\contentsline {section}{\numberline {5.13}include/utility/process\discretionary {-}{}{}\_\discretionary {-}{}{}logger.h \discretionary {-}{}{}File \discretionary {-}{}{}Reference}{78}{section.5.13}
+\contentsline {subsection}{\numberline {5.13.1}\discretionary {-}{}{}Detailed \discretionary {-}{}{}Description}{79}{subsection.5.13.1}
+\contentsline {subsection}{\numberline {5.13.2}\discretionary {-}{}{}Variable \discretionary {-}{}{}Documentation}{79}{subsection.5.13.2}
+\contentsline {subsubsection}{\numberline {5.13.2.1}output\discretionary {-}{}{}Format}{79}{subsubsection.5.13.2.1}
+\contentsline {subsubsection}{\numberline {5.13.2.2}proc\discretionary {-}{}{}Name\discretionary {-}{}{}Req}{79}{subsubsection.5.13.2.2}
+\contentsline {subsubsection}{\numberline {5.13.2.3}request\discretionary {-}{}{}Error}{79}{subsubsection.5.13.2.3}

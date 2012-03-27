@@ -1,0 +1,4 @@
+TARGET=main
+
+all:
+	./$(TARGET) -s ./test_configs/TDecAddr/TDecAddr.ini

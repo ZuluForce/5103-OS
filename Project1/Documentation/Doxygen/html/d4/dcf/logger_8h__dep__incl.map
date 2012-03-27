@@ -1,0 +1,11 @@
+<map id="G" name="G">
+<area shape="rect" id="node3" href="$dc/da7/cpu_8h.xhtml" title="include/cpu.h" alt="" coords="5,229,104,256"/>
+<area shape="rect" id="node9" href="$d2/dd8/scheduler_8h_source.xhtml" title="include/scheduler/scheduler.h" alt="" coords="203,80,397,107"/>
+<area shape="rect" id="node5" href="$d0/daa/kernel_8h.xhtml" title="include/kernel.h" alt="" coords="121,304,233,331"/>
+<area shape="rect" id="node7" href="$d8/dc0/init_8h_source.xhtml" title="include/init.h" alt="" coords="130,379,224,405"/>
+<area shape="rect" id="node11" href="$db/d41/fcfs_8h.xhtml" title="include/scheduler/fcfs.h" alt="" coords="28,155,187,181"/>
+<area shape="rect" id="node16" href="$db/dc3/lottery_8h.xhtml" title="include/scheduler/lottery.h" alt="" coords="213,155,387,181"/>
+<area shape="rect" id="node19" href="$de/da3/multi__level_8h_source.xhtml" title="include/scheduler/multi_level.h" alt="" coords="412,155,611,181"/>
+<area shape="rect" id="node22" href="$d9/dd2/round__robin_8h.xhtml" title="include/scheduler/round_robin.h" alt="" coords="636,155,841,181"/>
+<area shape="rect" id="node13" href="$d5/d8b/allSchedulers_8h_source.xhtml" title="include/scheduler/allSchedulers.h" alt="" coords="192,229,408,256"/>
+</map>

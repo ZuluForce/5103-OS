@@ -37,10 +37,12 @@ all: $(TARGET)
 
 
 $(TARGET): $(TARGET).cpp $(TARGET).h $(DEPS)
-	$(CC) $(CFLAGS) $(LFLAGS) $(_DEPS) $(SRCDIR)/$@.cpp -o $(BINDIR)/$@ 
+	$(CC) $(CFLAGS) $(_DEPS) $(SRCDIR)/$@.cpp -o $(BINDIR)/$@ $(LFLAGS)
 
 %.o: %.cpp %.h
 	$(CC) $< $(OBJCFLAGS) -o $(OBJDIR)/$@
+	
+run: run_fcfs
 	
 run_%: all
 	cd $(BINDIR) && ./$(TARGET) -scheduler $*
