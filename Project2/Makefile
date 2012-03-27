@@ -57,6 +57,9 @@ update_docs:
 clean:
 	rm -f $(OBJDIR)/*.o
 	rm -f $(BINDIR)/$(TARGET)
+	rm -Rf $(BINDIR)/test_results/*.log
+	rm -Rf $(BINDIR)/test_results/*.trace
+	rm -Rf $(BINDIR)/test_results/*.png
 	
 clean_docs:
 	rm -rf $(DOCDIR)/Doxygen/*

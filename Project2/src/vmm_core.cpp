@@ -27,6 +27,13 @@ cVMM::cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM, cCleanDaemon& _cDaemon)
 		exit(0);
 	}
 
+	if ( page_bits + offset_bits != 32 ) {
+		cerr << "Word size is not 32 bits" << endl;
+		cerr << "\tPage Bits: " << page_bits << endl;
+		cerr << "\tOffset Bits: " << offset_bits << endl << endl;
+		exit(-1);
+	}
+
 	PS = 1 << offset_bits;
 	PT_Size = 1 << page_bits;
 
@@ -172,7 +179,7 @@ void cVMM::printResults() {
 	fprintf(logStream, "Collecting/Recording resuts\n");
 
 	string logName = EXTRACTP(string, Results,file);
-	cout << "LogName: " << logName << endl;
+	cout << "LogName: " << logName << endl << endl;
 	fprintf(logStream, "LogName: %s\n", logName.c_str());
 
 	if ( logName.compare("") == 0 ) {
