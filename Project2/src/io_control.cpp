@@ -198,7 +198,10 @@ sIOContext* cIOControl::scheduleIO(sProc* proc, uint32_t page, eIOType iotype, s
 			newContext->release = release;
 
 			/* Timekeeping for process */
-			proc->clockTime += 11;
+			//proc->clockTime += 11;
+			//The real meaning of the clock time is the
+			//time spent on the cpu doing real work so we
+			//don't count this
 
 			cout << "***Adding Process " << proc->pid << " to io_in queue***" << endl;
 			fprintf(logStream, "Scheduling I/O (input) for process %d\n", proc->pid);
@@ -221,12 +224,13 @@ sIOContext* cIOControl::scheduleIO(sProc* proc, uint32_t page, eIOType iotype, s
 			io_in_wait.at(proc->pid) = newContext;
 
 			/* Timekeeping for process */
-			proc->clockTime += 11;
-
+			//proc->clockTime += 11;
+			/*
 			if ( release != NULL )
 				proc->clockTime += release->time;
 			else
 				proc->clockTime += io_time;
+			*/
 
 			cout << "Added I/O to wait queue for process " << proc->pid << endl;
 			fprintf(logStream, "Added I/O (input) to wait queue for process %d\n", proc->pid);

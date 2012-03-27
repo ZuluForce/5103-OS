@@ -54,12 +54,16 @@ if __name__ == '__main__':
 	ext_re = re.compile(".+[.]conf$")
 	trace_re = re.compile("^.+\.trace")
 	img_re = re.compile("^.+\.(png|jpg|jpeg|bmp)$")
+	save_re = re.compile("^.+\.save$")
 	
 	for filename in files:
 		if ( ext_re.match(filename) or trace_re.match(filename)):
 			continue
 			
 		if ( img_re.match(filename) ):
+			continue
+			
+		if ( save_re.match(filename) ):
 			continue
 		
 		newTest = testRun()

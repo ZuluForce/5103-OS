@@ -1,3 +1,0 @@
-The purpose of this test is to examine the effect of increasing the frame count on page fault frequency while running several processes with large datasets.
-
-For these tests we are leaving the cleaning daemon disabled.

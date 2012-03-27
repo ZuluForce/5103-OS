@@ -79,7 +79,7 @@ uint32_t cCPU::getFaultPage() {
 
 uint8_t cCPU::run() {
 
-	for ( int i = 0; i < quanta; ++i) {
+	for ( int i = 0; i < quanta; ++i, ++(curProc->clockTime)) {
 
 		string line;
 		if ( curProc->restart ) {

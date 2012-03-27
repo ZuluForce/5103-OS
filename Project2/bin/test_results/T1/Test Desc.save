@@ -1,0 +1,10 @@
+The purpose of this test is to measure the effect of increasing the number of global frames on various test parameters. The programs used in this test sweep through a large set of data in order doing reads then then sweep back through doing writes. While there are many page faults on the initial sweep, with more global frames the faults can prevented the second time through.
+
+In the worst case, all pages will fault again on the second sweep causing a doubling in the lowest possible number of faults. As you can see in the results, with very few frames the fault rate is quite high. As the frame count increases the total faults at first drops very rapidly and then down to its lowest possible with 80 frames. With 80 frames, every frame for every process can be held in memory. All the "large_dataset.trace" programs sweep over memory on 15 pages and the "good_locality.trace" program accesses data on 5 pages with good locality so given enough frames it should only fault 5 times.
+
+Therefore, given enough frames the fault count is 15 * 3 + 5 = 50 and that is what we see in the result graph.
+
+Other things to note:
+	Since our time keeping (virtual counter) is not the finest grain the cpu utilization measurements aren't the best but you can still see that with a decreasing number of global page faults the cpu utilization was increased.
+	
+	For context switches, with lower frame counts the number of context switches was controlled more directly by the number page faults since processes never finished their full quanta. When the frame count got large enough (80) the number of context switches was limited by the quanta size. If you look at the same graph but with the quanta size modified to be 20 you can see that up until the frame count is substantially large it is still dependent on the fault rate. Once we get to 80 with a quanta of 20 the context switches drop dramatically. Also, with a quanta of 20 we also see a large cpu utilization increase at frame count 80.

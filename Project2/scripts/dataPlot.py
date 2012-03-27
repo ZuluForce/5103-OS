@@ -29,6 +29,7 @@ prettyConfig = {'sps':"Page Size",\
 				'gtlbh':"Global TLB Hits",\
 				'gtlhm':"Global TLB Misses",\
 				'gtime':"Total Time Taken",\
+				'gutil':"CPU Utilization",\
 				'lcs':"Avg process context switches",\
 				'lpf':"Avg process page faults",\
 				'let':"Avg process exec time (CPU time)",\

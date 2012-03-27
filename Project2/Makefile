@@ -75,3 +75,6 @@ run_%: $(TARGET)
 	
 run_all: $(TARGET)
 	./scripts/run_all.py $(BINDIR) ./test_configs ./test_results
+	
+graph_%:
+	python ./scripts/makeGraphs.py $(BINDIR)/test_results/$*

@@ -4,10 +4,13 @@ configMap = {'x-axis':0,'order':1,'y-axis':2,'output':3,'type':4}
 
 class graphOutputs:
 	def __init__(self):
-		self.xy_re = re.compile("^(sps|sfc|sprt)(i|d)?:(lpf|lcs|let|ltlbh|ltlbm|lpfp|lcsp|letp|ltlbhp|ltlbmp|ltime|ltimep|gpf|gcs|get|gpgo|gpgi|gtlbh|gtlbm|gtime|gtimep):(.+?):?(?:(?<=:)(png|jpg|bmp)$|(?<!:)$)")
+		#There are simpler ways this could have been done but when
+		#I originally made this I hadn't intended for there o be this
+		#many opitons. If given more time I would rework this.
+		self.xy_re = re.compile("^(sps|sfc|sprt)(i|d)?:(lpf|lcs|let|ltlbh|ltlbm|lpfp|lcsp|letp|ltlbhp|ltlbmp|ltime|ltimep|gpf|gcs|get|gpgo|gpgi|gtlbh|gtlbm|gtime|gtimep|gutil):(.+?):?(?:(?<=:)(png|jpg|bmp)$|(?<!:)$)")
 
 		self.yaxis_lops = ['lpf','lcs','let','ltlbm','ltlbh','ltime'] ##lops - local options
-		self.yaxis_gops = ['gpf','gcs','get','gpgo','gpgi','gtlbh','gtlbm','gtime'] ##gops - global options
+		self.yaxis_gops = ['gpf','gcs','get','gpgo','gpgi','gtlbh','gtlbm','gtime','gutil'] ##gops - global options
 		
 		self.comment = re.compile("^##.*$")
 		
@@ -301,3 +304,4 @@ class testRun:
 		self.dataMap['gtlbh']	= (int(self.global_tlbh),)
 		self.dataMap['gtlbm']	= (int(self.global_tlbm),)
 		self.dataMap['gtime']	= (max(map(lambda x: int(x), self.dataMap['ltimep'])),)
+		self.dataMap['gutil']	= (float(self.dataMap['get'][0]) / self.dataMap['gtime'][0],)
