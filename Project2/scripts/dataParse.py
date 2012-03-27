@@ -4,10 +4,10 @@ configMap = {'x-axis':0,'order':1,'y-axis':2,'output':3,'type':4}
 
 class graphOutputs:
 	def __init__(self):
-		self.xy_re = re.compile("^(sps|sfc|sprt)(i|d)?:(lpf|lcs|let|ltlbh|ltlbm|lpfp|lcsp|letp|ltlbhp|ltlbmp|gpf|gcs|get|gpgo|gpgi|gtlbh|gtlbm):(.+?):?(?:(?<=:)(png|jpg|bmp)$|(?<!:)$)")
+		self.xy_re = re.compile("^(sps|sfc|sprt)(i|d)?:(lpf|lcs|let|ltlbh|ltlbm|lpfp|lcsp|letp|ltlbhp|ltlbmp|ltime|ltimep|gpf|gcs|get|gpgo|gpgi|gtlbh|gtlbm|gtime|gtimep):(.+?):?(?:(?<=:)(png|jpg|bmp)$|(?<!:)$)")
 
-		self.yaxis_lops = ['lpf','lcs','let','ltlbm','ltlbh'] ##lops - local options
-		self.yaxis_gops = ['gpf','gcs','get','gpgo','gpgi','gtlbh','gtlbm'] ##gops - global options
+		self.yaxis_lops = ['lpf','lcs','let','ltlbm','ltlbh','ltime'] ##lops - local options
+		self.yaxis_gops = ['gpf','gcs','get','gpgo','gpgi','gtlbh','gtlbm','gtime'] ##gops - global options
 		
 		self.comment = re.compile("^##.*$")
 		
@@ -81,6 +81,7 @@ class testRun:
 		self.tlbm_re	= re.compile("^TLB Miss: (\d+)$")
 		self.pgi_re		= re.compile("^Page In: (\d+)$")
 		self.pgo_re		= re.compile("^Page Out: (\d+)$")
+		self.time_re	= re.compile("^Total Time: (\d+)$")
 
 		self.proc_data = []
 		
@@ -134,6 +135,7 @@ class testRun:
 				proc_et		= None
 				proc_tlbh	= None
 				proc_tlbm	= None
+				proc_time	= None
 				
 				for proc_line in f:
 					match_cs	= self.cs_re.match(proc_line)
@@ -141,6 +143,7 @@ class testRun:
 					match_et	= self.et_re.match(proc_line)
 					match_tlbh	= self.tlbh_re.match(proc_line)
 					match_tlbm	= self.tlbm_re.match(proc_line)
+					match_time	= self.time_re.match(proc_line)
 					
 					if ( match_cs ):
 						proc_cs = match_cs.group(1)
@@ -159,8 +162,11 @@ class testRun:
 						#print("Matched local tlb miss: " + match_tlbm.group(1))
 						proc_tlbm = match_tlbm.group(1)
 						match_tlbm = None
+					elif ( match_time ):
+						proc_time = match_time.group(1)
+						match_time = None
 					else:	
-						self.proc_data.append((proc_num,proc_cs,proc_pf,proc_et,proc_tlbh,proc_tlbm))
+						self.proc_data.append((proc_num,proc_cs,proc_pf,proc_et,proc_tlbh,proc_tlbm,proc_time))
 
 						print("Finished parsing process data:")
 						print("\t" + str(self.proc_data[-1])) ##Print out tuple
@@ -238,22 +244,25 @@ class testRun:
 		return retVal
 		
 	def setupMaps(self):
-		cs_count = 0
-		pf_count = 0
-		et_count = 0
-		tlbh_count = 0
-		tlbm_count = 0
+		cs_count	= 0
+		pf_count	= 0
+		et_count	= 0
+		tlbh_count	= 0
+		tlbm_count	= 0
+		time_count	= 0
 		
 		## Mapping of the values in the process tuple
 		## Just in-case it changes later this will be
 		## easy to modify
-		tupMap = {'pn':0,'cs':1, 'pf':2, 'et':3, 'tlbh':4, 'tlbm':5}
+		tupMap = {'pn':0,'cs':1, 'pf':2, 'et':3, 'tlbh':4, 'tlbm':5, 'time':6}
 
+		##Hold individual process data
 		self.dataMap['lcsp']	= []
 		self.dataMap['lpfp']	= []
 		self.dataMap['letp']	= []
 		self.dataMap['ltlbhp']	= []
 		self.dataMap['ltlbmp']	= []
+		self.dataMap['ltimep']	= []
 		
 		for proc in self.proc_data:
 			cs_count	+= int(proc[tupMap['cs']])
@@ -261,12 +270,15 @@ class testRun:
 			et_count	+= int(proc[tupMap['et']])
 			tlbh_count	+= int(proc[tupMap['tlbh']])
 			tlbm_count	+= int(proc[tupMap['tlbm']])
+			time_count	+= int(proc[tupMap['time']])
+			
 			
 			self.dataMap['lcsp'].append(int(proc[tupMap['cs']]))
 			self.dataMap['lpfp'].append(int(proc[tupMap['pf']]))
 			self.dataMap['letp'].append(int(proc[tupMap['et']]))
 			self.dataMap['ltlbhp'].append(int(proc[tupMap['tlbh']]))
 			self.dataMap['ltlbmp'].append(int(proc[tupMap['tlbm']]))
+			self.dataMap['ltimep'].append(int(proc[tupMap['time']]))
 
 		self.dataMap['procNum'] = proc[tupMap['pn']]
 		##Take averages
@@ -275,6 +287,7 @@ class testRun:
 		self.dataMap['let']		= (float(et_count) / len(self.proc_data),)
 		self.dataMap['ltlbh']	= (float(tlbh_count) / len(self.proc_data),)
 		self.dataMap['ltlbm']	= (float(tlbm_count) / len(self.proc_data),)
+		self.dataMap['ltime']	= (float(time_count) / len(self.proc_data),)
 		
 		## Could just assign the value cs_count. In the future
 		## there may be data at the global level that does not
@@ -287,3 +300,4 @@ class testRun:
 		self.dataMap['gpgi']	= (int(self.global_pgi), )
 		self.dataMap['gtlbh']	= (int(self.global_tlbh),)
 		self.dataMap['gtlbm']	= (int(self.global_tlbm),)
+		self.dataMap['gtime']	= (max(map(lambda x: int(x), self.dataMap['ltimep'])),)

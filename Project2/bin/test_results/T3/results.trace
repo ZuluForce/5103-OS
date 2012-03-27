@@ -1998,7 +1998,7 @@ PR_FIFO: Spilling frame 17 containing a dirty page belonging to Process 1
 Added I/O (input) to wait queue for process 0
 IO Control: I/O (output) finished
 IO Control: Adding Process 2 to io_in queue from io_in_wait
-	I/O will complete when VC = 732
+	I/O will complete when VC = 733
 -*-Virtual counter = 723-*-
 Scheduling I/O (output)
 	Moving process 1's page 17 out
@@ -2026,7 +2026,7 @@ IO Control: I/O(input) finished for process 2
 Added I/O (input) to wait queue for process 1
 IO Control: I/O (output) finished
 IO Control: Adding Process 0 to io_in queue from io_in_wait
-	I/O will complete when VC = 742
+	I/O will complete when VC = 743
 -*-Virtual counter = 733-*-
 Scheduling I/O (output)
 	Moving process 2's page 18 out
@@ -2056,7 +2056,7 @@ IO Control: I/O(input) finished for process 0
 Added I/O (input) to wait queue for process 2
 IO Control: I/O (output) finished
 IO Control: Adding Process 1 to io_in queue from io_in_wait
-	I/O will complete when VC = 752
+	I/O will complete when VC = 753
 -*-Virtual counter = 743-*-
 Scheduling I/O (output)
 	Moving process 0's page 19 out
@@ -2086,7 +2086,7 @@ IO Control: I/O(input) finished for process 1
 Added I/O (input) to wait queue for process 0
 IO Control: I/O (output) finished
 IO Control: Adding Process 2 to io_in queue from io_in_wait
-	I/O will complete when VC = 762
+	I/O will complete when VC = 763
 -*-Virtual counter = 753-*-
 Scheduling I/O (output)
 	Moving process 1's page 20 out
@@ -2116,7 +2116,7 @@ IO Control: I/O(input) finished for process 2
 Added I/O (input) to wait queue for process 1
 IO Control: I/O (output) finished
 IO Control: Adding Process 0 to io_in queue from io_in_wait
-	I/O will complete when VC = 772
+	I/O will complete when VC = 773
 -*-Virtual counter = 763-*-
 Scheduling I/O (output)
 	Moving process 2's page 21 out
@@ -2146,7 +2146,7 @@ IO Control: I/O(input) finished for process 0
 Added I/O (input) to wait queue for process 2
 IO Control: I/O (output) finished
 IO Control: Adding Process 1 to io_in queue from io_in_wait
-	I/O will complete when VC = 782
+	I/O will complete when VC = 783
 -*-Virtual counter = 773-*-
 Scheduling I/O (output)
 	Moving process 0's page 22 out
@@ -2176,7 +2176,7 @@ IO Control: I/O(input) finished for process 1
 Added I/O (input) to wait queue for process 0
 IO Control: I/O (output) finished
 IO Control: Adding Process 2 to io_in queue from io_in_wait
-	I/O will complete when VC = 792
+	I/O will complete when VC = 793
 -*-Virtual counter = 783-*-
 Scheduling I/O (output)
 	Moving process 1's page 23 out
@@ -2206,7 +2206,7 @@ IO Control: I/O(input) finished for process 2
 Added I/O (input) to wait queue for process 1
 IO Control: I/O (output) finished
 IO Control: Adding Process 0 to io_in queue from io_in_wait
-	I/O will complete when VC = 802
+	I/O will complete when VC = 803
 -*-Virtual counter = 793-*-
 Scheduling I/O (output)
 	Moving process 2's page 24 out
@@ -2236,7 +2236,7 @@ IO Control: I/O(input) finished for process 0
 Added I/O (input) to wait queue for process 2
 IO Control: I/O (output) finished
 IO Control: Adding Process 1 to io_in queue from io_in_wait
-	I/O will complete when VC = 812
+	I/O will complete when VC = 813
 -*-Virtual counter = 803-*-
 Scheduling I/O (output)
 	Moving process 0's page 25 out
@@ -2266,7 +2266,7 @@ IO Control: I/O(input) finished for process 1
 Added I/O (input) to wait queue for process 0
 IO Control: I/O (output) finished
 IO Control: Adding Process 2 to io_in queue from io_in_wait
-	I/O will complete when VC = 822
+	I/O will complete when VC = 823
 -*-Virtual counter = 813-*-
 Scheduling I/O (output)
 	Moving process 1's page 26 out
@@ -2296,7 +2296,7 @@ IO Control: I/O(input) finished for process 2
 Added I/O (input) to wait queue for process 1
 IO Control: I/O (output) finished
 IO Control: Adding Process 0 to io_in queue from io_in_wait
-	I/O will complete when VC = 832
+	I/O will complete when VC = 833
 -*-Virtual counter = 823-*-
 Scheduling I/O (output)
 	Moving process 2's page 27 out
@@ -2326,7 +2326,7 @@ IO Control: I/O(input) finished for process 0
 Added I/O (input) to wait queue for process 2
 IO Control: I/O (output) finished
 IO Control: Adding Process 1 to io_in queue from io_in_wait
-	I/O will complete when VC = 842
+	I/O will complete when VC = 843
 -*-Virtual counter = 833-*-
 Scheduling I/O (output)
 	Moving process 0's page 28 out
@@ -2356,7 +2356,7 @@ IO Control: I/O(input) finished for process 1
 Added I/O (input) to wait queue for process 0
 IO Control: I/O (output) finished
 IO Control: Adding Process 2 to io_in queue from io_in_wait
-	I/O will complete when VC = 852
+	I/O will complete when VC = 853
 -*-Virtual counter = 843-*-
 Scheduling I/O (output)
 	Moving process 1's page 29 out
@@ -2386,7 +2386,7 @@ IO Control: I/O(input) finished for process 2
 Added I/O (input) to wait queue for process 1
 IO Control: I/O (output) finished
 IO Control: Adding Process 0 to io_in queue from io_in_wait
-	I/O will complete when VC = 862
+	I/O will complete when VC = 863
 -*-Virtual counter = 853-*-
 Scheduling I/O (output)
 	Moving process 2's page 30 out
@@ -2416,7 +2416,7 @@ IO Control: I/O(input) finished for process 0
 Added I/O (input) to wait queue for process 2
 IO Control: I/O (output) finished
 IO Control: Adding Process 1 to io_in queue from io_in_wait
-	I/O will complete when VC = 872
+	I/O will complete when VC = 873
 -*-Virtual counter = 863-*-
 Scheduling I/O (output)
 	Moving process 0's page 31 out
@@ -2443,7 +2443,7 @@ FA Policy: Unpinnig frame 30
 Switching out Process 0 for Process 1
 IO Control: I/O (output) finished
 IO Control: Adding Process 2 to io_in queue from io_in_wait
-	I/O will complete when VC = 887
+	I/O will complete when VC = 883
 -*-Virtual Counter: 877-*-
 CPU: Opcode:W  Virtual-Address:0x15000  PID:1
 -*-Virtual Counter: 878-*-

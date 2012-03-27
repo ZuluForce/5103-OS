@@ -23,19 +23,22 @@ prettyConfig = {'sps':"Page Size",\
 				'sprt':"Page Replacement Module",\
 				'gcs':"Global context switches",\
 				'gpf':"Global page faults",\
-				'get':"Global exec time",\
+				'get':"Global exec time (CPU time)",\
 				'gpo':"Global Page Outs",\
 				'gpi':"Global Page Ins",\
 				'gtlbh':"Global TLB Hits",\
 				'gtlhm':"Global TLB Misses",\
+				'gtime':"Total Time Taken",\
 				'lcs':"Avg process context switches",\
 				'lpf':"Avg process page faults",\
-				'let':"Avg process exec time",\
+				'let':"Avg process exec time (CPU time)",\
 				'ltlbh':"Avg process TLB hits",\
 				'ltlbm':"Avg process TLB misses",\
+				'ltime':"Avg process total time",\
 				'lcsp':"Per-Process context switches",\
 				'lpfp':"Per-Process page faults",\
-				'letp':"Per-Process exec time"}
+				'letp':"Per-Process exec time",\
+				'ltimep':"Per-Process total times",}
 
 img_ext_re = re.compile("^.+\.(\w+)$")
 
