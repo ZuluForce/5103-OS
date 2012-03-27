@@ -7,6 +7,14 @@
 #include "utility/logger.h"
 #include "Policy/frameAlloc.h"
 
+enum ePRStatus {
+	PR_SERVICED,	/**< Page fault serviced */
+	PR_SERVICED_IO,	/**< Page fault serviced with I/O required */
+	PR_NO_AVAIL,	/**< Page fault not serviced. No frames available (all pinned) */
+	PR_NO_ACTION,	/**< Used in returning from circular page fault handler. */
+};
+//PR_NO_AVAIL won't happen unless you have 1-2 global frames
+
 /** Abstract Page Replacement Policy */
 class cPRPolicy {
 	private:
@@ -34,10 +42,11 @@ class cPRPolicy {
 		 *	@param uint32_t page The page for the given process
 		 *	that needs to be fetched.
 		 */
-		virtual void resolvePageFault(sProc* proc, uint32_t page) = 0;
+		virtual ePRStatus resolvePageFault(sProc* proc, uint32_t page) = 0;
+		ePRStatus resolveCircularPF(sProc* proc, uint32_t page) { return PR_NO_ACTION; };
 		virtual void finishedQuanta(sProc*) = 0;
 		virtual void finishedIO(sProc*, sPTE*) = 0;
-		virtual void clearPages(int numPages) = 0;
+		virtual bool clearPages(int numPages) = 0;
 		virtual void unpinFrame(uint32_t frame) = 0;
 		virtual void returnFrame(uint32_t frame) = 0;
 };

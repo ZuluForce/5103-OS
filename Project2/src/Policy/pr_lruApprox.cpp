@@ -50,7 +50,7 @@ void cPRLruApprox::returnPTEOwner(sPTEOwner* pteOwner){
     pteowner_cache.push(pteOwner);
 }
 
-void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
+ePRStatus cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
 
     updateTime();
 
@@ -73,13 +73,14 @@ void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
 		FAPolicy.pin(freeFrame.second);
 
 
-		return;
+		return PR_SERVICED;
 	}
 
 	if ( pageHist.size() == 0 ) {
 		cerr << "An error has occured!!" << endl;
 		cerr << "There are no open frames and none to spill. ";
-		cerr << "Was the VMM initialized with 0 global frames?" << endl;
+
+		return PR_NO_AVAIL;
 	}
 
 	//Get the page_owner to replace
@@ -152,12 +153,12 @@ void cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
 		/* Schedule I/O */
 		VMMCore->pageOut(owner, minPTE->frame, ctx);
 
-		return;
+		return PR_SERVICED_IO;
 	}
 
 	fprintf(logStream, "PR_LRU_APPROX: Found non-dirty page frame %d\n", minPTE->frame);
 	VMMCore->pageIn(proc,page,IO_IN);
-	return;
+	return PR_SERVICED_IO;
 }
 
 void cPRLruApprox::finishedIO(sProc* proc, sPTE* page) {
@@ -200,8 +201,10 @@ void cPRLruApprox::finishedQuanta(sProc* proc) {
 	return;
 }
 
-void cPRLruApprox::clearPages(int numPages) {
+bool cPRLruApprox::clearPages(int numPages) {
 	assert(numPages >= 0);
+
+	if ( numPages == 0 ) return false;
 
 	if ( numPages > pageHist.size() ) {
 		cVMMExc ex;
@@ -248,10 +251,10 @@ void cPRLruApprox::clearPages(int numPages) {
 
 		++removed;
 	}
-	if ( numPages > 0)
-		fprintf(logStream, "###-------- Finished Clearing %d Frames --------###\n\n", numPages);
 
-	return;
+	fprintf(logStream, "###-------- Finished Clearing %d Frames --------###\n\n", numPages);
+
+	return true;
 }
 
 void cPRLruApprox::unpinFrame(uint32_t frame) {

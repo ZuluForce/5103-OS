@@ -32,8 +32,6 @@ class cRoundRobin {
 
         cIDManager blockedID;
 
-        int quantum;
-
 	public:
 		cRoundRobin();
 		~cRoundRobin();

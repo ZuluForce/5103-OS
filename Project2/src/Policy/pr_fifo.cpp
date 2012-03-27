@@ -18,7 +18,7 @@ cPRFifo::~cPRFifo() {
 	return;
 }
 
-void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
+ePRStatus cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
 
 	//Check for any open frames
 	pair<bool,uint32_t> freeFrame = FAPolicy.getFrame(proc);
@@ -38,13 +38,14 @@ void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
 		VMMCore->pageIn(proc, page, IO_IN);
 		FAPolicy.pin(freeFrame.second);
 
-		return;
+		return PR_SERVICED;
 	}
 
 	if ( pageHist.size() == 0 ) {
 		cerr << "An error has occured!!" << endl;
 		cerr << "There are no open frames and none to spill. ";
 
+		/*
 		stringstream stream;
 		stream << "No open frames and none to spill" << endl;
 		cPRExc ex;
@@ -57,8 +58,10 @@ void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
 		stream << "PRModule: " << name() << endl;
 		ex.setName(stream.str());
 
-		exit(-1);
 		throw((cPRExc) ex);
+		*/
+
+		return PR_NO_AVAIL;
 	}
 
 	//Get the page to replace and its owner's pid
@@ -77,7 +80,6 @@ void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
 		/* If a process was termintated its page isn't removed
 		 * from the queue for efficiency reasons. */
 		if ( !(rPage->flags[FI_PRESENT]) ) {
-			cout << "Owner: " << ownerid << " Frame: " << rPage->frame << endl;
 			pageHist.pop();
 			pageOwners.pop();
 			continue;
@@ -105,7 +107,7 @@ void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
 
 	//Check if the page is dirty
 	if ( rPage->flags[FI_DIRTY] ) {
-		cout << "Spilling frame " << rPage->frame << " containing a dirty page belonging to Process " << ownerid << endl;
+		cout << "PR_FIFO: Spilling frame " << rPage->frame << " containing a dirty page belonging to Process " << ownerid << endl;
 		fprintf(logStream, "PR_FIFO: Spilling frame %d containing a dirty page belonging to Process %d\n", rPage->frame, ownerid);
 		sProc* owner = VMMCore->getProcess(ownerid);
 
@@ -119,12 +121,13 @@ void cPRFifo::resolvePageFault(sProc* proc, uint32_t page) {
 		/* Schedule I/O */
 		VMMCore->pageOut(owner, rPage->frame, ctx);
 
-		return;
+		return PR_SERVICED_IO;
 	}
 
+	cout << "PR_FIFO: Found non-dirty page frame " << rPage->frame << endl;
 	fprintf(logStream, "PR_FIFO: Found non-dirty page frame %d\n", rPage->frame);
 	VMMCore->pageIn(proc,page,IO_IN);
-	return;
+	return PR_SERVICED_IO;
 }
 
 void cPRFifo::finishedIO(sProc* proc, sPTE* page) {
@@ -149,15 +152,17 @@ void cPRFifo::finishedQuanta(sProc* proc) {
 	return;
 }
 
-void cPRFifo::clearPages(int numPages) {
+bool cPRFifo::clearPages(int numPages) {
 	assert(numPages >= 0);
+
+	if ( numPages == 0 ) return false;
 
 	if ( numPages > pageHist.size() ) {
 		cVMMExc ex;
 		stringstream stream;
 		stream << "Tried to clear more pages than are occupying frame" << endl;
 		stream << "Check that the threshold for the daemon is less than the total frame count" << endl;
-		stream << "and that the cleanup amount is less than total memory" << endl;
+		stream << "and that the cleanup amount is less than (total frames - threshold)" << endl;
 		ex.setErrorStr(stream.str());
 		ex.setFatality(false);
 
@@ -196,10 +201,10 @@ void cPRFifo::clearPages(int numPages) {
 
 		++removed;
 	}
-	if ( numPages > 0)
-		fprintf(logStream, "###-------- Finished Clearing %d Frames --------###\n\n", numPages);
 
-	return;
+	fprintf(logStream, "###-------- Finished Clearing %d Frames --------###\n\n", numPages);
+
+	return true;
 }
 
 void cPRFifo::unpinFrame(uint32_t frame) {

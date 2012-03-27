@@ -27,6 +27,7 @@ void setDefaults(INIReader* settings) {
 	SETDP(Policy,cleanup_amnt,20);
 	SETDP(Policy,print_frames,0);
 	SETDP(Policy,frame_log, frames.trace);
+	SETDP(Policy,ignore_circular_fault_warn,0);
 
 	/* ------ Results ------ */
 	SETDP(Results,file,stats.log);

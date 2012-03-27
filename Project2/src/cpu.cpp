@@ -125,7 +125,18 @@ uint8_t cCPU::run() {
 			/* Save instruction */
 			curProc->restart = true;
 			curProc->rline = line;
-			++(curProc->repeatedFaults);
+
+			if ( curProc->circularFaultCheck ) {
+				/* In this scenario the sync shouldn't be necessary
+				 * but just to be safe.
+				 */
+				mmu.syncTLB();
+
+				return CPU_CIRC_PF;
+			} else {
+				//Set it so that if it happens again we know
+				curProc->circularFaultCheck = true;
+			}
 
 			/* Sync the tlb with the page table */
 			mmu.syncTLB();
@@ -138,9 +149,10 @@ uint8_t cCPU::run() {
 
 		if ( curProc->PC >= (curProc->maxPC - 1) )
 			return CPU_TERM;
+
+		curProc->circularFaultCheck = false;
 	}
 
-	curProc->repeatedFaults = 0;
 	mmu.syncTLB();
 	return CPU_OK;
 }

@@ -10,10 +10,11 @@
 
 /** Status of the execution quantum termination */
 enum eCPUState {
-	CPU_OK = 0x1,			/**< CPU finished executing instruction ok */
-	CPU_PF = CPU_OK << 1,	/**< CPU/MMU incured a page fault */
-	CPU_TERM = CPU_PF << 1,	/**< Process execution termination */
-	CPU_EX = CPU_TERM << 1,	/**< Process exception */
+	CPU_OK = 0x1,				/**< CPU finished executing instruction ok */
+	CPU_PF = CPU_OK << 1,		/**< CPU/MMU incured a page fault */
+	CPU_TERM = CPU_PF << 1,		/**< Process execution termination */
+	CPU_EX = CPU_TERM << 1,		/**< Process exception */
+	CPU_CIRC_PF = CPU_EX << 1,	/**< Potential circular page fault detected by cpu */
 };
 
 

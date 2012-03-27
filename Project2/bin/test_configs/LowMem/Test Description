@@ -1,0 +1,3 @@
+These tests are intended to fail if run. The VMM should detect a circular (cascading) page fault scenario and warn the user. I the setting ignore_circular_fault_warn is set to false this will exit the program. This is the default action.
+
+The python script executing the test should pause at this point so the user can see the message.

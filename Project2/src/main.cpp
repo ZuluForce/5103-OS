@@ -164,7 +164,7 @@ sProc* loadProc(string& filename) {
 	newProc->clockTime = 0;
 	newProc->cswitches = 0;
 	newProc->restart = false;
-	newProc->repeatedFaults = 0;
+	newProc->circularFaultCheck = false;
 
     /* Read process contents into memory */
 	struct stat fileinfo;
