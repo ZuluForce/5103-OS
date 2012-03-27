@@ -127,6 +127,8 @@ void cIOControl::tick() {
 			ctx->page->flags[FI_PRESENT] = true;
 			ctx->page->flags[FI_DIRTY] = false;
 			ctx->page->flags[FI_REF] = false;
+
+			// Set the timestamp to be the current virtual counter as this frame will be used shortly.
 			ctx->page->timestamp = *VC;
 
 			returnContext(ctx);

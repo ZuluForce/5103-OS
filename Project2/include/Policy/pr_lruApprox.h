@@ -19,7 +19,15 @@ class cPRLruApprox: public cPRPolicy {
 		uint32_t PTSize;
 
 		void updateTime();
+
+		/** Get a struct for holding both the PTE and Owner.
+        *   If the pteowner_cache has an entry, re-use it. Otherwise
+        *   malloc a new one. This helps with heap performance.
+        */
 		sPTEOwner* getPTEOwner();
+
+		/** Add a PTEOwner to the pteowner_cache to use later.
+		*/
 		void returnPTEOwner(sPTEOwner* pteOwner);
 
 	public:
@@ -28,12 +36,23 @@ class cPRLruApprox: public cPRPolicy {
 
 		const char* name() { return "lru_approx"; };
 
+        /** If no frames are free, spill the frame that has the lowest
+        *   shifted time. This aging algorithm simulates LRU.
+        */
 		ePRStatus resolvePageFault(sProc* proc, uint32_t page);
 
+        /** Update the approx time field in software.
+        */
 		void finishedQuanta(sProc* proc);
 
+        /** I/O is finished so add the PTE to the pageHist so we
+        *   know what frames are in use.
+        */
 		void finishedIO(sProc* proc, sPTE* page);
 
+        /** Clears pages by sorting the pageHist by the time field (increasing).
+        *   Then removes numPages from the front of pageHist.
+        */
 		bool clearPages(int numPages);
 
 		void unpinFrame(uint32_t frame);
@@ -48,5 +67,13 @@ class cPRLruApprox: public cPRPolicy {
 		 */
 		void returnFrame(uint32_t frame);
 };
+
+/** @fn cPRLruApprox::updateTime()
+*   Updates the time field by first shifting the time field to the right and then
+*   adding a 1 in the far left position if the ref bit is set.
+*   This function is called on a page fault or after a quanta is finished.
+*/
+
+
 
 #endif // PR_LRUAPPROX_H_INCLUDED

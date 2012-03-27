@@ -1,8 +1,8 @@
 TARGET=main
 R1=./$(TARGET) -s ./test_configs/T2/T2.ini
-R2=$(R1) Global:page_bits:19 Global:offset_bits:13 Results:file:./test_results/T2/r2.log Global:total_frames:16
-R3=$(R1) Global:page_bits:18 Global:offset_bits:14 Results:file:./test_results/T2/r3.log Global:total_frames:8
-R4=$(R1) Global:page_bits:17 Global:offset_bits:15 Results:file:./test_results/T2/r4.log Global:total_frames:4
+R2=$(R1) Global:page_bits:19 Global:offset_bits:13 Results:file:./test_results/T2/r2.log Results:trace:/test_results/T2/r2.trace Global:total_frames:16
+R3=$(R1) Global:page_bits:18 Global:offset_bits:14 Results:file:./test_results/T2/r3.log Results:trace:/test_results/T2/r3.trace Global:total_frames:8
+R4=$(R1) Global:page_bits:17 Global:offset_bits:15 Results:file:./test_results/T2/r4.log Results:trace:/test_results/T2/r4.trace Global:total_frames:4
 
 all:
 	$(R1)

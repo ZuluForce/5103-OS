@@ -39,6 +39,7 @@ struct sPTE {
 	uint8_t time;
 };
 
+/** A struct used to associate a process with a particular page. */
 struct sPTEOwner {
 	uint32_t pid;
 	sPTE* page;
@@ -50,6 +51,7 @@ struct sProc {
 	uint16_t cswitches;				/**< # of Context Switches */
 	int pageFaults, tlbhit, tlbmiss;
 	int clockTime;					/**< Time spent executing */
+	int finishTime;                 /**< VC when process finished */
 
 	istringstream* data;			/**< Text data of process */
 	int PC;							/**< Program Counter */
