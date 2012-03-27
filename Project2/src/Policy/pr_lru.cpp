@@ -4,6 +4,18 @@ extern INIReader* settings;
 extern cVMM* VMMCore;
 extern FILE* logStream;
 
+void cPRLru::printTimestamps(){
+    sPTEOwner *curPTEOwner;
+    list<sPTEOwner*>::iterator it;
+    it = pageHist.begin();
+    while (it != pageHist.end()){
+        curPTEOwner = *it;
+        fprintf(logStream, "Process %d: Has a PTE with frame %d, timeStamp: %d\n", curPTEOwner->pid, curPTEOwner->page->frame, curPTEOwner->page->timestamp);
+        ++it;
+    }
+
+}
+
 bool compare_timestamps (sPTEOwner *first, sPTEOwner *second){
     if (first->page == NULL){
         cVMMExc ex;
@@ -51,6 +63,8 @@ void cPRLru::returnPTEOwner(sPTEOwner* pteOwner){
 }
 
 void cPRLru::resolvePageFault(sProc* proc, uint32_t page) {
+
+    printTimestamps();
 
 	//Check for any open frames
 	pair<bool,uint32_t> freeFrame = FAPolicy.getFrame(proc);

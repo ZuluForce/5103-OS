@@ -127,6 +127,7 @@ void cIOControl::tick() {
 			ctx->page->flags[FI_PRESENT] = true;
 			ctx->page->flags[FI_DIRTY] = false;
 			ctx->page->flags[FI_REF] = false;
+			ctx->page->timestamp = *VC;
 
 			returnContext(ctx);
 			continue;
@@ -144,9 +145,12 @@ sIOContext* cIOControl::scheduleIO(sProc* proc, uint32_t page, eIOType iotype, s
 	 * of the core but since io_requests take some time
 	 * we need to count it here.
 	 */
-	tick();
+    for (int i; i < io_req_time; i++){
+        *VC = *VC + 1;
+        tick();
+    }
 
-	*VC += io_req_time;
+	//*VC += io_req_time;
 	fprintf(logStream, "-*-Virtual counter = %d-*-\n", *VC);
 
 	sIOContext* newContext = getContext();

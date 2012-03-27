@@ -120,7 +120,11 @@ sIOContext* cVMM::pageIn(sProc* proc, uint32_t page, eIOType iotype, sIOContext*
 }
 
 void cVMM::tickController(int times) {
-	ioCtrl->tick(times);
+    //ioCtrl->tick(times);
+    for (int i = 0; i < times; i++){
+        ++VC;
+        ioCtrl->tick();
+    }
 
 	return;
 }
@@ -234,7 +238,7 @@ int cVMM::start() {
 		}
 
 		runningProc = scheduler.getNextToRun();
-		/* This means there are still valid processes but
+		/* This means there are still valid processes but none
 		 * can currently run.
 		 */
 		if ( runningProc == NULL ) {

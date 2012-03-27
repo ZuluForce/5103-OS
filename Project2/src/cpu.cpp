@@ -32,7 +32,7 @@ void cCPU::addVC(int* VC) {
 }
 
 void cCPU::incVC(int amnt) {
-	*VC += amnt;
+	//*VC += amnt;
 
 	VMMCore->tickController(amnt);
 

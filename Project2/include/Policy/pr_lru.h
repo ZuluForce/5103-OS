@@ -37,6 +37,8 @@ class cPRLru: public cPRPolicy {
 
 		void unpinFrame(uint32_t frame);
 
+		void printTimestamps();
+
 		/** Return a frame to the system.
 		 *
 		 *	The VMM core calls this when a process termintates
