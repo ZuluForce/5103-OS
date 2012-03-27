@@ -1,0 +1,9 @@
+TARGET=main
+R1=./$(TARGET) -s settings.ini ./test_configs/TCleanD/TCleanD.ini
+R2=$(R1) Policy:PR:lru_approx	Results:file:./test_results/TCleanD/r2.log	Results:trace:./test_results/TCleanD/r2.trace
+R3=$(R1) Policy:PR:lru			Results:file:./test_results/TCleanD/r3.log	Results:trace:./test_results/TCleanD/r3.trace
+
+all:
+	$(R1)
+	$(R2)
+	$(R3)
