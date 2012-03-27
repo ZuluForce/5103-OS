@@ -67,8 +67,6 @@ void cPRLru::returnPTEOwner(sPTEOwner* pteOwner){
 
 ePRStatus cPRLru::resolvePageFault(sProc* proc, uint32_t page) {
 
-    printTimestamps();
-
 	//Check for any open frames
 	pair<bool,uint32_t> freeFrame = FAPolicy.getFrame(proc);
 
@@ -215,9 +213,7 @@ bool cPRLru::clearPages(int numPages) {
 	}
 
 	// Sort the list by time so minimum times are at the front
-    pageHist.sort(compare_timestamps);
-
-    printTimestamps();
+    	pageHist.sort(compare_timestamps);
 
 	sPTE* rmPage;
 	unsigned int owner;
