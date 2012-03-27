@@ -16,6 +16,9 @@ void cPRLru::printTimestamps(){
 
 }
 
+/** Compare the timestamp field in both structs and return true if the
+*   first struct should come before the second one.
+*/
 bool compare_timestamps (sPTEOwner *first, sPTEOwner *second){
     if (first->page == NULL){
         cVMMExc ex;
@@ -213,6 +216,8 @@ bool cPRLru::clearPages(int numPages) {
 
 	// Sort the list by time so minimum times are at the front
     pageHist.sort(compare_timestamps);
+
+    printTimestamps();
 
 	sPTE* rmPage;
 	unsigned int owner;

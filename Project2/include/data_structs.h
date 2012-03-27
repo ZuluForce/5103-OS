@@ -39,6 +39,7 @@ struct sPTE {
 	uint8_t time;
 };
 
+/** A struct used to associate a process with a particular page. */
 struct sPTEOwner {
 	uint32_t pid;
 	sPTE* page;

@@ -4,6 +4,9 @@ extern INIReader* settings;
 extern cVMM* VMMCore;
 extern FILE* logStream;
 
+/** Compare the time field in both structs and return true if the
+*   first struct should come before the second one.
+*/
 bool compare_times (sPTEOwner *first, sPTEOwner *second){
     if (first->page == NULL){
         cVMMExc ex;

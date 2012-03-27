@@ -1,11 +1,9 @@
 TARGET=main
-R1=./$(TARGET) -s ./test_configs/T3/T3.ini
-R2=$(R1) Policy:PR:fifo Results:file:./test_results/T3/r2.log
-R3=$(R1) Policy:PR:lru Results:file:./test_results/T3/r3.log
-R4=$(R1) Policy:PR:lru_approx Results:file:./test_results/T3/r4.log
+R1=./$(TARGET) -s settings.ini ./test_configs/T3/T3.ini
+R2=$(R1) Policy:PR:lru Results:file:./test_results/T3/r2.log Results:trace:./test_results/T3/r2.trace
+R3=$(R1) Policy:PR:lru_approx Results:file:./test_results/T3/r3.log Results:trace:./test_results/T3/r3.trace
 
 all:
 	$(R1)
 	$(R2)
 	$(R3)
-	$(R4)
