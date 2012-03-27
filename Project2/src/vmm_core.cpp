@@ -102,6 +102,7 @@ void cVMM::cleanupProcess(sProc* proc) {
 	 */
 	proc->PC = -1;
 	proc->maxPC = -1;
+	proc->finishTime = VC;
 
 	int cleanupCount = 0;
 
@@ -206,6 +207,8 @@ void cVMM::printResults() {
 
 		g_et += (*it)->clockTime;
 		log << "Execution Time: " << (*it)->clockTime << endl;
+
+		log << "Total Time: " << (*it)->finishTime << endl;
 
 		g_tlbhit += (*it)->tlbhit;
 		log << "TLB Hits: " << (*it)->tlbhit << endl;
