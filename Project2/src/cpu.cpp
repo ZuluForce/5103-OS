@@ -19,6 +19,10 @@ cCPU::cCPU() {
 	cout << "\tContext Switch time = " << cs_time << " units" << endl;
 	cout << "\tExecution Quanta = " << quanta << " units" << endl << endl;
 
+	assert(quanta > 0);
+	assert(cs_time >= 0);
+	assert(instr_time >= 0);
+
 	return;
 }
 

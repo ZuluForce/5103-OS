@@ -15,6 +15,7 @@ void setDefaults(INIReader* settings) {
 	SETDP(Timings,cs_time,5);
 	SETDP(Timings,pf_time,10);
 	SETDP(Timings,ioreq_time,1);
+	SETDP(Timings,quanta,4);
 
 	/* ------ MMU ------ */
 	SETDP(MMU,tlb_size,64);
