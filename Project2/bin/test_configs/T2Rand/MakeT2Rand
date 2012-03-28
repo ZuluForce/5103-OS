@@ -1,0 +1,11 @@
+TARGET=main
+R1=./$(TARGET) -s ./test_configs/T2Rand/T2Rand.ini
+R2=$(R1) Global:page_bits:19 Global:offset_bits:13 Results:file:./test_results/T2Rand/r2.log Results:trace:./test_results/T2Rand/r2.trace Global:total_frames:16
+R3=$(R1) Global:page_bits:18 Global:offset_bits:14 Results:file:./test_results/T2Rand/r3.log Results:trace:./test_results/T2Rand/r3.trace Global:total_frames:8
+R4=$(R1) Global:page_bits:17 Global:offset_bits:15 Results:file:./test_results/T2Rand/r4.log Results:trace:./test_results/T2Rand/r4.trace Global:total_frames:4
+
+all:
+	$(R1)
+	$(R2)
+	$(R3)
+	$(R4)

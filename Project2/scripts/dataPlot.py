@@ -224,7 +224,7 @@ def createGraph(config, tests):
 	for rectSet in rects:
 		autolabel(rectSet)
 
-	plt.show()
+	#plt.show()
 	
 	m = img_ext_re.match(output)
 	if ( m == None or m.group(1) != gtype):

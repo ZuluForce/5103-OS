@@ -1,0 +1,14 @@
+This test is intended to show the result of increasing the page size. As the size of the pages increases, the number of frames goes down. The processes used for this test "large_dataset.trace" have good spatial locality but not the best temporal locality because they resweep through the large dataset.
+
+No matter what each process faults the first time and then the larger the page that is brought in the more instructions that can be executed on the next quanta. When the page size gets large enough then execution is limited by the quanta.
+
+If we were to scale page-in/page-out time based on page size then we would see that larger page size would benefit these processes because of their spatial locality but it would severly penalize processes with random accesses.
+
+Results:
+	All the results are as expected. We should stress that these results are not in general for increasing page size but more for the particular processes we are running in this test.
+	
+	As the page size increases we see a decrease in the number of average context switches. With a small page size the processes were faulting every 2 inscructions but as the page size increased the small execution quanta played a larger role in the number of page faults.
+	
+	As expected the number of page faults decreased with an increased page size. Given the spatial locality of the processes, bringing a larger page in is more beneficial than having many frames in memory (with respect to page fault rate). Many smaller pages may allow the process to keep more pages in memory but it will have more faults to get them in.
+	
+	Most of the other results follow intuitively from these such as the average tlb hits increasing with the page size and the tlb misses decreasing. Also, as a direct result of less context switching and less page faulting the cpu utilization increased with page size.

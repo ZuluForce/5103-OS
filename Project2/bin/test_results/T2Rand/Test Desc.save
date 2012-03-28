@@ -1,0 +1,3 @@
+This is meant to show why the choice of processes in T2 was important. Given processes with very random accesses, increasing the page size has no effect because the next access is likely to not be anywhere close.
+
+All graphs for context switches, fault rate, tlb hits/misses all were the same across page sizes. The only metric that slightly changed is cpu utilization which dropped with a larger page size. Since the fault and cs rates stayed the same this must have come from an extra I/O operation. If we were measuring I/O requests relative to the size of the page we would see even more drastic changes in the utilization and overall process execution time. If we spend a lot of time to bring in a 32k page only to access it once then we wasted resources.
