@@ -24,10 +24,10 @@ prettyConfig = {'sps':"Page Size",\
 				'gcs':"Global context switches",\
 				'gpf':"Global page faults",\
 				'get':"Global exec time (CPU time)",\
-				'gpo':"Global Page Outs",\
-				'gpi':"Global Page Ins",\
+				'gpgo':"Global Page Outs",\
+				'gpgi':"Global Page Ins",\
 				'gtlbh':"Global TLB Hits",\
-				'gtlhm':"Global TLB Misses",\
+				'gtlbm':"Global TLB Misses",\
 				'gtime':"Total Time Taken",\
 				'gutil':"CPU Utilization",\
 				'lcs':"Avg process context switches",\
