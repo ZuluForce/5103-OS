@@ -1,0 +1,116 @@
+\hypertarget{classcFixedAlloc}{\section{c\-Fixed\-Alloc \-Class \-Reference}
+\label{d1/d40/classcFixedAlloc}\index{c\-Fixed\-Alloc@{c\-Fixed\-Alloc}}
+}
+
+
+\-Inheritance diagram for c\-Fixed\-Alloc\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=176pt]{dc/d13/classcFixedAlloc__inherit__graph}
+\end{center}
+\end{figure}
+
+
+\-Collaboration diagram for c\-Fixed\-Alloc\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=176pt]{d4/d27/classcFixedAlloc__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcFixedAlloc_a489395f063815020f36265a52308a3f6}{reg\-Procs} (vector$<$ \hyperlink{structsProc}{s\-Proc} $\ast$ $>$ \&procs)
+\begin{DoxyCompactList}\small\item\em \-Give the policy module information about processes. \end{DoxyCompactList}\item 
+\hypertarget{classcFixedAlloc_a12285e88707a40ae51b5d2963dfea1aa}{bool {\bfseries check\-Available} (uint32\-\_\-t frame, bool pinned\-Taken=true)}\label{d1/d40/classcFixedAlloc_a12285e88707a40ae51b5d2963dfea1aa}
+
+\item 
+\hypertarget{classcFixedAlloc_a6a9ece4fe93de1473efe111d44830cd1}{pair$<$ bool, uint32\-\_\-t $>$ {\bfseries get\-Frame} ()}\label{d1/d40/classcFixedAlloc_a6a9ece4fe93de1473efe111d44830cd1}
+
+\item 
+\hypertarget{classcFixedAlloc_acc3148cce2f2880af5624c2a409eafb4}{pair$<$ bool, uint32\-\_\-t $>$ {\bfseries get\-Frame} (\hyperlink{structsProc}{s\-Proc} $\ast$)}\label{d1/d40/classcFixedAlloc_acc3148cce2f2880af5624c2a409eafb4}
+
+\item 
+\hypertarget{classcFixedAlloc_ad51c52d37f59f8a40eb315f35892bc98}{bool {\bfseries get\-Frame} (uint32\-\_\-t frame)}\label{d1/d40/classcFixedAlloc_ad51c52d37f59f8a40eb315f35892bc98}
+
+\item 
+void \hyperlink{classcFixedAlloc_a79df79853a015bb750ca682630afcfd8}{return\-Frame} (uint32\-\_\-t frame)
+\begin{DoxyCompactList}\small\item\em \-System is returning a page. \end{DoxyCompactList}\item 
+\hypertarget{classcFixedAlloc_a2109057465d037b0c23dba1257163aba}{uint32\-\_\-t {\bfseries check\-Open} (bool)}\label{d1/d40/classcFixedAlloc_a2109057465d037b0c23dba1257163aba}
+
+\item 
+\hypertarget{classcFixedAlloc_a0baba5ee9e04148d9d5845ee5afbfe37}{bool {\bfseries pin} (uint32\-\_\-t frame)}\label{d1/d40/classcFixedAlloc_a0baba5ee9e04148d9d5845ee5afbfe37}
+
+\item 
+\hypertarget{classcFixedAlloc_a2a6f869ad3c6fa6190fdbca3e198bae9}{bool {\bfseries unpin} (uint32\-\_\-t frame)}\label{d1/d40/classcFixedAlloc_a2a6f869ad3c6fa6190fdbca3e198bae9}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Private \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcFixedAlloc_ad7bb774118a2d337f8f5f950c22b7ee0}{uint32\-\_\-t {\bfseries find\-First\-Of} (bool check, dynamic\-\_\-bitset$<$$>$ \&bits)}\label{d1/d40/classcFixedAlloc_ad7bb774118a2d337f8f5f950c22b7ee0}
+
+\item 
+\hypertarget{classcFixedAlloc_a14dda43745a14f32f5e01b37797ac879}{void {\bfseries print\-Frames} ()}\label{d1/d40/classcFixedAlloc_a14dda43745a14f32f5e01b37797ac879}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Private \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcFixedAlloc_aaf24339f1c79274e4d24fb1044d6ed25}{int {\bfseries alloc\-Size}}\label{d1/d40/classcFixedAlloc_aaf24339f1c79274e4d24fb1044d6ed25}
+
+\item 
+\hypertarget{classcFixedAlloc_a7df629e87072fd179c7e7934d2424815}{dynamic\-\_\-bitset {\bfseries frames}}\label{d1/d40/classcFixedAlloc_a7df629e87072fd179c7e7934d2424815}
+
+\item 
+\hypertarget{classcFixedAlloc_a09c47ddabbcc2e8f8708c929fefff05b}{dynamic\-\_\-bitset {\bfseries pinned}}\label{d1/d40/classcFixedAlloc_a09c47ddabbcc2e8f8708c929fefff05b}
+
+\item 
+\hypertarget{classcFixedAlloc_a369c2714b4308ef100b81195ead0b24a}{uint32\-\_\-t {\bfseries num\-Frames}}\label{d1/d40/classcFixedAlloc_a369c2714b4308ef100b81195ead0b24a}
+
+\item 
+\hypertarget{classcFixedAlloc_aed0c422265af0f1c248c6a5f4b6336d9}{uint32\-\_\-t {\bfseries open\-Frames}}\label{d1/d40/classcFixedAlloc_aed0c422265af0f1c248c6a5f4b6336d9}
+
+\item 
+\hypertarget{classcFixedAlloc_aeb96768ba92b2d27f3c736fed35076e2}{bool {\bfseries \-\_\-print\-F}}\label{d1/d40/classcFixedAlloc_aeb96768ba92b2d27f3c736fed35076e2}
+
+\item 
+\hypertarget{classcFixedAlloc_a619d729276b056675bc582b406f5d385}{bool {\bfseries \-\_\-print\-F\-\_\-on\-\_\-pin}}\label{d1/d40/classcFixedAlloc_a619d729276b056675bc582b406f5d385}
+
+\item 
+\hypertarget{classcFixedAlloc_ad953ea8614b03e098d3e46a6087e15ba}{\-F\-I\-L\-E $\ast$ {\bfseries print\-Loc}}\label{d1/d40/classcFixedAlloc_ad953ea8614b03e098d3e46a6087e15ba}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcFixedAlloc_a489395f063815020f36265a52308a3f6}{\index{c\-Fixed\-Alloc@{c\-Fixed\-Alloc}!reg\-Procs@{reg\-Procs}}
+\index{reg\-Procs@{reg\-Procs}!cFixedAlloc@{c\-Fixed\-Alloc}}
+\subsubsection[{reg\-Procs}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Fixed\-Alloc\-::reg\-Procs} (
+\begin{DoxyParamCaption}
+\item[{vector$<$ {\bf s\-Proc} $\ast$ $>$ \&}]{procs}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d1/d40/classcFixedAlloc_a489395f063815020f36265a52308a3f6}
+\-Some frame allocation policies may want information regarding particular processes. \-This is called after construction and it gives the policy a chance to build any necessary datastructures. 
+
+\-Implements \hyperlink{classcFrameAllocPolicy_a84e52441bcbb0a571bbcf1a7209cd662}{c\-Frame\-Alloc\-Policy}.
+
+\hypertarget{classcFixedAlloc_a79df79853a015bb750ca682630afcfd8}{\index{c\-Fixed\-Alloc@{c\-Fixed\-Alloc}!return\-Frame@{return\-Frame}}
+\index{return\-Frame@{return\-Frame}!cFixedAlloc@{c\-Fixed\-Alloc}}
+\subsubsection[{return\-Frame}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Fixed\-Alloc\-::return\-Frame} (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{frame}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d1/d40/classcFixedAlloc_a79df79853a015bb750ca682630afcfd8}
+\-This could happen on process termination or invocation of the page cleaning daemon. 
+
+\-Implements \hyperlink{classcFrameAllocPolicy_a40446e60eefff1fe2a72252af007c877}{c\-Frame\-Alloc\-Policy}.
+
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Policy/frame\-Alloc.\-h\item 
+src/\-Policy/frame\-Alloc.\-cpp\end{DoxyCompactItemize}

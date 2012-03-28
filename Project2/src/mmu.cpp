@@ -82,7 +82,7 @@ void cMMU::syncTLB() {
 			ptbr[TLB[i].VPN].flags[FI_DIRTY] = TLB[i].dirty;
 			ptbr[TLB[i].VPN].flags[FI_REF] = TLB[i].ref;
 			ptbr[TLB[i].VPN].timestamp = TLB[i].timestamp;
-			
+
 			//TLB[i].dirty = false;
 			//TLB[i].ref = false;
 		}

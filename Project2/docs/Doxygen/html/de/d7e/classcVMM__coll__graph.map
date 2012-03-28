@@ -1,0 +1,25 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$d7/df0/classcPRPolicy.xhtml" title="Abstract Page Replacement Policy." alt="" coords="2366,72,2450,99"/>
+<area shape="rect" id="node4" href="$dc/dcc/classcRoundRobin.xhtml" title="Round Robin Scheduler." alt="" coords="2357,123,2459,149"/>
+<area shape="rect" id="node6" href="$d4/d8e/structsProc.xhtml" title="Struct representing a process." alt="" coords="1621,147,1677,173"/>
+<area shape="rect" id="node38" href="$d2/dc6/classcCPU.xhtml" title="Very Simple CPU." alt="" coords="2065,299,2124,325"/>
+<area shape="rect" id="node8" href="$db/d4b/structsPTE.xhtml" title="A struct representing a single page table entry." alt="" coords="938,395,993,421"/>
+<area shape="rect" id="node41" href="$df/deb/classcMMU.xhtml" title="cMMU" alt="" coords="1619,325,1680,352"/>
+<area shape="rect" id="node63" href="$de/d05/structsIOContext.xhtml" title="Struct for holding the context of an I/O operation." alt="" coords="1255,499,1345,525"/>
+<area shape="rect" id="node10" title="STL class." alt="" coords="1093,108,1216,135"/>
+<area shape="rect" id="node12" title="STL class." alt="" coords="600,132,811,159"/>
+<area shape="rect" id="node14" title="STL class." alt="" coords="365,156,547,183"/>
+<area shape="rect" id="node50" title="STL class." alt="" coords="611,207,799,233"/>
+<area shape="rect" id="node16" title="STL class." alt="" coords="157,180,312,207"/>
+<area shape="rect" id="node53" title="STL class." alt="" coords="363,207,549,233"/>
+<area shape="rect" id="node18" title="STL class." alt="" coords="6,180,106,207"/>
+<area shape="rect" id="node20" title="STL class." alt="" coords="1260,167,1340,193"/>
+<area shape="rect" id="node22" title="STL class." alt="" coords="882,167,1049,193"/>
+<area shape="rect" id="node24" href="$de/dd4/classcIDManager.xhtml" title="A class for managing unique IDs." alt="" coords="2048,7,2141,33"/>
+<area shape="rect" id="node34" href="$d3/d6f/classcCleanDaemon.xhtml" title="cCleanDaemon" alt="" coords="2352,249,2464,276"/>
+<area shape="rect" id="node36" href="$d3/dd2/classcFrameAllocPolicy.xhtml" title="An abstract class for allocating frames to processes." alt="" coords="2029,248,2160,275"/>
+<area shape="rect" id="node44" href="$d2/deb/structsTLBE.xhtml" title="sTLBE" alt="" coords="1269,409,1331,436"/>
+<area shape="rect" id="node46" title="STL class." alt="" coords="1240,217,1360,244"/>
+<area shape="rect" id="node48" title="STL class." alt="" coords="862,217,1069,244"/>
+<area shape="rect" id="node57" href="$da/d8f/classcIOControl.xhtml" title="Class representing an I/O controller." alt="" coords="2365,473,2451,500"/>
+</map>

@@ -1,0 +1,75 @@
+\hypertarget{classcRoundRobin}{\section{c\-Round\-Robin \-Class \-Reference}
+\label{dc/dcc/classcRoundRobin}\index{c\-Round\-Robin@{c\-Round\-Robin}}
+}
+
+
+\-Round \-Robin \-Scheduler.  
+
+
+
+
+{\ttfamily \#include $<$round\-\_\-robin.\-h$>$}
+
+
+
+\-Collaboration diagram for c\-Round\-Robin\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{de/d42/classcRoundRobin__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcRoundRobin_a10405a29851eefc296b1381d18a066fe}{void {\bfseries init\-Proc\-Schedule\-Info} (\hyperlink{structsProc}{s\-Proc} $\ast$proc)}\label{dc/dcc/classcRoundRobin_a10405a29851eefc296b1381d18a066fe}
+
+\item 
+\hypertarget{classcRoundRobin_ad95f6a0fcf1491204e97eb8251fd947e}{void {\bfseries add\-Processes} (vector$<$ \hyperlink{structsProc}{s\-Proc} $\ast$ $>$ \&procs)}\label{dc/dcc/classcRoundRobin_ad95f6a0fcf1491204e97eb8251fd947e}
+
+\item 
+\hypertarget{classcRoundRobin_a8a61733eb22f178f571e60c2f7733554}{void {\bfseries set\-Blocked} (\hyperlink{structsProc}{s\-Proc} $\ast$)}\label{dc/dcc/classcRoundRobin_a8a61733eb22f178f571e60c2f7733554}
+
+\item 
+\hypertarget{classcRoundRobin_ab404125f4c54dfe1a1b183378dadc0f7}{void {\bfseries unblock\-Process} (\hyperlink{structsProc}{s\-Proc} $\ast$)}\label{dc/dcc/classcRoundRobin_ab404125f4c54dfe1a1b183378dadc0f7}
+
+\item 
+\hypertarget{classcRoundRobin_aae2aeb468ef9da468025de256d989b49}{void {\bfseries remove\-Process} (\hyperlink{structsProc}{s\-Proc} $\ast$)}\label{dc/dcc/classcRoundRobin_aae2aeb468ef9da468025de256d989b49}
+
+\item 
+\hypertarget{classcRoundRobin_a2fd190aaa6fa83ee4e9cee65234d76da}{\hyperlink{structsProc}{s\-Proc} $\ast$ {\bfseries get\-Next\-To\-Run} ()}\label{dc/dcc/classcRoundRobin_a2fd190aaa6fa83ee4e9cee65234d76da}
+
+\item 
+\hypertarget{classcRoundRobin_a3b5eeb480739c6ca7f4a69b6d4069626}{int {\bfseries num\-Processes} ()}\label{dc/dcc/classcRoundRobin_a3b5eeb480739c6ca7f4a69b6d4069626}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Private \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcRoundRobin_a36b3b12e175d93e4a1a23734ec0b0484}{queue$<$ \hyperlink{structsProc}{s\-Proc} $\ast$ $>$ {\bfseries ready\-Queue}}\label{dc/dcc/classcRoundRobin_a36b3b12e175d93e4a1a23734ec0b0484}
+
+\item 
+\hypertarget{classcRoundRobin_a1bba76fc4540d29a8de4c29cfccc67f9}{vector$<$ \hyperlink{structsProc}{s\-Proc} $\ast$ $>$ {\bfseries blocked\-Vector}}\label{dc/dcc/classcRoundRobin_a1bba76fc4540d29a8de4c29cfccc67f9}
+
+\item 
+\hypertarget{classcRoundRobin_a2068152f0b3d1592dc031ecf7b0d7d5f}{int {\bfseries total\-Blocked}}\label{dc/dcc/classcRoundRobin_a2068152f0b3d1592dc031ecf7b0d7d5f}
+
+\item 
+\hypertarget{classcRoundRobin_a8779f8cb28be168316b485c77d09b210}{int {\bfseries clock\-Ticks\-Used}}\label{dc/dcc/classcRoundRobin_a8779f8cb28be168316b485c77d09b210}
+
+\item 
+\hypertarget{classcRoundRobin_a8f0f882cea2c2d2289aef7b320ff15be}{\hyperlink{structsProc}{s\-Proc} $\ast$ {\bfseries running\-Proc}}\label{dc/dcc/classcRoundRobin_a8f0f882cea2c2d2289aef7b320ff15be}
+
+\item 
+\hypertarget{classcRoundRobin_a15ca5ec15a4ae935706b55ac71d6bee2}{\hyperlink{classcIDManager}{c\-I\-D\-Manager} {\bfseries blocked\-I\-D}}\label{dc/dcc/classcRoundRobin_a15ca5ec15a4ae935706b55ac71d6bee2}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-Nothing too much different here from project1 and since it isn't a core piece to this project it won't be documented in detail. 
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{round__robin_8h}{round\-\_\-robin.\-h}\item 
+src/round\-\_\-robin.\-cpp\end{DoxyCompactItemize}

@@ -14,14 +14,21 @@ How to run:
 	Clean - 'make clean'
 	Run - 'make run_%' where % is a test number
 		- The tests are stored under ./bin/test_configs/ . For example, within this directory is the T1 test directory. To run this test you would use 'make run_T1'
+		- Note: Your test's makefile should be named Make% (ie MakeT1) in order for this to work. More is explained in the README.testing file.
 		
 		- Alternatively, to run all the tests execute 'make run_all'. This will execute a python script that runs through the test directory and executes all tests. This same script will try to start the graph generator to produce the graphs for the given test.
 		
+		- 'make graph_%' where % is a test number will invoke the graph generator on the folder name % in the test_results directory
+		
+How to create tests:
+	Look to the README.testing file
+	
+		
 Command Line Parameters:
-	-s <.ini files>+
+	-s [.ini files]+
 		- The settings files are loaded in order. Identical settings in later files will overwrite previous ones.
 		
-	-t <trace files>+
+	-t [trace files]+
 		- This is a list of trace files to execute. These are loaded in-order before any specified in the settings file/s.
 		
 	Overriding Settings (shortcut to using multiple ini files)

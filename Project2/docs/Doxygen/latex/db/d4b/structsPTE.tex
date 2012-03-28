@@ -1,0 +1,41 @@
+\hypertarget{structsPTE}{\section{s\-P\-T\-E \-Struct \-Reference}
+\label{db/d4b/structsPTE}\index{s\-P\-T\-E@{s\-P\-T\-E}}
+}
+
+
+\-A struct representing a single page table entry.  
+
+
+
+
+{\ttfamily \#include $<$data\-\_\-structs.\-h$>$}
+
+\subsection*{\-Public \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structsPTE_a7f83c711e07dc476cceb9ac15ea010d7}{uint32\-\_\-t \hyperlink{structsPTE_a7f83c711e07dc476cceb9ac15ea010d7}{frame}}\label{db/d4b/structsPTE_a7f83c711e07dc476cceb9ac15ea010d7}
+
+\begin{DoxyCompactList}\small\item\em \-Frame that this \-P\-T\-E maps to. \end{DoxyCompactList}\item 
+\hypertarget{structsPTE_a8b5b24029a238d20968676a78a81928c}{int \hyperlink{structsPTE_a8b5b24029a238d20968676a78a81928c}{timestamp}}\label{db/d4b/structsPTE_a8b5b24029a238d20968676a78a81928c}
+
+\begin{DoxyCompactList}\small\item\em \-This gets set in hardware by the \-M\-M\-U. \end{DoxyCompactList}\item 
+bool \hyperlink{structsPTE_a5088ab9c05c286c643ef97d04a3c9dad}{flags} \mbox{[}3\mbox{]}
+\begin{DoxyCompactList}\small\item\em \-Page \-Table \-Entry (\-P\-T\-E) \-V\-M flags. \end{DoxyCompactList}\item 
+\hypertarget{structsPTE_a73f0dd13e3c1909cee215ff78c99e487}{uint8\-\_\-t \hyperlink{structsPTE_a73f0dd13e3c1909cee215ff78c99e487}{time}}\label{db/d4b/structsPTE_a73f0dd13e3c1909cee215ff78c99e487}
+
+\begin{DoxyCompactList}\small\item\em \-This is set in software by the pr\-\_\-lru\-Approx after each quanta or on a page fault. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{structsPTE_a5088ab9c05c286c643ef97d04a3c9dad}{\index{s\-P\-T\-E@{s\-P\-T\-E}!flags@{flags}}
+\index{flags@{flags}!sPTE@{s\-P\-T\-E}}
+\subsubsection[{flags}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf s\-P\-T\-E\-::flags}\mbox{[}3\mbox{]}}}\label{db/d4b/structsPTE_a5088ab9c05c286c643ef97d04a3c9dad}
+flags\mbox{[}0\mbox{]}\-: \-Present/absent flags\mbox{[}1\mbox{]}\-: \-Dirty flags\mbox{[}2\mbox{]}\-: \-Referenced 
+
+\-Referenced by c\-V\-M\-M\-::cleanup\-Process(), c\-P\-R\-Fifo\-::clear\-Pages(), c\-P\-R\-Lru\-Approx\-::clear\-Pages(), c\-P\-R\-Lru\-::clear\-Pages(), c\-P\-R\-Fifo\-::resolve\-Page\-Fault(), c\-P\-R\-Lru\-::resolve\-Page\-Fault(), c\-P\-R\-Lru\-Approx\-::resolve\-Page\-Fault(), c\-I\-O\-Control\-::tick(), and c\-P\-R\-Lru\-Approx\-::update\-Time().
+
+
+
+\-The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{data__structs_8h}{data\-\_\-structs.\-h}\end{DoxyCompactItemize}

@@ -1,0 +1,153 @@
+\hypertarget{classINIReader}{\section{\-I\-N\-I\-Reader \-Class \-Reference}
+\label{d5/de4/classINIReader}\index{\-I\-N\-I\-Reader@{\-I\-N\-I\-Reader}}
+}
+
+
+\-Class for parsing and storing contents of .ini files.  
+
+
+
+
+{\ttfamily \#include $<$ini\-Reader.\-h$>$}
+
+
+
+\-Collaboration diagram for \-I\-N\-I\-Reader\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{dc/d56/classINIReader__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classINIReader_aba944f62ed61ac43e14cf87a39830e36}{{\bfseries \-I\-N\-I\-Reader} (string filename)}\label{d5/de4/classINIReader_aba944f62ed61ac43e14cf87a39830e36}
+
+\item 
+\hypertarget{classINIReader_aea486d4afeda8c4ad491e3032c3e855b}{bool {\bfseries load\-\_\-ini} (string filename, bool auto\-\_\-parse=true, bool overwrite=true)}\label{d5/de4/classINIReader_aea486d4afeda8c4ad491e3032c3e855b}
+
+\item 
+\hypertarget{classINIReader_a61ccb2039611fe129cbd803a483b95a1}{bool {\bfseries loaded} ()}\label{d5/de4/classINIReader_a61ccb2039611fe129cbd803a483b95a1}
+
+\item 
+\hypertarget{classINIReader_ac43eedc1266d7d48c4f862fc015f7716}{bool {\bfseries exists} (const string \&section, const string \&key)}\label{d5/de4/classINIReader_ac43eedc1266d7d48c4f862fc015f7716}
+
+\item 
+\hypertarget{classINIReader_a9c097d869f3182731b83beb74bf67b7a}{void {\bfseries add\-Default} (const string \&section, const string \&key, const string \&value)}\label{d5/de4/classINIReader_a9c097d869f3182731b83beb74bf67b7a}
+
+\item 
+\hypertarget{classINIReader_af8aa397c78db338f067f384184532262}{void {\bfseries add\-Overwrite\-Exception} (const string \&section)}\label{d5/de4/classINIReader_af8aa397c78db338f067f384184532262}
+
+\item 
+\hypertarget{classINIReader_a90cd9a87f04299508a595ae73c5a5b96}{bool {\bfseries over\-Write\-Op} (const string \&section, const string \&key, const string \&value)}\label{d5/de4/classINIReader_a90cd9a87f04299508a595ae73c5a5b96}
+
+\item 
+\hypertarget{classINIReader_aa5e196e5706f611359735721241ad126}{{\footnotesize template$<$class T $>$ }\\\-T {\bfseries extract\-Value} (const string \&section, const string \&key)}\label{d5/de4/classINIReader_aa5e196e5706f611359735721241ad126}
+
+\item 
+\hypertarget{classINIReader_a390fc2ab035424a5dbb3d71dec787080}{string {\bfseries extract\-Comment} (const string \&section, const string \&key)}\label{d5/de4/classINIReader_a390fc2ab035424a5dbb3d71dec787080}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classINIReader_aec8a849e8af0a2cac8d17c346ca67f5b}{void {\bfseries parse\-\_\-ini} ()}\label{d5/de4/classINIReader_aec8a849e8af0a2cac8d17c346ca67f5b}
+
+\item 
+\hypertarget{classINIReader_a8b4eee32f6d7acdaff255a0bffed1da2}{int {\bfseries add\-Section} (char $\ast$line, bool mod\-Curr\-Section=true)}\label{d5/de4/classINIReader_a8b4eee32f6d7acdaff255a0bffed1da2}
+
+\item 
+\hypertarget{classINIReader_a96e5e897303456ca2daa6ef3b97fb1a3}{int {\bfseries add\-Section} (string \&line, bool mod\-Curr\-Section=true, bool ignore\-Rules=false)}\label{d5/de4/classINIReader_a96e5e897303456ca2daa6ef3b97fb1a3}
+
+\item 
+\hypertarget{classINIReader_a652b3278f888b4b6adc1fc47c05d7eed}{int {\bfseries add\-Key} (string \&line)}\label{d5/de4/classINIReader_a652b3278f888b4b6adc1fc47c05d7eed}
+
+\item 
+\hypertarget{classINIReader_a8c13740b6347288c69c627d1c8ead5b3}{int {\bfseries add\-Key} (string \&line, string \&section)}\label{d5/de4/classINIReader_a8c13740b6347288c69c627d1c8ead5b3}
+
+\item 
+\hypertarget{classINIReader_a585dfd12ccc146635cc7d911087a5446}{string \& {\bfseries get\-Key\-Value} (const string \&section, const string \&key)}\label{d5/de4/classINIReader_a585dfd12ccc146635cc7d911087a5446}
+
+\item 
+\hypertarget{classINIReader_a54fd0bb75ae7b16eec08907174d70092}{string \& {\bfseries get\-Key\-Comment} (const string \&section, const string \&key)}\label{d5/de4/classINIReader_a54fd0bb75ae7b16eec08907174d70092}
+
+\item 
+\hypertarget{classINIReader_a40f1282c103a076c0568c731ae629f0c}{string \& {\bfseries get\-Default} (const string \&section, const string \&key)}\label{d5/de4/classINIReader_a40f1282c103a076c0568c731ae629f0c}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Static \-Protected \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classINIReader_ad323be0c86dc65972d6193e5e086c018}{static void {\bfseries strip\-\_\-white\-\_\-space} (string \&str, const string \&\-Trim\-Chars=\char`\"{} $\backslash$t$\backslash$n$\backslash$r\char`\"{}, int \-Trim\-Dir=0)}\label{d5/de4/classINIReader_ad323be0c86dc65972d6193e5e086c018}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Protected \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classINIReader_a0ff7ef5be2c972cde7441ffa4e45de7b}{fstream {\bfseries ini\-\_\-file}}\label{d5/de4/classINIReader_a0ff7ef5be2c972cde7441ffa4e45de7b}
+
+\item 
+\hypertarget{classINIReader_a85cddc52115eb13a5b997165c55a345e}{int {\bfseries get\-\_\-pointer}}\label{d5/de4/classINIReader_a85cddc52115eb13a5b997165c55a345e}
+
+\item 
+\hypertarget{classINIReader_ae37b945ed9f042cc1e8ac39e2565c21a}{int {\bfseries put\-\_\-pointer}}\label{d5/de4/classINIReader_ae37b945ed9f042cc1e8ac39e2565c21a}
+
+\item 
+\hypertarget{classINIReader_a2ad48adb39922e1fae7771807ed6695f}{int {\bfseries line\-Number}}\label{d5/de4/classINIReader_a2ad48adb39922e1fae7771807ed6695f}
+
+\item 
+\hypertarget{classINIReader_a0c97a0c3b8fd520e2d553be1772341d6}{bool {\bfseries overwrite\-Mode}}\label{d5/de4/classINIReader_a0c97a0c3b8fd520e2d553be1772341d6}
+
+\item 
+\hypertarget{classINIReader_ace4e6013b369228014fe5c0400afec89}{string {\bfseries ini\-\_\-name}}\label{d5/de4/classINIReader_ace4e6013b369228014fe5c0400afec89}
+
+\item 
+\hypertarget{classINIReader_a83278378a5469c26449ae5b2ce4a89ae}{string {\bfseries curr\-Line}}\label{d5/de4/classINIReader_a83278378a5469c26449ae5b2ce4a89ae}
+
+\item 
+\hypertarget{classINIReader_a62c2ba95d9fda8ca1187cd17eb127e18}{string {\bfseries curr\-Section}}\label{d5/de4/classINIReader_a62c2ba95d9fda8ca1187cd17eb127e18}
+
+\item 
+\hypertarget{classINIReader_a3613ee606448d56d5467c2f23a4d7f3e}{string {\bfseries curr\-Key}}\label{d5/de4/classINIReader_a3613ee606448d56d5467c2f23a4d7f3e}
+
+\item 
+\hypertarget{classINIReader_a4d3649900b72b678f08a0180e9533cd4}{string {\bfseries default\-Section}}\label{d5/de4/classINIReader_a4d3649900b72b678f08a0180e9533cd4}
+
+\item 
+\hypertarget{classINIReader_a1aa77ea705fdfc2199c50bd927105f4f}{\-Section\-Map {\bfseries section\-\_\-map}}\label{d5/de4/classINIReader_a1aa77ea705fdfc2199c50bd927105f4f}
+
+\item 
+\hypertarget{classINIReader_a5638d8cb18c22c1bfddf4386a5b46a7c}{\-Section\-Map\-::iterator {\bfseries sec\-\_\-it}}\label{d5/de4/classINIReader_a5638d8cb18c22c1bfddf4386a5b46a7c}
+
+\item 
+\hypertarget{classINIReader_a1855338827817c614b04e813c180fa0d}{\-Key\-Map\-::iterator {\bfseries key\-\_\-it}}\label{d5/de4/classINIReader_a1855338827817c614b04e813c180fa0d}
+
+\item 
+\hypertarget{classINIReader_a9ace5e2e7f7d3ad6d6cca77380c04a68}{\-Key\-Map $\ast$ {\bfseries temp\-\_\-map}}\label{d5/de4/classINIReader_a9ace5e2e7f7d3ad6d6cca77380c04a68}
+
+\item 
+\hypertarget{classINIReader_abd12de357de84a26239165d339810f59}{\-Default\-Map {\bfseries default\-\_\-map}}\label{d5/de4/classINIReader_abd12de357de84a26239165d339810f59}
+
+\item 
+\hypertarget{classINIReader_aeed306baf82ac107ffa12169736479a8}{\-Default\-Map\-::iterator {\bfseries def\-\_\-sec\-\_\-it}}\label{d5/de4/classINIReader_aeed306baf82ac107ffa12169736479a8}
+
+\item 
+\hypertarget{classINIReader_a237850e82c0b5399f8f4b413aa66fc47}{\-Default\-Key\-Map\-::iterator {\bfseries def\-\_\-key\-\_\-it}}\label{d5/de4/classINIReader_a237850e82c0b5399f8f4b413aa66fc47}
+
+\item 
+\hypertarget{classINIReader_ae473d5806ec3b95bc8a188439eb46a7d}{\-Default\-Key\-Map $\ast$ {\bfseries def\-\_\-temp\-\_\-map}}\label{d5/de4/classINIReader_ae473d5806ec3b95bc8a188439eb46a7d}
+
+\item 
+\hypertarget{classINIReader_a66bb49578e1fa17136ae5838a8a58c46}{vector$<$ string $>$ {\bfseries no\-Overwrite\-Section}}\label{d5/de4/classINIReader_a66bb49578e1fa17136ae5838a8a58c46}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+\-This was taken from another project \-I was working on with some small addiitions (overriding settings). \-There is a lot here and because it is not central to this project it won't be documented in detail. 
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{iniReader_8h}{ini\-Reader.\-h}\item 
+src/ini\-Reader.\-cpp\end{DoxyCompactItemize}

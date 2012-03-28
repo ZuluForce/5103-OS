@@ -1,0 +1,85 @@
+\hypertarget{structsProc}{\section{s\-Proc \-Struct \-Reference}
+\label{d4/d8e/structsProc}\index{s\-Proc@{s\-Proc}}
+}
+
+
+\-Struct representing a process.  
+
+
+
+
+{\ttfamily \#include $<$data\-\_\-structs.\-h$>$}
+
+
+
+\-Collaboration diagram for s\-Proc\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{df/dc9/structsProc__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{structsProc_acba0c89d09f7973a240a9b229a31fabe}{unsigned int \hyperlink{structsProc_acba0c89d09f7973a240a9b229a31fabe}{pid}}\label{d4/d8e/structsProc_acba0c89d09f7973a240a9b229a31fabe}
+
+\begin{DoxyCompactList}\small\item\em \-Process \-P\-I\-D. \end{DoxyCompactList}\item 
+\hypertarget{structsProc_a621d8ad464b51d3cbf0ccd54ee3853bd}{uint16\-\_\-t \hyperlink{structsProc_a621d8ad464b51d3cbf0ccd54ee3853bd}{cswitches}}\label{d4/d8e/structsProc_a621d8ad464b51d3cbf0ccd54ee3853bd}
+
+\begin{DoxyCompactList}\small\item\em \# of \-Context \-Switches \end{DoxyCompactList}\item 
+\hypertarget{structsProc_a9a31e35852f9c3f517e2a685d919767f}{int {\bfseries page\-Faults}}\label{d4/d8e/structsProc_a9a31e35852f9c3f517e2a685d919767f}
+
+\item 
+\hypertarget{structsProc_a80729551ba1fa1d96a31114efbe51ebd}{int {\bfseries tlbhit}}\label{d4/d8e/structsProc_a80729551ba1fa1d96a31114efbe51ebd}
+
+\item 
+\hypertarget{structsProc_addf3df48be9557e0adfa8714cdf2549c}{int {\bfseries tlbmiss}}\label{d4/d8e/structsProc_addf3df48be9557e0adfa8714cdf2549c}
+
+\item 
+\hypertarget{structsProc_a5b9e75f676b6cf3b034c6bb64e1221e0}{int \hyperlink{structsProc_a5b9e75f676b6cf3b034c6bb64e1221e0}{clock\-Time}}\label{d4/d8e/structsProc_a5b9e75f676b6cf3b034c6bb64e1221e0}
+
+\begin{DoxyCompactList}\small\item\em \-Time spent executing. \end{DoxyCompactList}\item 
+\hypertarget{structsProc_a9079bdad478d80b701669442a8919f94}{int \hyperlink{structsProc_a9079bdad478d80b701669442a8919f94}{finish\-Time}}\label{d4/d8e/structsProc_a9079bdad478d80b701669442a8919f94}
+
+\begin{DoxyCompactList}\small\item\em \-V\-C when process finished. \end{DoxyCompactList}\item 
+\hypertarget{structsProc_adc5c77141ef1d0ce31aef263f5085871}{istringstream $\ast$ \hyperlink{structsProc_adc5c77141ef1d0ce31aef263f5085871}{data}}\label{d4/d8e/structsProc_adc5c77141ef1d0ce31aef263f5085871}
+
+\begin{DoxyCompactList}\small\item\em \-Text data of process. \end{DoxyCompactList}\item 
+\hypertarget{structsProc_a1c3a52cf9c8388b00fddeff11faec8ed}{int \hyperlink{structsProc_a1c3a52cf9c8388b00fddeff11faec8ed}{\-P\-C}}\label{d4/d8e/structsProc_a1c3a52cf9c8388b00fddeff11faec8ed}
+
+\begin{DoxyCompactList}\small\item\em \-Program \-Counter. \end{DoxyCompactList}\item 
+int \hyperlink{structsProc_a915cc193d810601697481767854a9b05}{max\-P\-C}
+\begin{DoxyCompactList}\small\item\em \-Max \-P\-C. \end{DoxyCompactList}\item 
+\hypertarget{structsProc_af4083409a9efd6e6eeafcf918e72423d}{bool \hyperlink{structsProc_af4083409a9efd6e6eeafcf918e72423d}{restart}}\label{d4/d8e/structsProc_af4083409a9efd6e6eeafcf918e72423d}
+
+\begin{DoxyCompactList}\small\item\em \-Used to flag an instruction restart. \end{DoxyCompactList}\item 
+\hypertarget{structsProc_af173141c3ed2ea7cfa2fb571e7c8a52a}{bool \hyperlink{structsProc_af173141c3ed2ea7cfa2fb571e7c8a52a}{circular\-Fault\-Check}}\label{d4/d8e/structsProc_af173141c3ed2ea7cfa2fb571e7c8a52a}
+
+\begin{DoxyCompactList}\small\item\em \-If the same process faults on the same instruction more than once the cpu notifies the core. \end{DoxyCompactList}\item 
+\hypertarget{structsProc_a82699971a08c9889bb70cdb000c2a65a}{string \hyperlink{structsProc_a82699971a08c9889bb70cdb000c2a65a}{rline}}\label{d4/d8e/structsProc_a82699971a08c9889bb70cdb000c2a65a}
+
+\begin{DoxyCompactList}\small\item\em \-Process instruction for the restart. \end{DoxyCompactList}\item 
+\hypertarget{structsProc_a469832c44beab71535219bc020956dcd}{\hyperlink{structsPTE}{s\-P\-T\-E} $\ast$ \hyperlink{structsProc_a469832c44beab71535219bc020956dcd}{\-P\-Tptr}}\label{d4/d8e/structsProc_a469832c44beab71535219bc020956dcd}
+
+\begin{DoxyCompactList}\small\item\em \-Pointer to process' page table. \end{DoxyCompactList}\item 
+void $\ast$ \hyperlink{structsProc_ab2e14e8d2e13b2d661c81e25d7bb2b2c}{schedule\-Data}
+\begin{DoxyCompactList}\small\item\em \-Scheduler specific data. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{structsProc_a915cc193d810601697481767854a9b05}{\index{s\-Proc@{s\-Proc}!max\-P\-C@{max\-P\-C}}
+\index{max\-P\-C@{max\-P\-C}!sProc@{s\-Proc}}
+\subsubsection[{max\-P\-C}]{\setlength{\rightskip}{0pt plus 5cm}int {\bf s\-Proc\-::max\-P\-C}}}\label{d4/d8e/structsProc_a915cc193d810601697481767854a9b05}
+\-Based on size of process file 
+
+\-Referenced by c\-V\-M\-M\-::cleanup\-Process(), and c\-C\-P\-U\-::run().
+
+\hypertarget{structsProc_ab2e14e8d2e13b2d661c81e25d7bb2b2c}{\index{s\-Proc@{s\-Proc}!schedule\-Data@{schedule\-Data}}
+\index{schedule\-Data@{schedule\-Data}!sProc@{s\-Proc}}
+\subsubsection[{schedule\-Data}]{\setlength{\rightskip}{0pt plus 5cm}void$\ast$ {\bf s\-Proc\-::schedule\-Data}}}\label{d4/d8e/structsProc_ab2e14e8d2e13b2d661c81e25d7bb2b2c}
+\-Always round robin for this project 
+
+\-The documentation for this struct was generated from the following file\-:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{data__structs_8h}{data\-\_\-structs.\-h}\end{DoxyCompactItemize}

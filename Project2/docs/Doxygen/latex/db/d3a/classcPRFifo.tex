@@ -1,0 +1,150 @@
+\hypertarget{classcPRFifo}{\section{c\-P\-R\-Fifo \-Class \-Reference}
+\label{db/d3a/classcPRFifo}\index{c\-P\-R\-Fifo@{c\-P\-R\-Fifo}}
+}
+
+
+\-Inheritance diagram for c\-P\-R\-Fifo\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=142pt]{d6/d49/classcPRFifo__inherit__graph}
+\end{center}
+\end{figure}
+
+
+\-Collaboration diagram for c\-P\-R\-Fifo\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d9/d21/classcPRFifo__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcPRFifo_a87ea4d98314c4418060e57982414a39f}{{\bfseries c\-P\-R\-Fifo} (\hyperlink{classcFrameAllocPolicy}{c\-Frame\-Alloc\-Policy} \&\-\_\-\-F\-A\-Policy)}\label{db/d3a/classcPRFifo_a87ea4d98314c4418060e57982414a39f}
+
+\item 
+const char $\ast$ \hyperlink{classcPRFifo_aa3b9269589ccebd364d07ef69015bad6}{name} ()
+\begin{DoxyCompactList}\small\item\em \-Name of \-P\-R module. \end{DoxyCompactList}\item 
+\hyperlink{pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217}{e\-P\-R\-Status} \hyperlink{classcPRFifo_a8121128a2dac3c8194c044e81fa0e5fc}{resolve\-Page\-Fault} (\hyperlink{structsProc}{s\-Proc} $\ast$proc, uint32\-\_\-t page)
+\begin{DoxyCompactList}\small\item\em \-Get a page frame for this process. \end{DoxyCompactList}\item 
+void \hyperlink{classcPRFifo_aadb8319e6e539280e0f56c0e6b40c581}{finished\-Quanta} (\hyperlink{structsProc}{s\-Proc} $\ast$proc)
+\begin{DoxyCompactList}\small\item\em \-This is called after an execution quanta finishes. \end{DoxyCompactList}\item 
+void \hyperlink{classcPRFifo_a158824c0cf38fa23a14f7148431bc34d}{finished\-I\-O} (\hyperlink{structsProc}{s\-Proc} $\ast$proc, \hyperlink{structsPTE}{s\-P\-T\-E} $\ast$page)
+\begin{DoxyCompactList}\small\item\em \-This is called after an \-I/\-O (input) completes. \end{DoxyCompactList}\item 
+bool \hyperlink{classcPRFifo_ab2bca492cfd0a628df492781ecd726ff}{clear\-Pages} (int num\-Pages)
+\begin{DoxyCompactList}\small\item\em \-Remove this many pages from memory. \end{DoxyCompactList}\item 
+\hypertarget{classcPRFifo_ac2bfc42038801005f9dbfed30d583bca}{void \hyperlink{classcPRFifo_ac2bfc42038801005f9dbfed30d583bca}{unpin\-Frame} (uint32\-\_\-t frame)}\label{db/d3a/classcPRFifo_ac2bfc42038801005f9dbfed30d583bca}
+
+\begin{DoxyCompactList}\small\item\em \-This is typically called after \-::finished\-I\-O so that the \-P\-R module unpins the frame in the frame allocation module. \end{DoxyCompactList}\item 
+void \hyperlink{classcPRFifo_a8155953bcbd7a0799d07a8228dc0e80c}{return\-Frame} (uint32\-\_\-t frame)
+\begin{DoxyCompactList}\small\item\em \-Return a frame to the system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Private \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcPRFifo_a55cd40966135c67531087a943d69cd8a}{queue$<$ \hyperlink{structsPTE}{s\-P\-T\-E} $\ast$ $>$ {\bfseries page\-Hist}}\label{db/d3a/classcPRFifo_a55cd40966135c67531087a943d69cd8a}
+
+\item 
+\hypertarget{classcPRFifo_ac2eb1d98dce1f4d65fb50de514bff2c6}{queue$<$ unsigned int $>$ {\bfseries page\-Owners}}\label{db/d3a/classcPRFifo_ac2eb1d98dce1f4d65fb50de514bff2c6}
+
+\item 
+\hypertarget{classcPRFifo_af559318a9aec1a9bb80316fe75c95ebf}{\hyperlink{classcFrameAllocPolicy}{c\-Frame\-Alloc\-Policy} \& {\bfseries \-F\-A\-Policy}}\label{db/d3a/classcPRFifo_af559318a9aec1a9bb80316fe75c95ebf}
+
+\item 
+\hypertarget{classcPRFifo_ae007331b8af8dc84c4833846f7ca6dde}{uint32\-\_\-t {\bfseries \-P\-T\-Size}}\label{db/d3a/classcPRFifo_ae007331b8af8dc84c4833846f7ca6dde}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcPRFifo_ab2bca492cfd0a628df492781ecd726ff}{\index{c\-P\-R\-Fifo@{c\-P\-R\-Fifo}!clear\-Pages@{clear\-Pages}}
+\index{clear\-Pages@{clear\-Pages}!cPRFifo@{c\-P\-R\-Fifo}}
+\subsubsection[{clear\-Pages}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf c\-P\-R\-Fifo\-::clear\-Pages} (
+\begin{DoxyParamCaption}
+\item[{int}]{num\-Pages}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{db/d3a/classcPRFifo_ab2bca492cfd0a628df492781ecd726ff}
+\-If the cleaning daemon decides that pages need to be cleaned it will determine how many from its policy and call the \-P\-R module to clean that many. \-This method keeps the \-P\-R policy separate from the decision on how many pages to clean and when.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em int} & \-Number of pages to clear. \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classcPRPolicy_a7a2b6d5761963a69d20794579d39530f}{c\-P\-R\-Policy}.
+
+\hypertarget{classcPRFifo_a158824c0cf38fa23a14f7148431bc34d}{\index{c\-P\-R\-Fifo@{c\-P\-R\-Fifo}!finished\-I\-O@{finished\-I\-O}}
+\index{finished\-I\-O@{finished\-I\-O}!cPRFifo@{c\-P\-R\-Fifo}}
+\subsubsection[{finished\-I\-O}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-P\-R\-Fifo\-::finished\-I\-O} (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Proc} $\ast$}]{, }
+\item[{{\bf s\-P\-T\-E} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{db/d3a/classcPRFifo_a158824c0cf38fa23a14f7148431bc34d}
+\-This is another notification point for the \-P\-R module to update its data structs. 
+
+\-Implements \hyperlink{classcPRPolicy_a169fb952830fa103a72a1cd223ac081f}{c\-P\-R\-Policy}.
+
+\hypertarget{classcPRFifo_aadb8319e6e539280e0f56c0e6b40c581}{\index{c\-P\-R\-Fifo@{c\-P\-R\-Fifo}!finished\-Quanta@{finished\-Quanta}}
+\index{finished\-Quanta@{finished\-Quanta}!cPRFifo@{c\-P\-R\-Fifo}}
+\subsubsection[{finished\-Quanta}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-P\-R\-Fifo\-::finished\-Quanta} (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Proc} $\ast$}]{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{db/d3a/classcPRFifo_aadb8319e6e539280e0f56c0e6b40c581}
+\-This gives the \-P\-R module a chance to update its internal data-\/structures using the reference bits or any other data available from the process struct. 
+
+\-Implements \hyperlink{classcPRPolicy_adfe4408f052b6ec414331ba1bafc736b}{c\-P\-R\-Policy}.
+
+\hypertarget{classcPRFifo_aa3b9269589ccebd364d07ef69015bad6}{\index{c\-P\-R\-Fifo@{c\-P\-R\-Fifo}!name@{name}}
+\index{name@{name}!cPRFifo@{c\-P\-R\-Fifo}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ {\bf c\-P\-R\-Fifo\-::name} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}\label{db/d3a/classcPRFifo_aa3b9269589ccebd364d07ef69015bad6}
+\-This is only used for logging purposes so that the \-P\-R module can be easily identified. 
+
+\-Implements \hyperlink{classcPRPolicy_ad0de8c0c77f8d2ecb1f5679f0c25b5be}{c\-P\-R\-Policy}.
+
+\hypertarget{classcPRFifo_a8121128a2dac3c8194c044e81fa0e5fc}{\index{c\-P\-R\-Fifo@{c\-P\-R\-Fifo}!resolve\-Page\-Fault@{resolve\-Page\-Fault}}
+\index{resolve\-Page\-Fault@{resolve\-Page\-Fault}!cPRFifo@{c\-P\-R\-Fifo}}
+\subsubsection[{resolve\-Page\-Fault}]{\setlength{\rightskip}{0pt plus 5cm}{\bf e\-P\-R\-Status} {\bf c\-P\-R\-Fifo\-::resolve\-Page\-Fault} (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Proc} $\ast$}]{proc, }
+\item[{uint32\-\_\-t}]{page}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{db/d3a/classcPRFifo_a8121128a2dac3c8194c044e81fa0e5fc}
+\-If a free one is available from the frame allocator it will be used. \-Otherwise, a page will have to be spilled.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em s\-Proc$\ast$} & \-A pointer to the process that the frame is being requested for.\\
+\hline
+{\em uint32\-\_\-t} & page \-The page for the given process that needs to be fetched. \\
+\hline
+\end{DoxyParams}
+
+
+\-Implements \hyperlink{classcPRPolicy_aae8a15e6e99ec90d54210fc4d4ddf211}{c\-P\-R\-Policy}.
+
+\hypertarget{classcPRFifo_a8155953bcbd7a0799d07a8228dc0e80c}{\index{c\-P\-R\-Fifo@{c\-P\-R\-Fifo}!return\-Frame@{return\-Frame}}
+\index{return\-Frame@{return\-Frame}!cPRFifo@{c\-P\-R\-Fifo}}
+\subsubsection[{return\-Frame}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-P\-R\-Fifo\-::return\-Frame} (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{frame}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{db/d3a/classcPRFifo_a8155953bcbd7a0799d07a8228dc0e80c}
+\-The \-V\-M\-M core calls this when a process termintates to free up any of its used frames. \-This call could be made directly to the frame allocator but using the \-P\-R module as a middle man gives it a chance to update as needed. 
+
+\-Implements \hyperlink{classcPRPolicy_ac78fc5c56b8f485eb18f6f36968612f1}{c\-P\-R\-Policy}.
+
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Policy/pr\-\_\-fifo.\-h\item 
+src/\-Policy/pr\-\_\-fifo.\-cpp\end{DoxyCompactItemize}

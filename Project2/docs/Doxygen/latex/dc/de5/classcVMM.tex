@@ -1,0 +1,266 @@
+\hypertarget{classcVMM}{\section{c\-V\-M\-M \-Class \-Reference}
+\label{dc/de5/classcVMM}\index{c\-V\-M\-M@{c\-V\-M\-M}}
+}
+
+
+\-Virtual \-Memory \-Manager core class.  
+
+
+
+
+{\ttfamily \#include $<$vmm\-\_\-core.\-h$>$}
+
+
+
+\-Collaboration diagram for c\-V\-M\-M\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{de/d7e/classcVMM__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hyperlink{classcVMM_a21cec43e5564ad3f79163dc554c89619}{c\-V\-M\-M} (vector$<$ \hyperlink{structsProc}{s\-Proc} $\ast$ $>$ \&\-\_\-procs, \hyperlink{classcPRPolicy}{c\-P\-R\-Policy} \&\-\_\-\-P\-R\-M, \hyperlink{classcCleanDaemon}{c\-Clean\-Daemon} \&\-\_\-c\-Daemon)
+\begin{DoxyCompactList}\small\item\em \-Virtual \-Memory \-Manager \-Constructor. \end{DoxyCompactList}\item 
+\hyperlink{classcVMM_a0c10d85db9c06944f5b4d4355efbd1f8}{$\sim$c\-V\-M\-M} ()
+\begin{DoxyCompactList}\small\item\em \-Virtual \-Memory \-Manager \-Destructor. \end{DoxyCompactList}\item 
+\hyperlink{structsIOContext}{s\-I\-O\-Context} $\ast$ \hyperlink{classcVMM_a7d58d9b5feb4f5c9ad547ca99c273b00}{page\-Out} (\hyperlink{structsProc}{s\-Proc} $\ast$, uint32\-\_\-t, \hyperlink{structsIOContext}{s\-I\-O\-Context} $\ast$ctx=\-N\-U\-L\-L)
+\begin{DoxyCompactList}\small\item\em \-Wrapper for the \-I/\-O controller (output scheduling) \end{DoxyCompactList}\item 
+\hyperlink{structsIOContext}{s\-I\-O\-Context} $\ast$ \hyperlink{classcVMM_a58c0522147951be596b9478f2d5a13f8}{page\-In} (\hyperlink{structsProc}{s\-Proc} $\ast$, uint32\-\_\-t, e\-I\-O\-Type, \hyperlink{structsIOContext}{s\-I\-O\-Context} $\ast$ctx=\-N\-U\-L\-L)
+\begin{DoxyCompactList}\small\item\em \-Wrapper for \-I/\-O controller (input scheduling) \end{DoxyCompactList}\item 
+void \hyperlink{classcVMM_a21ed6add6192ccf7fe8943c40f95b129}{tick\-Controller} (int times)
+\begin{DoxyCompactList}\small\item\em \-Tick the \-I/\-O controller n number of times. \end{DoxyCompactList}\item 
+\hyperlink{structsProc}{s\-Proc} $\ast$ \hyperlink{classcVMM_af307a5815558b71c9d0de57d8773e243}{get\-Process} (unsigned int id)
+\begin{DoxyCompactList}\small\item\em \-Used to get a reference to the particular process struct. \end{DoxyCompactList}\item 
+int \hyperlink{classcVMM_adc084e37fff4572dfe4d27619295b59f}{start} ()
+\begin{DoxyCompactList}\small\item\em \-Start running the processes. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Private \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcVMM_a3288709236249a61a5ce4aa76121c4f8}{init\-Processes} ()
+\begin{DoxyCompactList}\small\item\em \-Initialize process data specific to the \-V\-M\-M. \end{DoxyCompactList}\item 
+void \hyperlink{classcVMM_aadc20572362bbf039d9d03320d5e04c8}{cleanup\-Process} (\hyperlink{structsProc}{s\-Proc} $\ast$proc)
+\begin{DoxyCompactList}\small\item\em \-Cleanup process data and state. \end{DoxyCompactList}\item 
+void \hyperlink{classcVMM_ac9f66bbf61b7d9373e1f970360fdd317}{clear\-Circ\-Checks} ()
+\begin{DoxyCompactList}\small\item\em \-Set the circular fault check flag to false for each proc. \end{DoxyCompactList}\item 
+void \hyperlink{classcVMM_a15fdb6749d520207385efa32a7c2fce9}{print\-Results} ()
+\begin{DoxyCompactList}\small\item\em \-Gather and print results to log file. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Private \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcVMM_af1cd736f3e1f6077ef9447a56f88edc9}{uint32\-\_\-t \hyperlink{classcVMM_af1cd736f3e1f6077ef9447a56f88edc9}{num\-Frames}}\label{dc/de5/classcVMM_af1cd736f3e1f6077ef9447a56f88edc9}
+
+\begin{DoxyCompactList}\small\item\em \-Global memory frames. \end{DoxyCompactList}\item 
+\hypertarget{classcVMM_ae41d83d7c5bc8a0328f0ec21594e23c9}{uint32\-\_\-t \hyperlink{classcVMM_ae41d83d7c5bc8a0328f0ec21594e23c9}{\-P\-S}}\label{dc/de5/classcVMM_ae41d83d7c5bc8a0328f0ec21594e23c9}
+
+\begin{DoxyCompactList}\small\item\em \-Page size in bytes. \end{DoxyCompactList}\item 
+\hypertarget{classcVMM_ae17c1166bc5c01df7e10a3c4db35b5e8}{uint32\-\_\-t \hyperlink{classcVMM_ae17c1166bc5c01df7e10a3c4db35b5e8}{\-P\-T\-\_\-\-Size}}\label{dc/de5/classcVMM_ae17c1166bc5c01df7e10a3c4db35b5e8}
+
+\begin{DoxyCompactList}\small\item\em \-Page table size (\# of entries) \end{DoxyCompactList}\item 
+vector$<$ \hyperlink{structsProc}{s\-Proc} $\ast$ $>$ \& \hyperlink{classcVMM_aff53240e056433014fa0a9f7ab71cf26}{procs}
+\begin{DoxyCompactList}\small\item\em \-All processes. \end{DoxyCompactList}\item 
+\hypertarget{classcVMM_a46455d68dfba303ecba3a13b15376cfe}{\hyperlink{classcRoundRobin}{c\-Round\-Robin} \hyperlink{classcVMM_a46455d68dfba303ecba3a13b15376cfe}{scheduler}}\label{dc/de5/classcVMM_a46455d68dfba303ecba3a13b15376cfe}
+
+\begin{DoxyCompactList}\small\item\em \-Process scheduler. \end{DoxyCompactList}\item 
+\hypertarget{classcVMM_aa03d64942a7a89e1ffc2e4ea0b995374}{int \hyperlink{classcVMM_aa03d64942a7a89e1ffc2e4ea0b995374}{current\-Proc}}\label{dc/de5/classcVMM_aa03d64942a7a89e1ffc2e4ea0b995374}
+
+\begin{DoxyCompactList}\small\item\em \-P\-I\-D of current executing process. \end{DoxyCompactList}\item 
+\hypertarget{classcVMM_a330790f68bc4b132e9689e98f3dd93e5}{\hyperlink{classcCPU}{c\-C\-P\-U} \hyperlink{classcVMM_a330790f68bc4b132e9689e98f3dd93e5}{cpu}}\label{dc/de5/classcVMM_a330790f68bc4b132e9689e98f3dd93e5}
+
+\begin{DoxyCompactList}\small\item\em \-Executing \-C\-P\-U. \end{DoxyCompactList}\item 
+\hypertarget{classcVMM_a7799dcc75eda3321c2c620f1cee35752}{int \hyperlink{classcVMM_a7799dcc75eda3321c2c620f1cee35752}{\-V\-C}}\label{dc/de5/classcVMM_a7799dcc75eda3321c2c620f1cee35752}
+
+\begin{DoxyCompactList}\small\item\em \-Virtual \-Counter. \end{DoxyCompactList}\item 
+\hypertarget{classcVMM_aecf89cdeddc00e5ebbb982b80ed15507}{\hyperlink{classcIOControl}{c\-I\-O\-Control} $\ast$ \hyperlink{classcVMM_aecf89cdeddc00e5ebbb982b80ed15507}{io\-Ctrl}}\label{dc/de5/classcVMM_aecf89cdeddc00e5ebbb982b80ed15507}
+
+\begin{DoxyCompactList}\small\item\em \-I/\-O \-Controller. \end{DoxyCompactList}\item 
+\hypertarget{classcVMM_a63b6fa7b376c14f94b954ded274ac900}{uint32\-\_\-t {\bfseries page\-In\-Count}}\label{dc/de5/classcVMM_a63b6fa7b376c14f94b954ded274ac900}
+
+\item 
+\hypertarget{classcVMM_abc81233b05c18e9272f7c5b4c02a3027}{uint32\-\_\-t {\bfseries page\-Out\-Count}}\label{dc/de5/classcVMM_abc81233b05c18e9272f7c5b4c02a3027}
+
+\item 
+\hypertarget{classcVMM_a233738f5dcf43fbd0ebba9b86c932552}{\hyperlink{classcPRPolicy}{c\-P\-R\-Policy} \& \hyperlink{classcVMM_a233738f5dcf43fbd0ebba9b86c932552}{\-P\-R\-Module}}\label{dc/de5/classcVMM_a233738f5dcf43fbd0ebba9b86c932552}
+
+\begin{DoxyCompactList}\small\item\em \-Page \-Replacement \-Module. \end{DoxyCompactList}\item 
+\hypertarget{classcVMM_a1bd721816945c5e12d8e21b0a2331fe9}{\hyperlink{classcCleanDaemon}{c\-Clean\-Daemon} \& \hyperlink{classcVMM_a1bd721816945c5e12d8e21b0a2331fe9}{c\-Daemon}}\label{dc/de5/classcVMM_a1bd721816945c5e12d8e21b0a2331fe9}
+
+\begin{DoxyCompactList}\small\item\em \-Cleaning \-Daemon. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Constructor \& \-Destructor \-Documentation}
+\hypertarget{classcVMM_a21cec43e5564ad3f79163dc554c89619}{\index{c\-V\-M\-M@{c\-V\-M\-M}!c\-V\-M\-M@{c\-V\-M\-M}}
+\index{c\-V\-M\-M@{c\-V\-M\-M}!cVMM@{c\-V\-M\-M}}
+\subsubsection[{c\-V\-M\-M}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-V\-M\-M\-::c\-V\-M\-M} (
+\begin{DoxyParamCaption}
+\item[{vector$<$ {\bf s\-Proc} $\ast$ $>$ \&}]{\-\_\-procs, }
+\item[{{\bf c\-P\-R\-Policy} \&}]{\-\_\-\-P\-R\-M, }
+\item[{{\bf c\-Clean\-Daemon} \&}]{\-\_\-c\-Daemon}
+\end{DoxyParamCaption}
+)}}\label{dc/de5/classcVMM_a21cec43e5564ad3f79163dc554c89619}
+\-Initializes the \-Virtual \-Memory \-Manager class which is the core of the project.
+
+
+\begin{DoxyParams}{\-Parameters}
+{\em vector$<$s\-Proc$\ast$$>$\&} & \-A vector contining the processes loaded in main.\-cpp. \-The page tables and other data are initialized during \-V\-M\-M initialization.\\
+\hline
+{\em c\-P\-R\-Policy\&} & \-A reference to a derived class of \hyperlink{classcPRPolicy}{c\-P\-R\-Policy} (fifo, pure lru, lru apporx).\\
+\hline
+{\em c\-Clean\-Daemon\&} & \-A reference to the cleaning daemon. \-This is passed in because it requires a reference to the frame allocation policy which is only available in main.\-cpp \\
+\hline
+\end{DoxyParams}
+\hypertarget{classcVMM_a0c10d85db9c06944f5b4d4355efbd1f8}{\index{c\-V\-M\-M@{c\-V\-M\-M}!$\sim$c\-V\-M\-M@{$\sim$c\-V\-M\-M}}
+\index{$\sim$c\-V\-M\-M@{$\sim$c\-V\-M\-M}!cVMM@{c\-V\-M\-M}}
+\subsubsection[{$\sim$c\-V\-M\-M}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-V\-M\-M\-::$\sim$c\-V\-M\-M} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{dc/de5/classcVMM_a0c10d85db9c06944f5b4d4355efbd1f8}
+\-Cleans up the \-V\-M\-M. 
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcVMM_aadc20572362bbf039d9d03320d5e04c8}{\index{c\-V\-M\-M@{c\-V\-M\-M}!cleanup\-Process@{cleanup\-Process}}
+\index{cleanup\-Process@{cleanup\-Process}!cVMM@{c\-V\-M\-M}}
+\subsubsection[{cleanup\-Process}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-V\-M\-M\-::cleanup\-Process} (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Proc} $\ast$}]{proc}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{dc/de5/classcVMM_aadc20572362bbf039d9d03320d5e04c8}
+\-This function returns all occupied frames back to the system. \-After this it frees the memory used for the page table.
+
+\-All other data is left in tact and it is not removed from the process vector because upon termination we need to gather statistics for each process for the results trace.
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classcPRPolicy_ac78fc5c56b8f485eb18f6f36968612f1}{c\-P\-R\-Policy\-::return\-Frame} 
+\end{DoxySeeAlso}
+
+
+\-Referenced by start().
+
+\hypertarget{classcVMM_ac9f66bbf61b7d9373e1f970360fdd317}{\index{c\-V\-M\-M@{c\-V\-M\-M}!clear\-Circ\-Checks@{clear\-Circ\-Checks}}
+\index{clear\-Circ\-Checks@{clear\-Circ\-Checks}!cVMM@{c\-V\-M\-M}}
+\subsubsection[{clear\-Circ\-Checks}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-V\-M\-M\-::clear\-Circ\-Checks} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{dc/de5/classcVMM_ac9f66bbf61b7d9373e1f970360fdd317}
+\-This addition ot the cpu is more of a safety net but as long as it is being used it needs to work correctly. \-This funtion is mainly called after the cleaning daemon clears pages so that the cpu doesn't think there is a circular fault when it was really just the cleaning daemon. 
+
+\-Referenced by start().
+
+\hypertarget{classcVMM_af307a5815558b71c9d0de57d8773e243}{\index{c\-V\-M\-M@{c\-V\-M\-M}!get\-Process@{get\-Process}}
+\index{get\-Process@{get\-Process}!cVMM@{c\-V\-M\-M}}
+\subsubsection[{get\-Process}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-V\-M\-M\-::get\-Process} (
+\begin{DoxyParamCaption}
+\item[{unsigned int}]{id}
+\end{DoxyParamCaption}
+)}}\label{dc/de5/classcVMM_af307a5815558b71c9d0de57d8773e243}
+\-In some places like the \-P\-R module or the io\-\_\-controller there is sometimes a need to get a reference to the process when all you have is a pid. 
+
+\-Referenced by c\-P\-R\-Fifo\-::clear\-Pages(), c\-P\-R\-Lru\-Approx\-::clear\-Pages(), c\-P\-R\-Lru\-::clear\-Pages(), c\-P\-R\-Fifo\-::resolve\-Page\-Fault(), c\-P\-R\-Lru\-::resolve\-Page\-Fault(), and c\-P\-R\-Lru\-Approx\-::resolve\-Page\-Fault().
+
+\hypertarget{classcVMM_a3288709236249a61a5ce4aa76121c4f8}{\index{c\-V\-M\-M@{c\-V\-M\-M}!init\-Processes@{init\-Processes}}
+\index{init\-Processes@{init\-Processes}!cVMM@{c\-V\-M\-M}}
+\subsubsection[{init\-Processes}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-V\-M\-M\-::init\-Processes} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{dc/de5/classcVMM_a3288709236249a61a5ce4aa76121c4f8}
+\-The main purpose of this function is to initialize the page table for all processes.
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{structsProc}{s\-Proc} 
+\end{DoxySeeAlso}
+
+
+\-Referenced by c\-V\-M\-M().
+
+\hypertarget{classcVMM_a58c0522147951be596b9478f2d5a13f8}{\index{c\-V\-M\-M@{c\-V\-M\-M}!page\-In@{page\-In}}
+\index{page\-In@{page\-In}!cVMM@{c\-V\-M\-M}}
+\subsubsection[{page\-In}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-V\-M\-M\-::page\-In} (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Proc} $\ast$}]{proc, }
+\item[{uint32\-\_\-t}]{page, }
+\item[{e\-I\-O\-Type}]{iotype, }
+\item[{{\bf s\-I\-O\-Context} $\ast$}]{ctx = {\ttfamily \-N\-U\-L\-L}}
+\end{DoxyParamCaption}
+)}}\label{dc/de5/classcVMM_a58c0522147951be596b9478f2d5a13f8}
+\-Another wrapper for the \-I/\-O controller.
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classcIOControl_a47ac21dd888187a969eec853b7256a83}{c\-I\-O\-Control\-::schedule\-I\-O} 
+\end{DoxySeeAlso}
+
+
+\-Referenced by c\-P\-R\-Fifo\-::resolve\-Page\-Fault(), c\-P\-R\-Lru\-Approx\-::resolve\-Page\-Fault(), and c\-P\-R\-Lru\-::resolve\-Page\-Fault().
+
+\hypertarget{classcVMM_a7d58d9b5feb4f5c9ad547ca99c273b00}{\index{c\-V\-M\-M@{c\-V\-M\-M}!page\-Out@{page\-Out}}
+\index{page\-Out@{page\-Out}!cVMM@{c\-V\-M\-M}}
+\subsubsection[{page\-Out}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-V\-M\-M\-::page\-Out} (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Proc} $\ast$}]{proc, }
+\item[{uint32\-\_\-t}]{page, }
+\item[{{\bf s\-I\-O\-Context} $\ast$}]{ctx = {\ttfamily \-N\-U\-L\-L}}
+\end{DoxyParamCaption}
+)}}\label{dc/de5/classcVMM_a7d58d9b5feb4f5c9ad547ca99c273b00}
+\-This is a wrapper for the \-I/\-O controller. \-Calling this abstracts the actual \-I/\-O controller from those who will use it as well as providing a point for the \-V\-M\-M to record paging statistics.
+
+\begin{DoxySeeAlso}{\-See also}
+\hyperlink{classcIOControl_a47ac21dd888187a969eec853b7256a83}{c\-I\-O\-Control\-::schedule\-I\-O} 
+\end{DoxySeeAlso}
+
+
+\-Referenced by c\-P\-R\-Fifo\-::clear\-Pages(), c\-P\-R\-Lru\-Approx\-::clear\-Pages(), c\-P\-R\-Lru\-::clear\-Pages(), c\-P\-R\-Fifo\-::resolve\-Page\-Fault(), c\-P\-R\-Lru\-::resolve\-Page\-Fault(), and c\-P\-R\-Lru\-Approx\-::resolve\-Page\-Fault().
+
+\hypertarget{classcVMM_a15fdb6749d520207385efa32a7c2fce9}{\index{c\-V\-M\-M@{c\-V\-M\-M}!print\-Results@{print\-Results}}
+\index{print\-Results@{print\-Results}!cVMM@{c\-V\-M\-M}}
+\subsubsection[{print\-Results}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-V\-M\-M\-::print\-Results} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{dc/de5/classcVMM_a15fdb6749d520207385efa32a7c2fce9}
+\-After all execution is finished, this function gathers per-\/process and global data and prints it to a log file. \-This log can be read normally or used by the python script to build graphs (assuming a .conf is present). 
+
+\-Referenced by start().
+
+\hypertarget{classcVMM_adc084e37fff4572dfe4d27619295b59f}{\index{c\-V\-M\-M@{c\-V\-M\-M}!start@{start}}
+\index{start@{start}!cVMM@{c\-V\-M\-M}}
+\subsubsection[{start}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-V\-M\-M\-::start} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{dc/de5/classcVMM_adc084e37fff4572dfe4d27619295b59f}
+\-After the \-F\-M\-M has been initialized with some processes this is called to start execution. \hypertarget{classcVMM_a21ed6add6192ccf7fe8943c40f95b129}{\index{c\-V\-M\-M@{c\-V\-M\-M}!tick\-Controller@{tick\-Controller}}
+\index{tick\-Controller@{tick\-Controller}!cVMM@{c\-V\-M\-M}}
+\subsubsection[{tick\-Controller}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-V\-M\-M\-::tick\-Controller} (
+\begin{DoxyParamCaption}
+\item[{int}]{times}
+\end{DoxyParamCaption}
+)}}\label{dc/de5/classcVMM_a21ed6add6192ccf7fe8943c40f95b129}
+\-This is used for timekeeping. \-For example, when wwe do a context switch on the cpu it takes 5 units of time but we still need to keep track of the passage of time within other devices which virtually should be running in parallel.
+
+\begin{DoxySeeAlso}{\-See also}
+c\-I\-Ocontrol\-::tick 
+\end{DoxySeeAlso}
+
+
+\-Referenced by c\-C\-P\-U\-::inc\-V\-C().
+
+
+
+\subsection{\-Member \-Data \-Documentation}
+\hypertarget{classcVMM_aff53240e056433014fa0a9f7ab71cf26}{\index{c\-V\-M\-M@{c\-V\-M\-M}!procs@{procs}}
+\index{procs@{procs}!cVMM@{c\-V\-M\-M}}
+\subsubsection[{procs}]{\setlength{\rightskip}{0pt plus 5cm}vector$<${\bf s\-Proc}$\ast$$>$\& {\bf c\-V\-M\-M\-::procs}\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{dc/de5/classcVMM_aff53240e056433014fa0a9f7ab71cf26}
+
+
+\-Referenced by clear\-Circ\-Checks(), c\-V\-M\-M(), get\-Process(), init\-Processes(), print\-Results(), and start().
+
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/\hyperlink{vmm__core_8h}{vmm\-\_\-core.\-h}\item 
+src/vmm\-\_\-core.\-cpp\end{DoxyCompactItemize}

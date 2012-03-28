@@ -1,0 +1,74 @@
+\hypertarget{iniReader_8h}{\section{include/ini\-Reader.h \-File \-Reference}
+\label{d5/dfd/iniReader_8h}\index{include/ini\-Reader.\-h@{include/ini\-Reader.\-h}}
+}
+{\ttfamily \#include $<$stdlib.\-h$>$}\*
+{\ttfamily \#include $<$string$>$}\*
+{\ttfamily \#include $<$map$>$}\*
+{\ttfamily \#include $<$vector$>$}\*
+{\ttfamily \#include $<$iostream$>$}\*
+{\ttfamily \#include $<$sstream$>$}\*
+{\ttfamily \#include $<$fstream$>$}\*
+\-Include dependency graph for ini\-Reader.\-h\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d4/d3d/iniReader_8h__incl}
+\end{center}
+\end{figure}
+\-This graph shows which files directly or indirectly include this file\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{df/d2a/iniReader_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{\-Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structKeyRecord}{\-Key\-Record}
+\begin{DoxyCompactList}\small\item\em \-Struct for holding a single settings key and its value. \end{DoxyCompactList}\item 
+class \hyperlink{classINIReader}{\-I\-N\-I\-Reader}
+\begin{DoxyCompactList}\small\item\em \-Class for parsing and storing contents of .ini files. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Defines}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{iniReader_8h_a18d295a837ac71add5578860b55e5502}{\#define {\bfseries \-S\-T\-R}(x)~\#x}\label{d5/dfd/iniReader_8h_a18d295a837ac71add5578860b55e5502}
+
+\item 
+\hypertarget{iniReader_8h_a31aad80d0a34263777a05e1f42e0884a}{\#define {\bfseries \-E\-X\-T\-R\-A\-C\-T}(type, sec, opt)~settings.\-extract\-Value$<$type$>$(\-S\-T\-R(sec),\-S\-T\-R(opt))}\label{d5/dfd/iniReader_8h_a31aad80d0a34263777a05e1f42e0884a}
+
+\item 
+\hypertarget{iniReader_8h_a6fb59ac401a769f7e35c027d4adf4a53}{\#define {\bfseries \-E\-X\-T\-R\-A\-C\-T\-P}(type, sec, opt)~settings-\/$>$extract\-Value$<$type$>$(\-S\-T\-R(sec),\-S\-T\-R(opt))}\label{d5/dfd/iniReader_8h_a6fb59ac401a769f7e35c027d4adf4a53}
+
+\item 
+\hypertarget{iniReader_8h_a235bb366e470c9fee24cc421a11751db}{\#define {\bfseries \-E\-X\-T\-R\-A\-C\-T\-\_\-}(obj, type, sec, opt)~settings.\-extract\-Value$<$type$>$(\-S\-T\-R(sec),\-S\-T\-R(opt))}\label{d5/dfd/iniReader_8h_a235bb366e470c9fee24cc421a11751db}
+
+\item 
+\hypertarget{iniReader_8h_ab6e8c0efe9fe69c5d46f21684ef555e5}{\#define {\bfseries \-E\-X\-T\-R\-A\-C\-T\-P\-\_\-}(obj, type, sec, opt)~settings-\/$>$extract\-Value$<$type$>$(\-S\-T\-R(sec),\-S\-T\-R(opt))}\label{d5/dfd/iniReader_8h_ab6e8c0efe9fe69c5d46f21684ef555e5}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Typedefs}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{iniReader_8h_a47122fd58525bd1f2cbf2d640f6f6835}{typedef map$<$ string, \hyperlink{structKeyRecord}{\-Key\-Record} $>$ {\bfseries \-Key\-Map}}\label{d5/dfd/iniReader_8h_a47122fd58525bd1f2cbf2d640f6f6835}
+
+\item 
+\hypertarget{iniReader_8h_aadb294d991431880b3745d2c8ed5ef35}{typedef map$<$ string, \-Key\-Map $>$ {\bfseries \-Section\-Map}}\label{d5/dfd/iniReader_8h_aadb294d991431880b3745d2c8ed5ef35}
+
+\item 
+\hypertarget{iniReader_8h_ad48cd0136a0b83c26b8fcd49fcaff845}{typedef map$<$ string, string $>$ {\bfseries \-Default\-Key\-Map}}\label{d5/dfd/iniReader_8h_ad48cd0136a0b83c26b8fcd49fcaff845}
+
+\item 
+\hypertarget{iniReader_8h_af2cbef3947b8ab9a03975c47987430dd}{typedef map$<$ string, \*
+\-Default\-Key\-Map $>$ {\bfseries \-Default\-Map}}\label{d5/dfd/iniReader_8h_af2cbef3947b8ab9a03975c47987430dd}
+
+\end{DoxyCompactItemize}
+\subsection*{\-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{iniReader_8h_a1f46f162d9c866fefee345b20ca9bcea}{{\bfseries \-\_\-\-\_\-attribute\-\_\-\-\_\-} ((unused)) static bool str\-Eq(const string \&s1}\label{d5/dfd/iniReader_8h_a1f46f162d9c866fefee345b20ca9bcea}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}

@@ -1,0 +1,145 @@
+\hypertarget{classcPRLruApprox}{\section{c\-P\-R\-Lru\-Approx \-Class \-Reference}
+\label{d1/d58/classcPRLruApprox}\index{c\-P\-R\-Lru\-Approx@{c\-P\-R\-Lru\-Approx}}
+}
+
+
+\-Inheritance diagram for c\-P\-R\-Lru\-Approx\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=160pt]{d2/d0a/classcPRLruApprox__inherit__graph}
+\end{center}
+\end{figure}
+
+
+\-Collaboration diagram for c\-P\-R\-Lru\-Approx\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d0/d7d/classcPRLruApprox__coll__graph}
+\end{center}
+\end{figure}
+\subsection*{\-Public \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcPRLruApprox_afd0d2b59608725365a49418ac479ad00}{{\bfseries c\-P\-R\-Lru\-Approx} (\hyperlink{classcFrameAllocPolicy}{c\-Frame\-Alloc\-Policy} \&\-\_\-\-F\-A\-Policy)}\label{d1/d58/classcPRLruApprox_afd0d2b59608725365a49418ac479ad00}
+
+\item 
+const char $\ast$ \hyperlink{classcPRLruApprox_acf51ca9d36ab017456f856809e13dab7}{name} ()
+\begin{DoxyCompactList}\small\item\em \-Name of \-P\-R module. \end{DoxyCompactList}\item 
+\hyperlink{pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217}{e\-P\-R\-Status} \hyperlink{classcPRLruApprox_adc2d729279fec03798c9027c87af7c84}{resolve\-Page\-Fault} (\hyperlink{structsProc}{s\-Proc} $\ast$proc, uint32\-\_\-t page)
+\begin{DoxyCompactList}\small\item\em \-If no frames are free, spill the frame that has the lowest shifted time. \end{DoxyCompactList}\item 
+\hypertarget{classcPRLruApprox_aaf6600b3edb01fbbb0257f622b3fb1ec}{void \hyperlink{classcPRLruApprox_aaf6600b3edb01fbbb0257f622b3fb1ec}{finished\-Quanta} (\hyperlink{structsProc}{s\-Proc} $\ast$proc)}\label{d1/d58/classcPRLruApprox_aaf6600b3edb01fbbb0257f622b3fb1ec}
+
+\begin{DoxyCompactList}\small\item\em \-Update the approx time field in software. \end{DoxyCompactList}\item 
+\hypertarget{classcPRLruApprox_a93c48941ed2511000566bb3d24cf8313}{void \hyperlink{classcPRLruApprox_a93c48941ed2511000566bb3d24cf8313}{finished\-I\-O} (\hyperlink{structsProc}{s\-Proc} $\ast$proc, \hyperlink{structsPTE}{s\-P\-T\-E} $\ast$page)}\label{d1/d58/classcPRLruApprox_a93c48941ed2511000566bb3d24cf8313}
+
+\begin{DoxyCompactList}\small\item\em \-I/\-O is finished so add the \-P\-T\-E to the page\-Hist so we know what frames are in use. \end{DoxyCompactList}\item 
+bool \hyperlink{classcPRLruApprox_a7b1d7330af067ad28c089fb7a6267c00}{clear\-Pages} (int num\-Pages)
+\begin{DoxyCompactList}\small\item\em \-Clears pages by sorting the page\-Hist by the time field (increasing). \end{DoxyCompactList}\item 
+\hypertarget{classcPRLruApprox_aa14da3923094c008b82a07f430d97c19}{void \hyperlink{classcPRLruApprox_aa14da3923094c008b82a07f430d97c19}{unpin\-Frame} (uint32\-\_\-t frame)}\label{d1/d58/classcPRLruApprox_aa14da3923094c008b82a07f430d97c19}
+
+\begin{DoxyCompactList}\small\item\em \-This is typically called after \-::finished\-I\-O so that the \-P\-R module unpins the frame in the frame allocation module. \end{DoxyCompactList}\item 
+void \hyperlink{classcPRLruApprox_a5cc1b3cbc08b1ef334eb37138ff95c43}{return\-Frame} (uint32\-\_\-t frame)
+\begin{DoxyCompactList}\small\item\em \-Return a frame to the system. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Private \-Member \-Functions}
+\begin{DoxyCompactItemize}
+\item 
+void \hyperlink{classcPRLruApprox_a72c71139928164b0c300c3c2b0bb89f9}{update\-Time} ()
+\begin{DoxyCompactList}\small\item\em \-Updates the time field by first shifting the time field to the right and then adding a 1 in the far left position if the ref bit is set. \end{DoxyCompactList}\item 
+\hyperlink{structsPTEOwner}{s\-P\-T\-E\-Owner} $\ast$ \hyperlink{classcPRLruApprox_aa3b208b716158d929a314a1362e1b9e4}{get\-P\-T\-E\-Owner} ()
+\begin{DoxyCompactList}\small\item\em \-Get a struct for holding both the \-P\-T\-E and \-Owner. \end{DoxyCompactList}\item 
+\hypertarget{classcPRLruApprox_a9df7f4858418f4e8d61e38d56ec66d9d}{void \hyperlink{classcPRLruApprox_a9df7f4858418f4e8d61e38d56ec66d9d}{return\-P\-T\-E\-Owner} (\hyperlink{structsPTEOwner}{s\-P\-T\-E\-Owner} $\ast$pte\-Owner)}\label{d1/d58/classcPRLruApprox_a9df7f4858418f4e8d61e38d56ec66d9d}
+
+\begin{DoxyCompactList}\small\item\em \-Add a \-P\-T\-E\-Owner to the pteowner\-\_\-cache to use later. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Private \-Attributes}
+\begin{DoxyCompactItemize}
+\item 
+\hypertarget{classcPRLruApprox_a4514e3036505b6f3d30b3af0e8e304e9}{list$<$ \hyperlink{structsPTEOwner}{s\-P\-T\-E\-Owner} $\ast$ $>$ {\bfseries page\-Hist}}\label{d1/d58/classcPRLruApprox_a4514e3036505b6f3d30b3af0e8e304e9}
+
+\item 
+\hypertarget{classcPRLruApprox_a499f2e4b2930777879e95c531eac4adf}{queue$<$ \hyperlink{structsPTEOwner}{s\-P\-T\-E\-Owner} $\ast$ $>$ {\bfseries pteowner\-\_\-cache}}\label{d1/d58/classcPRLruApprox_a499f2e4b2930777879e95c531eac4adf}
+
+\item 
+\hypertarget{classcPRLruApprox_a8ceefcbdbed074f0a66e875e6d25ed34}{\hyperlink{classcFrameAllocPolicy}{c\-Frame\-Alloc\-Policy} \& {\bfseries \-F\-A\-Policy}}\label{d1/d58/classcPRLruApprox_a8ceefcbdbed074f0a66e875e6d25ed34}
+
+\item 
+\hypertarget{classcPRLruApprox_a428819ec4906eb67b1bc34dc3bf09608}{uint32\-\_\-t {\bfseries \-P\-T\-Size}}\label{d1/d58/classcPRLruApprox_a428819ec4906eb67b1bc34dc3bf09608}
+
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcPRLruApprox_a7b1d7330af067ad28c089fb7a6267c00}{\index{c\-P\-R\-Lru\-Approx@{c\-P\-R\-Lru\-Approx}!clear\-Pages@{clear\-Pages}}
+\index{clear\-Pages@{clear\-Pages}!cPRLruApprox@{c\-P\-R\-Lru\-Approx}}
+\subsubsection[{clear\-Pages}]{\setlength{\rightskip}{0pt plus 5cm}bool {\bf c\-P\-R\-Lru\-Approx\-::clear\-Pages} (
+\begin{DoxyParamCaption}
+\item[{int}]{num\-Pages}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d1/d58/classcPRLruApprox_a7b1d7330af067ad28c089fb7a6267c00}
+\-Then removes num\-Pages from the front of page\-Hist. 
+
+\-Implements \hyperlink{classcPRPolicy_a7a2b6d5761963a69d20794579d39530f}{c\-P\-R\-Policy}.
+
+\hypertarget{classcPRLruApprox_aa3b208b716158d929a314a1362e1b9e4}{\index{c\-P\-R\-Lru\-Approx@{c\-P\-R\-Lru\-Approx}!get\-P\-T\-E\-Owner@{get\-P\-T\-E\-Owner}}
+\index{get\-P\-T\-E\-Owner@{get\-P\-T\-E\-Owner}!cPRLruApprox@{c\-P\-R\-Lru\-Approx}}
+\subsubsection[{get\-P\-T\-E\-Owner}]{\setlength{\rightskip}{0pt plus 5cm}{\bf s\-P\-T\-E\-Owner} $\ast$ {\bf c\-P\-R\-Lru\-Approx\-::get\-P\-T\-E\-Owner} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{d1/d58/classcPRLruApprox_aa3b208b716158d929a314a1362e1b9e4}
+\-If the pteowner\-\_\-cache has an entry, re-\/use it. \-Otherwise malloc a new one. \-This helps with heap performance. 
+
+\-Referenced by finished\-I\-O().
+
+\hypertarget{classcPRLruApprox_acf51ca9d36ab017456f856809e13dab7}{\index{c\-P\-R\-Lru\-Approx@{c\-P\-R\-Lru\-Approx}!name@{name}}
+\index{name@{name}!cPRLruApprox@{c\-P\-R\-Lru\-Approx}}
+\subsubsection[{name}]{\setlength{\rightskip}{0pt plus 5cm}const char$\ast$ {\bf c\-P\-R\-Lru\-Approx\-::name} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}inline, virtual\mbox{]}}}}\label{d1/d58/classcPRLruApprox_acf51ca9d36ab017456f856809e13dab7}
+\-This is only used for logging purposes so that the \-P\-R module can be easily identified. 
+
+\-Implements \hyperlink{classcPRPolicy_ad0de8c0c77f8d2ecb1f5679f0c25b5be}{c\-P\-R\-Policy}.
+
+\hypertarget{classcPRLruApprox_adc2d729279fec03798c9027c87af7c84}{\index{c\-P\-R\-Lru\-Approx@{c\-P\-R\-Lru\-Approx}!resolve\-Page\-Fault@{resolve\-Page\-Fault}}
+\index{resolve\-Page\-Fault@{resolve\-Page\-Fault}!cPRLruApprox@{c\-P\-R\-Lru\-Approx}}
+\subsubsection[{resolve\-Page\-Fault}]{\setlength{\rightskip}{0pt plus 5cm}{\bf e\-P\-R\-Status} {\bf c\-P\-R\-Lru\-Approx\-::resolve\-Page\-Fault} (
+\begin{DoxyParamCaption}
+\item[{{\bf s\-Proc} $\ast$}]{proc, }
+\item[{uint32\-\_\-t}]{page}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d1/d58/classcPRLruApprox_adc2d729279fec03798c9027c87af7c84}
+\-This aging algorithm simulates \-L\-R\-U. 
+
+\-Implements \hyperlink{classcPRPolicy_aae8a15e6e99ec90d54210fc4d4ddf211}{c\-P\-R\-Policy}.
+
+\hypertarget{classcPRLruApprox_a5cc1b3cbc08b1ef334eb37138ff95c43}{\index{c\-P\-R\-Lru\-Approx@{c\-P\-R\-Lru\-Approx}!return\-Frame@{return\-Frame}}
+\index{return\-Frame@{return\-Frame}!cPRLruApprox@{c\-P\-R\-Lru\-Approx}}
+\subsubsection[{return\-Frame}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-P\-R\-Lru\-Approx\-::return\-Frame} (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{frame}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d1/d58/classcPRLruApprox_a5cc1b3cbc08b1ef334eb37138ff95c43}
+\-The \-V\-M\-M core calls this when a process termintates to free up any of its used frames. \-This call could be made directly to the frame allocator but using the \-P\-R module as a middle man gives it a chance to update as needed. 
+
+\-Implements \hyperlink{classcPRPolicy_ac78fc5c56b8f485eb18f6f36968612f1}{c\-P\-R\-Policy}.
+
+\hypertarget{classcPRLruApprox_a72c71139928164b0c300c3c2b0bb89f9}{\index{c\-P\-R\-Lru\-Approx@{c\-P\-R\-Lru\-Approx}!update\-Time@{update\-Time}}
+\index{update\-Time@{update\-Time}!cPRLruApprox@{c\-P\-R\-Lru\-Approx}}
+\subsubsection[{update\-Time}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-P\-R\-Lru\-Approx\-::update\-Time} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}private\mbox{]}}}}\label{d1/d58/classcPRLruApprox_a72c71139928164b0c300c3c2b0bb89f9}
+\-This function is called on a page fault or after a quanta is finished. 
+
+\-Referenced by finished\-Quanta(), and resolve\-Page\-Fault().
+
+
+
+\-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
+\item 
+include/\-Policy/pr\-\_\-lru\-Approx.\-h\item 
+src/\-Policy/pr\-\_\-lru\-Approx.\-cpp\end{DoxyCompactItemize}

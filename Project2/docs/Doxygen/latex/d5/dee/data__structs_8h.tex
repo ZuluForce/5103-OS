@@ -1,0 +1,64 @@
+\hypertarget{data__structs_8h}{\section{include/data\-\_\-structs.h \-File \-Reference}
+\label{d5/dee/data__structs_8h}\index{include/data\-\_\-structs.\-h@{include/data\-\_\-structs.\-h}}
+}
+{\ttfamily \#include $<$vector$>$}\*
+{\ttfamily \#include $<$string$>$}\*
+{\ttfamily \#include $<$sstream$>$}\*
+{\ttfamily \#include $<$iostream$>$}\*
+{\ttfamily \#include $<$inttypes.\-h$>$}\*
+\-Include dependency graph for data\-\_\-structs.\-h\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{da/dd6/data__structs_8h__incl}
+\end{center}
+\end{figure}
+\-This graph shows which files directly or indirectly include this file\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d1/dc3/data__structs_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{\-Classes}
+\begin{DoxyCompactItemize}
+\item 
+struct \hyperlink{structsPTE}{s\-P\-T\-E}
+\begin{DoxyCompactList}\small\item\em \-A struct representing a single page table entry. \end{DoxyCompactList}\item 
+struct \hyperlink{structsPTEOwner}{s\-P\-T\-E\-Owner}
+\begin{DoxyCompactList}\small\item\em \-A struct used to associate a process with a particular page. \end{DoxyCompactList}\item 
+struct \hyperlink{structsProc}{s\-Proc}
+\begin{DoxyCompactList}\small\item\em \-Struct representing a process. \end{DoxyCompactList}\item 
+struct \hyperlink{structsOpOverride}{s\-Op\-Override}
+\begin{DoxyCompactList}\small\item\em \-Struct for holding a settings overrides from command line. \end{DoxyCompactList}\item 
+struct \hyperlink{structsCmdOptions}{s\-Cmd\-Options}
+\begin{DoxyCompactList}\small\item\em \-All the settings files, traces and setting overrides from command line. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{data__structs_8h_a35b22dfd92090451943b80c7c0c896e5}{e\-Flag\-Index} \{ \hyperlink{data__structs_8h_a35b22dfd92090451943b80c7c0c896e5a0946ef97ddb136799838a467d2f51e50}{\-F\-I\-\_\-\-P\-R\-E\-S\-E\-N\-T}, 
+\hyperlink{data__structs_8h_a35b22dfd92090451943b80c7c0c896e5a3de6e98e4678bda91123c8ffc2ccfa20}{\-F\-I\-\_\-\-D\-I\-R\-T\-Y}, 
+\hyperlink{data__structs_8h_a35b22dfd92090451943b80c7c0c896e5aeef98cde3e508a19470675b934520168}{\-F\-I\-\_\-\-R\-E\-F}
+ \}
+\begin{DoxyCompactList}\small\item\em \-Enum used for indexing \-P\-T\-E flags. \end{DoxyCompactList}\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\subsection{\-Enumeration \-Type \-Documentation}
+\hypertarget{data__structs_8h_a35b22dfd92090451943b80c7c0c896e5}{\index{data\-\_\-structs.\-h@{data\-\_\-structs.\-h}!e\-Flag\-Index@{e\-Flag\-Index}}
+\index{e\-Flag\-Index@{e\-Flag\-Index}!data_structs.h@{data\-\_\-structs.\-h}}
+\subsubsection[{e\-Flag\-Index}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf e\-Flag\-Index}}}\label{d5/dee/data__structs_8h_a35b22dfd92090451943b80c7c0c896e5}
+\begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-F\-I\-\_\-\-P\-R\-E\-S\-E\-N\-T@{\-F\-I\-\_\-\-P\-R\-E\-S\-E\-N\-T}!data\-\_\-structs.\-h@{data\-\_\-structs.\-h}}\index{data\-\_\-structs.\-h@{data\-\_\-structs.\-h}!\-F\-I\-\_\-\-P\-R\-E\-S\-E\-N\-T@{\-F\-I\-\_\-\-P\-R\-E\-S\-E\-N\-T}}\item[{\em 
+\hypertarget{data__structs_8h_a35b22dfd92090451943b80c7c0c896e5a0946ef97ddb136799838a467d2f51e50}{\-F\-I\-\_\-\-P\-R\-E\-S\-E\-N\-T}\label{d5/dee/data__structs_8h_a35b22dfd92090451943b80c7c0c896e5a0946ef97ddb136799838a467d2f51e50}
+}]\-Access \-P\-T\-E present bit. \index{\-F\-I\-\_\-\-D\-I\-R\-T\-Y@{\-F\-I\-\_\-\-D\-I\-R\-T\-Y}!data\-\_\-structs.\-h@{data\-\_\-structs.\-h}}\index{data\-\_\-structs.\-h@{data\-\_\-structs.\-h}!\-F\-I\-\_\-\-D\-I\-R\-T\-Y@{\-F\-I\-\_\-\-D\-I\-R\-T\-Y}}\item[{\em 
+\hypertarget{data__structs_8h_a35b22dfd92090451943b80c7c0c896e5a3de6e98e4678bda91123c8ffc2ccfa20}{\-F\-I\-\_\-\-D\-I\-R\-T\-Y}\label{d5/dee/data__structs_8h_a35b22dfd92090451943b80c7c0c896e5a3de6e98e4678bda91123c8ffc2ccfa20}
+}]\-Access \-P\-T\-E dirty bit. \index{\-F\-I\-\_\-\-R\-E\-F@{\-F\-I\-\_\-\-R\-E\-F}!data\-\_\-structs.\-h@{data\-\_\-structs.\-h}}\index{data\-\_\-structs.\-h@{data\-\_\-structs.\-h}!\-F\-I\-\_\-\-R\-E\-F@{\-F\-I\-\_\-\-R\-E\-F}}\item[{\em 
+\hypertarget{data__structs_8h_a35b22dfd92090451943b80c7c0c896e5aeef98cde3e508a19470675b934520168}{\-F\-I\-\_\-\-R\-E\-F}\label{d5/dee/data__structs_8h_a35b22dfd92090451943b80c7c0c896e5aeef98cde3e508a19470675b934520168}
+}]\-Access \-P\-T\-E reference bit. \end{description}
+\end{Desc}
+

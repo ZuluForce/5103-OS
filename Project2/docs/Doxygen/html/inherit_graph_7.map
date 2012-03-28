@@ -1,0 +1,6 @@
+<map id="G" name="G">
+<area shape="rect" id="node1" href="$d7/df0/classcPRPolicy.xhtml" title="Abstract Page Replacement Policy." alt="" coords="6,56,90,83"/>
+<area shape="rect" id="node3" href="$db/d3a/classcPRFifo.xhtml" title="cPRFifo" alt="" coords="157,5,227,32"/>
+<area shape="rect" id="node5" href="$da/da5/classcPRLru.xhtml" title="cPRLru" alt="" coords="159,56,225,83"/>
+<area shape="rect" id="node7" href="$d1/d58/classcPRLruApprox.xhtml" title="cPRLruApprox" alt="" coords="139,107,245,133"/>
+</map>

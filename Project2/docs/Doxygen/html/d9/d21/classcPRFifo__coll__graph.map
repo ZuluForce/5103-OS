@@ -1,0 +1,5 @@
+<map id="G" name="G">
+<area shape="rect" id="node2" href="$d7/df0/classcPRPolicy.xhtml" title="Abstract Page Replacement Policy." alt="" coords="5,96,88,123"/>
+<area shape="rect" id="node8" href="$db/d4b/structsPTE.xhtml" title="A struct representing a single page table entry." alt="" coords="362,5,416,32"/>
+<area shape="rect" id="node10" href="$d3/dd2/classcFrameAllocPolicy.xhtml" title="An abstract class for allocating frames to processes." alt="" coords="488,96,617,123"/>
+</map>

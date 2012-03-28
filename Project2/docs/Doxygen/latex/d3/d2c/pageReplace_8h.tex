@@ -1,0 +1,57 @@
+\hypertarget{pageReplace_8h}{\section{include/\-Policy/page\-Replace.h \-File \-Reference}
+\label{d3/d2c/pageReplace_8h}\index{include/\-Policy/page\-Replace.\-h@{include/\-Policy/page\-Replace.\-h}}
+}
+{\ttfamily \#include \char`\"{}ini\-Reader.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}utility/logger.\-h\char`\"{}}\*
+{\ttfamily \#include \char`\"{}\-Policy/frame\-Alloc.\-h\char`\"{}}\*
+\-Include dependency graph for page\-Replace.\-h\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{d8/dd9/pageReplace_8h__incl}
+\end{center}
+\end{figure}
+\-This graph shows which files directly or indirectly include this file\-:\nopagebreak
+\begin{figure}[H]
+\begin{center}
+\leavevmode
+\includegraphics[width=350pt]{de/daa/pageReplace_8h__dep__incl}
+\end{center}
+\end{figure}
+\subsection*{\-Classes}
+\begin{DoxyCompactItemize}
+\item 
+class \hyperlink{classcPRPolicy}{c\-P\-R\-Policy}
+\begin{DoxyCompactList}\small\item\em \-Abstract \-Page \-Replacement \-Policy. \end{DoxyCompactList}\end{DoxyCompactItemize}
+\subsection*{\-Enumerations}
+\begin{DoxyCompactItemize}
+\item 
+enum \hyperlink{pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217}{e\-P\-R\-Status} \{ \hyperlink{pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217a743772bc7ef0bc5a46c4605f0c460c76}{\-P\-R\-\_\-\-S\-E\-R\-V\-I\-C\-E\-D}, 
+\hyperlink{pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217a3937cd51db90fbe319ef9e8bb9bcc436}{\-P\-R\-\_\-\-S\-E\-R\-V\-I\-C\-E\-D\-\_\-\-I\-O}, 
+\hyperlink{pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217a32dee3bb41068030734a88f443d04694}{\-P\-R\-\_\-\-N\-O\-\_\-\-A\-V\-A\-I\-L}, 
+\hyperlink{pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217a7490bb9f71dbfea9c903f4a4b25288d4}{\-P\-R\-\_\-\-N\-O\-\_\-\-A\-C\-T\-I\-O\-N}
+ \}
+\end{DoxyCompactItemize}
+
+
+\subsection{\-Detailed \-Description}
+
+
+\subsection{\-Enumeration \-Type \-Documentation}
+\hypertarget{pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217}{\index{page\-Replace.\-h@{page\-Replace.\-h}!e\-P\-R\-Status@{e\-P\-R\-Status}}
+\index{e\-P\-R\-Status@{e\-P\-R\-Status}!pageReplace.h@{page\-Replace.\-h}}
+\subsubsection[{e\-P\-R\-Status}]{\setlength{\rightskip}{0pt plus 5cm}enum {\bf e\-P\-R\-Status}}}\label{d3/d2c/pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217}
+\begin{Desc}
+\item[\-Enumerator\-: ]\par
+\begin{description}
+\index{\-P\-R\-\_\-\-S\-E\-R\-V\-I\-C\-E\-D@{\-P\-R\-\_\-\-S\-E\-R\-V\-I\-C\-E\-D}!page\-Replace.\-h@{page\-Replace.\-h}}\index{page\-Replace.\-h@{page\-Replace.\-h}!\-P\-R\-\_\-\-S\-E\-R\-V\-I\-C\-E\-D@{\-P\-R\-\_\-\-S\-E\-R\-V\-I\-C\-E\-D}}\item[{\em 
+\hypertarget{pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217a743772bc7ef0bc5a46c4605f0c460c76}{\-P\-R\-\_\-\-S\-E\-R\-V\-I\-C\-E\-D}\label{d3/d2c/pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217a743772bc7ef0bc5a46c4605f0c460c76}
+}]\-Page fault serviced. \index{\-P\-R\-\_\-\-S\-E\-R\-V\-I\-C\-E\-D\-\_\-\-I\-O@{\-P\-R\-\_\-\-S\-E\-R\-V\-I\-C\-E\-D\-\_\-\-I\-O}!page\-Replace.\-h@{page\-Replace.\-h}}\index{page\-Replace.\-h@{page\-Replace.\-h}!\-P\-R\-\_\-\-S\-E\-R\-V\-I\-C\-E\-D\-\_\-\-I\-O@{\-P\-R\-\_\-\-S\-E\-R\-V\-I\-C\-E\-D\-\_\-\-I\-O}}\item[{\em 
+\hypertarget{pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217a3937cd51db90fbe319ef9e8bb9bcc436}{\-P\-R\-\_\-\-S\-E\-R\-V\-I\-C\-E\-D\-\_\-\-I\-O}\label{d3/d2c/pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217a3937cd51db90fbe319ef9e8bb9bcc436}
+}]\-Page fault serviced with \-I/\-O required. \index{\-P\-R\-\_\-\-N\-O\-\_\-\-A\-V\-A\-I\-L@{\-P\-R\-\_\-\-N\-O\-\_\-\-A\-V\-A\-I\-L}!page\-Replace.\-h@{page\-Replace.\-h}}\index{page\-Replace.\-h@{page\-Replace.\-h}!\-P\-R\-\_\-\-N\-O\-\_\-\-A\-V\-A\-I\-L@{\-P\-R\-\_\-\-N\-O\-\_\-\-A\-V\-A\-I\-L}}\item[{\em 
+\hypertarget{pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217a32dee3bb41068030734a88f443d04694}{\-P\-R\-\_\-\-N\-O\-\_\-\-A\-V\-A\-I\-L}\label{d3/d2c/pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217a32dee3bb41068030734a88f443d04694}
+}]\-Page fault not serviced. \-No frames available (all pinned) \index{\-P\-R\-\_\-\-N\-O\-\_\-\-A\-C\-T\-I\-O\-N@{\-P\-R\-\_\-\-N\-O\-\_\-\-A\-C\-T\-I\-O\-N}!page\-Replace.\-h@{page\-Replace.\-h}}\index{page\-Replace.\-h@{page\-Replace.\-h}!\-P\-R\-\_\-\-N\-O\-\_\-\-A\-C\-T\-I\-O\-N@{\-P\-R\-\_\-\-N\-O\-\_\-\-A\-C\-T\-I\-O\-N}}\item[{\em 
+\hypertarget{pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217a7490bb9f71dbfea9c903f4a4b25288d4}{\-P\-R\-\_\-\-N\-O\-\_\-\-A\-C\-T\-I\-O\-N}\label{d3/d2c/pageReplace_8h_af4bc4c41a44c2bd80e8cbf1aae370217a7490bb9f71dbfea9c903f4a4b25288d4}
+}]\-Used in returning from circular page fault handler. \end{description}
+\end{Desc}
+

@@ -1,0 +1,55 @@
+This document is intended to describe how to setup your own tests.
+
+Test layouts:
+	All test configurations reside in the bin/test_configs/ folder. Each test folder must at least have a makefile that starts as (M|m)ake.*
+	It must start with a capital M if you are going to use the make target 'make run_%' where your makefile would be Make%
+	When the run_all target is used in the makefile the python script goes through each of these directories and executes their respective makefiles with the bin directory as the cwd. Therefore any path references in the test specific makefile or the test ini file should be absolute or relative to the bin directory.
+	
+	Look at other test setups to get an idea how this works but here is a general description. Each test specifies its own .ini file with specific settings it wishes to override for the whole test as well as specifying the output directory for the log and trace files. The log file just holds statistics for the whole execution and is used to build graphs and the trace files are large files containing the history of the VMM execution.
+	
+	After setting up a test specific ini file (which isn't necessary) the makefile will define the different targets. The main settings.ini file in the bin directory should always be included first before any test specific ini files to ensure the base settings are all present. Remember that setting are overwritten in the order they show up in ini files. Usually you will always overwrite the setting for the trace and log files because for gathering results you want to have separate logs for each run. So for this you will typically have some line like: Results:file:./test_results/my_test/r2.log and for the next one .../r3.log and so forth
+	
+	Before running the test make sure the bin/test_results/<your test> directory is created otherwise the VMM will fail an assertion since it can't find the directory. After running 'make run_all' or 'make run_<testname>', godwilling we didn't miss any potential bugs it should execute to completion and your .trace and .log files will show up in your result directory.
+	
+	*!*!*If you add processes to run in an ini file make sure you do it only in one place because they will not be overwritten. If you need to add more processes outside the ini file use the -t [trace_file/s] option from the command line. This also goes to say you shouldn't modify the main settings.ini file only your test's ini file.
+	
+Graph Config Setup:
+	This is completely optional but if you want to generate graphs for a particular test its directory will need to contain a file called out_graphs.conf. Inside the bin/test_results/ directory there should be an example configuration file with a big writeup on the options. The config is somewhat cryptic but I originally wanted it to be small and easy to parse.
+	
+	Example graph line:
+	
+	spsi:gtlbh:ps_vs_tlbh
+		-This means, "Give me a graph with the frame size (increasing) on the x-axis and the global tlb hits on the y-axis and name the file 'ps_vs_tlbh'"
+		-you can optionally add one more settings to the end :png :jpg ... but if none is specified it defaults to png. I recommend you leave it with this since the other ones were not tested.
+		
+		
+
+INI files:
+	- Our .ini files are fairly standard with sections denoted by [] and then key-value pairs delimited by '=' within the section.
+	- Comments can be added using #
+	- There are many settings which likely won't be changed and in fact haven't been tested with modified values but here are some of the more important ones
+	
+		Global:page_bits - How many bits are used for the page
+		Global:offset_bits - How many bits are used for the offset
+			-This could have been condensed to just defining the page size and the system would figure out the bits but because we started here we stuck with it.
+			-If you accidentally enter values that don't add up to 32 the system will give you an error
+			
+		Global:total_frames - How many frames does the system have. This combined with the page size defines the total memory in the system. Once again this could be simplified to just defining an amount of memory.
+		
+		Timings:quanta - Execution quanta. For some of the larger datasets with high locality this default value (3) is prohibitively small.
+		
+		MMU:tlb_size - How many entries does the tlb have?
+		MMU:addr_type - Our VMM does not support a mix of decimal and hex traces in the same execution but if you specify ahead of time it can work with all of one or the other. When specified, this is assumed for all trace files loaded. If the wrong one is specified it will likely continue to work but give you invalid addresses. Options are hex or decimal
+		
+		Policy:FA - Frame allocator. Leave it alone because we didn't have time to get a working set implementation.
+		Policy:PR - Page Replacement. Options are fifo, lru, lru_approx
+		
+		Policy:clean_min - Threshold for the cleaning daemon
+		Policy:cleanup_amnt - How many frames should be cleaned when invoked
+		
+		Processes
+			- In this section you should list processes that you want to run. The listing must start at 0 and go up in order for main to load them.
+			
+		Results:file - Yes this is a bad name for the setting but I wasn't expecting to have so many files initially. This is the output location for the log file.
+		
+		Results:trace - Output location for trace file. This should be changed to your test result directory along with the log file.
