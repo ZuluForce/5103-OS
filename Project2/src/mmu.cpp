@@ -154,6 +154,22 @@ uint32_t cMMU::getAddr(string& sVA, bool isWrite) {
 
 	for (int i = 0; i < tlbSize; ++i) {
 		if (TLB[i].VPN == VPN && TLB[i].valid) {
+			if ( !ptbr[VPN].flags[FI_PRESENT] ) {
+				/* While this sort of defeats the purpose of the
+				 * tlb if we only have one process we don't flush
+				 * the tlb however if a page is removed we don't
+				 * want its tlb entry to be valid anymore (if it is there).
+				 *
+				 * Rather than creating a more complicated mechanism to
+				 * propagate this information back we just check it here.
+				 */
+				TLB[i].valid = false;
+
+				faultPage = VPN;
+				mmu_status = MMU_PF;
+				return 0;
+			}
+
 			uint32_t FN = TLB[i].frame;
 
 			PA = (FN * pageSize) + offset;
