@@ -11,7 +11,7 @@ LRU (approx) - replaces the page that was least recently used. Time stamp is upd
 
 Looking at how the test works.
 
-The BadLRU test is a scenario where approx LRU performs worse than pure LRU and FIFO.
+The BadLRU test is a scenario where approx LRU performs significantly worse than pure LRU and FIFO.
 
 
 ------------------------------------------------
