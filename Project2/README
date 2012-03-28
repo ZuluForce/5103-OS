@@ -19,6 +19,7 @@ How to run:
 		- Alternatively, to run all the tests execute 'make run_all'. This will execute a python script that runs through the test directory and executes all tests. This same script will try to start the graph generator to produce the graphs for the given test.
 		
 		- 'make graph_%' where % is a test number will invoke the graph generator on the folder name % in the test_results directory
+		- If you aren't running a test (ours or yours), look below at the command line parameters on the options
 		
 How to create tests:
 	Look to the README.testing file
@@ -30,12 +31,20 @@ Command Line Parameters:
 		
 	-t [trace files]+
 		- This is a list of trace files to execute. These are loaded in-order before any specified in the settings file/s.
+		- If your trace files use decimal addresses then this should be specified in the ini file or as an override as discussed below
+			- Check the setting MMU:addr_type in settings.ini for the valid settings (hex or decimal)
 		
 	Overriding Settings (shortcut to using multiple ini files)
 		Section:Option:new_value
+		
+	Example program execution using default settings (cwd = bin)
+	./main -s settings.ini -t traces/main.trace MMU:addr_type:decimal
+		-This will execute main with the settings in settings.ini (default ones) and main.trace should have base 10 addrress values
+		- If you are changing a lot of settings and running more than 2 trace files it may be easier to write full test or at least a separate ini file. See README.testing
+		
 
 Test Outputs:
-	All tests output their results to a directory with the same name but stored under bin/test_results/<testname>/
+	All tests (make run_all) output their results to a directory with the same name but stored under bin/test_results/<testname>/
 		
 
 Note on Python Scripts:

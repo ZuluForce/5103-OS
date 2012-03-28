@@ -65,7 +65,7 @@ var sectionId = 'dynsection-1';
 </g>
 <!-- Node3 -->
 <g id="node6" class="node"><title>Node3</title>
-<a xlink:href="../../de/d7e/cleaningDaemon_8h_source.xhtml" target="_top" xlink:title="include/Policy/cleaningDaemon.h">
+<a xlink:href="../../de/d7e/cleaningDaemon_8h.xhtml" target="_top" xlink:title="include/Policy/cleaningDaemon.h">
 <polygon fill="white" stroke="black" points="-0.5,-56.5 -0.5,-75.5 160.5,-75.5 160.5,-56.5 -0.5,-56.5"/>
 <text text-anchor="middle" x="80" y="-63.5" font-family="Helvetica,sans-Serif" font-size="10.00">include/Policy/cleaningDaemon.h</text>
 </a>

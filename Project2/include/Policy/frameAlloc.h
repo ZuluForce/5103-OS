@@ -51,6 +51,16 @@ class cFrameAllocPolicy {
 		virtual bool unpin(uint32_t frame) = 0;
 };
 
+/** A class implementing a simple fcfs style frame allocation
+ *
+ *	The namae "fixed alloc" is a bit of a misnomer because
+ *	originally we though that each process would only be
+ *	given a fixed number of frames. With the global demand
+ *	paging policy this changed to simply being a class for
+ *	managing which frames were open and whenever someone
+ *	requests a page they are given one if it is available,
+ *	regardless of how many they have gotten before.
+ */
 class cFixedAlloc: public cFrameAllocPolicy {
 	private:
 		int allocSize;
@@ -86,5 +96,20 @@ class cFixedAlloc: public cFrameAllocPolicy {
 		bool pin(uint32_t frame);
 		bool unpin(uint32_t frame);
 };
+
+/** @fn cFixedAlloc::pin(uint32_t)
+ *	Pin a frame
+ *
+ *	A pinned frame cannot be given to anyone else.
+ *	Usually this does not matter because the page
+ *	is reserved first and therefore the frame allocator
+ *	won't give it out again. There are scenarios where
+ *	on a page fault they PR module may decide to replace
+ *	a page which is still coming into memory. In this case
+ *	the PR module would notice from this class that the
+ *	frame is pinned so it can't spill it.
+ *
+ *	This scenario happens mostly in low memory situations.
+ */
 
 #endif // FRAMEALLOC_H_INCLUDED

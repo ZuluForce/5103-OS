@@ -18,7 +18,7 @@
 </g>
 <!-- Node2 -->
 <g id="node3" class="node"><title>Node2</title>
-<a xlink:href="db/d3a/classcPRFifo.xhtml" target="_top" xlink:title="cPRFifo">
+<a xlink:href="db/d3a/classcPRFifo.xhtml" target="_top" xlink:title="FIFO PR Policy.">
 <polygon fill="white" stroke="black" points="113.5,-76.5 113.5,-95.5 166.5,-95.5 166.5,-76.5 113.5,-76.5"/>
 <text text-anchor="middle" x="140" y="-83.5" font-family="Helvetica,sans-Serif" font-size="10.00">cPRFifo</text>
 </a>
@@ -30,7 +30,7 @@
 </g>
 <!-- Node3 -->
 <g id="node5" class="node"><title>Node3</title>
-<a xlink:href="da/da5/classcPRLru.xhtml" target="_top" xlink:title="cPRLru">
+<a xlink:href="da/da5/classcPRLru.xhtml" target="_top" xlink:title="Pure LRU PR Policy.">
 <polygon fill="white" stroke="black" points="115,-38.5 115,-57.5 165,-57.5 165,-38.5 115,-38.5"/>
 <text text-anchor="middle" x="140" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">cPRLru</text>
 </a>
@@ -42,7 +42,7 @@
 </g>
 <!-- Node4 -->
 <g id="node7" class="node"><title>Node4</title>
-<a xlink:href="d1/d58/classcPRLruApprox.xhtml" target="_top" xlink:title="cPRLruApprox">
+<a xlink:href="d1/d58/classcPRLruApprox.xhtml" target="_top" xlink:title="LRU approximate PR Policy.">
 <polygon fill="white" stroke="black" points="100,-0.5 100,-19.5 180,-19.5 180,-0.5 100,-0.5"/>
 <text text-anchor="middle" x="140" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">cPRLruApprox</text>
 </a>

@@ -84,7 +84,12 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="title">cCleanDaemon Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="cCleanDaemon" --><div class="dynheader">
+<!-- doxytag: class="cCleanDaemon" -->
+<p>Cleaning Daemon for system.  
+</p>
+
+<p><code>#include &lt;<a class="el" href="../../de/d7e/cleaningDaemon_8h_source.xhtml">cleaningDaemon.h</a>&gt;</code></p>
+<div class="dynheader">
 Collaboration diagram for cCleanDaemon:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" frameborder="0" src="../../d7/def/classcCleanDaemon__coll__graph.svg" width="139" height="128"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
@@ -96,8 +101,8 @@ Collaboration diagram for cCleanDaemon:</div>
 Public Member Functions</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a7646bbaebfefa0c9478e5a23333768db"></a><!-- doxytag: member="cCleanDaemon::cCleanDaemon" ref="a7646bbaebfefa0c9478e5a23333768db" args="(cFrameAllocPolicy &amp;_FA)" -->
 &#160;</td><td class="memItemRight" valign="bottom"><b>cCleanDaemon</b> (<a class="el" href="../../d3/dd2/classcFrameAllocPolicy.xhtml">cFrameAllocPolicy</a> &amp;_FA)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ac9a8ca1ac1d35f554af393274dd87f68"></a><!-- doxytag: member="cCleanDaemon::checkClean" ref="ac9a8ca1ac1d35f554af393274dd87f68" args="()" -->
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>checkClean</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d3/d6f/classcCleanDaemon.xhtml#ac9a8ca1ac1d35f554af393274dd87f68">checkClean</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Check if pages need to be cleaned.  <a href="#ac9a8ca1ac1d35f554af393274dd87f68"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a175b113f2f0f943199348e7f1f55252e"></a><!-- doxytag: member="cCleanDaemon::FAPolicy" ref="a175b113f2f0f943199348e7f1f55252e" args="" -->
@@ -107,6 +112,26 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>min_thresh</b></t
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af193b6bcae4c81485b62cba8c413c7ab"></a><!-- doxytag: member="cCleanDaemon::clean_amnt" ref="af193b6bcae4c81485b62cba8c413c7ab" args="" -->
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>clean_amnt</b></td></tr>
 </table>
+<hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ac9a8ca1ac1d35f554af393274dd87f68"></a><!-- doxytag: member="cCleanDaemon::checkClean" ref="ac9a8ca1ac1d35f554af393274dd87f68" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t <a class="el" href="../../d3/d6f/classcCleanDaemon.xhtml#ac9a8ca1ac1d35f554af393274dd87f68">cCleanDaemon::checkClean</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>The VMM core calls this and the daemon checks with the FA module to see how many frames are available. If it is below its threshold it returns how many should be cleaned. This value is passed to the PR module which makes the policy decisions on which to replace. </p>
+
+<p>Referenced by <a class="el" href="../../dc/de5/classcVMM.xhtml#adc084e37fff4572dfe4d27619295b59f">cVMM::start()</a>.</p>
+
+</div>
+</div>
 <hr/>The documentation for this class was generated from the following files:<ul>
 <li>include/Policy/<a class="el" href="../../de/d7e/cleaningDaemon_8h_source.xhtml">cleaningDaemon.h</a></li>
 <li>src/Policy/cleaningDaemon.cpp</li>
@@ -129,7 +154,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>clean_amnt</b></t
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 27 2012 23:10:55 for 5103 Project 2 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 28 2012 13:26:03 for 5103 Project 2 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

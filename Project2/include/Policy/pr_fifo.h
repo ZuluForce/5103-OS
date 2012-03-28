@@ -7,6 +7,7 @@
 
 using namespace std;
 
+/** FIFO PR Policy */
 class cPRFifo: public cPRPolicy {
 	private:
 		//FIFO history of the pages

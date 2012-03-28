@@ -2,7 +2,7 @@ var searchData=
 [
   ['getaddr',['getAddr',['../df/deb/classcMMU.xhtml#a8f67a55d3444b1164999ef64253eb37e',1,'cMMU']]],
   ['getcontext',['getContext',['../da/d8f/classcIOControl.xhtml#a55df5b64418ea644eb23a6198ff13845',1,'cIOControl']]],
-  ['getfaultpage',['getFaultPage',['../d2/dc6/classcCPU.xhtml#a37f4ab4a93668da37be34f8d4d77a339',1,'cCPU']]],
+  ['getfaultpage',['getFaultPage',['../d2/dc6/classcCPU.xhtml#a37f4ab4a93668da37be34f8d4d77a339',1,'cCPU::getFaultPage()'],['../df/deb/classcMMU.xhtml#ab906b5a3693545e3d7fbdab5d1b3a397',1,'cMMU::getFaultPage()']]],
   ['getfinishedptequeue',['getFinishedPTEQueue',['../da/d8f/classcIOControl.xhtml#a72bbe2fda30108727eab840aede31b42',1,'cIOControl']]],
   ['getfinishedqueue',['getFinishedQueue',['../da/d8f/classcIOControl.xhtml#a7765e006a0403642713469f9674a1dd3',1,'cIOControl']]],
   ['getid',['getID',['../de/dd4/classcIDManager.xhtml#a45420147e785cc219743e9aa2c336501',1,'cIDManager']]],

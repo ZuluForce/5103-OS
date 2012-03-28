@@ -3,6 +3,15 @@
 }
 
 
+\-A class implementing a simple fcfs style frame allocation.  
+
+
+
+
+{\ttfamily \#include $<$frame\-Alloc.\-h$>$}
+
+
+
 \-Inheritance diagram for c\-Fixed\-Alloc\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -41,9 +50,8 @@ void \hyperlink{classcFixedAlloc_a79df79853a015bb750ca682630afcfd8}{return\-Fram
 \hypertarget{classcFixedAlloc_a2109057465d037b0c23dba1257163aba}{uint32\-\_\-t {\bfseries check\-Open} (bool)}\label{d1/d40/classcFixedAlloc_a2109057465d037b0c23dba1257163aba}
 
 \item 
-\hypertarget{classcFixedAlloc_a0baba5ee9e04148d9d5845ee5afbfe37}{bool {\bfseries pin} (uint32\-\_\-t frame)}\label{d1/d40/classcFixedAlloc_a0baba5ee9e04148d9d5845ee5afbfe37}
-
-\item 
+bool \hyperlink{classcFixedAlloc_ae876cb2df8588fc96c2e6310478f773b}{pin} (uint32\-\_\-t frame)
+\begin{DoxyCompactList}\small\item\em \-Pin a frame. \end{DoxyCompactList}\item 
 \hypertarget{classcFixedAlloc_a2a6f869ad3c6fa6190fdbca3e198bae9}{bool {\bfseries unpin} (uint32\-\_\-t frame)}\label{d1/d40/classcFixedAlloc_a2a6f869ad3c6fa6190fdbca3e198bae9}
 
 \end{DoxyCompactItemize}
@@ -85,7 +93,23 @@ void \hyperlink{classcFixedAlloc_a79df79853a015bb750ca682630afcfd8}{return\-Fram
 \end{DoxyCompactItemize}
 
 
+\subsection{\-Detailed \-Description}
+\-The namae \char`\"{}fixed alloc\char`\"{} is a bit of a misnomer because originally we though that each process would only be given a fixed number of frames. \-With the global demand paging policy this changed to simply being a class for managing which frames were open and whenever someone requests a page they are given one if it is available, regardless of how many they have gotten before. 
+
 \subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcFixedAlloc_ae876cb2df8588fc96c2e6310478f773b}{\index{c\-Fixed\-Alloc@{c\-Fixed\-Alloc}!pin@{pin}}
+\index{pin@{pin}!cFixedAlloc@{c\-Fixed\-Alloc}}
+\subsubsection[{pin}]{\setlength{\rightskip}{0pt plus 5cm}{\bf c\-Fixed\-Alloc\-::pin} (
+\begin{DoxyParamCaption}
+\item[{uint32\-\_\-t}]{frame}
+\end{DoxyParamCaption}
+)\hspace{0.3cm}{\ttfamily  \mbox{[}virtual\mbox{]}}}}\label{d1/d40/classcFixedAlloc_ae876cb2df8588fc96c2e6310478f773b}
+\-A pinned frame cannot be given to anyone else. \-Usually this does not matter because the page is reserved first and therefore the frame allocator won't give it out again. \-There are scenarios where on a page fault they \-P\-R module may decide to replace a page which is still coming into memory. \-In this case the \-P\-R module would notice from this class that the frame is pinned so it can't spill it.
+
+\-This scenario happens mostly in low memory situations. 
+
+\-Implements \hyperlink{classcFrameAllocPolicy}{c\-Frame\-Alloc\-Policy}.
+
 \hypertarget{classcFixedAlloc_a489395f063815020f36265a52308a3f6}{\index{c\-Fixed\-Alloc@{c\-Fixed\-Alloc}!reg\-Procs@{reg\-Procs}}
 \index{reg\-Procs@{reg\-Procs}!cFixedAlloc@{c\-Fixed\-Alloc}}
 \subsubsection[{reg\-Procs}]{\setlength{\rightskip}{0pt plus 5cm}void {\bf c\-Fixed\-Alloc\-::reg\-Procs} (

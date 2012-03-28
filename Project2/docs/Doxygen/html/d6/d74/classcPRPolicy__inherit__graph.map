@@ -1,5 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$db/d3a/classcPRFifo.xhtml" title="cPRFifo" alt="" coords="5,80,75,107"/>
-<area shape="rect" id="node5" href="$da/da5/classcPRLru.xhtml" title="cPRLru" alt="" coords="100,80,167,107"/>
-<area shape="rect" id="node7" href="$d1/d58/classcPRLruApprox.xhtml" title="cPRLruApprox" alt="" coords="191,80,297,107"/>
+<area shape="rect" id="node3" href="$db/d3a/classcPRFifo.xhtml" title="FIFO PR Policy." alt="" coords="5,80,75,107"/>
+<area shape="rect" id="node5" href="$da/da5/classcPRLru.xhtml" title="Pure LRU PR Policy." alt="" coords="100,80,167,107"/>
+<area shape="rect" id="node7" href="$d1/d58/classcPRLruApprox.xhtml" title="LRU approximate PR Policy." alt="" coords="191,80,297,107"/>
 </map>

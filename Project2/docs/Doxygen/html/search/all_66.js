@@ -9,6 +9,7 @@ var searchData=
   ['finishedquanta',['finishedQuanta',['../d7/df0/classcPRPolicy.xhtml#adfe4408f052b6ec414331ba1bafc736b',1,'cPRPolicy::finishedQuanta()'],['../db/d3a/classcPRFifo.xhtml#aadb8319e6e539280e0f56c0e6b40c581',1,'cPRFifo::finishedQuanta()'],['../da/da5/classcPRLru.xhtml#a9e0bb304978dddc8342a5b9445c091b6',1,'cPRLru::finishedQuanta()'],['../d1/d58/classcPRLruApprox.xhtml#aaf6600b3edb01fbbb0257f622b3fb1ec',1,'cPRLruApprox::finishedQuanta()']]],
   ['finishtime',['finishTime',['../d4/d8e/structsProc.xhtml#a9079bdad478d80b701669442a8919f94',1,'sProc']]],
   ['flags',['flags',['../db/d4b/structsPTE.xhtml#a5088ab9c05c286c643ef97d04a3c9dad',1,'sPTE']]],
+  ['flushtlb',['flushTLB',['../df/deb/classcMMU.xhtml#ad46f9d2c75a2fac3b0b7154e864345ab',1,'cMMU']]],
   ['frame',['frame',['../db/d4b/structsPTE.xhtml#a7f83c711e07dc476cceb9ac15ea010d7',1,'sPTE']]],
   ['freeid',['freeID',['../de/dd4/classcIDManager.xhtml#a0bed8666fa886f86428e7ac059bc5de0',1,'cIDManager']]]
 ];

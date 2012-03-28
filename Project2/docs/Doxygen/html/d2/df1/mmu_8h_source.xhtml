@@ -79,80 +79,79 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="title">include/mmu.h</div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef MMU_CPP_INCLUDED</span>
+<a href="../../d2/df1/mmu_8h.xhtml">Go to the documentation of this file.</a><div class="fragment"><pre class="fragment"><a name="l00001"></a>00001 <span class="preprocessor">#ifndef MMU_CPP_INCLUDED</span>
 <a name="l00002"></a>00002 <span class="preprocessor"></span><span class="preprocessor">#define MMU_CPP_INCLUDED</span>
 <a name="l00003"></a>00003 <span class="preprocessor"></span>
-<a name="l00004"></a>00004 <span class="preprocessor">#include &lt;cassert&gt;</span>
-<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;string.h&gt;</span>
-<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;inttypes.h&gt;</span>
-<a name="l00007"></a>00007 
-<a name="l00008"></a>00008 <span class="preprocessor">#include &quot;<a class="code" href="../../d5/dee/data__structs_8h.xhtml">data_structs.h</a>&quot;</span>
-<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;<a class="code" href="../../d5/dfd/iniReader_8h.xhtml">iniReader.h</a>&quot;</span>
-<a name="l00010"></a>00010 
+<a name="l00005"></a>00005 <span class="preprocessor">#include &lt;cassert&gt;</span>
+<a name="l00006"></a>00006 <span class="preprocessor">#include &lt;string.h&gt;</span>
+<a name="l00007"></a>00007 <span class="preprocessor">#include &lt;inttypes.h&gt;</span>
+<a name="l00008"></a>00008 
+<a name="l00009"></a>00009 <span class="preprocessor">#include &quot;<a class="code" href="../../d5/dee/data__structs_8h.xhtml">data_structs.h</a>&quot;</span>
+<a name="l00010"></a>00010 <span class="preprocessor">#include &quot;<a class="code" href="../../d5/dfd/iniReader_8h.xhtml">iniReader.h</a>&quot;</span>
 <a name="l00011"></a>00011 
-<a name="l00012"></a>00012 <span class="keyword">enum</span> eMMUstate {
-<a name="l00013"></a>00013     MMU_THIT,   
-<a name="l00014"></a>00014     MMU_TMISS,  
-<a name="l00015"></a>00015     MMU_PF      
-<a name="l00016"></a>00016 };
-<a name="l00017"></a>00017 
-<a name="l00019"></a><a class="code" href="../../d2/deb/structsTLBE.xhtml">00019</a> <span class="keyword">struct </span><a class="code" href="../../d2/deb/structsTLBE.xhtml">sTLBE</a> {
-<a name="l00020"></a>00020     uint32_t VPN;
-<a name="l00021"></a>00021     uint32_t frame;
-<a name="l00022"></a>00022 
-<a name="l00023"></a>00023     <span class="keywordtype">int</span> timestamp;
-<a name="l00024"></a>00024 
-<a name="l00031"></a><a class="code" href="../../d2/deb/structsTLBE.xhtml#a49cd068c40f5bb2698fb351d4356492e">00031</a>     <span class="keywordtype">bool</span> <a class="code" href="../../d2/deb/structsTLBE.xhtml#a49cd068c40f5bb2698fb351d4356492e" title="Is this a valid translation?">valid</a>;
-<a name="l00032"></a>00032     <span class="keywordtype">bool</span> dirty;
-<a name="l00033"></a>00033     <span class="keywordtype">bool</span> ref;
-<a name="l00034"></a>00034 };
-<a name="l00035"></a>00035 
-<a name="l00036"></a><a class="code" href="../../df/deb/classcMMU.xhtml">00036</a> <span class="keyword">class </span><a class="code" href="../../df/deb/classcMMU.xhtml">cMMU</a> {
-<a name="l00037"></a>00037     <span class="keyword">private</span>:
-<a name="l00038"></a>00038         <a class="code" href="../../d2/deb/structsTLBE.xhtml">sTLBE</a>* TLB;
-<a name="l00039"></a>00039         uint16_t tlbSize;
-<a name="l00040"></a>00040         uint32_t pageSize;
-<a name="l00041"></a>00041         uint32_t off_bits;
-<a name="l00042"></a>00042         <span class="keywordtype">bool</span> hexAddr;
-<a name="l00043"></a>00043 
-<a name="l00044"></a>00044         stringstream ssAddr;
+<a name="l00013"></a><a class="code" href="../../d2/df1/mmu_8h.xhtml#ae08a7145dbbab15abf6cd31e4958d861">00013</a> <span class="keyword">enum</span> <a class="code" href="../../d2/df1/mmu_8h.xhtml#ae08a7145dbbab15abf6cd31e4958d861" title="State of the MMU after translation (or attempted)">eMMUstate</a> {
+<a name="l00014"></a><a class="code" href="../../d2/df1/mmu_8h.xhtml#ae08a7145dbbab15abf6cd31e4958d861ab881282fb1f4def6fbeb85c4d6a2b34d">00014</a>     <a class="code" href="../../d2/df1/mmu_8h.xhtml#ae08a7145dbbab15abf6cd31e4958d861ab881282fb1f4def6fbeb85c4d6a2b34d" title="TLB Hit.">MMU_THIT</a>,   
+<a name="l00015"></a><a class="code" href="../../d2/df1/mmu_8h.xhtml#ae08a7145dbbab15abf6cd31e4958d861a38fa29ba4ff54aeb2233b2f1a0c31e8c">00015</a>     <a class="code" href="../../d2/df1/mmu_8h.xhtml#ae08a7145dbbab15abf6cd31e4958d861a38fa29ba4ff54aeb2233b2f1a0c31e8c" title="TLB Miss.">MMU_TMISS</a>,  
+<a name="l00016"></a><a class="code" href="../../d2/df1/mmu_8h.xhtml#ae08a7145dbbab15abf6cd31e4958d861ac0f58cca1cb5dc9e520cb453380cb06b">00016</a>     <a class="code" href="../../d2/df1/mmu_8h.xhtml#ae08a7145dbbab15abf6cd31e4958d861ac0f58cca1cb5dc9e520cb453380cb06b" title="Page Fault.">MMU_PF</a>      
+<a name="l00017"></a>00017 };
+<a name="l00018"></a>00018 
+<a name="l00020"></a><a class="code" href="../../d2/deb/structsTLBE.xhtml">00020</a> <span class="keyword">struct </span><a class="code" href="../../d2/deb/structsTLBE.xhtml" title="Struct representing a single entry in the TLB.">sTLBE</a> {
+<a name="l00021"></a>00021     uint32_t VPN;
+<a name="l00022"></a>00022     uint32_t frame;
+<a name="l00023"></a>00023 
+<a name="l00024"></a>00024     <span class="keywordtype">int</span> timestamp;
+<a name="l00025"></a>00025 
+<a name="l00032"></a><a class="code" href="../../d2/deb/structsTLBE.xhtml#a49cd068c40f5bb2698fb351d4356492e">00032</a>     <span class="keywordtype">bool</span> <a class="code" href="../../d2/deb/structsTLBE.xhtml#a49cd068c40f5bb2698fb351d4356492e" title="Is this a valid translation?">valid</a>;
+<a name="l00033"></a>00033     <span class="keywordtype">bool</span> dirty;
+<a name="l00034"></a>00034     <span class="keywordtype">bool</span> ref;
+<a name="l00035"></a>00035 };
+<a name="l00036"></a>00036 
+<a name="l00038"></a><a class="code" href="../../df/deb/classcMMU.xhtml">00038</a> <span class="keyword">class </span><a class="code" href="../../df/deb/classcMMU.xhtml" title="Class representing an MMU in the CPU.">cMMU</a> {
+<a name="l00039"></a>00039     <span class="keyword">private</span>:
+<a name="l00040"></a>00040         <a class="code" href="../../d2/deb/structsTLBE.xhtml" title="Struct representing a single entry in the TLB.">sTLBE</a>* TLB;
+<a name="l00041"></a>00041         uint16_t tlbSize;
+<a name="l00042"></a>00042         uint32_t pageSize;
+<a name="l00043"></a>00043         uint32_t off_bits;
+<a name="l00044"></a>00044         <span class="keywordtype">bool</span> hexAddr;
 <a name="l00045"></a>00045 
-<a name="l00049"></a><a class="code" href="../../df/deb/classcMMU.xhtml#a90cbcd50347e8b9030f66bce2fc52e2a">00049</a>         uint32_t <a class="code" href="../../df/deb/classcMMU.xhtml#a90cbcd50347e8b9030f66bce2fc52e2a" title="For replacing old tlb entries we are simply treating it as a ring buffer.">replaceIndex</a>;
-<a name="l00050"></a>00050 
-<a name="l00051"></a>00051         <span class="keywordtype">int</span>* VC;
+<a name="l00046"></a>00046         stringstream ssAddr;
+<a name="l00047"></a>00047 
+<a name="l00051"></a><a class="code" href="../../df/deb/classcMMU.xhtml#a90cbcd50347e8b9030f66bce2fc52e2a">00051</a>         uint32_t <a class="code" href="../../df/deb/classcMMU.xhtml#a90cbcd50347e8b9030f66bce2fc52e2a" title="For replacing old tlb entries we are simply treating it as a ring buffer.">replaceIndex</a>;
 <a name="l00052"></a>00052 
-<a name="l00053"></a>00053         <span class="comment">/* -- Page Table Info --*/</span>
-<a name="l00054"></a>00054         <a class="code" href="../../db/d4b/structsPTE.xhtml" title="A struct representing a single page table entry.">sPTE</a>* ptbr;
-<a name="l00055"></a>00055 
-<a name="l00056"></a>00056         <span class="comment">/* These will be collected during cleanup to</span>
-<a name="l00057"></a>00057 <span class="comment">         * provide the appropriate statistics.</span>
-<a name="l00058"></a>00058 <span class="comment">         */</span>
-<a name="l00059"></a>00059         <span class="keywordtype">int</span> tlb_hits;
-<a name="l00060"></a>00060         <span class="keywordtype">int</span> tlb_misses;
-<a name="l00061"></a>00061 
-<a name="l00062"></a>00062         eMMUstate mmu_status;
+<a name="l00053"></a>00053         <span class="keywordtype">int</span>* VC;
+<a name="l00054"></a>00054 
+<a name="l00055"></a>00055         <span class="comment">/* -- Page Table Info --*/</span>
+<a name="l00056"></a>00056         <a class="code" href="../../db/d4b/structsPTE.xhtml" title="A struct representing a single page table entry.">sPTE</a>* ptbr;
+<a name="l00057"></a>00057 
+<a name="l00058"></a>00058         <span class="comment">/* These will be collected during cleanup to</span>
+<a name="l00059"></a>00059 <span class="comment">         * provide the appropriate statistics.</span>
+<a name="l00060"></a>00060 <span class="comment">         */</span>
+<a name="l00061"></a>00061         <span class="keywordtype">int</span> tlb_hits;
+<a name="l00062"></a>00062         <span class="keywordtype">int</span> tlb_misses;
 <a name="l00063"></a>00063 
-<a name="l00064"></a>00064         uint32_t faultPage;
+<a name="l00064"></a>00064         <a class="code" href="../../d2/df1/mmu_8h.xhtml#ae08a7145dbbab15abf6cd31e4958d861" title="State of the MMU after translation (or attempted)">eMMUstate</a> mmu_status;
 <a name="l00065"></a>00065 
-<a name="l00066"></a>00066         <span class="keywordtype">void</span> addTLB(uint32_t, uint32_t, <span class="keywordtype">bool</span>);
+<a name="l00066"></a>00066         uint32_t faultPage;
 <a name="l00067"></a>00067 
-<a name="l00068"></a>00068     <span class="keyword">public</span>:
-<a name="l00069"></a>00069         <a class="code" href="../../df/deb/classcMMU.xhtml">cMMU</a>();
-<a name="l00070"></a>00070         ~<a class="code" href="../../df/deb/classcMMU.xhtml">cMMU</a>();
-<a name="l00071"></a>00071 
-<a name="l00072"></a>00072         <span class="keywordtype">void</span> setPTBR(<a class="code" href="../../db/d4b/structsPTE.xhtml" title="A struct representing a single page table entry.">sPTE</a>* _ptbr) { ptbr = _ptbr; };
+<a name="l00068"></a>00068         <span class="keywordtype">void</span> <a class="code" href="../../df/deb/classcMMU.xhtml#a3344e754b5752bd079787ee5a7328bbf" title="Add an entry to the TLB.">addTLB</a>(uint32_t, uint32_t, <span class="keywordtype">bool</span>);
+<a name="l00069"></a>00069 
+<a name="l00070"></a>00070     <span class="keyword">public</span>:
+<a name="l00071"></a>00071         <a class="code" href="../../df/deb/classcMMU.xhtml" title="Class representing an MMU in the CPU.">cMMU</a>();
+<a name="l00072"></a>00072         ~<a class="code" href="../../df/deb/classcMMU.xhtml" title="Class representing an MMU in the CPU.">cMMU</a>();
 <a name="l00073"></a>00073 
-<a name="l00074"></a>00074         <span class="keywordtype">void</span> addVC(<span class="keywordtype">int</span>* VC);
+<a name="l00074"></a><a class="code" href="../../df/deb/classcMMU.xhtml#a1fadf507689a62a0a28ea10734bdfcca">00074</a>         <span class="keywordtype">void</span> <a class="code" href="../../df/deb/classcMMU.xhtml#a1fadf507689a62a0a28ea10734bdfcca" title="Set the Page Table Base Register.">setPTBR</a>(<a class="code" href="../../db/d4b/structsPTE.xhtml" title="A struct representing a single page table entry.">sPTE</a>* _ptbr) { ptbr = _ptbr; };
 <a name="l00075"></a>00075 
-<a name="l00076"></a>00076         <span class="keywordtype">void</span> flushTLB(<span class="keywordtype">bool</span> sync = <span class="keyword">true</span>);
-<a name="l00077"></a>00077         <span class="keywordtype">void</span> syncTLB();
-<a name="l00078"></a>00078 
-<a name="l00079"></a>00079         eMMUstate checkStatus() { <span class="keywordflow">return</span> mmu_status; };
-<a name="l00080"></a>00080         uint32_t getFaultPage() { <span class="keywordflow">return</span> faultPage; };
-<a name="l00091"></a>00091         uint32_t <a class="code" href="../../df/deb/classcMMU.xhtml#a8f67a55d3444b1164999ef64253eb37e" title="Translate virtual to physical address.">getAddr</a>(<span class="keywordtype">string</span>&amp; sVA, <span class="keywordtype">bool</span> isWrite);
-<a name="l00092"></a>00092 };
-<a name="l00093"></a>00093 
-<a name="l00094"></a>00094 <span class="preprocessor">#endif // MMU_CPP_INCLUDED</span>
+<a name="l00076"></a>00076         <span class="keywordtype">void</span> <a class="code" href="../../df/deb/classcMMU.xhtml#a043b4dce463c5379e1885a5918103286" title="Add a refernece to the main VCC for timekeeping purposes.">addVC</a>(<span class="keywordtype">int</span>* VC);
+<a name="l00077"></a>00077 
+<a name="l00078"></a>00078         <span class="keywordtype">void</span> <a class="code" href="../../df/deb/classcMMU.xhtml#ad46f9d2c75a2fac3b0b7154e864345ab" title="Flush the tlb and optionally sync values back to page table.">flushTLB</a>(<span class="keywordtype">bool</span> sync = <span class="keyword">true</span>);
+<a name="l00079"></a>00079         <span class="keywordtype">void</span> <a class="code" href="../../df/deb/classcMMU.xhtml#ae981abbf574849c2d83c2402212c3d24" title="Sync TLB entries without flushing them.">syncTLB</a>();
+<a name="l00080"></a>00080 
+<a name="l00081"></a><a class="code" href="../../df/deb/classcMMU.xhtml#ac0b382b3495595d8b4784835c9d73515">00081</a>         <a class="code" href="../../d2/df1/mmu_8h.xhtml#ae08a7145dbbab15abf6cd31e4958d861" title="State of the MMU after translation (or attempted)">eMMUstate</a> <a class="code" href="../../df/deb/classcMMU.xhtml#ac0b382b3495595d8b4784835c9d73515" title="What is the MMU status after the last translation.">checkStatus</a>() { <span class="keywordflow">return</span> mmu_status; };
+<a name="l00082"></a><a class="code" href="../../df/deb/classcMMU.xhtml#ab906b5a3693545e3d7fbdab5d1b3a397">00082</a>         uint32_t <a class="code" href="../../df/deb/classcMMU.xhtml#ab906b5a3693545e3d7fbdab5d1b3a397" title="What was the VPN that caused the fault.">getFaultPage</a>() { <span class="keywordflow">return</span> faultPage; };
+<a name="l00093"></a>00093         uint32_t <a class="code" href="../../df/deb/classcMMU.xhtml#a8f67a55d3444b1164999ef64253eb37e" title="Translate virtual to physical address.">getAddr</a>(<span class="keywordtype">string</span>&amp; sVA, <span class="keywordtype">bool</span> isWrite);
+<a name="l00094"></a>00094 };
+<a name="l00095"></a>00095 
+<a name="l00147"></a>00147 <span class="preprocessor">#endif // MMU_CPP_INCLUDED</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -171,7 +170,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 27 2012 23:10:55 for 5103 Project 2 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 28 2012 13:26:03 for 5103 Project 2 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

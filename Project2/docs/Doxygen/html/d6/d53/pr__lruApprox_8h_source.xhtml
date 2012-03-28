@@ -89,42 +89,42 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <a name="l00008"></a>00008 
 <a name="l00009"></a>00009 <span class="keyword">using namespace </span>std;
 <a name="l00010"></a>00010 
-<a name="l00011"></a><a class="code" href="../../d1/d58/classcPRLruApprox.xhtml">00011</a> <span class="keyword">class </span><a class="code" href="../../d1/d58/classcPRLruApprox.xhtml">cPRLruApprox</a>: <span class="keyword">public</span> <a class="code" href="../../d7/df0/classcPRPolicy.xhtml" title="Abstract Page Replacement Policy.">cPRPolicy</a> {
-<a name="l00012"></a>00012     <span class="keyword">private</span>:
-<a name="l00013"></a>00013         <span class="comment">//history of the pages</span>
-<a name="l00014"></a>00014         list&lt;sPTEOwner*&gt; pageHist;
-<a name="l00015"></a>00015         queue&lt;sPTEOwner*&gt; pteowner_cache;
-<a name="l00016"></a>00016 
-<a name="l00017"></a>00017         <a class="code" href="../../d3/dd2/classcFrameAllocPolicy.xhtml" title="An abstract class for allocating frames to processes.">cFrameAllocPolicy</a>&amp; FAPolicy;
-<a name="l00018"></a>00018 
-<a name="l00019"></a>00019         uint32_t PTSize;
-<a name="l00020"></a>00020 
-<a name="l00021"></a>00021         <span class="keywordtype">void</span> updateTime();
-<a name="l00022"></a>00022 
-<a name="l00027"></a>00027         <a class="code" href="../../d2/d96/structsPTEOwner.xhtml" title="A struct used to associate a process with a particular page.">sPTEOwner</a>* getPTEOwner();
-<a name="l00028"></a>00028 
-<a name="l00031"></a>00031         <span class="keywordtype">void</span> returnPTEOwner(<a class="code" href="../../d2/d96/structsPTEOwner.xhtml" title="A struct used to associate a process with a particular page.">sPTEOwner</a>* pteOwner);
-<a name="l00032"></a>00032 
-<a name="l00033"></a>00033     <span class="keyword">public</span>:
-<a name="l00034"></a>00034         <a class="code" href="../../d1/d58/classcPRLruApprox.xhtml">cPRLruApprox</a>(<a class="code" href="../../d3/dd2/classcFrameAllocPolicy.xhtml" title="An abstract class for allocating frames to processes.">cFrameAllocPolicy</a>&amp; _FAPolicy);
-<a name="l00035"></a>00035         ~<a class="code" href="../../d1/d58/classcPRLruApprox.xhtml">cPRLruApprox</a>();
-<a name="l00036"></a>00036 
-<a name="l00037"></a><a class="code" href="../../d1/d58/classcPRLruApprox.xhtml#acf51ca9d36ab017456f856809e13dab7">00037</a>         <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="../../d1/d58/classcPRLruApprox.xhtml#acf51ca9d36ab017456f856809e13dab7" title="Name of PR module.">name</a>() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;lru_approx&quot;</span>; };
-<a name="l00038"></a>00038 
-<a name="l00042"></a>00042         <a class="code" href="../../d3/d2c/pageReplace_8h.xhtml#af4bc4c41a44c2bd80e8cbf1aae370217">ePRStatus</a> resolvePageFault(<a class="code" href="../../d4/d8e/structsProc.xhtml" title="Struct representing a process.">sProc</a>* proc, uint32_t page);
-<a name="l00043"></a>00043 
-<a name="l00046"></a>00046         <span class="keywordtype">void</span> finishedQuanta(<a class="code" href="../../d4/d8e/structsProc.xhtml" title="Struct representing a process.">sProc</a>* proc);
-<a name="l00047"></a>00047 
-<a name="l00051"></a>00051         <span class="keywordtype">void</span> finishedIO(<a class="code" href="../../d4/d8e/structsProc.xhtml" title="Struct representing a process.">sProc</a>* proc, <a class="code" href="../../db/d4b/structsPTE.xhtml" title="A struct representing a single page table entry.">sPTE</a>* page);
-<a name="l00052"></a>00052 
-<a name="l00056"></a>00056         <span class="keywordtype">bool</span> clearPages(<span class="keywordtype">int</span> numPages);
-<a name="l00057"></a>00057 
-<a name="l00058"></a>00058         <span class="keywordtype">void</span> unpinFrame(uint32_t frame);
-<a name="l00059"></a>00059 
-<a name="l00068"></a>00068         <span class="keywordtype">void</span> returnFrame(uint32_t frame);
-<a name="l00069"></a>00069 };
-<a name="l00070"></a>00070 
-<a name="l00079"></a>00079 <span class="preprocessor">#endif // PR_LRUAPPROX_H_INCLUDED</span>
+<a name="l00012"></a><a class="code" href="../../d1/d58/classcPRLruApprox.xhtml">00012</a> <span class="keyword">class </span><a class="code" href="../../d1/d58/classcPRLruApprox.xhtml" title="LRU approximate PR Policy.">cPRLruApprox</a>: <span class="keyword">public</span> <a class="code" href="../../d7/df0/classcPRPolicy.xhtml" title="Abstract Page Replacement Policy.">cPRPolicy</a> {
+<a name="l00013"></a>00013     <span class="keyword">private</span>:
+<a name="l00014"></a>00014         <span class="comment">//history of the pages</span>
+<a name="l00015"></a>00015         list&lt;sPTEOwner*&gt; pageHist;
+<a name="l00016"></a>00016         queue&lt;sPTEOwner*&gt; pteowner_cache;
+<a name="l00017"></a>00017 
+<a name="l00018"></a>00018         <a class="code" href="../../d3/dd2/classcFrameAllocPolicy.xhtml" title="An abstract class for allocating frames to processes.">cFrameAllocPolicy</a>&amp; FAPolicy;
+<a name="l00019"></a>00019 
+<a name="l00020"></a>00020         uint32_t PTSize;
+<a name="l00021"></a>00021 
+<a name="l00022"></a>00022         <span class="keywordtype">void</span> updateTime();
+<a name="l00023"></a>00023 
+<a name="l00028"></a>00028         <a class="code" href="../../d2/d96/structsPTEOwner.xhtml" title="A struct used to associate a process with a particular page.">sPTEOwner</a>* getPTEOwner();
+<a name="l00029"></a>00029 
+<a name="l00032"></a>00032         <span class="keywordtype">void</span> returnPTEOwner(<a class="code" href="../../d2/d96/structsPTEOwner.xhtml" title="A struct used to associate a process with a particular page.">sPTEOwner</a>* pteOwner);
+<a name="l00033"></a>00033 
+<a name="l00034"></a>00034     <span class="keyword">public</span>:
+<a name="l00035"></a>00035         <a class="code" href="../../d1/d58/classcPRLruApprox.xhtml" title="LRU approximate PR Policy.">cPRLruApprox</a>(<a class="code" href="../../d3/dd2/classcFrameAllocPolicy.xhtml" title="An abstract class for allocating frames to processes.">cFrameAllocPolicy</a>&amp; _FAPolicy);
+<a name="l00036"></a>00036         ~<a class="code" href="../../d1/d58/classcPRLruApprox.xhtml" title="LRU approximate PR Policy.">cPRLruApprox</a>();
+<a name="l00037"></a>00037 
+<a name="l00038"></a><a class="code" href="../../d1/d58/classcPRLruApprox.xhtml#acf51ca9d36ab017456f856809e13dab7">00038</a>         <span class="keyword">const</span> <span class="keywordtype">char</span>* <a class="code" href="../../d1/d58/classcPRLruApprox.xhtml#acf51ca9d36ab017456f856809e13dab7" title="Name of PR module.">name</a>() { <span class="keywordflow">return</span> <span class="stringliteral">&quot;lru_approx&quot;</span>; };
+<a name="l00039"></a>00039 
+<a name="l00043"></a>00043         <a class="code" href="../../d3/d2c/pageReplace_8h.xhtml#af4bc4c41a44c2bd80e8cbf1aae370217">ePRStatus</a> resolvePageFault(<a class="code" href="../../d4/d8e/structsProc.xhtml" title="Struct representing a process.">sProc</a>* proc, uint32_t page);
+<a name="l00044"></a>00044 
+<a name="l00047"></a>00047         <span class="keywordtype">void</span> finishedQuanta(<a class="code" href="../../d4/d8e/structsProc.xhtml" title="Struct representing a process.">sProc</a>* proc);
+<a name="l00048"></a>00048 
+<a name="l00052"></a>00052         <span class="keywordtype">void</span> finishedIO(<a class="code" href="../../d4/d8e/structsProc.xhtml" title="Struct representing a process.">sProc</a>* proc, <a class="code" href="../../db/d4b/structsPTE.xhtml" title="A struct representing a single page table entry.">sPTE</a>* page);
+<a name="l00053"></a>00053 
+<a name="l00057"></a>00057         <span class="keywordtype">bool</span> clearPages(<span class="keywordtype">int</span> numPages);
+<a name="l00058"></a>00058 
+<a name="l00059"></a>00059         <span class="keywordtype">void</span> unpinFrame(uint32_t frame);
+<a name="l00060"></a>00060 
+<a name="l00069"></a>00069         <span class="keywordtype">void</span> returnFrame(uint32_t frame);
+<a name="l00070"></a>00070 };
+<a name="l00071"></a>00071 
+<a name="l00080"></a>00080 <span class="preprocessor">#endif // PR_LRUAPPROX_H_INCLUDED</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -143,7 +143,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 27 2012 23:10:55 for 5103 Project 2 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 28 2012 13:26:03 for 5103 Project 2 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

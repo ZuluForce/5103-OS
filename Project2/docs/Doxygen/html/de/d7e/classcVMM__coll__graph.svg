@@ -135,7 +135,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node20 -->
 <g id="node41" class="node"><title>Node20</title>
-<a xlink:href="../../df/deb/classcMMU.xhtml" target="_top" xlink:title="cMMU">
+<a xlink:href="../../df/deb/classcMMU.xhtml" target="_top" xlink:title="Class representing an MMU in the CPU.">
 <polygon fill="white" stroke="black" points="1210,-198.31 1210,-217.31 1256,-217.31 1256,-198.31 1210,-198.31"/>
 <text text-anchor="middle" x="1233" y="-205.31" font-family="Helvetica,sans-Serif" font-size="10.00">cMMU</text>
 </a>
@@ -331,7 +331,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node17 -->
 <g id="node34" class="node"><title>Node17</title>
-<a xlink:href="../../d3/d6f/classcCleanDaemon.xhtml" target="_top" xlink:title="cCleanDaemon">
+<a xlink:href="../../d3/d6f/classcCleanDaemon.xhtml" target="_top" xlink:title="Cleaning Daemon for system.">
 <polygon fill="white" stroke="black" points="1760,-255.31 1760,-274.31 1844,-274.31 1844,-255.31 1760,-255.31"/>
 <text text-anchor="middle" x="1802" y="-262.31" font-family="Helvetica,sans-Serif" font-size="10.00">cCleanDaemon</text>
 </a>
@@ -369,7 +369,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node21 -->
 <g id="node44" class="node"><title>Node21</title>
-<a xlink:href="../../d2/deb/structsTLBE.xhtml" target="_top" xlink:title="sTLBE">
+<a xlink:href="../../d2/deb/structsTLBE.xhtml" target="_top" xlink:title="Struct representing a single entry in the TLB.">
 <polygon fill="white" stroke="black" points="947.5,-135.31 947.5,-154.31 994.5,-154.31 994.5,-135.31 947.5,-135.31"/>
 <text text-anchor="middle" x="971" y="-142.31" font-family="Helvetica,sans-Serif" font-size="10.00">sTLBE</text>
 </a>

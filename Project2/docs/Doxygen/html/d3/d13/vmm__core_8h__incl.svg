@@ -246,7 +246,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node37 -->
 <g id="node121" class="node"><title>Node37</title>
-<a xlink:href="../../de/d7e/cleaningDaemon_8h_source.xhtml" target="_top" xlink:title="Policy/cleaningDaemon.h">
+<a xlink:href="../../de/d7e/cleaningDaemon_8h.xhtml" target="_top" xlink:title="Policy/cleaningDaemon.h">
 <polygon fill="white" stroke="black" points="649,-224.5 649,-243.5 777,-243.5 777,-224.5 649,-224.5"/>
 <text text-anchor="middle" x="713" y="-231.5" font-family="Helvetica,sans-Serif" font-size="10.00">Policy/cleaningDaemon.h</text>
 </a>
@@ -263,7 +263,7 @@ var sectionId = 'dynsection-0';
 </g>
 <!-- Node12 -->
 <g id="node23" class="node"><title>Node12</title>
-<a xlink:href="../../d2/df1/mmu_8h_source.xhtml" target="_top" xlink:title="mmu.h">
+<a xlink:href="../../d2/df1/mmu_8h.xhtml" target="_top" xlink:title="mmu.h">
 <polygon fill="white" stroke="black" points="347.5,-112.5 347.5,-131.5 394.5,-131.5 394.5,-112.5 347.5,-112.5"/>
 <text text-anchor="middle" x="371" y="-119.5" font-family="Helvetica,sans-Serif" font-size="10.00">mmu.h</text>
 </a>

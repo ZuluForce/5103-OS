@@ -9,6 +9,7 @@
 
 using namespace std;
 
+/** Pure LRU PR Policy */
 class cPRLru: public cPRPolicy {
 	private:
 		//history of the pages

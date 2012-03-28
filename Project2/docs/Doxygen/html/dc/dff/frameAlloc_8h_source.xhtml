@@ -114,43 +114,43 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <a name="l00051"></a>00051         <span class="keyword">virtual</span> <span class="keywordtype">bool</span> unpin(uint32_t frame) = 0;
 <a name="l00052"></a>00052 };
 <a name="l00053"></a>00053 
-<a name="l00054"></a><a class="code" href="../../d1/d40/classcFixedAlloc.xhtml">00054</a> <span class="keyword">class </span><a class="code" href="../../d1/d40/classcFixedAlloc.xhtml">cFixedAlloc</a>: <span class="keyword">public</span> <a class="code" href="../../d3/dd2/classcFrameAllocPolicy.xhtml" title="An abstract class for allocating frames to processes.">cFrameAllocPolicy</a> {
-<a name="l00055"></a>00055     <span class="keyword">private</span>:
-<a name="l00056"></a>00056         <span class="keywordtype">int</span> allocSize;
-<a name="l00057"></a>00057         dynamic_bitset&lt;&gt; frames;
-<a name="l00058"></a>00058         dynamic_bitset&lt;&gt; pinned;
-<a name="l00059"></a>00059 
-<a name="l00060"></a>00060         uint32_t numFrames;
-<a name="l00061"></a>00061         uint32_t openFrames;
-<a name="l00062"></a>00062 
-<a name="l00063"></a>00063         uint32_t findFirstOf(<span class="keywordtype">bool</span> check, dynamic_bitset&lt;&gt;&amp; bits);
-<a name="l00064"></a>00064 
-<a name="l00065"></a>00065         <span class="keywordtype">bool</span> _printF;
-<a name="l00066"></a>00066         <span class="keywordtype">bool</span> _printF_on_pin;
-<a name="l00067"></a>00067         <span class="keywordtype">void</span> printFrames();
-<a name="l00068"></a>00068         FILE* printLoc;
+<a name="l00064"></a><a class="code" href="../../d1/d40/classcFixedAlloc.xhtml">00064</a> <span class="keyword">class </span><a class="code" href="../../d1/d40/classcFixedAlloc.xhtml" title="A class implementing a simple fcfs style frame allocation.">cFixedAlloc</a>: <span class="keyword">public</span> <a class="code" href="../../d3/dd2/classcFrameAllocPolicy.xhtml" title="An abstract class for allocating frames to processes.">cFrameAllocPolicy</a> {
+<a name="l00065"></a>00065     <span class="keyword">private</span>:
+<a name="l00066"></a>00066         <span class="keywordtype">int</span> allocSize;
+<a name="l00067"></a>00067         dynamic_bitset&lt;&gt; frames;
+<a name="l00068"></a>00068         dynamic_bitset&lt;&gt; pinned;
 <a name="l00069"></a>00069 
-<a name="l00070"></a>00070     <span class="keyword">public</span>:
-<a name="l00071"></a>00071         <a class="code" href="../../d1/d40/classcFixedAlloc.xhtml">cFixedAlloc</a>();
-<a name="l00072"></a>00072         ~<a class="code" href="../../d1/d40/classcFixedAlloc.xhtml">cFixedAlloc</a>();
-<a name="l00073"></a>00073 
-<a name="l00074"></a>00074         <span class="keywordtype">void</span> regProcs(vector&lt;sProc*&gt;&amp; procs);
-<a name="l00075"></a>00075 
-<a name="l00076"></a>00076         <span class="keywordtype">bool</span> checkAvailable(uint32_t frame, <span class="keywordtype">bool</span> pinnedTaken = <span class="keyword">true</span>);
-<a name="l00077"></a>00077 
-<a name="l00078"></a>00078         pair&lt;bool,uint32_t&gt; getFrame();
-<a name="l00079"></a>00079         pair&lt;bool,uint32_t&gt; getFrame(<a class="code" href="../../d4/d8e/structsProc.xhtml" title="Struct representing a process.">sProc</a>*);
-<a name="l00080"></a>00080         <span class="keywordtype">bool</span> getFrame(uint32_t frame);
-<a name="l00081"></a>00081 
-<a name="l00082"></a>00082         <span class="keywordtype">void</span> returnFrame(uint32_t frame);
+<a name="l00070"></a>00070         uint32_t numFrames;
+<a name="l00071"></a>00071         uint32_t openFrames;
+<a name="l00072"></a>00072 
+<a name="l00073"></a>00073         uint32_t findFirstOf(<span class="keywordtype">bool</span> check, dynamic_bitset&lt;&gt;&amp; bits);
+<a name="l00074"></a>00074 
+<a name="l00075"></a>00075         <span class="keywordtype">bool</span> _printF;
+<a name="l00076"></a>00076         <span class="keywordtype">bool</span> _printF_on_pin;
+<a name="l00077"></a>00077         <span class="keywordtype">void</span> printFrames();
+<a name="l00078"></a>00078         FILE* printLoc;
+<a name="l00079"></a>00079 
+<a name="l00080"></a>00080     <span class="keyword">public</span>:
+<a name="l00081"></a>00081         <a class="code" href="../../d1/d40/classcFixedAlloc.xhtml" title="A class implementing a simple fcfs style frame allocation.">cFixedAlloc</a>();
+<a name="l00082"></a>00082         ~<a class="code" href="../../d1/d40/classcFixedAlloc.xhtml" title="A class implementing a simple fcfs style frame allocation.">cFixedAlloc</a>();
 <a name="l00083"></a>00083 
-<a name="l00084"></a>00084         uint32_t checkOpen(<span class="keywordtype">bool</span>);
+<a name="l00084"></a>00084         <span class="keywordtype">void</span> regProcs(vector&lt;sProc*&gt;&amp; procs);
 <a name="l00085"></a>00085 
-<a name="l00086"></a>00086         <span class="keywordtype">bool</span> pin(uint32_t frame);
-<a name="l00087"></a>00087         <span class="keywordtype">bool</span> unpin(uint32_t frame);
-<a name="l00088"></a>00088 };
-<a name="l00089"></a>00089 
-<a name="l00090"></a>00090 <span class="preprocessor">#endif // FRAMEALLOC_H_INCLUDED</span>
+<a name="l00086"></a>00086         <span class="keywordtype">bool</span> checkAvailable(uint32_t frame, <span class="keywordtype">bool</span> pinnedTaken = <span class="keyword">true</span>);
+<a name="l00087"></a>00087 
+<a name="l00088"></a>00088         pair&lt;bool,uint32_t&gt; getFrame();
+<a name="l00089"></a>00089         pair&lt;bool,uint32_t&gt; getFrame(<a class="code" href="../../d4/d8e/structsProc.xhtml" title="Struct representing a process.">sProc</a>*);
+<a name="l00090"></a>00090         <span class="keywordtype">bool</span> getFrame(uint32_t frame);
+<a name="l00091"></a>00091 
+<a name="l00092"></a>00092         <span class="keywordtype">void</span> returnFrame(uint32_t frame);
+<a name="l00093"></a>00093 
+<a name="l00094"></a>00094         uint32_t checkOpen(<span class="keywordtype">bool</span>);
+<a name="l00095"></a>00095 
+<a name="l00096"></a>00096         <span class="keywordtype">bool</span> pin(uint32_t frame);
+<a name="l00097"></a>00097         <span class="keywordtype">bool</span> unpin(uint32_t frame);
+<a name="l00098"></a>00098 };
+<a name="l00099"></a>00099 
+<a name="l00115"></a>00115 <span class="preprocessor">#endif // FRAMEALLOC_H_INCLUDED</span>
 </pre></div></div><!-- contents -->
 <!-- window showing the filter options -->
 <div id="MSearchSelectWindow"
@@ -169,7 +169,7 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 27 2012 23:10:55 for 5103 Project 2 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 28 2012 13:26:03 for 5103 Project 2 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

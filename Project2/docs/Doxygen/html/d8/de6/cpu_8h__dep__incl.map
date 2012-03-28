@@ -1,6 +1,6 @@
 <map id="G" name="G">
 <area shape="rect" id="node3" href="$d4/d9a/vmm__core_8h.xhtml" title="include/vmm_core.h" alt="" coords="303,80,441,107"/>
-<area shape="rect" id="node6" href="$de/d7e/cleaningDaemon_8h_source.xhtml" title="include/Policy/cleaningDaemon.h" alt="" coords="5,155,219,181"/>
+<area shape="rect" id="node6" href="$de/d7e/cleaningDaemon_8h.xhtml" title="include/Policy/cleaningDaemon.h" alt="" coords="5,155,219,181"/>
 <area shape="rect" id="node9" href="$d4/dbf/main_8h_source.xhtml" title="include/main.h" alt="" coords="204,229,311,256"/>
 <area shape="rect" id="node12" href="$d3/ded/pr__fifo_8h_source.xhtml" title="include/Policy/pr_fifo.h" alt="" coords="295,155,448,181"/>
 <area shape="rect" id="node18" href="$db/d16/pr__lru_8h_source.xhtml" title="include/Policy/pr_lru.h" alt="" coords="474,155,624,181"/>

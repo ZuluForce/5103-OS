@@ -30,7 +30,7 @@
 </g>
 <!-- Node3 -->
 <g id="node5" class="node"><title>Node3</title>
-<a xlink:href="d5/d34/classcPRExc.xhtml" target="_top" xlink:title="cPRExc">
+<a xlink:href="d5/d34/classcPRExc.xhtml" target="_top" xlink:title="Exception specific to the PR module.">
 <polygon fill="white" stroke="black" points="106.5,-38.5 106.5,-57.5 159.5,-57.5 159.5,-38.5 106.5,-38.5"/>
 <text text-anchor="middle" x="133" y="-45.5" font-family="Helvetica,sans-Serif" font-size="10.00">cPRExc</text>
 </a>

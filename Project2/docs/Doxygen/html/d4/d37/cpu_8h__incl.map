@@ -1,5 +1,5 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$d2/df1/mmu_8h_source.xhtml" title="mmu.h" alt="" coords="145,304,207,331"/>
+<area shape="rect" id="node3" href="$d2/df1/mmu_8h.xhtml" title="mmu.h" alt="" coords="145,304,207,331"/>
 <area shape="rect" id="node11" href="$d5/dee/data__structs_8h.xhtml" title="data_structs.h" alt="" coords="325,379,429,405"/>
 <area shape="rect" id="node22" href="$d5/dfd/iniReader_8h.xhtml" title="iniReader.h" alt="" coords="505,379,593,405"/>
 <area shape="rect" id="node36" href="$d1/d8c/logger_8h.xhtml" title="utility/logger.h" alt="" coords="933,379,1035,405"/>
@@ -10,7 +10,7 @@
 <area shape="rect" id="node85" href="$d1/df8/allPR_8h_source.xhtml" title="Policy/allPR.h" alt="" coords="1474,155,1579,181"/>
 <area shape="rect" id="node91" href="$dc/dff/frameAlloc_8h_source.xhtml" title="Policy/frameAlloc.h" alt="" coords="651,304,785,331"/>
 <area shape="rect" id="node117" href="$de/d9a/strConv_8h_source.xhtml" title="utility/strConv.h" alt="" coords="1233,155,1348,181"/>
-<area shape="rect" id="node121" href="$de/d7e/cleaningDaemon_8h_source.xhtml" title="Policy/cleaningDaemon.h" alt="" coords="644,155,815,181"/>
+<area shape="rect" id="node121" href="$de/d7e/cleaningDaemon_8h.xhtml" title="Policy/cleaningDaemon.h" alt="" coords="644,155,815,181"/>
 <area shape="rect" id="node67" href="$df/db9/id_8h.xhtml" title="utility/id.h" alt="" coords="1217,304,1295,331"/>
 <area shape="rect" id="node87" href="$d3/d2c/pageReplace_8h.xhtml" title="Policy/pageReplace.h" alt="" coords="908,229,1056,256"/>
 <area shape="rect" id="node97" href="$d3/ded/pr__fifo_8h_source.xhtml" title="Policy/pr_fifo.h" alt="" coords="1825,229,1935,256"/>

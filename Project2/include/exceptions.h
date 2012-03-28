@@ -63,6 +63,7 @@ class cIOExc: public cException {
 		string& getTrace() { return IO_Data_Trace; };
 };
 
+/** Exception specific to the PR module*/
 class cPRExc: public cException {
 	private:
 		string name;

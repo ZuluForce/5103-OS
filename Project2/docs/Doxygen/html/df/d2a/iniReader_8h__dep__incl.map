@@ -1,8 +1,8 @@
 <map id="G" name="G">
-<area shape="rect" id="node3" href="$d2/df1/mmu_8h_source.xhtml" title="include/mmu.h" alt="" coords="495,80,601,107"/>
+<area shape="rect" id="node3" href="$d2/df1/mmu_8h.xhtml" title="include/mmu.h" alt="" coords="495,80,601,107"/>
 <area shape="rect" id="node5" href="$dc/da7/cpu_8h.xhtml" title="include/cpu.h" alt="" coords="563,155,661,181"/>
 <area shape="rect" id="node7" href="$d4/d9a/vmm__core_8h.xhtml" title="include/vmm_core.h" alt="" coords="475,229,613,256"/>
-<area shape="rect" id="node10" href="$de/d7e/cleaningDaemon_8h_source.xhtml" title="include/Policy/cleaningDaemon.h" alt="" coords="697,304,911,331"/>
+<area shape="rect" id="node10" href="$de/d7e/cleaningDaemon_8h.xhtml" title="include/Policy/cleaningDaemon.h" alt="" coords="697,304,911,331"/>
 <area shape="rect" id="node30" href="$d9/dd2/round__robin_8h.xhtml" title="include/round_robin.h" alt="" coords="626,80,771,107"/>
 <area shape="rect" id="node33" href="$d7/d62/io__control_8h_source.xhtml" title="include/io_control.h" alt="" coords="166,80,300,107"/>
 <area shape="rect" id="node36" href="$dc/dff/frameAlloc_8h_source.xhtml" title="include/Policy/frameAlloc.h" alt="" coords="358,155,537,181"/>

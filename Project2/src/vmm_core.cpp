@@ -60,7 +60,8 @@ cVMM::cVMM(vector<sProc*>& _procs, cPRPolicy& _PRM, cCleanDaemon& _cDaemon)
 		cout << endl;
 		cout << "!!!! Detected potential circular fault before starting !!!!" << endl;
 		cout << "First page-in would be replaced before process 0 executes again" << endl;
-		cout << "Use setting ignore_circular_fault_warn to skip this" << endl << endl;
+		cout << "This may be a designed test so don't worry. Otherwise fix the problem or" << endl;
+		cout << "use setting ignore_circular_fault_warn to skip this" << endl << endl;
 
 		if ( !EXTRACTP(bool, Policy, ignore_circular_fault_warn) )
 			exit(-1);

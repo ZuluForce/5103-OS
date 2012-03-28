@@ -8,6 +8,7 @@
 
 using namespace std;
 
+/** LRU approximate PR Policy */
 class cPRLruApprox: public cPRPolicy {
 	private:
 		//history of the pages

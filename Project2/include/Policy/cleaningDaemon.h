@@ -1,6 +1,8 @@
 #ifndef CLEANINGDAEMON_H_INCLUDED
 #define CLEANINGDAEMON_H_INCLUDED
 
+/** @file */
+
 #include "iniReader.h"
 #include "Policy/frameAlloc.h"
 

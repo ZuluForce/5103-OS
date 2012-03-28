@@ -29,7 +29,7 @@
 </g>
 <!-- Node3 -->
 <g id="node4" class="node"><title>Node3</title>
-<a xlink:href="../../d2/deb/structsTLBE.xhtml" target="_top" xlink:title="sTLBE">
+<a xlink:href="../../d2/deb/structsTLBE.xhtml" target="_top" xlink:title="Struct representing a single entry in the TLB.">
 <polygon fill="white" stroke="black" points="58.5,-68.5 58.5,-87.5 105.5,-87.5 105.5,-68.5 58.5,-68.5"/>
 <text text-anchor="middle" x="82" y="-75.5" font-family="Helvetica,sans-Serif" font-size="10.00">sTLBE</text>
 </a>

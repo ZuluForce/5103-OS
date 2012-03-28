@@ -1,7 +1,7 @@
 <map id="G" name="G">
 <area shape="rect" id="node2" href="$d4/d8e/structsProc.xhtml" title="Struct representing a process." alt="" coords="1643,189,1699,216"/>
 <area shape="rect" id="node4" href="$db/d4b/structsPTE.xhtml" title="A struct representing a single page table entry." alt="" coords="1459,120,1514,147"/>
-<area shape="rect" id="node20" href="$df/deb/classcMMU.xhtml" title="cMMU" alt="" coords="1640,77,1701,104"/>
+<area shape="rect" id="node20" href="$df/deb/classcMMU.xhtml" title="Class representing an MMU in the CPU." alt="" coords="1640,77,1701,104"/>
 <area shape="rect" id="node6" title="STL class." alt="" coords="1280,189,1403,216"/>
 <area shape="rect" id="node8" title="STL class." alt="" coords="813,132,1024,159"/>
 <area shape="rect" id="node10" title="STL class." alt="" coords="365,104,547,131"/>
@@ -11,7 +11,7 @@
 <area shape="rect" id="node14" title="STL class." alt="" coords="6,77,106,104"/>
 <area shape="rect" id="node16" title="STL class." alt="" coords="1447,259,1527,285"/>
 <area shape="rect" id="node18" title="STL class." alt="" coords="1069,259,1235,285"/>
-<area shape="rect" id="node23" href="$d2/deb/structsTLBE.xhtml" title="sTLBE" alt="" coords="1455,56,1518,83"/>
+<area shape="rect" id="node23" href="$d2/deb/structsTLBE.xhtml" title="Struct representing a single entry in the TLB." alt="" coords="1455,56,1518,83"/>
 <area shape="rect" id="node25" title="STL class." alt="" coords="1427,5,1547,32"/>
 <area shape="rect" id="node27" title="STL class." alt="" coords="1049,11,1255,37"/>
 </map>

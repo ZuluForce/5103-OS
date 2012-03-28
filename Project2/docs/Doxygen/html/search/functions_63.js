@@ -1,5 +1,7 @@
 var searchData=
 [
+  ['checkclean',['checkClean',['../d3/d6f/classcCleanDaemon.xhtml#ac9a8ca1ac1d35f554af393274dd87f68',1,'cCleanDaemon']]],
+  ['checkstatus',['checkStatus',['../df/deb/classcMMU.xhtml#ac0b382b3495595d8b4784835c9d73515',1,'cMMU']]],
   ['cidmanager',['cIDManager',['../de/dd4/classcIDManager.xhtml#a59021595aaf85ebc151c207a8a04f101',1,'cIDManager']]],
   ['ciocontrol',['cIOControl',['../da/d8f/classcIOControl.xhtml#aefe59221a4ffc9df0973e468febf013b',1,'cIOControl']]],
   ['cleanupprocess',['cleanupProcess',['../dc/de5/classcVMM.xhtml#aadc20572362bbf039d9d03320d5e04c8',1,'cVMM']]],

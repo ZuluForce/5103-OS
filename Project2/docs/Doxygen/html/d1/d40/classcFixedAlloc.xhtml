@@ -85,7 +85,12 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="title">cFixedAlloc Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="cFixedAlloc" --><!-- doxytag: inherits="cFrameAllocPolicy" --><div class="dynheader">
+<!-- doxytag: class="cFixedAlloc" --><!-- doxytag: inherits="cFrameAllocPolicy" -->
+<p>A class implementing a simple fcfs style frame allocation.  
+ <a href="../../d1/d40/classcFixedAlloc.xhtml#details">More...</a></p>
+
+<p><code>#include &lt;<a class="el" href="../../dc/dff/frameAlloc_8h_source.xhtml">frameAlloc.h</a>&gt;</code></p>
+<div class="dynheader">
 Inheritance diagram for cFixedAlloc:</div>
 <div class="dyncontent">
 <div class="center"><iframe scrolling="no" frameborder="0" src="../../dc/d13/classcFixedAlloc__inherit__graph.svg" width="139" height="112"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
@@ -114,8 +119,8 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>getFrame</b> (uint32_
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">System is returning a page.  <a href="#a79df79853a015bb750ca682630afcfd8"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2109057465d037b0c23dba1257163aba"></a><!-- doxytag: member="cFixedAlloc::checkOpen" ref="a2109057465d037b0c23dba1257163aba" args="(bool)" -->
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>checkOpen</b> (bool)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0baba5ee9e04148d9d5845ee5afbfe37"></a><!-- doxytag: member="cFixedAlloc::pin" ref="a0baba5ee9e04148d9d5845ee5afbfe37" args="(uint32_t frame)" -->
-bool&#160;</td><td class="memItemRight" valign="bottom"><b>pin</b> (uint32_t frame)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../d1/d40/classcFixedAlloc.xhtml#ae876cb2df8588fc96c2e6310478f773b">pin</a> (uint32_t frame)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Pin a frame.  <a href="#ae876cb2df8588fc96c2e6310478f773b"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a2a6f869ad3c6fa6190fdbca3e198bae9"></a><!-- doxytag: member="cFixedAlloc::unpin" ref="a2a6f869ad3c6fa6190fdbca3e198bae9" args="(uint32_t frame)" -->
 bool&#160;</td><td class="memItemRight" valign="bottom"><b>unpin</b> (uint32_t frame)</td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
@@ -143,7 +148,30 @@ bool&#160;</td><td class="memItemRight" valign="bottom"><b>_printF_on_pin</b></t
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ad953ea8614b03e098d3e46a6087e15ba"></a><!-- doxytag: member="cFixedAlloc::printLoc" ref="ad953ea8614b03e098d3e46a6087e15ba" args="" -->
 FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>printLoc</b></td></tr>
 </table>
-<hr/><h2>Member Function Documentation</h2>
+<hr/><a name="details" id="details"></a><h2>Detailed Description</h2>
+<div class="textblock"><p>The namae "fixed alloc" is a bit of a misnomer because originally we though that each process would only be given a fixed number of frames. With the global demand paging policy this changed to simply being a class for managing which frames were open and whenever someone requests a page they are given one if it is available, regardless of how many they have gotten before. </p>
+</div><hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ae876cb2df8588fc96c2e6310478f773b"></a><!-- doxytag: member="cFixedAlloc::pin" ref="ae876cb2df8588fc96c2e6310478f773b" args="(uint32_t frame)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../d1/d40/classcFixedAlloc.xhtml#ae876cb2df8588fc96c2e6310478f773b">cFixedAlloc::pin</a> </td>
+          <td>(</td>
+          <td class="paramtype">uint32_t&#160;</td>
+          <td class="paramname"><em>frame</em></td><td>)</td>
+          <td><code> [virtual]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>A pinned frame cannot be given to anyone else. Usually this does not matter because the page is reserved first and therefore the frame allocator won't give it out again. There are scenarios where on a page fault they PR module may decide to replace a page which is still coming into memory. In this case the PR module would notice from this class that the frame is pinned so it can't spill it.</p>
+<p>This scenario happens mostly in low memory situations. </p>
+
+<p>Implements <a class="el" href="../../d3/dd2/classcFrameAllocPolicy.xhtml">cFrameAllocPolicy</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a489395f063815020f36265a52308a3f6"></a><!-- doxytag: member="cFixedAlloc::regProcs" ref="a489395f063815020f36265a52308a3f6" args="(vector&lt; sProc * &gt; &amp;procs)" -->
 <div class="memitem">
 <div class="memproto">
@@ -206,7 +234,7 @@ FILE *&#160;</td><td class="memItemRight" valign="bottom"><b>printLoc</b></td></
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 27 2012 23:10:55 for 5103 Project 2 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 28 2012 13:26:03 for 5103 Project 2 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>

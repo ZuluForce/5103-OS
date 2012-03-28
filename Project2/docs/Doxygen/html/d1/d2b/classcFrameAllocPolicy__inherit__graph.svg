@@ -16,7 +16,7 @@
 </g>
 <!-- Node2 -->
 <g id="node3" class="node"><title>Node2</title>
-<a xlink:href="../../d1/d40/classcFixedAlloc.xhtml" target="_top" xlink:title="cFixedAlloc">
+<a xlink:href="../../d1/d40/classcFixedAlloc.xhtml" target="_top" xlink:title="A class implementing a simple fcfs style frame allocation.">
 <polygon fill="white" stroke="black" points="14,-0.5 14,-19.5 82,-19.5 82,-0.5 14,-0.5"/>
 <text text-anchor="middle" x="48" y="-7.5" font-family="Helvetica,sans-Serif" font-size="10.00">cFixedAlloc</text>
 </a>

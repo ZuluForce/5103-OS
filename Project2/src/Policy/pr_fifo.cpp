@@ -134,6 +134,10 @@ void cPRFifo::finishedIO(sProc* proc, sPTE* page) {
 	assert(proc != NULL);
 	assert(page != NULL);
 
+	/* At this point we add the page to our history
+	 * queue and unpin it.
+	 */
+
 	pageHist.push( page );
 	pageOwners.push( proc->pid );
 

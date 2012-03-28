@@ -3,6 +3,15 @@
 }
 
 
+\-Cleaning \-Daemon for system.  
+
+
+
+
+{\ttfamily \#include $<$cleaning\-Daemon.\-h$>$}
+
+
+
 \-Collaboration diagram for c\-Clean\-Daemon\-:\nopagebreak
 \begin{figure}[H]
 \begin{center}
@@ -16,9 +25,8 @@
 \hypertarget{classcCleanDaemon_a7646bbaebfefa0c9478e5a23333768db}{{\bfseries c\-Clean\-Daemon} (\hyperlink{classcFrameAllocPolicy}{c\-Frame\-Alloc\-Policy} \&\-\_\-\-F\-A)}\label{d3/d6f/classcCleanDaemon_a7646bbaebfefa0c9478e5a23333768db}
 
 \item 
-\hypertarget{classcCleanDaemon_ac9a8ca1ac1d35f554af393274dd87f68}{uint32\-\_\-t {\bfseries check\-Clean} ()}\label{d3/d6f/classcCleanDaemon_ac9a8ca1ac1d35f554af393274dd87f68}
-
-\end{DoxyCompactItemize}
+uint32\-\_\-t \hyperlink{classcCleanDaemon_ac9a8ca1ac1d35f554af393274dd87f68}{check\-Clean} ()
+\begin{DoxyCompactList}\small\item\em \-Check if pages need to be cleaned. \end{DoxyCompactList}\end{DoxyCompactItemize}
 \subsection*{\-Private \-Attributes}
 \begin{DoxyCompactItemize}
 \item 
@@ -33,7 +41,21 @@
 \end{DoxyCompactItemize}
 
 
+\subsection{\-Member \-Function \-Documentation}
+\hypertarget{classcCleanDaemon_ac9a8ca1ac1d35f554af393274dd87f68}{\index{c\-Clean\-Daemon@{c\-Clean\-Daemon}!check\-Clean@{check\-Clean}}
+\index{check\-Clean@{check\-Clean}!cCleanDaemon@{c\-Clean\-Daemon}}
+\subsubsection[{check\-Clean}]{\setlength{\rightskip}{0pt plus 5cm}uint32\-\_\-t {\bf c\-Clean\-Daemon\-::check\-Clean} (
+\begin{DoxyParamCaption}
+{}
+\end{DoxyParamCaption}
+)}}\label{d3/d6f/classcCleanDaemon_ac9a8ca1ac1d35f554af393274dd87f68}
+\-The \-V\-M\-M core calls this and the daemon checks with the \-F\-A module to see how many frames are available. \-If it is below its threshold it returns how many should be cleaned. \-This value is passed to the \-P\-R module which makes the policy decisions on which to replace. 
+
+\-Referenced by c\-V\-M\-M\-::start().
+
+
+
 \-The documentation for this class was generated from the following files\-:\begin{DoxyCompactItemize}
 \item 
-include/\-Policy/cleaning\-Daemon.\-h\item 
+include/\-Policy/\hyperlink{cleaningDaemon_8h}{cleaning\-Daemon.\-h}\item 
 src/\-Policy/cleaning\-Daemon.\-cpp\end{DoxyCompactItemize}

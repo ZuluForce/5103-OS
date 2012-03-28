@@ -85,34 +85,42 @@ var searchBox = new SearchBox("searchBox", "../../search",false,'Search');
 <div class="title">cMMU Class Reference</div>  </div>
 </div><!--header-->
 <div class="contents">
-<!-- doxytag: class="cMMU" --><div class="dynheader">
+<!-- doxytag: class="cMMU" -->
+<p>Class representing an MMU in the CPU.  
+</p>
+
+<p><code>#include &lt;<a class="el" href="../../d2/df1/mmu_8h_source.xhtml">mmu.h</a>&gt;</code></p>
+<div class="dynheader">
 Collaboration diagram for cMMU:</div>
 <div class="dyncontent">
-<div class="center"><iframe scrolling="no" frameborder="0" src="../../dc/d5d/classcMMU__coll__graph.svg" width="411" height="515"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe></div>
+<div class="center"><iframe scrolling="no" frameborder="0" src="../../dc/d5d/classcMMU__coll__graph.svg" width="411" height="515"><p><b>This browser is not able to show SVG: try Firefox, Chrome, Safari, or Opera instead.</b></p></iframe>
+</div>
 <center><span class="legend">[<a href="../../graph_legend.xhtml">legend</a>]</span></center></div>
 
 <p><a href="../../d6/df4/classcMMU-members.xhtml">List of all members.</a></p>
 <table class="memberdecls">
 <tr><td colspan="2"><h2><a name="pub-methods"></a>
 Public Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a07912c15eb7a743c0736f3b4e9616860"></a><!-- doxytag: member="cMMU::setPTBR" ref="a07912c15eb7a743c0736f3b4e9616860" args="(sPTE *_ptbr)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>setPTBR</b> (<a class="el" href="../../db/d4b/structsPTE.xhtml">sPTE</a> *_ptbr)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af6b2683d1514d5587d8a48c2dc025f5e"></a><!-- doxytag: member="cMMU::addVC" ref="af6b2683d1514d5587d8a48c2dc025f5e" args="(int *VC)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addVC</b> (int *VC)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a551b571684c7203e0993d3270316e75e"></a><!-- doxytag: member="cMMU::flushTLB" ref="a551b571684c7203e0993d3270316e75e" args="(bool sync=true)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>flushTLB</b> (bool sync=true)</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ab36461a16e1a4a073a025bd91b8ba519"></a><!-- doxytag: member="cMMU::syncTLB" ref="ab36461a16e1a4a073a025bd91b8ba519" args="()" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>syncTLB</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a85181f4d23360667aec58e6822c6889b"></a><!-- doxytag: member="cMMU::checkStatus" ref="a85181f4d23360667aec58e6822c6889b" args="()" -->
-eMMUstate&#160;</td><td class="memItemRight" valign="bottom"><b>checkStatus</b> ()</td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a755d689d330c8283f1d6183c1e5cbcc1"></a><!-- doxytag: member="cMMU::getFaultPage" ref="a755d689d330c8283f1d6183c1e5cbcc1" args="()" -->
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>getFaultPage</b> ()</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/deb/classcMMU.xhtml#a1fadf507689a62a0a28ea10734bdfcca">setPTBR</a> (<a class="el" href="../../db/d4b/structsPTE.xhtml">sPTE</a> *_ptbr)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Set the Page Table Base Register.  <a href="#a1fadf507689a62a0a28ea10734bdfcca"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a043b4dce463c5379e1885a5918103286"></a><!-- doxytag: member="cMMU::addVC" ref="a043b4dce463c5379e1885a5918103286" args="(int *VC)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/deb/classcMMU.xhtml#a043b4dce463c5379e1885a5918103286">addVC</a> (int *VC)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add a refernece to the main VCC for timekeeping purposes. <br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/deb/classcMMU.xhtml#ad46f9d2c75a2fac3b0b7154e864345ab">flushTLB</a> (bool sync=true)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Flush the tlb and optionally sync values back to page table.  <a href="#ad46f9d2c75a2fac3b0b7154e864345ab"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/deb/classcMMU.xhtml#ae981abbf574849c2d83c2402212c3d24">syncTLB</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Sync TLB entries without flushing them.  <a href="#ae981abbf574849c2d83c2402212c3d24"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="el" href="../../d2/df1/mmu_8h.xhtml#ae08a7145dbbab15abf6cd31e4958d861">eMMUstate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/deb/classcMMU.xhtml#ac0b382b3495595d8b4784835c9d73515">checkStatus</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">What is the MMU status after the last translation.  <a href="#ac0b382b3495595d8b4784835c9d73515"></a><br/></td></tr>
+<tr><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/deb/classcMMU.xhtml#ab906b5a3693545e3d7fbdab5d1b3a397">getFaultPage</a> ()</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">What was the VPN that caused the fault.  <a href="#ab906b5a3693545e3d7fbdab5d1b3a397"></a><br/></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/deb/classcMMU.xhtml#a8f67a55d3444b1164999ef64253eb37e">getAddr</a> (string &amp;sVA, bool isWrite)</td></tr>
 <tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Translate virtual to physical address.  <a href="#a8f67a55d3444b1164999ef64253eb37e"></a><br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-methods"></a>
 Private Member Functions</h2></td></tr>
-<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a9cc1d030c6180c32aa9e6308a6a7c66c"></a><!-- doxytag: member="cMMU::addTLB" ref="a9cc1d030c6180c32aa9e6308a6a7c66c" args="(uint32_t, uint32_t, bool)" -->
-void&#160;</td><td class="memItemRight" valign="bottom"><b>addTLB</b> (uint32_t, uint32_t, bool)</td></tr>
+<tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a3344e754b5752bd079787ee5a7328bbf"></a><!-- doxytag: member="cMMU::addTLB" ref="a3344e754b5752bd079787ee5a7328bbf" args="(uint32_t, uint32_t, bool)" -->
+void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="../../df/deb/classcMMU.xhtml#a3344e754b5752bd079787ee5a7328bbf">addTLB</a> (uint32_t, uint32_t, bool)</td></tr>
+<tr><td class="mdescLeft">&#160;</td><td class="mdescRight">Add an entry to the TLB. <br/></td></tr>
 <tr><td colspan="2"><h2><a name="pri-attribs"></a>
 Private Attributes</h2></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a0d648c0b2700336ccd048d338e3c0f40"></a><!-- doxytag: member="cMMU::TLB" ref="a0d648c0b2700336ccd048d338e3c0f40" args="" -->
@@ -138,11 +146,51 @@ int&#160;</td><td class="memItemRight" valign="bottom"><b>tlb_hits</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="af9b299f41ac146cca9982cd2768b3945"></a><!-- doxytag: member="cMMU::tlb_misses" ref="af9b299f41ac146cca9982cd2768b3945" args="" -->
 int&#160;</td><td class="memItemRight" valign="bottom"><b>tlb_misses</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a593631c8752611c58c8ddd5a82f24d9e"></a><!-- doxytag: member="cMMU::mmu_status" ref="a593631c8752611c58c8ddd5a82f24d9e" args="" -->
-eMMUstate&#160;</td><td class="memItemRight" valign="bottom"><b>mmu_status</b></td></tr>
+<a class="el" href="../../d2/df1/mmu_8h.xhtml#ae08a7145dbbab15abf6cd31e4958d861">eMMUstate</a>&#160;</td><td class="memItemRight" valign="bottom"><b>mmu_status</b></td></tr>
 <tr><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="a719786f4271afae04e95286bf9bcdd81"></a><!-- doxytag: member="cMMU::faultPage" ref="a719786f4271afae04e95286bf9bcdd81" args="" -->
 uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>faultPage</b></td></tr>
 </table>
 <hr/><h2>Member Function Documentation</h2>
+<a class="anchor" id="ac0b382b3495595d8b4784835c9d73515"></a><!-- doxytag: member="cMMU::checkStatus" ref="ac0b382b3495595d8b4784835c9d73515" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../df/deb/classcMMU.xhtml#ac0b382b3495595d8b4784835c9d73515">cMMU::checkStatus</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>Since the getAddr function returns the translated address. With the exception of doing some bit packing we can't return the status in the same variable. </p>
+
+<p>Referenced by <a class="el" href="../../d2/dc6/classcCPU.xhtml#a68467fbd50317a9495765606d2f7d4b1">cCPU::run()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ad46f9d2c75a2fac3b0b7154e864345ab"></a><!-- doxytag: member="cMMU::flushTLB" ref="ad46f9d2c75a2fac3b0b7154e864345ab" args="(bool sync=true)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../df/deb/classcMMU.xhtml#ad46f9d2c75a2fac3b0b7154e864345ab">cMMU::flushTLB</a> </td>
+          <td>(</td>
+          <td class="paramtype">bool&#160;</td>
+          <td class="paramname"><em>sync</em> = <code>true</code></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>On context switch this is called to clear all the entries by simply setting their valid bit to false. If the sync flag is set and a page is dirty/referenced then this information is written back to the main page table.</p>
+<p>This syncing is usually not necessary since the cpu calls sync on a page fault or quanta terminnation so that the table is up-to-date for the PR module to make decisions. </p>
+
+<p>Referenced by <a class="el" href="../../d2/dc6/classcCPU.xhtml#abbc235250416bd5bcba0630617988bb4">cCPU::switchProc()</a>.</p>
+
+</div>
+</div>
 <a class="anchor" id="a8f67a55d3444b1164999ef64253eb37e"></a><!-- doxytag: member="cMMU::getAddr" ref="a8f67a55d3444b1164999ef64253eb37e" args="(string &amp;sVA, bool isWrite)" -->
 <div class="memitem">
 <div class="memproto">
@@ -179,6 +227,64 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>faultPage</b></td
 
 </div>
 </div>
+<a class="anchor" id="ab906b5a3693545e3d7fbdab5d1b3a397"></a><!-- doxytag: member="cMMU::getFaultPage" ref="ab906b5a3693545e3d7fbdab5d1b3a397" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../df/deb/classcMMU.xhtml#ab906b5a3693545e3d7fbdab5d1b3a397">cMMU::getFaultPage</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>The cpu calls this to send back to the VMM core so it can handle it accordingly. </p>
+
+<p>Referenced by <a class="el" href="../../d2/dc6/classcCPU.xhtml#a37f4ab4a93668da37be34f8d4d77a339">cCPU::getFaultPage()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="a1fadf507689a62a0a28ea10734bdfcca"></a><!-- doxytag: member="cMMU::setPTBR" ref="a1fadf507689a62a0a28ea10734bdfcca" args="(sPTE *_ptbr)" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../df/deb/classcMMU.xhtml#a1fadf507689a62a0a28ea10734bdfcca">cMMU::setPTBR</a> </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="../../db/d4b/structsPTE.xhtml">sPTE</a> *&#160;</td>
+          <td class="paramname"><em>_ptbr</em></td><td>)</td>
+          <td><code> [inline]</code></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>This needs to be reset on context switch </p>
+
+<p>Referenced by <a class="el" href="../../d2/dc6/classcCPU.xhtml#abbc235250416bd5bcba0630617988bb4">cCPU::switchProc()</a>.</p>
+
+</div>
+</div>
+<a class="anchor" id="ae981abbf574849c2d83c2402212c3d24"></a><!-- doxytag: member="cMMU::syncTLB" ref="ae981abbf574849c2d83c2402212c3d24" args="()" -->
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname"><a class="el" href="../../df/deb/classcMMU.xhtml#ae981abbf574849c2d83c2402212c3d24">cMMU::syncTLB</a> </td>
+          <td>(</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div>
+<div class="memdoc">
+<p>This is the same as ::fulshTLB with the exception of not flushing/ invalidating the table entries. This is useful when an execution quanta finishes so you want to sync the entries but not flush them in-case it is the only process left. </p>
+
+<p>Referenced by <a class="el" href="../../d2/dc6/classcCPU.xhtml#a68467fbd50317a9495765606d2f7d4b1">cCPU::run()</a>.</p>
+
+</div>
+</div>
 <hr/><h2>Member Data Documentation</h2>
 <a class="anchor" id="a90cbcd50347e8b9030f66bce2fc52e2a"></a><!-- doxytag: member="cMMU::replaceIndex" ref="a90cbcd50347e8b9030f66bce2fc52e2a" args="" -->
 <div class="memitem">
@@ -191,6 +297,8 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>faultPage</b></td
 </div>
 <div class="memdoc">
 <p>This is the index where new entries are being placed </p>
+
+<p>Referenced by <a class="el" href="../../df/deb/classcMMU.xhtml#a3344e754b5752bd079787ee5a7328bbf">addTLB()</a>, and <a class="el" href="../../df/deb/classcMMU.xhtml#ad46f9d2c75a2fac3b0b7154e864345ab">flushTLB()</a>.</p>
 
 </div>
 </div>
@@ -216,7 +324,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><b>faultPage</b></td
 
 
 <hr class="footer"/><address class="footer"><small>
-Generated on Tue Mar 27 2012 23:10:55 for 5103 Project 2 by &#160;<a href="http://www.doxygen.org/index.html">
+Generated on Wed Mar 28 2012 13:26:03 for 5103 Project 2 by &#160;<a href="http://www.doxygen.org/index.html">
 <img class="footer" src="../../doxygen.png" alt="doxygen"/>
 </a> 1.7.6.1
 </small></address>
