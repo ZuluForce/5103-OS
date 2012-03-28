@@ -127,7 +127,7 @@ bool cFixedAlloc::unpin(uint32_t frame) {
 	if ( !pinned.test(frame) )
 		return false;
 
-	fprintf(logStream, "FA Policy: Unpinnig frame %d\n", frame);
+	fprintf(logStream, "FA Policy: Unpinning frame %d\n", frame);
 	pinned.flip(frame);
 
 	if (_printF_on_pin)

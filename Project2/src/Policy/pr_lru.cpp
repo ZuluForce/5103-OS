@@ -152,7 +152,7 @@ ePRStatus cPRLru::resolvePageFault(sProc* proc, uint32_t page) {
 	//Check if the page is dirty
 	if ( minPTE->flags[FI_DIRTY] ) {
 		cout << "Spilling frame " << minPTE->frame << " containing a dirty page belonging to Process " << minOwner << endl;
-		fprintf(logStream, "PR_LRU_APPROX: Spilling frame %d containing a dirty page belonging to Process %d\n", minPTE->frame, minOwner);
+		fprintf(logStream, "PR_LRU: Spilling frame %d containing a dirty page belonging to Process %d\n", minPTE->frame, minOwner);
 		sProc* owner = VMMCore->getProcess(minOwner);
 
 		/* Spill old page */
@@ -168,7 +168,7 @@ ePRStatus cPRLru::resolvePageFault(sProc* proc, uint32_t page) {
 		return PR_SERVICED_IO;
 	}
 
-	fprintf(logStream, "PR_LRU_APPROX: Found non-dirty page frame %d\n", minPTE->frame);
+	fprintf(logStream, "PR_LRU: Found non-dirty page frame %d\n", minPTE->frame);
 	VMMCore->pageIn(proc,page,IO_IN);
 	return PR_SERVICED_IO;
 }

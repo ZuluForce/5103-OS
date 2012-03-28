@@ -112,8 +112,6 @@ ePRStatus cPRLruApprox::resolvePageFault(sProc* proc, uint32_t page) {
 		    continue;
 		}
 
-		cout << "Timestamp: " << curPTEOwner->page->timestamp << endl;
-
         if (curPTEOwner->page->time < min){
             minPTEOwner = curPTEOwner;
             min = curPTEOwner->page->time;
