@@ -29,6 +29,7 @@ using namespace boost;
 
 extern INIReader* settings;
 
+/** Virtual Memory Manager core class */
 class cVMM {
 	private:
 		/* ---- Virtual Memory Info ---- */
@@ -161,6 +162,16 @@ class cVMM {
  *	statistics for each process for the results trace.
  *
  *	@see cPRPolicy::returnFrame
+ */
+
+/** @fn cVMM::clearCircChecks()
+ *	Set the circular fault check flag to false for each proc
+ *
+ *	This addition ot the cpu is more of a safety net but as
+ *	long as it is being used it needs to work correctly. This
+ *	funtion is mainly called after the cleaning daemon clears
+ *	pages so that the cpu doesn't think there is a circular
+ *	fault when it was really just the cleaning daemon.
  */
 
 /** @fn cVMM::printResults()

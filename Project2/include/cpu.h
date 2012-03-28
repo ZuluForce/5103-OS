@@ -66,15 +66,15 @@ class cCPU {
  *	\li parameter = NULL - Do Nothing
  *
  *	\li curProc=NULL
- *		\li Switches process
- *		\li Flushes TLB (Not really necessary but make sure)
- *		\li Set PTBR in MMU
+ *		Switches process
+ *		Flushes TLB (Not really necessary but make sure)
+ *		Set PTBR in MMU
  *
  *	\li curProc!=NULL
- *		\li Increment CS count for curProc
- *		\li Flush TLB
- *		\li Set PTBR for new proc
- *		\li Increment the VC by the cs_switch time (default 5)
+ *		Increment CS count for curProc
+ *		Flush TLB
+ *		Set PTBR for new proc
+ *		Increment the VC by the cs_switch time (default 5)
  */
 
 /** @fn cCPU::getFaultPage()

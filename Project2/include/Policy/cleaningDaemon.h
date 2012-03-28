@@ -6,6 +6,7 @@
 
 using namespace std;
 
+/** Cleaning Daemon for system */
 class cCleanDaemon {
 	private:
 		cFrameAllocPolicy& FAPolicy;
@@ -17,6 +18,15 @@ class cCleanDaemon {
 		cCleanDaemon(cFrameAllocPolicy& _FA);
 		~cCleanDaemon();
 
+		/** Check if pages need to be cleaned
+		 *
+		 *	The VMM core calls this and the daemon checks
+		 *	with the FA module to see how many frames are
+		 *	available. If it is below its threshold it returns
+		 *	how many should be cleaned. This value is passed
+		 *	to the PR module which makes the policy decisions
+		 *	on which to replace.
+		 */
 		uint32_t checkClean();
 };
 

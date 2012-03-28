@@ -87,6 +87,15 @@ for dir in test_dirs:
 if output_dirs == None:
 	exit(0)
 
+try:
+	import numpy
+	import matplotlib
+except:
+	print("Required libraries: numpy,matplotlib are not installed")
+	print("Skipping graph creation")
+	print("Check the readme on instructions for fulfilling dependencies\n")
+	exit(0)
+
 for dir in output_dirs:
 	if not os.path.isdir(os.path.join(full_outdir_path,dir)):
 		print("Skipping (%s): not a directory" % (dir))
