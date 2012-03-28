@@ -1,0 +1,10 @@
+In this test case we are showing how LRU, both pure and approx, can be worse than FIFO.
+
+Access pattern: 0x0, 0x1000, 0x0, 0x2000
+
+Let's look at what the LRU and FIFO caches look like before we make another access.
+
+LRU contains "0x0, 0x2000" and FIFO contains "0x1000, 0x2000". If the next page access is a "0x1000", LRU will page fault and therefore perform worse than FIFO. If the next page
+access is an "0x0", then LRU will perform better. If the next page access is a "0x2000", they will perform equally as well. In our test the next access is "B", showing that
+LRU can be worse than FIFO is some cases.
+
