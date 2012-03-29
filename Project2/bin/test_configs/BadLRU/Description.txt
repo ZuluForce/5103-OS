@@ -1,22 +1,31 @@
-Description of the BadLRU test
+In this test case we are showing how approx LRU can be worse than pure LRU and FIFO.
 
-Look at how each of the page replacement algorithms works.
+Frames: 3
 
-FIFO - replaces pages in a first in first out order.
+---Access Pattern---
+Process 1: A, B, C
 
-LRU (pure) - replaces the page that was least recently used. Time stamp is updated after every access to the page.
+*Process switch*
 
-LRU (approx) - replaces the page that was least recently used. Time stamp is updated only when the page comes into memory.
+Process 2: D, E, F
+
+*Process switch*
+
+Process 1: A, B, C
 
 
-Looking at how the test works.
+Before the first process switch, we have A, B, and C in cache, each with decreasing "age".
 
-The BadLRU test is a scenario where approx LRU performs worse than pure LRU and FIFO.
+When we are executing the second process, we replace A from Process 1 with D from Process 2. All of the pages from Process 1 will be replaced from the pages in Process 2.
+
+When switching back to Process 1, every single access will be a page fault because none of the pages exist in memory any more.
 
 
-------------------------------------------------
-Going to give a more concise description
+This scenario only exists in approx LRU and not pure LRU because the "age" is only updated when pages put into memory, not after every access. 
 
+
+
+--- Delete this if you want ---
 In this test we show how approx LRU performs worse than pure LRU and FIFO. In approx LRU pages are given an age only when they are put into memory.
 When switching to a different process, we do differentiate which pages were from which processes. That means that pages from a process that is not running will be considered 
 old and will be replaced. When the operating system switches back to the other process there will be many page faults getting all of the replaced pages back into memory. 
