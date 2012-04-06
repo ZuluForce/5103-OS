@@ -10,7 +10,7 @@ IndexNode::IndexNode()
   uid = 0;
   gid = 0;
   size = 0;
-  for (int i=0; i<MAX_DIRECT_BLOCKS; i++) 
+  for (int i=0; i<MAX_DIRECT_BLOCKS; i++)
     directBlocks [i] = FileSystem::NOT_A_BLOCK;
 
   indirectBlock = FileSystem::NOT_A_BLOCK;
@@ -51,6 +51,21 @@ short IndexNode::getNlink()
   return nlink;
 }
 
+bool IndexNode::incNlink() {
+	//Could chedk if the short is going to overflow
+	++nlink;
+
+	return true;
+}
+
+bool IndexNode::decNlink() {
+	if ( nlink == 0 ) {
+		return false;
+	}
+	--nlink;
+	return true;
+}
+
 void IndexNode::setUid(short newUid)
 {
   uid = newUid;
@@ -86,23 +101,23 @@ int IndexNode::getSize()
   return size;
 }
 
-/* Create and initialize an indirect inode block. This is done by setting 
- * all the addresses within the block to NOT_A_BLOCK 
+/* Create and initialize an indirect inode block. This is done by setting
+ * all the addresses within the block to NOT_A_BLOCK
  * The number of the newly created indirect block is returned
  * */
 int IndexNode::initIndirectBlock(byte *indirBlock)
 {
-	//Allocate the indirect block 
-	
+	//Allocate the indirect block
+
 	//Initialize it by setting all the indirect block addresses to Not_a_block
 
 	// save this indirect block to disk
-	
-	//return the allocated block number 
+
+	//return the allocated block number
 	return 0;
 }
 
-/* Read the block number at the 3 bytes from offset and return it 
+/* Read the block number at the 3 bytes from offset and return it
  * Inputs: indirBlock: Byte array which holds the block data from which the block number is read
  * offset: offset within the block from which to read the block number
  * returns: the block number read
@@ -112,7 +127,7 @@ int IndexNode::deserializeBlockNumber(byte *indirBlock, int offset)
 	//look at the IndexNode::Read() function on ideas on how to implement this
 }
 
-/* Write  the block number (given by 'value') at the 3 bytes from offset and return it 
+/* Write  the block number (given by 'value') at the 3 bytes from offset and return it
  * Inputs: indirBlock: Byte array which holds the block data into which the block number is written
  * offset: offset within the block whre the block number is written
  * value: block number to write to the byte array
@@ -123,13 +138,13 @@ void IndexNode::serializeBlockNumber(byte *indirBlock, int offset, int value)
 }
 
 
-/* Gets the address corresponding to the specified 
+/* Gets the address corresponding to the specified
    sequential block of the file;
    block is the sequential block number
    returns the address of the block, a number between zero and one
    less than the number of blocks in the file system
 */
-int IndexNode::getBlockAddress(int block) 
+int IndexNode::getBlockAddress(int block)
 // throws Exception
 {
   if(block >= 0 && block < MAX_DIRECT_BLOCKS)
@@ -145,7 +160,7 @@ int IndexNode::getBlockAddress(int block)
    address the address of the block, a number between zero and one
    less than the number of blocks in the file system
 */
-void IndexNode::setBlockAddress(int block, int address) 
+void IndexNode::setBlockAddress(int block, int address)
 // throws Exception
 {
   if(block >= 0 && block < MAX_DIRECT_BLOCKS)
@@ -186,7 +201,7 @@ int IndexNode::getCtime()
 }
 
 /* Writes the contents of an index node to a byte array.
-   This is used to copy the bytes which correspond to the 
+   This is used to copy the bytes which correspond to the
    disk image of the index node onto a block buffer so that
    they may be written to the file system;
    buffer is the buffer to which bytes should be written;
@@ -231,7 +246,7 @@ void IndexNode::write(byte *buffer, int offset)
   }
 
 /* Reads the contents of an index node from a byte array.
-   This is used to copy the bytes which correspond to the 
+   This is used to copy the bytes which correspond to the
    disk image of the index node from a block buffer that
    has been read from the file system;
    buffer the buffer from which bytes should be read;
@@ -248,29 +263,29 @@ void IndexNode::read(byte *buffer, int offset)
   // read the mode info
   b1 = buffer[offset] & 0xff;
   b0 = buffer[offset+1] & 0xff;
-  mode = (short)(b1 << 8 | b0); 
+  mode = (short)(b1 << 8 | b0);
 
   // read the nlink info
   b1 = buffer[offset+2] & 0xff;
   b0 = buffer[offset+3] & 0xff;
-  nlink = (short)(b1 << 8 | b0); 
+  nlink = (short)(b1 << 8 | b0);
 
   // read the uid info
   b1 = buffer[offset+4] & 0xff;
   b0 = buffer[offset+5] & 0xff;
-  uid = (short)(b1 << 8 | b0); 
+  uid = (short)(b1 << 8 | b0);
 
-  // read the gid info    
+  // read the gid info
   b1 = buffer[offset+6] & 0xff;
   b0 = buffer[offset+7] & 0xff;
-  gid = (short)(b1 << 8 | b0); 
+  gid = (short)(b1 << 8 | b0);
 
   // read the size info
   b3 = buffer[offset+8] & 0xff;
   b2 = buffer[offset+8+1] & 0xff;
   b1 = buffer[offset+8+2] & 0xff;
   b0 = buffer[offset+8+3] & 0xff;
-  size = b3 << 24 | b2 << 16 | b1 << 8 | b0; 
+  size = b3 << 24 | b2 << 16 | b1 << 8 | b0;
 
   // read the block address info 3 bytes at a time
   for(int i = 0; i < MAX_DIRECT_BLOCKS; i ++)
@@ -278,7 +293,7 @@ void IndexNode::read(byte *buffer, int offset)
       b2 = buffer[offset+12+i*3] & 0xff;
       b1 = buffer[offset+12+i*3+1] & 0xff;
       b0 = buffer[offset+12+i*3+2] & 0xff;
-      directBlocks[i] = b2 << 16 | b1 << 8 | b0; 
+      directBlocks[i] = b2 << 16 | b1 << 8 | b0;
     }
 
   // leave room for indirectBlock, doubleIndirectBlock, tripleIndirectBlock

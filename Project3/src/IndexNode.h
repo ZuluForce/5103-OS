@@ -21,10 +21,10 @@ class IndexNode
    // information.
    short mode;
 
-   // Not yet implemented. Number of links to this file.  
+   // Not yet implemented. Number of links to this file.
    short nlink;
 
-   // Not yet implemented. Owner's user id. 
+   // Not yet implemented. Owner's user id.
    short uid;
 
    // Not yet implemented. Owner's group id.
@@ -32,7 +32,7 @@ class IndexNode
 
    int size; // Number of bytes in this file.
 
-  /* Array of direct blocks containing the block addresses for the 
+  /* Array of direct blocks containing the block addresses for the
      first MAX_DIRECT_BLOCKS blocks of the file.  Note that each
      element in the array is stored as a 3-byte number on disk.
   */
@@ -47,20 +47,20 @@ class IndexNode
   // Not yet implemented.
   int tripleIndirectBlock;
 
-  /* Not yet implemented.  The date and time at which this file was last accessed.  
-     This is traditionally implemented as the number of seconds 
+  /* Not yet implemented.  The date and time at which this file was last accessed.
+     This is traditionally implemented as the number of seconds
      past 1970/01/01 00:00:00
   */
   int atime;
 
-  /* Not yet implemented. The date and time at which this file was last modified.  
-     This is traditionally implemented as the number of seconds 
+  /* Not yet implemented. The date and time at which this file was last modified.
+     This is traditionally implemented as the number of seconds
      past 1970/01/01 00:00:00
   */
   int mtime;
 
-  /* Not yet implemented. The date and time at which this file was created.  
-     This is traditionally implemented as the number of seconds 
+  /* Not yet implemented. The date and time at which this file was created.
+     This is traditionally implemented as the number of seconds
      past 1970/01/01 00:00:00
   */
 
@@ -72,6 +72,8 @@ class IndexNode
   short getMode();
   void setNlink(short newNlink);
   short getNlink();
+  bool incNlink();
+  bool decNlink();
   void setUid(short newUid);
   short getUid();
   short getGid();

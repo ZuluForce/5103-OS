@@ -16,28 +16,30 @@ typedef char *String;
 
 // Always parsing of pathnames
 class StringTokenizer {
-  char curr[MAXPATH];
-  char delim[MAXPATH];
-  int next_control;
-  String r;
+	char curr[MAXPATH];
+	char delim[MAXPATH];
+	int next_control;
+	String r;
 
- public:
-  StringTokenizer(String, String);
-  boolean hasMoreTokens();
-  String nextToken();
+public:
+	StringTokenizer(String, String);
+	boolean hasMoreTokens();
+	String nextToken();
 };
 
 class StringBuffer {
-  char *str;
+	char *str;
 public:
-  void append (char);
-  void append (short);
-  void append (int);
-  void append (String);
-  String toString ();
-  StringBuffer (int);
-  StringBuffer (char*);
-  StringBuffer (const char*);
+	void append (char);
+	void append (short);
+	void append (int);
+	void append (String);
+	String toString ();
+	StringBuffer (int);
+	StringBuffer (char*);
+	StringBuffer (const char*);
 };
+
+void StringCut(String cutFrom, const String cutOut, StringBuffer *outBuf);
 
 #endif

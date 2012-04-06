@@ -11,14 +11,14 @@ StringTokenizer::StringTokenizer (String s, String d) {
 
 // A bit kludgey: strtok has internal state so we have handle this
 // No good way to "poke ahead" so we have to read a token and remember it
-boolean StringTokenizer::hasMoreTokens () 
+boolean StringTokenizer::hasMoreTokens ()
 {
-  if (next_control == 1) {     
-    r = strtok (curr, delim);  
+  if (next_control == 1) {
+    r = strtok (curr, delim);
     next_control = 2;
   }
   else if (next_control == 2) {
-    r = strtok (NULL, delim);  
+    r = strtok (NULL, delim);
     next_control = 3;
   }
   return (r != 0);
@@ -27,7 +27,7 @@ boolean StringTokenizer::hasMoreTokens ()
 
 // *Assumes* hasMoreTokens has been called first ... as a side-effect it
 // will grab a token that we simply return here - we also change states
-String StringTokenizer::nextToken () 
+String StringTokenizer::nextToken ()
 {
   if (next_control == 1)
     next_control = 2;
@@ -73,5 +73,34 @@ StringBuffer::StringBuffer (char* s) {
 StringBuffer::StringBuffer (const char* s) {
   str = new char[MAXPATH];
   strcpy (str, s);
+}
+
+void StringCut(String cutFrom, const String cutOut, StringBuffer *outBuf) {
+	if ( cutFrom == NULL || cutOut == NULL ) {
+		return;
+	}
+
+	//Find the portion to be cut out
+	short index = 0;
+	while (true) {
+		if ( cutFrom[index] == '\0' ||
+			 cutOut[index] == '\0') {
+			break;
+		}
+
+		if ( cutFrom[index] == cutOut[index] )
+			++index;
+		else
+			break;
+	}
+
+	while (true) {
+		if ( cutFrom[index] == '\0' )
+			break;
+
+		outBuf->append(cutFrom[index++]);
+	}
+
+	return;
 }
 

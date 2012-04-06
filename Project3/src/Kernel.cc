@@ -11,11 +11,11 @@
 ProcessContext *Kernel::process;
 const String Kernel::PROGRAM_NAME  = "Kernel"; // name for error msgs
 int Kernel::processCount;
-FileDescriptor *Kernel::openFiles[MaxOpenFiles]; 
-FileSystem *Kernel::openFileSystems [MaxOpenFileSystems];  
+FileDescriptor *Kernel::openFiles[MaxOpenFiles];
+FileSystem *Kernel::openFileSystems [MaxOpenFileSystems];
 int Kernel::MAX_OPEN_FILES;
-const StringArr Kernel::sys_errlist = 
-	  { 
+const StringArr Kernel::sys_errlist =
+	  {
 	    null
 	 , "Not owner"
 	 , "No such file or directory"
@@ -26,7 +26,7 @@ const StringArr Kernel::sys_errlist =
 	 , null
 	 , null
 	 , "Bad file number"
-	 , null
+	 , "Expected non-NULL parameters"
 	 , null
 	 , null
 	 , "Permission denied"
@@ -122,116 +122,105 @@ int Kernel::creat(String pathname, short mode)
 
   StringTokenizer *st = new StringTokenizer(fullPath, "/");
   String name = "."; // start at root node
-  while(st->hasMoreTokens())
-    {
-      name = st->nextToken();
-      if (strcmp(name, ""))
-	{
-	  // check to see if the current node is a directory
-	  if((currIndexNode->getMode() & S_IFMT) != S_IFDIR)
-	    {
-	      // return (ENOTDIR) if a needed directory is not a directory
-	      process->errno = ENOTDIR;
-	      return -1;
-	    }
-	  
-	  // check to see if it is readable by the user
-	  // ??? tbd
-	  // return (EACCES) if a needed directory is not readable
+	while(st->hasMoreTokens()) {
+		name = st->nextToken();
+		if (strcmp(name, "")) {
+			// check to see if the current node is a directory
+			if((currIndexNode->getMode() & S_IFMT) != S_IFDIR)
+			{
+			  // return (ENOTDIR) if a needed directory is not a directory
+			  process->errno = ENOTDIR;
+			  return -1;
+			}
 
-	  if(st->hasMoreTokens())
-	    {
-	      dirname->append(name);
-	      dirname->append('/');
-	    }
+			// check to see if it is readable by the user
+			// ??? tbd
+			// return (EACCES) if a needed directory is not readable
 
-	  // get the next inode corresponding to the token
-	  prevIndexNode = currIndexNode;
-	  currIndexNode = new IndexNode();
-	  indexNodeNumber = findNextIndexNode
-	    (fileSystem, prevIndexNode, name, currIndexNode);
+			if(st->hasMoreTokens()) {
+			  dirname->append(name);
+			  dirname->append('/');
+			}
+
+			// get the next inode corresponding to the token
+			prevIndexNode = currIndexNode;
+			currIndexNode = new IndexNode();
+			indexNodeNumber = findNextIndexNode
+			(fileSystem, prevIndexNode, name, currIndexNode);
+		}
 	}
-    }
 
   // ??? we need to set some fields in the file descriptor
   int flags = O_WRONLY; // ???
   FileDescriptor *fileDescriptor = null;
 
-  if (indexNodeNumber < 0)
-    {
-      // file does not exist.  We check to see if we can create it.
-      // check to see if the prevIndexNode (a directory) is writeable
-      // ??? tbd
-      // return (EACCES) if the file does not exist and the directory
-      // in which it is to be created is not writable
+  if (indexNodeNumber < 0) {
+		// file does not exist.  We check to see if we can create it.
+		// check to see if the prevIndexNode (a directory) is writeable
+		// ??? tbd
+		// return (EACCES) if the file does not exist and the directory
+		// in which it is to be created is not writable
 
-      currIndexNode->setMode(mode);
-      currIndexNode->setNlink((short)1);
+		currIndexNode->setMode(mode);
+		currIndexNode->setNlink((short)1);
 
-      // allocate the next available inode from the file system
-      short newInode = fileSystem->allocateIndexNode();
-      if(newInode == -1)
-        return -1;
+		// allocate the next available inode from the file system
+		short newInode = fileSystem->allocateIndexNode();
+		if(newInode == -1)
+			return -1;
 
-      fileDescriptor = 
-        new FileDescriptor(fileSystem, currIndexNode, flags);
-      // assign inode for the new file
-      fileDescriptor->setIndexNodeNumber(newInode);
+		fileDescriptor =
+		new FileDescriptor(fileSystem, currIndexNode, flags);
+		// assign inode for the new file
+		fileDescriptor->setIndexNodeNumber(newInode);
 
-      fileSystem->writeIndexNode(currIndexNode, newInode);
+		fileSystem->writeIndexNode(currIndexNode, newInode);
 
-      // open the directory
-      // ??? it would be nice if we had an "open" that took an inode 
-      // instead of a name for the dir
-      
-      int dir = open(dirname->toString(), O_RDWR);
-      if(dir < 0)
-	{
-	  perror(PROGRAM_NAME);
-	  exit(1);
-	}
+		// open the directory
+		// ??? it would be nice if we had an "open" that took an inode
+		// instead of a name for the dir
 
-      // scan past the directory entries less than the current entry
-      // and insert the new element immediately following
-      int status;
-      DirectoryEntry *newDirectoryEntry = 
-        new DirectoryEntry(newInode, name);
-      DirectoryEntry* currentDirectoryEntry = new DirectoryEntry();
-      while(true)
-	{
-	  // read an entry from the directory
-	  status = readdir(dir, currentDirectoryEntry);
-	  if(status < 0)
-	    {
-	      fprintf (stderr, "error reading directory in creat\n");
-	      exit(Kernel::EXIT_F);
-	    }
-	  else if(status == 0)
-	    {
-	      // if no entry read, write the new item at the current 
-	      // location and break
-	      writedir(dir, newDirectoryEntry);
-	      break;
-	    }
-	  else
-	    {
-	      // if current item > new item, write the new item in 
-	      // place of the old one and break
-	      if(strcmp (currentDirectoryEntry->getName(),
-			 newDirectoryEntry->getName()) > 0)
-		{
-		  int seek_status = 
-		    lseek(dir, - DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
-		  if(seek_status < 0)
-		    {
-		      fprintf (stderr, ": error during seek in creat\n");
-		      exit(Kernel::EXIT_F);
-		    }
-		  writedir(dir, newDirectoryEntry);
-		  break;
+		int dir = open(dirname->toString(), O_RDWR);
+		if(dir < 0) {
+			perror(PROGRAM_NAME);
+			exit(1);
 		}
-	    }
-	}
+
+		// scan past the directory entries less than the current entry
+		// and insert the new element immediately following
+		int status;
+		DirectoryEntry *newDirectoryEntry = new DirectoryEntry(newInode, name);
+		DirectoryEntry* currentDirectoryEntry = new DirectoryEntry();
+		while (true) {
+			// read an entry from the directory
+			status = readdir(dir, currentDirectoryEntry);
+			if (status < 0) {
+			  fprintf (stderr, "error reading directory in creat\n");
+			  exit(Kernel::EXIT_F);
+			}
+			else if (status == 0) {
+			  // if no entry read, write the new item at the current
+			  // location and break
+			  writedir(dir, newDirectoryEntry);
+			  break;
+			}
+			else {
+				// if current item > new item, write the new item in
+				// place of the old one and break
+				if(strcmp (currentDirectoryEntry->getName(),
+					newDirectoryEntry->getName()) > 0) {
+
+					int seek_status = lseek(dir, - DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
+					if (seek_status < 0) {
+						fprintf (stderr, ": error during seek in creat\n");
+						exit(Kernel::EXIT_F);
+					}
+
+				writedir(dir, newDirectoryEntry);
+				break;
+				}
+			}
+		}
       // copy the rest of the directory entries out to the file
       while (status > 0)
 	{
@@ -241,7 +230,7 @@ int Kernel::creat(String pathname, short mode)
 	  if(status > 0)
 	    {
 	      // in its place
-	      int seek_status = 
+	      int seek_status =
 		lseek(dir, - DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
 	      if(seek_status < 0)
 		{
@@ -286,7 +275,7 @@ int Kernel::creat(String pathname, short mode)
 	      currIndexNode->setBlockAddress(i, FileSystem::NOT_A_BLOCK);
 	    }
 	}
-      
+
       // update the inode to size 0
       currIndexNode->setSize(0);
 
@@ -294,7 +283,7 @@ int Kernel::creat(String pathname, short mode)
       fileSystem->writeIndexNode(currIndexNode, indexNodeNumber);
 
       // set up the file descriptor
-      fileDescriptor = 
+      fileDescriptor =
         new FileDescriptor(fileSystem, currIndexNode, flags);
       // assign inode for the new file
       fileDescriptor->setIndexNodeNumber(indexNodeNumber);
@@ -313,7 +302,7 @@ void Kernel::Exit(int status)
       {
         close(i);
       }
-  
+
   // terminate the process
   Kernel::process = null;
   Kernel::processCount --;
@@ -323,38 +312,35 @@ void Kernel::Exit(int status)
     finalize(status);
 }
 
-int Kernel::lseek(int fd, int offset, int whence)
-{
-  // check fd
-  int status = check_fd(fd);
-  if(status < 0)
-    return status;
+int Kernel::lseek(int fd, int offset, int whence) {
+	// check fd
+	int status = check_fd(fd);
+	if(status < 0)
+		return status;
 
-  FileDescriptor *file = process->openFiles[fd];
+	FileDescriptor *file = process->openFiles[fd];
 
-  int newOffset;
-  if(whence == 0)
-    newOffset = offset;
-  else if(whence == 1)
-    newOffset = file->getOffset() + offset;
-  else if (whence == 2)
-    newOffset = file->getSize() + offset;
-  else
-    {
-      // bad whence value
-      process->errno = EINVAL;
-      return -1;
-    }
+	int newOffset;
+	if(whence == 0)
+		newOffset = offset;
+	else if(whence == 1)
+		newOffset = file->getOffset() + offset;
+	else if (whence == 2)
+		newOffset = file->getSize() + offset;
+	else {
+		// bad whence value
+		process->errno = EINVAL;
+		return -1;
+	}
 
-  if(newOffset < 0)
-    {
-      // bad offset value
-      process->errno = EINVAL;
-      return -1;
-    }
+	if(newOffset < 0) {
+		// bad offset value
+		process->errno = EINVAL;
+		return -1;
+	}
 
-  file->setOffset(newOffset);
-  return newOffset;
+	file->setOffset(newOffset);
+	return newOffset;
 }
 
 int Kernel::open(String pathname, int flags)
@@ -362,16 +348,16 @@ int Kernel::open(String pathname, int flags)
 {
   // get the full path name
   String fullPath = getFullPath(pathname);
-  
+
   IndexNode *indexNode = new IndexNode();
   short indexNodeNumber = findIndexNode(fullPath, indexNode);
   if(indexNodeNumber < 0)
     return -1;
 
-  // ??? return (Exxx) if the file is not readable 
+  // ??? return (Exxx) if the file is not readable
   // and was opened O_RDONLY or O_RDWR
 
-  // ??? return (Exxx) if the file is not writable 
+  // ??? return (Exxx) if the file is not writable
   // and was opened O_WRONLY or O_RDWR
 
   // set up the file descriptor
@@ -384,7 +370,7 @@ int Kernel::open(String pathname, int flags)
 
 int Kernel::open(FileDescriptor *fileDescriptor)
 {
-  // scan the kernel open file list for a slot 
+  // scan the kernel open file list for a slot
   // and add our new file descriptor
   int kfd = -1;
   for(int i = 0; i < Kernel::MAX_OPEN_FILES; i ++)
@@ -395,13 +381,13 @@ int Kernel::open(FileDescriptor *fileDescriptor)
         break;
       }
   if(kfd == -1)
-    { 
+    {
       // return (ENFILE) if there are already too many open files
       process->errno = ENFILE;
       return -1;
     }
 
-  // scan the list of open files for a slot 
+  // scan the list of open files for a slot
   // and add our new file descriptor
   int fd = -1;
   for(int i = 0; i < ProcessContext::MAX_OPEN_FILES; i ++)
@@ -465,7 +451,7 @@ int Kernel::read(int fd, byte *buf, int count)
     return readCount;
   }
 
-int Kernel::readdir(int fd, DirectoryEntry *dirp) 
+int Kernel::readdir(int fd, DirectoryEntry *dirp)
 // throws Exception
 {
   // check fd
@@ -493,9 +479,9 @@ int Kernel::readdir(int fd, DirectoryEntry *dirp)
       return status;
 
     // read bytes from the block into the DirectoryEntry
-    dirp->read(file->getBytes(), 
+    dirp->read(file->getBytes(),
       file->getOffset() % file->getBlockSize());
-    file->setOffset(file->getOffset() + 
+    file->setOffset(file->getOffset() +
       DirectoryEntry::DIRECTORY_ENTRY_SIZE);
 
     // return the size of a DirectoryEntry
@@ -534,7 +520,7 @@ int Kernel::stat(String name, Stat *buf)
 
   // find the index node
   IndexNode *indexNode = new IndexNode();
-  short indexNodeNumber = findIndexNode(path, indexNode); 
+  short indexNodeNumber = findIndexNode(path, indexNode);
   if(indexNodeNumber < 0)
     {
       // return ENOENT
@@ -557,7 +543,7 @@ void Kernel::sync()
   // write out inode blocks if updated
   // write out data blocks if updated
 
-  // at present, all changes to inodes, data blocks, 
+  // at present, all changes to inodes, data blocks,
   // and free list blocks
   // are written as they go, so this method does nothing.
 }
@@ -583,7 +569,7 @@ int Kernel::write(int fd, byte *buf, int count)
   for(int i = 0; i < count; i ++)
     {
       // if this is the first time through the loop,
-      // or if we're at the beginning of a block, 
+      // or if we're at the beginning of a block,
       // load or allocate a data block
       if((i == 0) || ((offset % blockSize) == 0))
       {
@@ -597,7 +583,7 @@ int Kernel::write(int fd, byte *buf, int count)
       // if we get to the end of a block, write it out
       if((offset % blockSize) == 0)
 	{
-	  status = 
+	  status =
 	    file->writeBlock((short)((offset - 1) / blockSize));
 	  if(status < 0)
 	    return status;
@@ -618,7 +604,7 @@ int Kernel::write(int fd, byte *buf, int count)
       if(status < 0)
         return status;
     }
-    
+
   // update the file size if it grew
   if(offset > size)
     file->setSize(offset);
@@ -630,7 +616,7 @@ int Kernel::write(int fd, byte *buf, int count)
   return writeCount;
 }
 
-int Kernel::writedir(int fd, DirectoryEntry *dirp) 
+int Kernel::writedir(int fd, DirectoryEntry *dirp)
 // throws Exception
 {
   // check fd
@@ -663,7 +649,7 @@ int Kernel::writedir(int fd, DirectoryEntry *dirp)
     return status;
 
   // update the file size
-  file->setOffset(file->getOffset() + 
+  file->setOffset(file->getOffset() +
 		  DirectoryEntry::DIRECTORY_ENTRY_SIZE);
   if(file->getOffset() > file->getSize())
     file->setSize(file->getOffset());
@@ -714,9 +700,9 @@ void Kernel::initialize()
     // create the first process
     Kernel::process = new ProcessContext(uid, gid, dir, umask);
     Kernel::processCount++;
-    
+
     // open the root file system -- should catch error if it fails!
-    openFileSystems[ROOT_FILE_SYSTEM] = 
+    openFileSystems[ROOT_FILE_SYSTEM] =
       new FileSystem(rootFileSystemFilename, rootFileSystemMode);
 }
 
@@ -743,8 +729,8 @@ void Kernel::finalize(int status)
 int Kernel::check_fd(int fd)
 {
   // look for the file descriptor in the open file list
-  if (fd < 0 || 
-      fd >= Kernel::process->num_files || 
+  if (fd < 0 ||
+      fd >= Kernel::process->num_files ||
       Kernel::process->openFiles[fd] == null)
     {
       // return (EBADF) if file descriptor is invalid
@@ -763,7 +749,7 @@ int Kernel::check_fd_for_read(int fd)
 
   FileDescriptor *fileDescriptor = Kernel::process->openFiles[fd];
   int flags = fileDescriptor->getFlags();
-  if((flags != O_RDONLY) && 
+  if((flags != O_RDONLY) &&
      (flags != O_RDWR))
     {
       // return (EBADF) if the file is not open for reading
@@ -782,7 +768,7 @@ int Kernel::check_fd_for_write(int fd)
 
   FileDescriptor *fileDescriptor = Kernel::process->openFiles[fd];
   int flags = fileDescriptor->getFlags();
-  if((flags != O_WRONLY) && 
+  if((flags != O_WRONLY) &&
      (flags != O_RDWR))
     {
       // return (EBADF) if the file is not open for writing
@@ -793,33 +779,54 @@ int Kernel::check_fd_for_write(int fd)
   return 0;
 }
 
-String Kernel::getFullPath(String pathname)
-{
-  String fullPath = null;
+String Kernel::getFullPath(String pathname) {
+	String fullPath = null;
 
-  // make sure the path starts with a slash
-  //    if(pathname.startsWith("/"))
-  if(pathname[0] ==  '/')
-    fullPath = pathname;
-  else {
-    char *temp = new char[100]; // should clean up ... use StringBuffer
-    strcpy (temp, Kernel::process->getDir());
-    strcat (temp, "/");
-    fullPath = strcat (temp, pathname);
-  }
-  return fullPath;
+	// make sure the path starts with a slash
+	//    if(pathname.startsWith("/"))
+	if(pathname[0] ==  '/')
+		fullPath = pathname;
+	else {
+		char *temp = new char[100]; // should clean up ... use StringBuffer
+		strcpy (temp, Kernel::process->getDir());
+		strcat (temp, "/");
+		fullPath = strcat (temp, pathname);
+	}
+
+	return fullPath;
+}
+
+String Kernel::getDeepestDir(String pathname) {
+	StringBuffer *path = new StringBuffer("/");
+
+	StringTokenizer *st = new StringTokenizer(pathname, "/");
+
+	String name = ".";
+	while (st->hasMoreTokens()) {
+		name = st->nextToken();
+
+		if ( !st->hasMoreTokens() ) {
+			//Throw out the last part
+			break;
+		}
+
+		path->append(name);
+		path->append('/');
+	}
+
+	return path->toString();
 }
 
 IndexNode *Kernel::rootIndexNode = null;
-IndexNode *Kernel::getRootIndexNode()
-{
-  if(rootIndexNode == null)
-    rootIndexNode = openFileSystems[ROOT_FILE_SYSTEM]->getRootIndexNode();
-  return rootIndexNode;
+IndexNode *Kernel::getRootIndexNode() {
+	if(rootIndexNode == null)
+		rootIndexNode = openFileSystems[ROOT_FILE_SYSTEM]->getRootIndexNode();
+
+	return rootIndexNode;
 }
 
 short Kernel::findNextIndexNode
-(FileSystem *fileSystem, IndexNode *indexNode, String name, 
+(FileSystem *fileSystem, IndexNode *indexNode, String name,
  IndexNode *nextIndexNode)
 // throws Exception
 {
@@ -835,7 +842,7 @@ short Kernel::findNextIndexNode
   // ??? tbd
   // return (EACCES) if a needed directory is not readable
 
-  FileDescriptor *fileDescriptor = 
+  FileDescriptor *fileDescriptor =
     new FileDescriptor(fileSystem, indexNode, O_RDONLY);
   int fd = open(fileDescriptor);
   if(fd < 0)
@@ -857,7 +864,7 @@ short Kernel::findNextIndexNode
       status = readdir(fd, directoryEntry);
       if(status <= 0)
       {
-        // we got to the end of the directory, or 
+        // we got to the end of the directory, or
         // encountered an error, so quit
         break;
       }
@@ -941,4 +948,64 @@ short Kernel::findIndexNode(String path, IndexNode *inode)
   // copy indexNode to inode
   indexNode->copy(inode);
   return indexNodeNumber;
+}
+
+
+int Kernel::link(String oldpath, String newPath) {
+	if ( oldpath == NULL || newPath == NULL ) {
+		//Should set errno here
+		Kernel::setErrno(ENULL);
+		return -1;
+	}
+
+	int status = 0;
+
+	//Get inode of oldpath
+	IndexNode *oldinode = new IndexNode();
+	short node_num = Kernel::findIndexNode(oldpath, oldinode);
+	fprintf(stderr, "Got inode to link to (%d)\n", node_num);
+	if ( node_num < 0 ) {
+		return status;
+	}
+
+	String dirname = Kernel::getDeepestDir(newPath);
+	fprintf(stderr, "Directory name: %s\n", dirname);
+	StringBuffer *fname = new StringBuffer("");
+	StringCut(newPath, dirname, fname); //Get just the filename
+	fprintf(stderr, "New filename: %s\n", fname->toString());
+
+	int dir = open(dirname, O_RDWR);
+	if (dir < 0) {
+		perror(PROGRAM_NAME);
+		exit(1);
+	}
+
+	DirectoryEntry* currDirEntry = new DirectoryEntry();
+	DirectoryEntry* newDirEntry = new DirectoryEntry(node_num, fname->toString());
+
+	while (true) {
+		status = readdir(dir, currDirEntry);
+		if (status < 0) {
+			fprintf(stderr, "error reading directory in ls\n");
+			exit(Kernel::EXIT_F);
+		} else if (status == 0) {
+			//Directory empty, go ahead an make new entry
+			writedir(dir, newDirEntry);
+			break;
+		} else {
+			//Take care of this later
+			;
+		}
+	}
+
+	close(dir);
+
+	oldinode->incNlink();
+
+	return 0;
+}
+
+int Kernel::unlink(const char *pathname) {
+
+	return 0;
 }
