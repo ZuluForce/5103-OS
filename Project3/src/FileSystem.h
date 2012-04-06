@@ -62,6 +62,7 @@ private:
 
 public:
 	short allocateIndexNode(); // throws IOException
+	void freeIndexNode(short node);
 	void readIndexNode(IndexNode *indexNode, short indexNodeNumber);
 	//   throws IOException
 	void writeIndexNode(IndexNode *indexNode , short indexNodeNumber);

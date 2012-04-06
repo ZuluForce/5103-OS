@@ -56,12 +56,13 @@ int main(int argc, char ** args) //throws Exception
       Stat *parentStat = new Stat();
       char buf[100]; // remove magic #
       strcpy (buf, name);
+      fprintf(stderr, "Name: %s\n", buf);
       strcat (buf, "/..");
       Kernel::stat(buf, parentStat);
       // add entry for ".."
       DirectoryEntry *parent = new DirectoryEntry
 	(parentStat->getIno() , "..");
-      
+
       parent->write(directoryEntryBuffer , 0);
       status = Kernel::write
 	(newDir, directoryEntryBuffer, DirectoryEntry::DIRECTORY_ENTRY_SIZE);
@@ -70,7 +71,7 @@ int main(int argc, char ** args) //throws Exception
 	  Kernel::perror(PROGRAM_NAME);
 	  Kernel::Exit(5);
       }
-      
+
       // call close() to close the file
       status = Kernel::close(newDir);
       if(status < 0)

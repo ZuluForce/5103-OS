@@ -66,36 +66,36 @@ class IndexNode
 
   int ctime;
 
- public:
-  IndexNode();
-  void setMode(short newMode);
-  short getMode();
-  void setNlink(short newNlink);
-  short getNlink();
-  bool incNlink();
-  bool decNlink();
-  void setUid(short newUid);
-  short getUid();
-  short getGid();
-  void setGid(short newGid);
-  void setSize(int newSize);
-  int getSize();
-  int getBlockAddress(int block); // throws Exception
-  void setBlockAddress(int block, int address); // throws Exception
-  void setAtime(int newAtime);
-  int getAtime();
-  void setMtime(int newMtime);
-  int getMtime();
-  void setCtime(int newCtime);
-  int getCtime();
-  void write(byte *buffer, int offset);
-  void read(byte *buffer, int offset);
-  String toString();
-  void copy(IndexNode *indexNode);
-  //*** These methods should be implemented for indirect blocks ***
-  int initIndirectBlock(byte *indirBlock);
-  int deserializeBlockNumber(byte *indirBlock, int offset);
-  void serializeBlockNumber(byte *indirBlock, int offset, int value);
+public:
+	IndexNode();
+	void setMode(short newMode);
+	short getMode();
+	void setNlink(short newNlink);
+	short getNlink();
+	bool incNlink();
+	bool decNlink();
+	void setUid(short newUid);
+	short getUid();
+	short getGid();
+	void setGid(short newGid);
+	void setSize(int newSize);
+	int getSize();
+	int getBlockAddress(int block); // throws Exception
+	void setBlockAddress(int block, int address); // throws Exception
+	void setAtime(int newAtime);
+	int getAtime();
+	void setMtime(int newMtime);
+	int getMtime();
+	void setCtime(int newCtime);
+	int getCtime();
+	void write(byte *buffer, int offset);
+	void read(byte *buffer, int offset);
+	String toString();
+	void copy(IndexNode *indexNode);
+	//*** These methods should be implemented for indirect blocks ***
+	int initIndirectBlock(byte *indirBlock);
+	int deserializeBlockNumber(byte *indirBlock, int offset);
+	void serializeBlockNumber(byte *indirBlock, int offset, int value);
 };
 
 #endif

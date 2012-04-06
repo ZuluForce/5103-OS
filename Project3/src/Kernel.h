@@ -146,6 +146,9 @@ public:
 	*/
 	static int open(FileDescriptor *fileDescriptor);
 
+	static bool isOpen(short nodeNum);
+	static bool isOpen(IndexNode* node);
+
 	/* Read bytes from a file. Simulates the unix system call:
 	*   int read(int fd, void *buf, size_t count);
 	returns the number of bytes actually read; or -1 if an error occurs.
@@ -199,7 +202,7 @@ public:
 	static int writedir(int fd, DirectoryEntry *dirp); // throws Exception
 
 	static int link(String oldpath, String newPath);
-	static int unlink(const char *pathname);
+	static int unlink(String pathname);
 
 	/*
 	to be done:

@@ -12,7 +12,7 @@ DirectoryEntry::DirectoryEntry()
     d_name[i] = '\0';
 }
 
-DirectoryEntry::DirectoryEntry(short ino, String name) 
+DirectoryEntry::DirectoryEntry(short ino, String name)
 {
   d_ino = 0;
   d_name = new byte[MAX_FILENAME_LENGTH];
@@ -56,13 +56,12 @@ String DirectoryEntry::getName()
   return s->toString();
 }
 
-void DirectoryEntry::write(byte *buffer , int offset)
-{
-    //    buffer[offset] = (byte)(d_ino >>> 8);
-  buffer[offset] = (byte)(d_ino >> 8);
-  buffer[offset+1] = (byte) d_ino;
-  for(int i = 0; i < MAX_FILENAME_LENGTH; i ++)
-    buffer[offset+2+i] = d_name[i];
+void DirectoryEntry::write(byte *buffer , int offset) {
+	//    buffer[offset] = (byte)(d_ino >>> 8);
+	buffer[offset] = (byte)(d_ino >> 8);
+	buffer[offset+1] = (byte) d_ino;
+	for(int i = 0; i < MAX_FILENAME_LENGTH; i ++)
+		buffer[offset+2+i] = d_name[i];
 }
 
 void DirectoryEntry::read(byte *buffer , int offset)

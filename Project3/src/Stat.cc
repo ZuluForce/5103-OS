@@ -2,7 +2,7 @@
 
 #include <Stat.h>
 
-Stat::Stat () 
+Stat::Stat ()
 {
   st_dev = 0;
   st_ino = 0;
@@ -127,14 +127,13 @@ int Stat::getCtime()
   return st_ctime;
 }
 
-void Stat::copyIndexNode(IndexNode *indexNode)
-{
-  st_mode = indexNode->getMode();
-  st_nlink = indexNode->getNlink();
-  st_uid = indexNode->getUid();
-  st_uid = indexNode->getGid();
-  st_size = indexNode->getSize();
-  st_atime = indexNode->getAtime();
-  st_mtime = indexNode->getMtime();
-  st_ctime = indexNode->getCtime();
+void Stat::copyIndexNode(IndexNode *indexNode) {
+	st_mode = indexNode->getMode();
+	st_nlink = indexNode->getNlink();
+	st_uid = indexNode->getUid();
+	st_gid = indexNode->getGid();
+	st_size = indexNode->getSize();
+	st_atime = indexNode->getAtime();
+	st_mtime = indexNode->getMtime();
+	st_ctime = indexNode->getCtime();
 }

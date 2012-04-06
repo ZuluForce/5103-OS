@@ -93,13 +93,40 @@ int Kernel::close(int fd)
   if(status < 0)
     return status;
 
+	short numRefsInode = 0;
+	short refInodeNum = process->openFiles[fd]->getIndexNodeNumber();
+	IndexNode *refInode = process->openFiles[fd]->getIndexNode();
+
   // remove the file descriptor from the kernel's list of open files
-  for(int i = 0; i < Kernel::MAX_OPEN_FILES; i ++)
-    if(openFiles[i] == process->openFiles[fd])
-      {
+  for(int i = 0; i < Kernel::MAX_OPEN_FILES; i ++) {
+	if ( openFiles[i]->getIndexNodeNumber() == refInodeNum )
+		++numRefsInode;
+
+    if(openFiles[i] == process->openFiles[fd]) {
+      	/* If the link count on the referenced inode is 0
+      	 * then remove the inode. We also need to check no
+      	 * other open fd's reference it */
+		if ( refInode->getNlink() == 0 ) {
+			for (int j = i; j < Kernel::MAX_OPEN_FILES; ++j) {
+				if ( openFiles[j] &&
+					openFiles[j]->getIndexNodeNumber() == refInodeNum) {
+					++numRefsInode;
+					break;
+				}
+			}
+
+			//This was the only fd left referencing it
+			if ( numRefsInode == 1 ) {
+				//Remove and free the inode
+				FileSystem *fs = openFileSystems[ROOT_FILE_SYSTEM];
+				fs->freeIndexNode(refInodeNum);
+			}
+		}
+
         openFiles[i] = null;
         break;
       }
+  }
   // ??? is it an error if we didn't find the open file?
 
   // remove the file descriptor from the list.
@@ -411,10 +438,28 @@ int Kernel::open(FileDescriptor *fileDescriptor)
   return fd;
 }
 
+bool Kernel::isOpen(short nodeNum) {
+	for (int i = 0; i < MAX_OPEN_FILES; ++i) {
+		if ( openFiles[i] &&
+			openFiles[i]->getIndexNodeNumber() == nodeNum )
+			return true;
+	}
 
-int Kernel::read(int fd, byte *buf, int count)
-// throws Exception
-{
+	return false;
+}
+
+bool Kernel::isOpen(IndexNode* node) {
+	for (int i = 0; i < MAX_OPEN_FILES; ++i) {
+		if ( openFiles[i] &&
+			openFiles[i]->getIndexNode() == node )
+				return true;
+	}
+
+	return false;
+}
+
+
+int Kernel::read(int fd, byte *buf, int count) {
   // check fd
   int status = check_fd_for_read(fd);
   if(status < 0)
@@ -451,9 +496,7 @@ int Kernel::read(int fd, byte *buf, int count)
     return readCount;
   }
 
-int Kernel::readdir(int fd, DirectoryEntry *dirp)
-// throws Exception
-{
+int Kernel::readdir(int fd, DirectoryEntry *dirp) {
   // check fd
   int status = check_fd_for_read(fd);
   if(status < 0)
@@ -488,56 +531,50 @@ int Kernel::readdir(int fd, DirectoryEntry *dirp)
     return DirectoryEntry::DIRECTORY_ENTRY_SIZE;
   }
 
-int Kernel::fstat(int fd, Stat *buf)
-// throws Exception
-{
-  // check fd
-  int status = check_fd(fd);
-  if(status < 0)
-    return status;
+int Kernel::fstat(int fd, Stat *buf) {
+	// check fd
+	int status = check_fd(fd);
+	if(status < 0)
+		return status;
 
-  FileDescriptor *fileDescriptor = process->openFiles[fd];
-  short deviceNumber = fileDescriptor->getDeviceNumber();
-  short indexNodeNumber = fileDescriptor->getIndexNodeNumber();
-  IndexNode *indexNode = fileDescriptor->getIndexNode();
+	FileDescriptor *fileDescriptor = process->openFiles[fd];
+	short deviceNumber = fileDescriptor->getDeviceNumber();
+	short indexNodeNumber = fileDescriptor->getIndexNodeNumber();
+	IndexNode *indexNode = fileDescriptor->getIndexNode();
 
-  // copy information to buf
-  buf->st_dev = deviceNumber;
-  buf->st_ino = indexNodeNumber;
-  buf->copyIndexNode(indexNode);
+	// copy information to buf
+	buf->st_dev = deviceNumber;
+	buf->st_ino = indexNodeNumber;
+	buf->copyIndexNode(indexNode);
 
-  return 0;
+	return 0;
 }
 
-int Kernel::stat(String name, Stat *buf)
-// throws Exception
-{
-  // a buffer for reading directory entries
-  DirectoryEntry *directoryEntry = new DirectoryEntry();
+int Kernel::stat(String name, Stat *buf) {
+	// a buffer for reading directory entries
+	DirectoryEntry *directoryEntry = new DirectoryEntry();
 
-  // get the full path
-  String path = getFullPath(name);
+	// get the full path
+	String path = getFullPath(name);
 
-  // find the index node
-  IndexNode *indexNode = new IndexNode();
-  short indexNodeNumber = findIndexNode(path, indexNode);
-  if(indexNodeNumber < 0)
-    {
-      // return ENOENT
-      process->errno = ENOENT;
-      return -1;
-    }
+	// find the index node
+	IndexNode *indexNode = new IndexNode();
+	short indexNodeNumber = findIndexNode(path, indexNode);
+	if(indexNodeNumber < 0) {
+		// return ENOENT
+		process->errno = ENOENT;
+		return -1;
+	}
 
-  // copy information to buf
-  buf->st_dev = ROOT_FILE_SYSTEM;
-  buf->st_ino = indexNodeNumber;
-  buf->copyIndexNode(indexNode);
+	// copy information to buf
+	buf->st_dev = ROOT_FILE_SYSTEM;
+	buf->st_ino = indexNodeNumber;
+	buf->copyIndexNode(indexNode);
 
-  return 0;
+	return 0;
 }
 
-void Kernel::sync()
-{
+void Kernel::sync() {
   // write out superblock if updated
   // write out free list blocks if updated
   // write out inode blocks if updated
@@ -677,57 +714,53 @@ to be done:
        mode_t umask(mode_t mask);
 */
 
-void Kernel::initialize()
-{
-  // We are hard-setting the properties ... could also check filesys.conf
-    // get the root file system properties
-    String rootFileSystemFilename = "filesys.dat";
-    String rootFileSystemMode = "rw";
-    short uid = 1;
-    uid = 1;
-    short gid = 1;
-    short umask = 0002;
-    String dir = "/root";
-    MAX_OPEN_FILES = 20;
-    ProcessContext::MAX_OPEN_FILES = 10;
+void Kernel::initialize() {
+	// We are hard-setting the properties ... could also check filesys.conf
+	// get the root file system properties
+	String rootFileSystemFilename = "filesys.dat";
+	String rootFileSystemMode = "rw";
+	short uid = 1;
+	uid = 1;
+	short gid = 1;
+	short umask = 0002;
+	String dir = "/root";
+	MAX_OPEN_FILES = 20;
+	ProcessContext::MAX_OPEN_FILES = 10;
 
-    // create open file array
-    for (int i=0; i<MAX_OPEN_FILES; i++) {
-      openFiles[i] = new FileDescriptor;
-      openFiles[i] = null;
-    }
+	// create open file array
+	for (int i=0; i<MAX_OPEN_FILES; i++) {
+		openFiles[i] = new FileDescriptor;
+		openFiles[i] = null;
+	}
 
-    // create the first process
-    Kernel::process = new ProcessContext(uid, gid, dir, umask);
-    Kernel::processCount++;
+	// create the first process
+	Kernel::process = new ProcessContext(uid, gid, dir, umask);
+	Kernel::processCount++;
 
-    // open the root file system -- should catch error if it fails!
-    openFileSystems[ROOT_FILE_SYSTEM] =
-      new FileSystem(rootFileSystemFilename, rootFileSystemMode);
+	// open the root file system -- should catch error if it fails!
+	openFileSystems[ROOT_FILE_SYSTEM] =
+	  new FileSystem(rootFileSystemFilename, rootFileSystemMode);
 }
 
 
-void Kernel::finalize(int status)
-//  throws Exception
-{
-  // exit() any remaining processes
-  if(Kernel::process != null)
-    Exit(0);
+void Kernel::finalize(int status) {
+	// exit() any remaining processes
+	if(Kernel::process != null)
+		Exit(0);
 
-  // flush file system blocks
-  sync();
+	// flush file system blocks
+	sync();
 
-  // close the root file system
-  openFileSystems[ROOT_FILE_SYSTEM]->close();
+	// close the root file system
+	openFileSystems[ROOT_FILE_SYSTEM]->close();
 
-  // terminate the program
-  exit (status);
+	// terminate the program
+	exit (status);
 }
 
 /* Some internal methods. */
 
-int Kernel::check_fd(int fd)
-{
+int Kernel::check_fd(int fd) {
   // look for the file descriptor in the open file list
   if (fd < 0 ||
       fd >= Kernel::process->num_files ||
@@ -741,42 +774,36 @@ int Kernel::check_fd(int fd)
   return 0;
 }
 
-int Kernel::check_fd_for_read(int fd)
-{
-  int status = check_fd(fd);
-  if(status < 0)
-    return -1;
+int Kernel::check_fd_for_read(int fd) {
+	int status = check_fd(fd);
+	if(status < 0)
+	return -1;
 
-  FileDescriptor *fileDescriptor = Kernel::process->openFiles[fd];
-  int flags = fileDescriptor->getFlags();
-  if((flags != O_RDONLY) &&
-     (flags != O_RDWR))
-    {
-      // return (EBADF) if the file is not open for reading
-      Kernel::process->errno = EBADF;
-      return -1;
-    }
+	FileDescriptor *fileDescriptor = Kernel::process->openFiles[fd];
+	int flags = fileDescriptor->getFlags();
+	if((flags != O_RDONLY) && (flags != O_RDWR)) {
+		// return (EBADF) if the file is not open for reading
+		Kernel::process->errno = EBADF;
+		return -1;
+	}
 
-  return 0;
+	return 0;
 }
 
-int Kernel::check_fd_for_write(int fd)
-{
-  int status = check_fd(fd);
-  if(status < 0)
-    return -1;
+int Kernel::check_fd_for_write(int fd) {
+	int status = check_fd(fd);
+	if(status < 0)
+		return -1;
 
-  FileDescriptor *fileDescriptor = Kernel::process->openFiles[fd];
-  int flags = fileDescriptor->getFlags();
-  if((flags != O_WRONLY) &&
-     (flags != O_RDWR))
-    {
-      // return (EBADF) if the file is not open for writing
-      Kernel::process->errno = EBADF;
-      return -1;
-    }
+	FileDescriptor *fileDescriptor = Kernel::process->openFiles[fd];
+	int flags = fileDescriptor->getFlags();
+	if((flags != O_WRONLY) && (flags != O_RDWR)){
+	  // return (EBADF) if the file is not open for writing
+	  Kernel::process->errno = EBADF;
+	  return -1;
+	}
 
-  return 0;
+	return 0;
 }
 
 String Kernel::getFullPath(String pathname) {
@@ -974,6 +1001,12 @@ int Kernel::link(String oldpath, String newPath) {
 	StringCut(newPath, dirname, fname); //Get just the filename
 	fprintf(stderr, "New filename: %s\n", fname->toString());
 
+	if ( fname->toString() == "" ) {
+		//Trying to create a link as a directory
+		Kernel::setErrno(EISDIR);
+		return -1;
+	}
+
 	int dir = open(dirname, O_RDWR);
 	if (dir < 0) {
 		perror(PROGRAM_NAME);
@@ -986,7 +1019,7 @@ int Kernel::link(String oldpath, String newPath) {
 	while (true) {
 		status = readdir(dir, currDirEntry);
 		if (status < 0) {
-			fprintf(stderr, "error reading directory in ls\n");
+			fprintf(stderr, "error reading directory in link\n");
 			exit(Kernel::EXIT_F);
 		} else if (status == 0) {
 			//Directory empty, go ahead an make new entry
@@ -1002,10 +1035,63 @@ int Kernel::link(String oldpath, String newPath) {
 
 	oldinode->incNlink();
 
+	delete fname;
+
 	return 0;
 }
 
-int Kernel::unlink(const char *pathname) {
+int Kernel::unlink(String pathname) {
+	String dirname = Kernel::getDeepestDir(pathname);
+	StringBuffer *_fname = new StringBuffer("");
+	StringCut(pathname,dirname,_fname);
+	String fname = _fname->toString();
+
+	fprintf(stderr, "Removing file %s in directory %s\n", fname, dirname);
+	delete _fname;
+
+	int dirfd = open(dirname, O_RDWR);
+
+	if ( dirfd < 0 ) {
+		Kernel::setErrno(ENOENT);
+		return -1;
+	}
+
+	fprintf(stderr, "Successfully opened the directory\n");
+
+	//Now find the filename in the directory
+	int status = 0;
+	DirectoryEntry *currEntry = new DirectoryEntry();
+	while (true) {
+		status = readdir(dirfd, currEntry);
+		if ( status < 0 ) {
+			fprintf(stderr, "error reading directory in unlink\n");
+			exit(Kernel::EXIT_F);
+		}
+		if (!strcmp(currEntry->getName(),fname)) {
+			fprintf(stderr, "Found matching directory entry\n");
+			//Found the directory entry
+			IndexNode* refInode = new IndexNode();
+			short refInodeNum = 0;
+			refInodeNum = findIndexNode(pathname,refInode);
+			if ( refInodeNum < 0 ) {
+				perror(PROGRAM_NAME);
+				return -1;
+			}
+			fprintf(stderr, "Decrementing link count. refInode = %p num = %d\n", refInode, refInodeNum);
+			refInode->decNlink();
+			fprintf(stderr, "Checking nlink count\n");
+			if ( refInode->getNlink() == 0 &&
+				 !Kernel::isOpen(refInode)) {
+				fprintf(stderr, "inode isn't referenced so we are removing it\n");
+				//Not open and this was the last link...remove it
+				FileSystem *fs = openFileSystems[ROOT_FILE_SYSTEM];
+				fs->freeIndexNode(currEntry->getIno());
+			}
+
+			//Remove the directory entry
+			break;
+		}
+	}
 
 	return 0;
 }

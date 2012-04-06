@@ -3,52 +3,47 @@
 #include <IndexNode.h>
 #include <FileSystem.h>
 
-IndexNode::IndexNode()
-{
-  mode = 0;
-  nlink  = 0;
-  uid = 0;
-  gid = 0;
-  size = 0;
-  for (int i=0; i<MAX_DIRECT_BLOCKS; i++)
-    directBlocks [i] = FileSystem::NOT_A_BLOCK;
+IndexNode::IndexNode() {
+	mode = 0;
+	nlink  = 0;
+	uid = 0;
+	gid = 0;
+	size = 0;
+	for (int i = 0; i < MAX_DIRECT_BLOCKS; i++)
+		directBlocks [i] = FileSystem::NOT_A_BLOCK;
 
-  indirectBlock = FileSystem::NOT_A_BLOCK;
-  doubleIndirectBlock = FileSystem::NOT_A_BLOCK;
-  tripleIndirectBlock = FileSystem::NOT_A_BLOCK;
-  atime = 0;
-  mtime = 0;
-  ctime = 0;
+	indirectBlock = FileSystem::NOT_A_BLOCK;
+	doubleIndirectBlock = FileSystem::NOT_A_BLOCK;
+	tripleIndirectBlock = FileSystem::NOT_A_BLOCK;
+	atime = 0;
+	mtime = 0;
+	ctime = 0;
 }
 
 
 // Sets the mode for this IndexNode.
 // This is the file type and file protection information.
-void IndexNode::setMode(short newMode)
-{
-  mode = newMode;
+void IndexNode::setMode(short newMode) {
+	mode = newMode;
 }
 
 
 // Gets the mode for this IndexNode.
 // This is the file type and file protection information.
-short IndexNode::getMode()
-{
-  return mode;
+short IndexNode::getMode() {
+	return mode;
 }
 
 // Set the number of links for this IndedNode.
 //  newNlink is the number of links
-void IndexNode::setNlink(short newNlink)
-{
-  nlink = newNlink;
+void IndexNode::setNlink(short newNlink) {
+	nlink = newNlink;
 }
 
 
 // Get the number of links for this IndexNode.
-short IndexNode::getNlink()
-{
-  return nlink;
+short IndexNode::getNlink() {
+	return nlink;
 }
 
 bool IndexNode::incNlink() {
