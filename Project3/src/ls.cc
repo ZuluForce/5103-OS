@@ -33,45 +33,40 @@ static void print(String name, Stat *stat)
 }
 
 
-int main(int argc, char **argv) 
+int main(int argc, char **argv)
 // throws Exception
 {
   // initialize the file system simulator kernel
   Kernel::initialize();
   // for each path-name given
-  for(int i = 1; i < argc; i ++)
-    {
-      String name = argv[i]; 
-      int status = 0;
+  for(int i = 1; i < argc; i ++) {
+		String name = argv[i];
+		int status = 0;
 
-      // stat the name to get information about the file or directory
-      Stat *stat = new Stat();
-      status = Kernel::stat(name, stat);
-      if(status < 0)
-	{
-	  Kernel::perror(PROGRAM_NAME);
-	  Kernel::Exit(1);
-	}
-      // mask the file type from the mode
-      short type = (short)(stat->getMode() & Kernel::S_IFMT);
+		// stat the name to get information about the file or directory
+		Stat *stat = new Stat();
+		status = Kernel::stat(name, stat);
+		if(status < 0) {
+			Kernel::perror(PROGRAM_NAME);
+			Kernel::Exit(1);
+		}
+		// mask the file type from the mode
+		short type = (short)(stat->getMode() & Kernel::S_IFMT);
 
-      // if name is a regular file, print the info
-      if(type == Kernel::S_IFREG)
-	{
-	  print(name, stat);
-	}
+		// if name is a regular file, print the info
+		if(type == Kernel::S_IFREG) {
+			print(name, stat);
+		}
       // if name is a directory open it and read the contents
-      else if(type == Kernel::S_IFDIR)
-	{
-	  // open the directory
-	  int fd = Kernel::open(name, Kernel::O_RDONLY);
-	  if(fd < 0)
-	    {
-	      Kernel::perror(PROGRAM_NAME);
-	      fprintf (stderr, "%s%s%s%s\n", PROGRAM_NAME,
-		       ": unable to open ", name, " for reading");
-	      Kernel::Exit(1);
-	    }
+      else if(type == Kernel::S_IFDIR) {
+		// open the directory
+		int fd = Kernel::open(name, Kernel::O_RDONLY);
+		if(fd < 0) {
+			Kernel::perror(PROGRAM_NAME);
+			fprintf (stderr, "%s%s%s%s\n", PROGRAM_NAME,
+			   ": unable to open ", name, " for reading");
+			Kernel::Exit(1);
+		}
 
 	  // print a heading for this directory
 	  fprintf(stdout,"%s%s\n", name, ":");
@@ -81,7 +76,7 @@ int main(int argc, char **argv)
 	  int count = 0;
 
 	  // while we can read, print the information on each entry
-	  while(true) 
+	  while(true)
 	    {
 	      // read an entry; quit loop if error or nothing read
 	      status = Kernel::readdir(fd, directoryEntry);
@@ -121,7 +116,7 @@ int main(int argc, char **argv)
 
         // print a footing for this directory
 	  fprintf(stdout, "%s%d\n", "total files: ", count);
-	}    
+	}
     }
 
   // exit with success if we process all the arguments

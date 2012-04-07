@@ -248,28 +248,26 @@ int Kernel::creat(String pathname, short mode)
 				}
 			}
 		}
-      // copy the rest of the directory entries out to the file
-      while (status > 0)
-	{
-	  DirectoryEntry *nextDirectoryEntry = new DirectoryEntry();
-	  // read next item
-	  status = readdir(dir, nextDirectoryEntry);
-	  if(status > 0)
-	    {
-	      // in its place
-	      int seek_status =
-		lseek(dir, - DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
-	      if(seek_status < 0)
-		{
-		  fprintf (stderr, ": error during seek in creat\n");
-		  exit(Kernel::EXIT_F);
+		// copy the rest of the directory entries out to the file
+		while (status > 0) {
+			DirectoryEntry *nextDirectoryEntry = new DirectoryEntry();
+			// read next item
+			status = readdir(dir, nextDirectoryEntry);
+			if(status > 0) {
+		  		// in its place
+				int seek_status =
+				lseek(dir, - DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
+				if(seek_status < 0) {
+					fprintf (stderr, ": error during seek in creat\n");
+					exit(Kernel::EXIT_F);
+				}
+			}
+
+			// write current item
+			writedir(dir, currentDirectoryEntry);
+			// current item = next item
+			currentDirectoryEntry = nextDirectoryEntry;
 		}
-	    }
-	  // write current item
-	  writedir(dir, currentDirectoryEntry);
-	  // current item = next item
-	  currentDirectoryEntry = nextDirectoryEntry;
-	}
 
       // close the directory
       close(dir);
@@ -823,7 +821,10 @@ String Kernel::getFullPath(String pathname) {
 	return fullPath;
 }
 
-String Kernel::getDeepestDir(String pathname) {
+String Kernel::getDeepestDir(String pathname, bool ignoreTrail) {
+	if ( ignoreTrail && pathname[strlen(pathname) - 1] == '/')
+		pathname[strlen(pathname)-1] = '\0';
+
 	StringBuffer *path = new StringBuffer("/");
 
 	StringTokenizer *st = new StringTokenizer(pathname, "/");
@@ -907,22 +908,19 @@ short Kernel::findNextIndexNode
 
     // close the file since we're done with it
     close_status = close(fd);
-    if(close_status < 0)
-    {
+    if(close_status < 0) {
       // process->errno = ???
       return -1;
     }
 
     // if we encountered an error reading, return error
-    if(status < 0)
-    {
+    if(status < 0) {
       // process->errno = ???
       return -1;
     }
 
     // if we got to the directory without finding the name, return error
-    if(status == 0)
-    {
+    if(status == 0) {
       Kernel::process->errno = ENOENT;
       return -1;
     }
@@ -1010,12 +1008,12 @@ int Kernel::link(String oldpath, String newPath) {
 	int dir = open(dirname, O_RDWR);
 	if (dir < 0) {
 		perror(PROGRAM_NAME);
-		exit(1);
+		return -1;
 	}
 
 	DirectoryEntry* currDirEntry = new DirectoryEntry();
 	DirectoryEntry* newDirEntry = new DirectoryEntry(node_num, fname->toString());
-
+	int cmpStatus = 0;
 	while (true) {
 		status = readdir(dir, currDirEntry);
 		if (status < 0) {
@@ -1026,9 +1024,39 @@ int Kernel::link(String oldpath, String newPath) {
 			writedir(dir, newDirEntry);
 			break;
 		} else {
-			//Take care of this later
-			;
+			//Since directories are kept sorted we need to check
+			//its position
+			cmpStatus = strcmp(currDirEntry->getName(),newDirEntry->getName());
+			if ( cmpStatus > 0) {
+				int seek_status = lseek(dir, - DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
+				if (seek_status < 0) {
+					fprintf(stderr, ": error during seek in link\n");
+					exit(Kernel::EXIT_F);
+				}
+
+				writedir(dir, newDirEntry);
+				break;
+			} else if ( cmpStatus == 0 ) {
+				Kernel::setErrno(EEXIST);
+				return -1;
+			}
 		}
+	}
+
+	while (status > 0) {
+		DirectoryEntry *nextDirEntry = new DirectoryEntry();
+
+		status = readdir(dir, nextDirEntry);
+		if (status > 0)	{
+			int seek_status = lseek(dir, -DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
+			if (seek_status < 0) {
+				fprintf(stderr, ": error during seek in link\n");
+				exit(Kernel::EXIT_F);
+			}
+		}
+
+		writedir(dir, currDirEntry);
+		currDirEntry = nextDirEntry;
 	}
 
 	close(dir);
@@ -1089,6 +1117,7 @@ int Kernel::unlink(String pathname) {
 			}
 
 			//Remove the directory entry
+
 			break;
 		}
 	}

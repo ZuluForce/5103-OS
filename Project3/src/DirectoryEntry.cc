@@ -23,8 +23,7 @@ DirectoryEntry::DirectoryEntry(short ino, String name)
   setName(name);
 }
 
-void DirectoryEntry::setIno(short newIno)
-{
+void DirectoryEntry::setIno(short newIno) {
   d_ino = newIno;
 }
 

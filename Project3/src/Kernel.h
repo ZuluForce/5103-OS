@@ -244,7 +244,16 @@ public:
 	// ??? should be private?
 	static short ROOT_FILE_SYSTEM;
 
-
+	/* Given a path it returns the deepest directory.
+	 * /home/work -> /home
+	 * /home/work/ -> /home/work
+	 *
+	 * As you can see it is a very simple function. While
+	 * work may be a directory, this function doesn't check
+	 * that. It just returns everything preceeding the last
+	 * '/' character.
+	 */
+	static String getDeepestDir(String pathname, bool ingnoreTrail = false);
 
 public:
 
@@ -321,7 +330,6 @@ static int check_fd_for_write(int fd);
    returns the resulting fully qualified path name
 */
 static String getFullPath(String pathname);
-static String getDeepestDir(String pathname);
 
 static IndexNode *rootIndexNode;
 static IndexNode *getRootIndexNode();

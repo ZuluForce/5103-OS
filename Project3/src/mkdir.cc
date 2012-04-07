@@ -55,10 +55,12 @@ int main(int argc, char ** args) //throws Exception
       // get file info for ".."
       Stat *parentStat = new Stat();
       char buf[100]; // remove magic #
-      strcpy (buf, name);
+      strcpy (buf, Kernel::getDeepestDir(name,true));
       fprintf(stderr, "Name: %s\n", buf);
-      strcat (buf, "/..");
-      Kernel::stat(buf, parentStat);
+      //strcat (buf, "/..");
+      status = Kernel::stat(buf, parentStat);
+      fprintf(stderr, "status after stat = %d\n", status);
+      fprintf(stderr, "parentStat->getIno() = %d\n", parentStat->getIno());
       // add entry for ".."
       DirectoryEntry *parent = new DirectoryEntry
 	(parentStat->getIno() , "..");
