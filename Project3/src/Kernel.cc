@@ -436,6 +436,43 @@ int Kernel::open(FileDescriptor *fileDescriptor)
   return fd;
 }
 
+int Kernel::fdOpen(int fd) {
+	if ( fd >= ProcessContext::MAX_OPEN_FILES ) {
+		Kernel::setErrno(EBADF);
+		return -1;
+	}
+
+	FileDescriptor *openFile = process->openFiles[fd];
+	if ( openFile == NULL ) {
+		Kernel::setErrno(EBADF);
+		return -1;
+	}
+
+	FileDescriptor *newFile =
+	new FileDescriptor(openFileSystems[ROOT_FILE_SYSTEM],
+						openFile->getIndexNode(),
+						openFile->getFlags());
+
+	newFile->setIndexNodeNumber(openFile->getIndexNodeNumber());
+
+	int newfd = -1;
+	newfd = open(newFile);
+	if ( newfd < 0 )
+		return newfd;
+
+	lseek(newfd, openFile->getOffset(),0);
+	return newfd;
+}
+
+
+//Just fo debugging purposes
+void Kernel::printOffsets(int fd1, int fd2) {
+	FileDescriptor *f1 = process->openFiles[fd1];
+	FileDescriptor *f2 = process->openFiles[fd2];
+
+	fprintf(stderr, "f1 off: %d   f2 off: %d\n", f1->getOffset(), f2->getOffset());
+}
+
 bool Kernel::isOpen(short nodeNum) {
 	for (int i = 0; i < MAX_OPEN_FILES; ++i) {
 		if ( openFiles[i] &&
@@ -527,7 +564,26 @@ int Kernel::readdir(int fd, DirectoryEntry *dirp) {
 
     // return the size of a DirectoryEntry
     return DirectoryEntry::DIRECTORY_ENTRY_SIZE;
-  }
+}
+
+int Kernel::changeSize(int fd, int newsize, int how) {
+	//if ( check_fd(fd) < 0 ) {
+	//	Kernel::setErrno(EBADF);
+	//	return -1;
+	//}
+
+	FileDescriptor *file = process->openFiles[fd];
+
+	if ( how == 0 ) {
+		//Change the size to be absolutely this
+		file->setSize(newsize);
+	} else if ( how == 1 ) {
+		//Add newsize to the current size
+		file->setSize(file->getSize() + newsize);
+	}
+
+	return 0;
+}
 
 int Kernel::fstat(int fd, Stat *buf) {
 	// check fd
@@ -1074,7 +1130,6 @@ int Kernel::unlink(String pathname) {
 	StringCut(pathname,dirname,_fname);
 	String fname = _fname->toString();
 
-	fprintf(stderr, "Removing file %s in directory %s\n", fname, dirname);
 	delete _fname;
 
 	int dirfd = open(dirname, O_RDWR);
@@ -1084,12 +1139,11 @@ int Kernel::unlink(String pathname) {
 		return -1;
 	}
 
-	fprintf(stderr, "Successfully opened the directory\n");
-
 	//Now find the filename in the directory
-	int status = 0;
+	int status = 1;
+	bool deleted = false;
 	DirectoryEntry *currEntry = new DirectoryEntry();
-	while (true) {
+	while (status > 0) {
 		status = readdir(dirfd, currEntry);
 		if ( status < 0 ) {
 			fprintf(stderr, "error reading directory in unlink\n");
@@ -1105,12 +1159,10 @@ int Kernel::unlink(String pathname) {
 				perror(PROGRAM_NAME);
 				return -1;
 			}
-			fprintf(stderr, "Decrementing link count. refInode = %p num = %d\n", refInode, refInodeNum);
+
 			refInode->decNlink();
-			fprintf(stderr, "Checking nlink count\n");
 			if ( refInode->getNlink() == 0 &&
 				 !Kernel::isOpen(refInode)) {
-				fprintf(stderr, "inode isn't referenced so we are removing it\n");
 				//Not open and this was the last link...remove it
 				FileSystem *fs = openFileSystems[ROOT_FILE_SYSTEM];
 				fs->freeIndexNode(currEntry->getIno());
@@ -1118,9 +1170,59 @@ int Kernel::unlink(String pathname) {
 
 			//Remove the directory entry
 
+			/* I'm openinng a new file descriptor so it will have
+			 * a different seek position to the original one. This is
+			 * used to copy up any directory entries below the removed
+			 * one */
+			int fd2 = fdOpen(dirfd);
+			if ( fd2 < 0 )
+				return fd2;
+			lseek(fd2, -DirectoryEntry::DIRECTORY_ENTRY_SIZE,1);
+
+			status = readdir(dirfd, currEntry);
+			while (status > 0) {
+				printOffsets(dirfd, fd2);
+				writedir(fd2, currEntry);
+
+				status = readdir(dirfd, currEntry);
+			}
+
+			if ( status < 0)
+				return status;
+
+			status = changeSize(fd2,-DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
+			if ( status < 0 )
+				return status;
+
+			close(dirfd);
+			close(fd2);
+
+			deleted = true;
 			break;
 		}
 	}
 
+	if ( !deleted ) {
+		Kernel::setErrno(ENOENT);
+		return -1;
+	}
+
 	return 0;
+}
+
+int Kernel::filesysStatus(int fsn) {
+	if ( fsn >= MaxOpenFileSystems ) {
+		fprintf(stderr, "fsn = %d\n", fsn);
+		Kernel::setErrno(EINVAL);
+		return -1;
+	}
+
+	FileSystem *fs = openFileSystems[fsn];
+
+	fprintf(stderr, "/* ---- Printing Status of Filesystem %d ---- */\n", fsn);
+	fprintf(stderr, "Block Size: %d\n", fs->getBlockSize());
+	fprintf(stderr, "Total Blocks: %d\n", fs->getBlockCount());
+	fprintf(stderr, "Blocks Taken: %d\n", fs->getTakenBlocks());
+	fprintf(stderr, "/* ------------------------------------------ */\n");
+
 }

@@ -19,7 +19,7 @@ public:
 	static const int EPERM = 1; // not owner
 	static const int ENOENT = 2; // No such file or directory.
 	static const int EBADF = 9; // Bad file number.
-	static const int ENULL = 10;
+	static const int ENULL = 10; //Expected parameter was null
 	static const int EACCES = 13; // Permission denied.
 	static const int EEXIST = 17; // File exists.
 	static const int EXDEV = 18; // Cross-device link.
@@ -146,6 +146,12 @@ public:
 	*/
 	static int open(FileDescriptor *fileDescriptor);
 
+	/* Opens a file using an existing integer fd. It sets the
+	 * new fd to be at the same offset as the one given.
+	 */
+	static int fdOpen(int fd);
+	static void printOffsets(int fd1, int fd2);
+
 	static bool isOpen(short nodeNum);
 	static bool isOpen(IndexNode* node);
 
@@ -204,6 +210,7 @@ public:
 	static int link(String oldpath, String newPath);
 	static int unlink(String pathname);
 
+	static int filesysStatus(int fsn = ROOT_FILE_SYSTEM);
 	/*
 	to be done:
 	   int access(const char *pathname, int mode);
@@ -330,6 +337,12 @@ static int check_fd_for_write(int fd);
    returns the resulting fully qualified path name
 */
 static String getFullPath(String pathname);
+
+/* Changes the specified size of the underlying file.
+ * how = 0 - Changes the size to be newsize
+ * how = 1 - Changes the size to be size + newsize
+ */
+static int changeSize(int fd, int newsize, int how);
 
 static IndexNode *rootIndexNode;
 static IndexNode *getRootIndexNode();

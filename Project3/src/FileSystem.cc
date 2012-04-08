@@ -10,30 +10,28 @@
    newFilename is the name of the FileSystem file to open;
    newMode the mode ("r" or "rw") to use when opening the file
 */
-FileSystem::FileSystem(String newFilename, String newMode)
-// throws IOException
-{
-  file = null;
-  filename = null;
-  mode = null;
-  blockSize = 0;
-  blockCount = 0;
-  freeListBlockOffset = 0;
-  inodeBlockOffset = 0;
-  dataBlockOffset = 0;
-  rootIndexNode = null;
+FileSystem::FileSystem(String newFilename, String newMode) {
+	file = null;
+	filename = null;
+	mode = null;
+	blockSize = 0;
+	blockCount = 0;
+	freeListBlockOffset = 0;
+	inodeBlockOffset = 0;
+	dataBlockOffset = 0;
+	rootIndexNode = null;
 
-  currentFreeListBitNumber = 0;
-  currentFreeListBlock = -1;
-  freeListBitBlock = null;
+	currentFreeListBitNumber = 0;
+	currentFreeListBlock = -1;
+	freeListBitBlock = null;
 
-  currentIndexNodeNumber = 0;
-  currentIndexNodeBlock = -1;
-  indexBlockBytes = null;
+	currentIndexNodeNumber = 0;
+	currentIndexNodeBlock = -1;
+	indexBlockBytes = null;
 
-  filename = newFilename;
-  mode = newMode;
-  open();
+	filename = newFilename;
+	mode = newMode;
+	open();
 }
 
 // Get the blockSize for this FileSystem (in bytes)
@@ -274,4 +272,12 @@ void FileSystem::loadIndexNodeBlock(short indexNodeNumber) {
 		read(indexBlockBytes, inodeBlockOffset + neededIndexNodeBlock);
 		currentIndexNodeBlock = neededIndexNodeBlock;
 	}
+}
+
+int FileSystem::getTakenBlocks() {
+	return freeListBitBlock->countSet();
+}
+
+int FileSystem::getBlockCount() {
+	return blockCount;
 }

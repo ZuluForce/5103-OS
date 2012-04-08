@@ -4,12 +4,12 @@
 #include <FileDescriptor.h>
 #include <Kernel.h>
 
-FileDescriptor::FileDescriptor()  
+FileDescriptor::FileDescriptor()
 // throws IOException
 {}
 
 
-FileDescriptor::FileDescriptor(short newDeviceNumber, 
+FileDescriptor::FileDescriptor(short newDeviceNumber,
 			       short newIndexNodeNumber, int newFlags)
 // throws IOException
   {
@@ -45,48 +45,39 @@ FileDescriptor::FileDescriptor(FileSystem *newFileSystem,
   bytes = new byte[fileSystem->getBlockSize()];
 }
 
-void FileDescriptor::setDeviceNumber(short newDeviceNumber)
-{
+void FileDescriptor::setDeviceNumber(short newDeviceNumber) {
   deviceNumber = newDeviceNumber;
 }
- 
-short FileDescriptor::getDeviceNumber()
-{
+
+short FileDescriptor::getDeviceNumber() {
   return deviceNumber;
 }
 
-IndexNode* FileDescriptor::getIndexNode()
-{
+IndexNode* FileDescriptor::getIndexNode() {
   return indexNode;
 }
 
-void FileDescriptor::setIndexNodeNumber(short newIndexNodeNumber)
-{
+void FileDescriptor::setIndexNodeNumber(short newIndexNodeNumber) {
   indexNodeNumber = newIndexNodeNumber;
 }
 
-short FileDescriptor::getIndexNodeNumber()
-{
+short FileDescriptor::getIndexNodeNumber() {
   return indexNodeNumber;
 }
 
-int FileDescriptor::getFlags()
-{
+int FileDescriptor::getFlags() {
   return flags;
 }
 
-byte* FileDescriptor::getBytes()
-{
+byte* FileDescriptor::getBytes() {
   return bytes;
 }
 
-short FileDescriptor::getMode()
-{
+short FileDescriptor::getMode() {
   return indexNode->getMode();
 }
 
-int FileDescriptor::getSize()
-{
+int FileDescriptor::getSize() {
   return indexNode->getSize();
 }
 
@@ -98,32 +89,26 @@ void FileDescriptor::setSize(int newSize) // throws IOException
   fileSystem->writeIndexNode(indexNode , indexNodeNumber);
 }
 
-short FileDescriptor::getBlockSize()
-{
+short FileDescriptor::getBlockSize() {
   return fileSystem->getBlockSize();
 }
 
-int FileDescriptor::getOffset()
-{
+int FileDescriptor::getOffset() {
   return offset;
 }
 
-void FileDescriptor::setOffset(int newOffset)
-{
-  offset = newOffset; 
+void FileDescriptor::setOffset(int newOffset) {
+  offset = newOffset;
 }
 
-int FileDescriptor::readBlock(short relativeBlockNumber) 
-// throws Exception
-{
-  if(relativeBlockNumber >= IndexNode::MAX_FILE_BLOCKS)
-    {
-      Kernel::setErrno(Kernel::EFBIG);
-      return -1;
+int FileDescriptor::readBlock(short relativeBlockNumber) {
+  if(relativeBlockNumber >= IndexNode::MAX_FILE_BLOCKS) {
+		Kernel::setErrno(Kernel::EFBIG);
+		return -1;
     }
-  // ask the IndexNode for the actual block number 
+  // ask the IndexNode for the actual block number
   // given the relative block number
-  int blockOffset = 
+  int blockOffset =
     indexNode->getBlockAddress(relativeBlockNumber);
 
   if(blockOffset == FileSystem::NOT_A_BLOCK)
@@ -136,13 +121,13 @@ int FileDescriptor::readBlock(short relativeBlockNumber)
   else
     {
       // read the actual block into bytes
-      fileSystem->read(bytes, 
+      fileSystem->read(bytes,
 		       fileSystem->getDataBlockOffset() + blockOffset);
     }
   return 0;
 }
 
-int FileDescriptor::writeBlock(short relativeBlockNumber) 
+int FileDescriptor::writeBlock(short relativeBlockNumber)
 // throws Exception
 {
   if(relativeBlockNumber >= IndexNode::MAX_FILE_BLOCKS)
@@ -150,9 +135,9 @@ int FileDescriptor::writeBlock(short relativeBlockNumber)
       Kernel::setErrno(Kernel::EFBIG);
       return -1;
     }
-  // ask the IndexNode for the actual block number 
+  // ask the IndexNode for the actual block number
   // given the relative block number
-  int blockOffset = 
+  int blockOffset =
     indexNode->getBlockAddress(relativeBlockNumber);
 
   if(blockOffset == FileSystem::NOT_A_BLOCK)
@@ -169,7 +154,7 @@ int FileDescriptor::writeBlock(short relativeBlockNumber)
     }
 
   // write the actual block from bytes
-  fileSystem->write(bytes,  
+  fileSystem->write(bytes,
 		    fileSystem->getDataBlockOffset() + blockOffset);
   return 0;
 }

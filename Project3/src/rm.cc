@@ -20,5 +20,6 @@ int main(int argc, char** argv) {
 		Kernel::Exit(status);
 	}
 
+	fprintf(stdout, "Removed file: %s\n", argv[1]);
 	return 0;
 }
