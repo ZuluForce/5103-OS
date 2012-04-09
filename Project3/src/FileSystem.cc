@@ -213,20 +213,29 @@ short FileSystem::allocateIndexNode()
 }
 
 void FileSystem::freeIndexNode(short node) {
+	fprintf(stderr, "Freeing resources for node %d\n", node);
 	IndexNode *temp = new IndexNode();
 	readIndexNode(temp, node);
 
-	temp->setNlink(0);
-
-	int numBlocks = temp->getSize() / blockSize;
+	int numBlocks = (temp->getSize() / blockSize);
+	numBlocks += (temp->getSize() % blockSize) > 0 ? 1 : 0;
+	fprintf(stderr, "File Size: %d\n", temp->getSize());
 
 	for (int i = 0; i < numBlocks; ++i) {
+		fprintf(stderr, "Freeing physical block %d\n", temp->getBlockAddress(i));
 		freeBlock(temp->getBlockAddress(i));
+
+		temp->setBlockAddress(i, FileSystem::NOT_A_BLOCK);
 	}
 
 	//Not necessary but a potential optimization
 	if ( currentIndexNodeNumber == (node - 1) )
 		--currentIndexNodeNumber;
+
+	temp->setNlink(0);
+	temp->setSize(0);
+	writeIndexNode(temp, node);
+	delete temp;
 
 	return;
 }
@@ -274,10 +283,37 @@ void FileSystem::loadIndexNodeBlock(short indexNodeNumber) {
 	}
 }
 
-int FileSystem::getTakenBlocks() {
+int FileSystem::getTakenDBlocks() {
+	for (int i  = 0; i < blockCount; ++i) {
+		loadFreeListBlock(i);
+	}
 	return freeListBitBlock->countSet();
+}
+
+int FileSystem::getTakenInodes() {
+	IndexNode *temp = new IndexNode();
+
+	int end = ((dataBlockOffset - inodeBlockOffset) *
+			(blockSize / IndexNode::INDEX_NODE_SIZE));
+
+	int count = 0;
+
+	for ( int i = 0; i < end; ++i ) {
+		readIndexNode(temp, i);
+
+		if ( temp->getNlink() != 0 )
+			++count;
+	}
+
+	delete temp;
+	return count;
 }
 
 int FileSystem::getBlockCount() {
 	return blockCount;
+}
+
+int FileSystem::getInodeCount() {
+	return ((dataBlockOffset - inodeBlockOffset) *
+			(blockSize / IndexNode::INDEX_NODE_SIZE));
 }

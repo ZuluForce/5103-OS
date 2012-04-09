@@ -68,8 +68,10 @@ public:
 	void writeIndexNode(IndexNode *indexNode , short indexNodeNumber);
 	//   throws IOException
 
-	int getTakenBlocks();
+	int getTakenDBlocks();
+	int getTakenInodes();
 	int getBlockCount();
+	int getInodeCount();
 private:
 	void loadIndexNodeBlock(short indexNodeNumber);  // throws IOException
 };

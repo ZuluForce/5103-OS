@@ -84,8 +84,8 @@ void IndexNode::setGid(short newGid)
 
 // Sets the size for this IndexNode.
 // This is the number of bytes in the file.
-void IndexNode::setSize(int newSize)
-{
+void IndexNode::setSize(int newSize) {
+
   size = newSize;
 }
 
@@ -165,33 +165,27 @@ void IndexNode::setBlockAddress(int block, int address)
   //new Exception("invalid block address " + block);
 }
 
-void IndexNode::setAtime(int newAtime)
-{
+void IndexNode::setAtime(int newAtime) {
   atime = newAtime;
 }
 
-int IndexNode::getAtime()
-{
+int IndexNode::getAtime() {
   return atime;
 }
 
-void IndexNode::setMtime(int newMtime)
-{
+void IndexNode::setMtime(int newMtime) {
   mtime = newMtime;
 }
 
-int IndexNode::getMtime()
-{
+int IndexNode::getMtime() {
   return mtime;
 }
 
-void IndexNode::setCtime(int newCtime)
-{
+void IndexNode::setCtime(int newCtime) {
   ctime = newCtime;
 }
 
-int IndexNode::getCtime()
-{
+int IndexNode::getCtime() {
   return ctime;
 }
 
@@ -203,8 +197,7 @@ int IndexNode::getCtime()
    offset the offset from the beginning of the buffer
    at which bytes should be written
 */
-void IndexNode::write(byte *buffer, int offset)
-{
+void IndexNode::write(byte *buffer, int offset) {
   // write the mode info
   buffer[offset] = (byte)(mode >> 8);
   buffer[offset+1] = (byte)mode;
@@ -248,39 +241,38 @@ void IndexNode::write(byte *buffer, int offset)
    offset the offset from the beginning of the buffer
    at which bytes should be read
 */
-void IndexNode::read(byte *buffer, int offset)
-{
-  int b3;
-  int b2;
-  int b1;
-  int b0;
+void IndexNode::read(byte *buffer, int offset) {
+	int b3;
+	int b2;
+	int b1;
+	int b0;
 
-  // read the mode info
-  b1 = buffer[offset] & 0xff;
-  b0 = buffer[offset+1] & 0xff;
-  mode = (short)(b1 << 8 | b0);
+	// read the mode info
+	b1 = buffer[offset] & 0xff;
+	b0 = buffer[offset+1] & 0xff;
+	mode = (short)(b1 << 8 | b0);
 
-  // read the nlink info
-  b1 = buffer[offset+2] & 0xff;
-  b0 = buffer[offset+3] & 0xff;
-  nlink = (short)(b1 << 8 | b0);
+	// read the nlink info
+	b1 = buffer[offset+2] & 0xff;
+	b0 = buffer[offset+3] & 0xff;
+	nlink = (short)(b1 << 8 | b0);
 
-  // read the uid info
-  b1 = buffer[offset+4] & 0xff;
-  b0 = buffer[offset+5] & 0xff;
-  uid = (short)(b1 << 8 | b0);
+	// read the uid info
+	b1 = buffer[offset+4] & 0xff;
+	b0 = buffer[offset+5] & 0xff;
+	uid = (short)(b1 << 8 | b0);
 
-  // read the gid info
-  b1 = buffer[offset+6] & 0xff;
-  b0 = buffer[offset+7] & 0xff;
-  gid = (short)(b1 << 8 | b0);
+	// read the gid info
+	b1 = buffer[offset+6] & 0xff;
+	b0 = buffer[offset+7] & 0xff;
+	gid = (short)(b1 << 8 | b0);
 
-  // read the size info
-  b3 = buffer[offset+8] & 0xff;
-  b2 = buffer[offset+8+1] & 0xff;
-  b1 = buffer[offset+8+2] & 0xff;
-  b0 = buffer[offset+8+3] & 0xff;
-  size = b3 << 24 | b2 << 16 | b1 << 8 | b0;
+	// read the size info
+	b3 = buffer[offset+8] & 0xff;
+	b2 = buffer[offset+8+1] & 0xff;
+	b1 = buffer[offset+8+2] & 0xff;
+	b0 = buffer[offset+8+3] & 0xff;
+	size = b3 << 24 | b2 << 16 | b1 << 8 | b0;
 
   // read the block address info 3 bytes at a time
   for(int i = 0; i < MAX_DIRECT_BLOCKS; i ++)
@@ -297,8 +289,7 @@ void IndexNode::read(byte *buffer, int offset)
 }
 
 
-String IndexNode::toString()
-{
+String IndexNode::toString() {
   StringBuffer *s = new StringBuffer("IndexNode[");
   s->append(mode);
   s->append(',');
@@ -314,8 +305,7 @@ String IndexNode::toString()
   return s->toString();
 }
 
-void IndexNode::copy(IndexNode *indexNode)
-{
+void IndexNode::copy(IndexNode *indexNode) {
   indexNode->mode = mode;
   indexNode->nlink = nlink;
   indexNode->uid = uid;
@@ -329,6 +319,6 @@ void IndexNode::copy(IndexNode *indexNode)
   indexNode->atime = atime;
   indexNode->mtime = mtime;
   indexNode->ctime = ctime;
-  }
+}
 
 

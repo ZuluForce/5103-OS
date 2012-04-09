@@ -5,14 +5,12 @@
 BitBlock::BitBlock(short blockSize): Block(blockSize) { }
 
 // Set a specified (whichBit) bit to 1 (true)
-void BitBlock::setBit(int whichBit)
-{
+void BitBlock::setBit(int whichBit) {
   bytes[whichBit/8] |= (byte)(1 << (whichBit%8));
 }
 
 // Set a specified (whichBit) bit to value
-void BitBlock::setBit(int whichBit, boolean value)
-{
+void BitBlock::setBit(int whichBit, boolean value) {
   if (value)
     setBit(whichBit);
   else
@@ -20,14 +18,12 @@ void BitBlock::setBit(int whichBit, boolean value)
 }
 
 // Checks to see if whichBit is set (1)
-boolean BitBlock::isBitSet(int whichBit)
-{
+boolean BitBlock::isBitSet(int whichBit) {
   return (bytes[whichBit/8] & (byte)(1 << (whichBit%8))) != 0;
 }
 
 // Set a specified (whichBit) bit to false (0)
-void BitBlock::resetBit(int whichBit)
-{
+void BitBlock::resetBit(int whichBit) {
   bytes[whichBit/8] &= ~ (byte)(1 << (whichBit%8));
 }
 

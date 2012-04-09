@@ -1219,10 +1219,24 @@ int Kernel::filesysStatus(int fsn) {
 
 	FileSystem *fs = openFileSystems[fsn];
 
+	int totalBlocks = fs->getBlockCount();
+
+	int takenInode = fs->getTakenInodes();
+	int totalInode = fs->getInodeCount();
+
+	int inodeBlocks = totalInode / (fs->getBlockSize() / IndexNode::INDEX_NODE_SIZE);
+
+	int takenDBlocks = fs->getTakenDBlocks();
+	int totalDBlocks = totalBlocks - inodeBlocks - 2;
+
+
+
 	fprintf(stderr, "/* ---- Printing Status of Filesystem %d ---- */\n", fsn);
 	fprintf(stderr, "Block Size: %d\n", fs->getBlockSize());
-	fprintf(stderr, "Total Blocks: %d\n", fs->getBlockCount());
-	fprintf(stderr, "Blocks Taken: %d\n", fs->getTakenBlocks());
-	fprintf(stderr, "/* ------------------------------------------ */\n");
+	fprintf(stderr, "Total Blocks: %d\n", totalBlocks);
+	fprintf(stderr, "DBlocks Alloc'd: %d (total %d)\n", takenDBlocks, totalDBlocks);
+	fprintf(stderr, "Inodes Allocated: %d (total %d in %d blocks)\n",
+			takenInode, totalInode, inodeBlocks);
+	fprintf(stderr, "/* ----------------------------------------- */\n");
 
 }
