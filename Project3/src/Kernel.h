@@ -352,6 +352,7 @@ static short findNextIndexNode
    IndexNode *nextIndexNode); // throws Exception
 
 static short findIndexNode(String path, IndexNode *inode);
+static int updateIndexNode(IndexNode *node, short nodenum);
 
 };
 

@@ -574,13 +574,34 @@ int Kernel::changeSize(int fd, int newsize, int how) {
 
 	FileDescriptor *file = process->openFiles[fd];
 
+	int status = 0;
+	int realsize = 0;
 	if ( how == 0 ) {
-		//Change the size to be absolutely this
-		file->setSize(newsize);
+		realsize = newsize;
 	} else if ( how == 1 ) {
-		//Add newsize to the current size
-		file->setSize(file->getSize() + newsize);
+		realsize = file->getSize() + newsize;
+	} else {
+		Kernel::setErrno(EINVAL);
+		return -1;
 	}
+
+	//Check if the change in size crossed a block boundary
+	int blockSize = file->getBlockSize();
+	int currBlocks = ((file->getSize() - 1) / blockSize) + 1;
+	int newBlocks = ((realsize - 1) / blockSize) + 1;
+	currBlocks = currBlocks < 0 ? 0 : currBlocks;
+	newBlocks = newBlocks < 0 ? 0 : newBlocks; //In-case the size is being set to 0
+	//size - 1 so it wraps to the next block at blockSize + 1 bytes.
+	if ( newBlocks < currBlocks) {
+		//Deallocate the unneeded blocks
+		FileSystem *fs = openFileSystems[ROOT_FILE_SYSTEM];
+		status = fs->freeInodeBlocks(file->getIndexNodeNumber(),
+							currBlocks - newBlocks);
+
+		if (status < 0) return status;
+	}
+
+	file->setSize(realsize);
 
 	return 0;
 }
@@ -1031,6 +1052,18 @@ short Kernel::findIndexNode(String path, IndexNode *inode)
   return indexNodeNumber;
 }
 
+int Kernel::updateIndexNode(IndexNode *node, short nodenum) {
+	if ( node == NULL || nodenum < 0 ) {
+		Kernel::setErrno(EINVAL);
+		return -1;
+	}
+
+	FileSystem *fs = openFileSystems[ROOT_FILE_SYSTEM];
+
+	fs->writeIndexNode(node, nodenum);
+	return 0;
+}
+
 
 int Kernel::link(String oldpath, String newPath) {
 	if ( oldpath == NULL || newPath == NULL ) {
@@ -1118,6 +1151,7 @@ int Kernel::link(String oldpath, String newPath) {
 	close(dir);
 
 	oldinode->incNlink();
+	updateIndexNode(oldinode, node_num);
 
 	delete fname;
 

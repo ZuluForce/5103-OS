@@ -240,6 +240,27 @@ void FileSystem::freeIndexNode(short node) {
 	return;
 }
 
+int FileSystem::freeInodeBlocks(short node, short howmany) {
+	IndexNode *temp = new IndexNode();
+	readIndexNode(temp, node);
+
+	int numBlocks = ((temp->getSize() - 1) / blockSize);
+	if ( numBlocks < howmany ) {
+		Kernel::setErrno(Kernel::EINVAL);
+		return -1;
+	}
+
+	for ( int i = 0; i < howmany; ++i) {
+		freeBlock(temp->getBlockAddress(numBlocks-i-1));
+		temp->setBlockAddress(numBlocks-i-1, FileSystem::NOT_A_BLOCK);
+	}
+
+	writeIndexNode(temp, node);
+	delete temp;
+
+	return 0;
+}
+
   /* Reads an index node at the index node location specified;
      indexNode the index node;
      indexNodeNumber the location.
