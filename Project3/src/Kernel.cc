@@ -978,7 +978,17 @@ short Kernel::findNextIndexNode
         indexNodeNumber = directoryEntry->getIno();
         // read the inode block
         fileSystem->readIndexNode(nextIndexNode, indexNodeNumber);
-        // we're done searching
+        // we're done searching...Oh wait...
+        //It could be a symlink!!
+        if ((nextIndexNode->getMode() & S_IFMT) == S_IFSYM) {
+			indexNodeNumber = resolveSymlinkNode(fileSystem,
+												nextIndexNode, nextIndexNode);
+
+			if ( indexNodeNumber < 0 )
+				status = -1;
+
+			break;
+        }
         break;
       }
     }
@@ -1004,6 +1014,39 @@ short Kernel::findNextIndexNode
 
     // return index node number if success
     return indexNodeNumber;
+}
+
+short Kernel::resolveSymlinkNode(FileSystem *fs, IndexNode *inode,
+								IndexNode *resolveInode) {
+
+	if ( (inode->getMode() & S_IFMT) != S_IFSYM ) {
+		Kernel::setErrno(EINVAL);
+		return -1;
+	}
+
+	int status = 0;
+	//Get address out of symlink
+	FileDescriptor *fd = new FileDescriptor(fs, inode, O_RDONLY);
+	int _fd = open(fd);
+	if ( _fd < 0 )
+		return -1;
+
+	byte path[inode->getSize()];
+	memset((void*) path, '\0', inode->getSize());
+	status = Kernel::read(_fd, path, inode->getSize());
+	path[inode->getSize()] = '\0';
+
+	if ( status < 0 )
+		return status;
+
+	status = findIndexNode((String) path, resolveInode);
+	if ( status < 0 )
+		return status;
+
+	close(_fd);
+	delete fd;
+
+	return (short) status;
 }
 
 // get the inode for a file which is expected to exist
@@ -1263,19 +1306,15 @@ int Kernel::symlink(String oldpath, String newpath) {
 	IndexNode *inode = new IndexNode();
 	inode->setMode(S_IFSYM);
 	inode->setNlink((short)1);
-	fprintf(stderr, "Opening new Filedescriptor\n");
 	newFd = new FileDescriptor(fs, inode, O_WRONLY);
-	fprintf(stderr, "Openeing fd in the kernel\n");
 	int _newFd = open(newFd);
 
 	newFd->setIndexNodeNumber(newInodeNum);
 	fs->writeIndexNode(inode, newInodeNum);
 
-	fprintf(stderr, "Writing path into symlink file\n");
 	//Write the pathname into the symlink
 	Kernel::write(_newFd, (byte*) oldpath, strlen(oldpath));
 
-	fprintf(stderr, "Going into standard link code\n");
 	//Below here it is almost the same as link
 	String dirname = Kernel::getDeepestDir(newpath);
 	fprintf(stderr, "Directory name: %s\n", dirname);
@@ -1348,6 +1387,18 @@ int Kernel::symlink(String oldpath, String newpath) {
 	delete fname;
 
 	return 0;
+}
+
+bool Kernel::validFileName(String name) {
+	char *stayNull = NULL;
+
+	stayNull = strrchr((char*) name, '/');
+	if ( stayNull != NULL ) return false;
+
+	stayNull = strstr((char*) name, "..");
+	if ( stayNull != NULL ) return false;
+
+	return true;
 }
 
 int Kernel::filesysStatus(int fsn) {

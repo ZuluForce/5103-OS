@@ -347,12 +347,17 @@ static String getFullPath(String pathname);
  */
 static int changeSize(int fd, int newsize, int how);
 
+static bool validFileName(String name);
+
 static IndexNode *rootIndexNode;
 static IndexNode *getRootIndexNode();
 
 static short findNextIndexNode
   (FileSystem *fileSystem, IndexNode *indexNode, String name,
    IndexNode *nextIndexNode); // throws Exception
+
+static short resolveSymlinkNode
+	(FileSystem *fileSystem,IndexNode *Inode,IndexNode *nextInode);
 
 static short findIndexNode(String path, IndexNode *inode);
 static int updateIndexNode(IndexNode *node, short nodenum);

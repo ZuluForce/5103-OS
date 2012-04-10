@@ -22,6 +22,7 @@ private:
 public:
 	static short const ROOT_INDEX_NODE_NUMBER = 0;
 	static int const NOT_A_BLOCK = 0x00FFFFFF;
+	static int const MAX_PATH_LENGTH = 256; //I made this to avoid floating constants elsewhere
 	FileSystem(String newFilename , String newMode);  // throws IOException
 	short getBlockSize();
 	int getFreeListBlockOffset();

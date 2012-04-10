@@ -81,7 +81,7 @@ int main(int argc, char **argv)
 	      // read an entry; quit loop if error or nothing read
 	      status = Kernel::readdir(fd, directoryEntry);
 	      if(status <= 0)
-		break;
+			break;
 
 	      // get the name from the entry
 	      String entryName = directoryEntry->getName();
