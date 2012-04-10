@@ -1244,6 +1244,112 @@ int Kernel::unlink(String pathname) {
 	return 0;
 }
 
+int Kernel::symlink(String oldpath, String newpath) {
+		if ( oldpath == NULL || newpath == NULL ) {
+		//Should set errno here
+		Kernel::setErrno(ENULL);
+		return -1;
+	}
+
+	int status = 0;
+
+	//We are going to need an inode
+	FileSystem *fs = openFileSystems[ROOT_FILE_SYSTEM];
+	FileDescriptor *newFd = NULL;
+	short newInodeNum = fs->allocateIndexNode();
+	if ( newInodeNum == -1)
+		return -1;
+
+	IndexNode *inode = new IndexNode();
+	inode->setMode(S_IFSYM);
+	inode->setNlink((short)1);
+	fprintf(stderr, "Opening new Filedescriptor\n");
+	newFd = new FileDescriptor(fs, inode, O_WRONLY);
+	fprintf(stderr, "Openeing fd in the kernel\n");
+	int _newFd = open(newFd);
+
+	newFd->setIndexNodeNumber(newInodeNum);
+	fs->writeIndexNode(inode, newInodeNum);
+
+	fprintf(stderr, "Writing path into symlink file\n");
+	//Write the pathname into the symlink
+	Kernel::write(_newFd, (byte*) oldpath, strlen(oldpath));
+
+	fprintf(stderr, "Going into standard link code\n");
+	//Below here it is almost the same as link
+	String dirname = Kernel::getDeepestDir(newpath);
+	fprintf(stderr, "Directory name: %s\n", dirname);
+	StringBuffer *fname = new StringBuffer("");
+	StringCut(newpath, dirname, fname); //Get just the filename
+	fprintf(stderr, "New filename: %s\n", fname->toString());
+
+	if ( fname->toString() == "" ) {
+		//Trying to create a link as a directory
+		Kernel::setErrno(EISDIR);
+		return -1;
+	}
+
+	int dir = open(dirname, O_RDWR);
+	if (dir < 0) {
+		perror(PROGRAM_NAME);
+		return -1;
+	}
+
+	DirectoryEntry* currDirEntry = new DirectoryEntry();
+	DirectoryEntry* newDirEntry = new DirectoryEntry(newInodeNum, fname->toString());
+	int cmpStatus = 0;
+	while (true) {
+		status = readdir(dir, currDirEntry);
+		if (status < 0) {
+			fprintf(stderr, "error reading directory in link\n");
+			exit(Kernel::EXIT_F);
+		} else if (status == 0) {
+			//Directory empty, go ahead an make new entry
+			writedir(dir, newDirEntry);
+			break;
+		} else {
+			//Since directories are kept sorted we need to check
+			//its position
+			cmpStatus = strcmp(currDirEntry->getName(),newDirEntry->getName());
+			if ( cmpStatus > 0) {
+				int seek_status = lseek(dir, - DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
+				if (seek_status < 0) {
+					fprintf(stderr, ": error during seek in link\n");
+					exit(Kernel::EXIT_F);
+				}
+
+				writedir(dir, newDirEntry);
+				break;
+			} else if ( cmpStatus == 0 ) {
+				Kernel::setErrno(EEXIST);
+				return -1;
+			}
+		}
+	}
+
+	while (status > 0) {
+		DirectoryEntry *nextDirEntry = new DirectoryEntry();
+
+		status = readdir(dir, nextDirEntry);
+		if (status > 0)	{
+			int seek_status = lseek(dir, -DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
+			if (seek_status < 0) {
+				fprintf(stderr, ": error during seek in link\n");
+				exit(Kernel::EXIT_F);
+			}
+		}
+
+		writedir(dir, currDirEntry);
+		currDirEntry = nextDirEntry;
+	}
+
+	close(dir);
+
+	delete fname;
+
+	return 0;
+}
+
 int Kernel::filesysStatus(int fsn) {
 	if ( fsn >= MaxOpenFileSystems ) {
 		fprintf(stderr, "fsn = %d\n", fsn);
