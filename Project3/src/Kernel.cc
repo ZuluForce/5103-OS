@@ -1265,12 +1265,12 @@ int Kernel::filesysStatus(int fsn) {
 
 
 
-	fprintf(stderr, "/* ---- Printing Status of Filesystem %d ---- */\n", fsn);
-	fprintf(stderr, "Block Size: %d\n", fs->getBlockSize());
-	fprintf(stderr, "Total Blocks: %d\n", totalBlocks);
-	fprintf(stderr, "DBlocks Alloc'd: %d (total %d)\n", takenDBlocks, totalDBlocks);
-	fprintf(stderr, "Inodes Allocated: %d (total %d in %d blocks)\n",
+	fprintf(stdout, "/* ---- Printing Status of Filesystem %d ---- */\n", fsn);
+	fprintf(stdout, "Block Size: %d\n", fs->getBlockSize());
+	fprintf(stdout, "Total Blocks: %d\n", totalBlocks);
+	fprintf(stdout, "DBlocks Alloc'd: %d (total %d)\n", takenDBlocks, totalDBlocks);
+	fprintf(stdout, "Inodes Allocated: %d (total %d in %d blocks)\n",
 			takenInode, totalInode, inodeBlocks);
-	fprintf(stderr, "/* ----------------------------------------- */\n");
+	fprintf(stdout, "/* ----------------------------------------- */\n");
 
 }
