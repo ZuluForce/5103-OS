@@ -35,7 +35,7 @@ FileDescriptor::FileDescriptor(FileSystem *newFileSystem,
   fileSystem = null;
   indexNode = null;
   deviceNumber = -1;
-  short indexNodeNumber = -1;
+  indexNodeNumber = -1;
   flags = 0;
   offset = 0;
   bytes = null;

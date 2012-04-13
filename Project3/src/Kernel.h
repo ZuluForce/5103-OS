@@ -181,7 +181,7 @@ public:
 	/* Obtain information about a named file. Simulates the unix system call:
 	*   int stat(const char *name, struct stat *buf);
 	*/
-	static int stat(String name, Stat *buf); // throws Exception
+	static int stat(String name, Stat *buf, bool leaveLink = false); // throws Exception
 
 	/* First commits inodes to buffers, and then buffers to disk.
 	Simulates unix system call:
@@ -354,12 +354,12 @@ static IndexNode *getRootIndexNode();
 
 static short findNextIndexNode
   (FileSystem *fileSystem, IndexNode *indexNode, String name,
-   IndexNode *nextIndexNode); // throws Exception
+   IndexNode *nextIndexNode, bool leaveLink = false); // throws Exception
 
 static short resolveSymlinkNode
 	(FileSystem *fileSystem,IndexNode *Inode,IndexNode *nextInode);
 
-static short findIndexNode(String path, IndexNode *inode);
+static short findIndexNode(String path, IndexNode *inode, bool leaveLink = false);
 static int updateIndexNode(IndexNode *node, short nodenum);
 
 };

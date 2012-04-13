@@ -27,5 +27,5 @@ int main(int argc, char **argv) {
 		Kernel::Exit(-1);
 	}
 
-	return 0;
+	Kernel::Exit(0);
 }

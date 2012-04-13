@@ -6,7 +6,8 @@ static const String PROGRAM_NAME = "tee";
 static const int BUF_SIZE = 4096;
 
 // The file mode to use when creating the output file.
-static const short OUTPUT_MODE = 0700;
+//static const short OUTPUT_MODE = 0700;
+static const short OUTPUT_MODE = Kernel::S_IFREG;
 
 /* Copies standard input to standard output and to a file */
 int main (int argc, char **argv)
