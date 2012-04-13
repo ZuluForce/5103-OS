@@ -43,7 +43,7 @@ public:
 	void write(byte *buffer, int offset);
 
 	/* Reads a DirectoryEntry from the spcified byte array at the specified
-	* offse; buffer is the byte array from which the directory entry should be read;
+	* offset; buffer is the byte array from which the directory entry should be read;
 	* offset is the offset from the beginning of the buffer from which the
 	* directory entry should be read
 	*/

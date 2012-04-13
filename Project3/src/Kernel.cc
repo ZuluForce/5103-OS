@@ -53,8 +53,7 @@ const StringArr Kernel::sys_errlist =
 int Kernel::MAX_OPEN_FILE_SYSTEMS;
 short Kernel::ROOT_FILE_SYSTEM = 0;
 
-void Kernel::perror(String s)
-{
+void Kernel::perror(String s) {
   const char *message = null;
   if ((Kernel::process->errno > 0) && (Kernel::process->errno < Kernel::sys_nerr))
     message = Kernel::sys_errlist[Kernel::process->errno];
@@ -65,20 +64,16 @@ void Kernel::perror(String s)
 }
 
 
-void Kernel::setErrno(int newErrno)
-{
-  if(Kernel::process == null)
-    {
+void Kernel::setErrno(int newErrno) {
+  if(Kernel::process == null) {
       fprintf (stderr, "no current process in setErrno\n");
       exit (Kernel::EXIT_F);
     }
   Kernel::process->errno = newErrno;
 }
 
-int Kernel::getErrno()
-{
-    if(Kernel::process == null)
-    {
+int Kernel::getErrno() {
+    if(Kernel::process == null) {
       fprintf (stderr, "no current process in getErrno\n");
       exit (Kernel::EXIT_F);
     }
@@ -86,47 +81,28 @@ int Kernel::getErrno()
 }
 
 
-int Kernel::close(int fd)
-{
+int Kernel::close(int fd) {
   // check fd
   int status = check_fd(fd);
   if(status < 0)
     return status;
 
-	short numRefsInode = 0;
 	short refInodeNum = process->openFiles[fd]->getIndexNodeNumber();
 	IndexNode *refInode = process->openFiles[fd]->getIndexNode();
 
-  // remove the file descriptor from the kernel's list of open files
-  for(int i = 0; i < Kernel::MAX_OPEN_FILES; i ++) {
-	if ( openFiles[i]->getIndexNodeNumber() == refInodeNum )
-		++numRefsInode;
+	// remove the file descriptor from the kernel's list of open files
+	for(int i = 0; i < Kernel::MAX_OPEN_FILES; i ++) {
 
-    if(openFiles[i] == process->openFiles[fd]) {
-      	/* If the link count on the referenced inode is 0
-      	 * then remove the inode. We also need to check no
-      	 * other open fd's reference it */
-		if ( refInode->getNlink() == 0 ) {
-			for (int j = i; j < Kernel::MAX_OPEN_FILES; ++j) {
-				if ( openFiles[j] &&
-					openFiles[j]->getIndexNodeNumber() == refInodeNum) {
-					++numRefsInode;
-					break;
-				}
-			}
-
-			//This was the only fd left referencing it
-			if ( numRefsInode == 1 ) {
-				//Remove and free the inode
+		if(openFiles[i] == process->openFiles[fd]) {
+			if ( refInode->getNlink() == 0 ) {
 				FileSystem *fs = openFileSystems[ROOT_FILE_SYSTEM];
 				fs->freeIndexNode(refInodeNum);
 			}
-		}
 
-        openFiles[i] = null;
-        break;
-      }
-  }
+			openFiles[i] = null;
+			break;
+		}
+	}
   // ??? is it an error if we didn't find the open file?
 
   // remove the file descriptor from the list.
@@ -321,12 +297,11 @@ int Kernel::creat(String pathname, short mode)
 void Kernel::Exit(int status)
 //  throws Exception
 {
-  // close anything that might be open for the current process
-  for(int i = 0; i < process->num_files; i ++)
-    if(Kernel::process->openFiles[i] != null)
-      {
-        close(i);
-      }
+	// close anything that might be open for the current process
+	for(int i = 0; i < process->num_files; i ++)
+		if (Kernel::process->openFiles[i] != null) {
+			close(i);
+		}
 
   // terminate the process
   Kernel::process = null;
@@ -625,7 +600,7 @@ int Kernel::fstat(int fd, Stat *buf) {
 	return 0;
 }
 
-int Kernel::stat(String name, Stat *buf) {
+int Kernel::stat(String name, Stat *buf, bool leaveLink) {
 	// a buffer for reading directory entries
 	DirectoryEntry *directoryEntry = new DirectoryEntry();
 
@@ -634,7 +609,7 @@ int Kernel::stat(String name, Stat *buf) {
 
 	// find the index node
 	IndexNode *indexNode = new IndexNode();
-	short indexNodeNumber = findIndexNode(path, indexNode);
+	short indexNodeNumber = findIndexNode(path, indexNode, leaveLink);
 	if(indexNodeNumber < 0) {
 		// return ENOENT
 		process->errno = ENOENT;
@@ -932,29 +907,24 @@ IndexNode *Kernel::getRootIndexNode() {
 
 short Kernel::findNextIndexNode
 (FileSystem *fileSystem, IndexNode *indexNode, String name,
- IndexNode *nextIndexNode)
-// throws Exception
-{
-  // if stat isn't a directory give an error
-  if((indexNode->getMode() & S_IFMT) != S_IFDIR)
-    {
-      // return (ENOTDIR) if a needed directory is not a directory
-      Kernel::process->errno = ENOTDIR;
-      return -1;
-    }
+ IndexNode *nextIndexNode, bool leaveLink) {
+	// if stat isn't a directory give an error
+	if((indexNode->getMode() & S_IFMT) != S_IFDIR) {
+		// return (ENOTDIR) if a needed directory is not a directory
+		Kernel::process->errno = ENOTDIR;
+		return -1;
+	}
 
   // if user isn't alowed to read directory, give an error
   // ??? tbd
   // return (EACCES) if a needed directory is not readable
-
   FileDescriptor *fileDescriptor =
     new FileDescriptor(fileSystem, indexNode, O_RDONLY);
-  int fd = open(fileDescriptor);
-  if(fd < 0)
-    {
-      // process->errno = ???
-      return -1;
-    }
+	int fd = open(fileDescriptor);
+	if(fd < 0) {
+		// process->errno = ???
+		return -1;
+	}
 
   // create a buffer for reading directory entries
   DirectoryEntry *directoryEntry = new DirectoryEntry();
@@ -963,25 +933,38 @@ short Kernel::findNextIndexNode
   int close_status;
   short indexNodeNumber = -1;
   // while there are more directory blocks to be read
-  while(true)
-    {
+  while(true) {
       // read a directory entry
       status = readdir(fd, directoryEntry);
-      if(status <= 0)
-      {
+      if(status <= 0) {
         // we got to the end of the directory, or
         // encountered an error, so quit
         break;
       }
+
       if(!strcmp (directoryEntry->getName(), name))
       {
         indexNodeNumber = directoryEntry->getIno();
         // read the inode block
         fileSystem->readIndexNode(nextIndexNode, indexNodeNumber);
-        // we're done searching
+        // we're done searching...Oh wait...
+        //It could be a symlink!!
+        if ((nextIndexNode->getMode() & S_IFMT) == S_IFSYM) {
+
+			if ( !leaveLink ) {
+				indexNodeNumber = resolveSymlinkNode(fileSystem,
+													nextIndexNode, nextIndexNode);
+
+				if ( indexNodeNumber < 0 )
+					status = -1;
+			}
+
+			break;
+        }
+
         break;
       }
-    }
+	}
 
     // close the file since we're done with it
     close_status = close(fd);
@@ -1006,22 +989,53 @@ short Kernel::findNextIndexNode
     return indexNodeNumber;
 }
 
-// get the inode for a file which is expected to exist
-short Kernel::findIndexNode(String path, IndexNode *inode)
-//  throws Exception
-{
-  // start with the root file system, root inode
-  FileSystem *fileSystem = openFileSystems[ ROOT_FILE_SYSTEM ];
-  IndexNode *indexNode = getRootIndexNode();
-  short indexNodeNumber = FileSystem::ROOT_INDEX_NODE_NUMBER;
+short Kernel::resolveSymlinkNode(FileSystem *fs, IndexNode *inode,
+								IndexNode *resolveInode) {
 
+	if ( (inode->getMode() & S_IFMT) != S_IFSYM ) {
+		Kernel::setErrno(EINVAL);
+		return -1;
+	}
+
+	int status = 0;
+	//Get address out of symlink
+	FileDescriptor *fd = new FileDescriptor(fs, inode, O_RDONLY);
+	int _fd = open(fd);
+	if ( _fd < 0 )
+		return -1;
+
+	byte path[inode->getSize()];
+	memset((void*) path, '\0', inode->getSize());
+	status = Kernel::read(_fd, path, inode->getSize());
+	path[inode->getSize()] = '\0';
+
+	if ( status < 0 )
+		return status;
+
+	status = findIndexNode((String) path, resolveInode);
+	if ( status < 0 )
+		return status;
+
+	close(_fd);
+	delete fd;
+
+	return (short) status;
+}
+
+// get the inode for a file which is expected to exist
+short Kernel::findIndexNode(String path, IndexNode *inode, bool leaveLink) {
+	// start with the root file system, root inode
+	FileSystem *fileSystem = openFileSystems[ ROOT_FILE_SYSTEM ];
+	IndexNode *indexNode = getRootIndexNode();
+	short indexNodeNumber = FileSystem::ROOT_INDEX_NODE_NUMBER;
+
+	bool lastNode = false;
   // parse the path until we get to the end
-  StringTokenizer *st = new StringTokenizer(path, "/");
-  while(st->hasMoreTokens())
-    {
+  StringTokenizer_rr *st = new StringTokenizer_rr(path, "/");
+  while(st->hasMoreTokens()) {
       String s = st->nextToken();
-      if (strcmp (s,""))
-      {
+
+      if (strcmp (s,"")) {
         // check to see if it is a directory
         if((indexNode->getMode() & S_IFMT) != S_IFDIR)
         {
@@ -1033,13 +1047,13 @@ short Kernel::findIndexNode(String path, IndexNode *inode)
         // check to see if it is readable by the user
         // ??? tbd
         // return (EACCES) if a needed directory is not readable
-
         IndexNode *nextIndexNode = new IndexNode();
         // get the next index node corresponding to the token
+        lastNode = !st->hasMoreTokens() && leaveLink;
         indexNodeNumber = findNextIndexNode
-	  (fileSystem, indexNode, s, nextIndexNode);
-        if(indexNodeNumber < 0)
-        {
+	  (fileSystem, indexNode, s, nextIndexNode, lastNode);
+
+        if(indexNodeNumber < 0) {
           // return ENOENT
           Kernel::process->errno = ENOENT;
           return -1;
@@ -1047,9 +1061,13 @@ short Kernel::findIndexNode(String path, IndexNode *inode)
         indexNode = nextIndexNode;
       }
     }
-  // copy indexNode to inode
-  indexNode->copy(inode);
-  return indexNodeNumber;
+	// copy indexNode to inode
+	indexNode->copy(inode);
+
+	//Cleanup
+	delete st;
+
+	return indexNodeNumber;
 }
 
 int Kernel::updateIndexNode(IndexNode *node, short nodenum) {
@@ -1102,6 +1120,7 @@ int Kernel::link(String oldpath, String newPath) {
 
 	DirectoryEntry* currDirEntry = new DirectoryEntry();
 	DirectoryEntry* newDirEntry = new DirectoryEntry(node_num, fname->toString());
+
 	int cmpStatus = 0;
 	while (true) {
 		status = readdir(dir, currDirEntry);
@@ -1242,6 +1261,128 @@ int Kernel::unlink(String pathname) {
 	}
 
 	return 0;
+}
+
+int Kernel::symlink(String oldpath, String newpath) {
+	if ( oldpath == NULL || newpath == NULL ) {
+		//Should set errno here
+		Kernel::setErrno(ENULL);
+		return -1;
+	}
+
+	int status = 0;
+
+	//We are going to need an inode
+	FileSystem *fs = openFileSystems[ROOT_FILE_SYSTEM];
+	FileDescriptor *newFd = NULL;
+	short newInodeNum = fs->allocateIndexNode();
+	if ( newInodeNum == -1)
+		return -1;
+
+	IndexNode *inode = new IndexNode();
+	inode->setMode(S_IFSYM);
+	inode->setNlink((short)1);
+	newFd = new FileDescriptor(fs, inode, O_WRONLY);
+	int _newFd = open(newFd);
+
+	newFd->setIndexNodeNumber(newInodeNum);
+	fs->writeIndexNode(inode, newInodeNum);
+
+	//Write the pathname into the symlink
+	Kernel::write(_newFd, (byte*) oldpath, strlen(oldpath)+1);
+
+	IndexNode *temp = new IndexNode();
+	fs->readIndexNode(temp, newInodeNum);
+
+	close(_newFd);
+	delete newFd;
+
+	//Below here it is almost the same as link
+	String dirname = Kernel::getDeepestDir(newpath);
+	fprintf(stderr, "Directory name: %s\n", dirname);
+	StringBuffer *fname = new StringBuffer("");
+	StringCut(newpath, dirname, fname); //Get just the filename
+	fprintf(stderr, "New filename: %s\n", fname->toString());
+
+	if ( fname->toString() == "" ) {
+		//Trying to create a link as a directory
+		Kernel::setErrno(EISDIR);
+		return -1;
+	}
+
+	int dir = open(dirname, O_RDWR);
+	if (dir < 0) {
+		perror(PROGRAM_NAME);
+		return -1;
+	}
+
+	DirectoryEntry* currDirEntry = new DirectoryEntry();
+	DirectoryEntry* newDirEntry = new DirectoryEntry(newInodeNum, fname->toString());
+	fprintf(stdout, "New symlink name: %s\n", fname->toString());
+
+	int cmpStatus = 0;
+	while (true) {
+		status = readdir(dir, currDirEntry);
+		if (status < 0) {
+			fprintf(stderr, "error reading directory in symlink\n");
+			exit(Kernel::EXIT_F);
+		} else if (status == 0) {
+			//Directory empty, go ahead an make new entry
+			writedir(dir, newDirEntry);
+			break;
+		} else {
+			//Since directories are kept sorted we need to check
+			//its position
+			cmpStatus = strcmp(currDirEntry->getName(),newDirEntry->getName());
+			if ( cmpStatus > 0) {
+				int seek_status = lseek(dir, - DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
+				if (seek_status < 0) {
+					fprintf(stderr, ": error during seek in link\n");
+					exit(Kernel::EXIT_F);
+				}
+
+				writedir(dir, newDirEntry);
+				break;
+			} else if ( cmpStatus == 0 ) {
+				Kernel::setErrno(EEXIST);
+				return -1;
+			}
+		}
+	}
+
+	while (status > 0) {
+		DirectoryEntry *nextDirEntry = new DirectoryEntry();
+
+		status = readdir(dir, nextDirEntry);
+		if (status > 0)	{
+			int seek_status = lseek(dir, -DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
+			if (seek_status < 0) {
+				fprintf(stderr, ": error during seek in link\n");
+				exit(Kernel::EXIT_F);
+			}
+		}
+
+		writedir(dir, currDirEntry);
+		currDirEntry = nextDirEntry;
+	}
+
+	close(dir);
+
+	delete fname;
+
+	return 0;
+}
+
+bool Kernel::validFileName(String name) {
+	char *stayNull = NULL;
+
+	stayNull = strrchr((char*) name, '/');
+	if ( stayNull != NULL ) return false;
+
+	stayNull = strstr((char*) name, "..");
+	if ( stayNull != NULL ) return false;
+
+	return true;
 }
 
 int Kernel::filesysStatus(int fsn) {

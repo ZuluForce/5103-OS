@@ -27,6 +27,20 @@ public:
 	String nextToken();
 };
 
+class StringTokenizer_rr {
+	char curr[MAXPATH];
+	char delim[MAXPATH];
+	int next_control;
+	String r;
+
+	char *saveptr;
+
+public:
+	StringTokenizer_rr(String,String);
+	bool hasMoreTokens();
+	String nextToken();
+};
+
 class StringBuffer {
 	char *str;
 public:

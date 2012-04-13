@@ -44,6 +44,7 @@ public:
 	/* Modes */
 	// File type masks
 	static const short S_IFMT = (short)0170000;
+	static const short S_IFSYM = (short)0110000;
 	static const short S_IFREG = (short)0100000; // Regular file
 	static const short S_IFMPB = 070000; // Multiplexed block special
 	static const short S_IFBLK = 060000; // Block Special
@@ -180,7 +181,7 @@ public:
 	/* Obtain information about a named file. Simulates the unix system call:
 	*   int stat(const char *name, struct stat *buf);
 	*/
-	static int stat(String name, Stat *buf); // throws Exception
+	static int stat(String name, Stat *buf, bool leaveLink = false); // throws Exception
 
 	/* First commits inodes to buffers, and then buffers to disk.
 	Simulates unix system call:
@@ -209,6 +210,8 @@ public:
 
 	static int link(String oldpath, String newPath);
 	static int unlink(String pathname);
+
+	static int symlink(String oldpath, String newpath);
 
 	static int filesysStatus(int fsn = ROOT_FILE_SYSTEM);
 	/*
@@ -344,14 +347,19 @@ static String getFullPath(String pathname);
  */
 static int changeSize(int fd, int newsize, int how);
 
+static bool validFileName(String name);
+
 static IndexNode *rootIndexNode;
 static IndexNode *getRootIndexNode();
 
 static short findNextIndexNode
   (FileSystem *fileSystem, IndexNode *indexNode, String name,
-   IndexNode *nextIndexNode); // throws Exception
+   IndexNode *nextIndexNode, bool leaveLink = false); // throws Exception
 
-static short findIndexNode(String path, IndexNode *inode);
+static short resolveSymlinkNode
+	(FileSystem *fileSystem,IndexNode *Inode,IndexNode *nextInode);
+
+static short findIndexNode(String path, IndexNode *inode, bool leaveLink = false);
 static int updateIndexNode(IndexNode *node, short nodenum);
 
 };

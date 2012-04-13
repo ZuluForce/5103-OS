@@ -15,16 +15,18 @@ ProcessContext::ProcessContext()
   uid = 1;
   gid = 1;
   dir = "/root";
-  umask = 0000; 
+  umask = 0000;
 
-  for (int i=0; i<MaxOpenFiles; i++)  { 
+  for (int i=0; i<MaxOpenFiles; i++)  {
     openFiles[i] = new FileDescriptor;
     openFiles[i] = null;
   }
+
+  num_files = 0;
 }
 
 // Construct a process context and specify uid, gid, dir, and umask.
-ProcessContext::ProcessContext(short newUid , short newGid , String newDir , 
+ProcessContext::ProcessContext(short newUid , short newGid , String newDir ,
 				short newUmask)
 {
   errno = 0;
@@ -36,6 +38,7 @@ ProcessContext::ProcessContext(short newUid , short newGid , String newDir ,
     openFiles[i] = new FileDescriptor;
     openFiles[i] = null;
   }
+  num_files = 0;
 }
 
 void ProcessContext::setUid(short newUid)
