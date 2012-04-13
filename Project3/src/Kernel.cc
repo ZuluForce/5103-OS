@@ -14,12 +14,13 @@ int Kernel::processCount;
 FileDescriptor *Kernel::openFiles[MaxOpenFiles];
 FileSystem *Kernel::openFileSystems [MaxOpenFileSystems];
 int Kernel::MAX_OPEN_FILES;
+int Kernel::symHopCount;
 const StringArr Kernel::sys_errlist =
 	  {
 	    null
 	 , "Not owner"
 	 , "No such file or directory"
-	 , null
+	 , "Symbolic link creates loop"
 	 , null
 	 , null
 	 , null
@@ -42,7 +43,7 @@ const StringArr Kernel::sys_errlist =
 	 , "File table overflow"
 	 , "Too many open files"
 	 , null
-	 , "Bad filename. Likely too large."
+	 , "Bad filename. Likely too long."
 	 , "File too large"
 	 , "No space left on device"
 	 , null
@@ -349,29 +350,27 @@ int Kernel::lseek(int fd, int offset, int whence) {
 	return newOffset;
 }
 
-int Kernel::open(String pathname, int flags)
-  // throws Exception
-{
-  // get the full path name
-  String fullPath = getFullPath(pathname);
+int Kernel::open(String pathname, int flags) {
+	// get the full path name
+	String fullPath = getFullPath(pathname);
 
-  IndexNode *indexNode = new IndexNode();
-  short indexNodeNumber = findIndexNode(fullPath, indexNode);
-  if(indexNodeNumber < 0)
-    return -1;
+	IndexNode *indexNode = new IndexNode();
+	short indexNodeNumber = findIndexNode(fullPath, indexNode);
+	if(indexNodeNumber < 0)
+		return -1;
 
-  // ??? return (Exxx) if the file is not readable
-  // and was opened O_RDONLY or O_RDWR
+	// ??? return (Exxx) if the file is not readable
+	// and was opened O_RDONLY or O_RDWR
 
-  // ??? return (Exxx) if the file is not writable
-  // and was opened O_WRONLY or O_RDWR
+	// ??? return (Exxx) if the file is not writable
+	// and was opened O_WRONLY or O_RDWR
 
-  // set up the file descriptor
-  FileDescriptor *fileDescriptor = new FileDescriptor
-    (openFileSystems[ ROOT_FILE_SYSTEM ], indexNode, flags);
-  fileDescriptor->setIndexNodeNumber(indexNodeNumber);
+	// set up the file descriptor
+	FileDescriptor *fileDescriptor = new FileDescriptor
+		(openFileSystems[ ROOT_FILE_SYSTEM ], indexNode, flags);
+	fileDescriptor->setIndexNodeNumber(indexNodeNumber);
 
-  return open(fileDescriptor);
+	return open(fileDescriptor);
 }
 
 int Kernel::open(FileDescriptor *fileDescriptor)
@@ -618,7 +617,8 @@ int Kernel::stat(String name, Stat *buf, bool leaveLink) {
 	short indexNodeNumber = findIndexNode(path, indexNode, leaveLink);
 	if(indexNodeNumber < 0) {
 
-		if ( process->errno == EBLINK )
+		if ( process->errno == EBLINK ||
+			 process->errno == ELOOP )
 			return -1;
 
 		// return ENOENT
@@ -800,6 +800,8 @@ void Kernel::initialize() {
 	// open the root file system -- should catch error if it fails!
 	openFileSystems[ROOT_FILE_SYSTEM] =
 	  new FileSystem(rootFileSystemFilename, rootFileSystemMode);
+
+	symHopCount = 0;
 }
 
 
@@ -962,12 +964,23 @@ short Kernel::findNextIndexNode
         if ((nextIndexNode->getMode() & S_IFMT) == S_IFSYM) {
 
 			if ( !leaveLink ) {
-				indexNodeNumber = resolveSymlinkNode(fileSystem,
-													nextIndexNode, nextIndexNode);
-
-				if ( indexNodeNumber < 0 ) {
-					Kernel::setErrno(EBLINK);
+				if ( symHopCount > hopThresh ) {
+					//Check if a loop is detected
+					Kernel::setErrno(ELOOP);
 					status = -1;
+				} else {
+					//Otherwise dereference it
+					++symHopCount;
+					indexNodeNumber = resolveSymlinkNode(fileSystem,
+														nextIndexNode, nextIndexNode);
+
+					if ( indexNodeNumber < 0 ) {
+						if ( !(process->errno == ELOOP) )
+							Kernel::setErrno(EBLINK);
+						status = -1;
+					}
+
+					symHopCount = 0;
 				}
 			}
 
@@ -1066,11 +1079,12 @@ short Kernel::findIndexNode(String path, IndexNode *inode, bool leaveLink) {
 	  (fileSystem, indexNode, s, nextIndexNode, lastNode);
 
         if(indexNodeNumber < 0) {
-			if ( process->errno == EBLINK )
+			if ( process->errno == EBLINK ||
+				 process->errno == ELOOP)
 				return -1;
-          // return ENOENT
-          Kernel::process->errno = ENOENT;
-          return -1;
+
+			Kernel::setErrno(ENOENT);
+			return -1;
         }
         indexNode = nextIndexNode;
       }
@@ -1115,19 +1129,27 @@ int Kernel::link(String oldpath, String newPath) {
 		return -1;
 	}
 
-	String dirname = Kernel::getDeepestDir(newPath);
-	fprintf(stderr, "Directory name: %s\n", dirname);
-	StringBuffer *fname = new StringBuffer("");
-	StringCut(newPath, dirname, fname); //Get just the filename
-	String newfname = fname->toString();
-	fprintf(stderr, "New filename: %s\n", newfname);
-
-	if ( newfname == "" ) {
-		//Trying to create a link as a directory
+	//Check that it isn't a directory
+	if ( (oldinode->getMode() & S_IFMT) == S_IFDIR ) {
 		Kernel::setErrno(EISDIR);
 		return -1;
 	}
 
+	String dirname = Kernel::getDeepestDir(newPath);
+	StringBuffer *fname = new StringBuffer("");
+	StringCut(newPath, dirname, fname); //Get just the filename
+	String newfname = fname->toString();
+	//fprintf(stderr, "New filename: %s\n", newfname);
+
+	//Make sure the file doesn't already exist
+	IndexNode *checkExist = new IndexNode();
+	int existsNode = findIndexNode(newPath, checkExist, false);
+	if ( existsNode >= 0 ) {
+		Kernel::setErrno(EEXIST);
+		return -1;
+	}
+
+	//Is it valid? This currently only checks length
 	if ( !DirectoryEntry::checkValid(newfname) ) {
 		Kernel::setErrno(EBADFN);
 		return -1;
@@ -1172,6 +1194,7 @@ int Kernel::link(String oldpath, String newPath) {
 		}
 	}
 
+	//Write all the remaining entries back
 	while (status > 0) {
 		DirectoryEntry *nextDirEntry = new DirectoryEntry();
 
@@ -1194,6 +1217,7 @@ int Kernel::link(String oldpath, String newPath) {
 	updateIndexNode(oldinode, node_num);
 
 	delete fname;
+	delete oldinode;
 
 	return 0;
 }
@@ -1228,9 +1252,16 @@ int Kernel::unlink(String pathname) {
 			//Found the directory entry
 			IndexNode* refInode = new IndexNode();
 			short refInodeNum = 0;
-			refInodeNum = findIndexNode(pathname,refInode);
+			refInodeNum = findIndexNode(pathname,refInode, true);
 			if ( refInodeNum < 0 ) {
 				perror(PROGRAM_NAME);
+				delete refInode;
+				delete currEntry;
+
+				return -1;
+			}
+			if ( (refInode->getMode() & S_IFMT) == S_IFDIR ) {
+				Kernel::setErrno(EISDIR);
 				return -1;
 			}
 
@@ -1240,6 +1271,9 @@ int Kernel::unlink(String pathname) {
 				//Not open and this was the last link...remove it
 				FileSystem *fs = openFileSystems[ROOT_FILE_SYSTEM];
 				fs->freeIndexNode(currEntry->getIno());
+			} else {
+				//Make sure we sync the changes back if we don't remove
+				updateIndexNode(refInode, refInodeNum);
 			}
 
 			//Remove the directory entry
@@ -1293,11 +1327,11 @@ int Kernel::symlink(String oldpath, String newpath) {
 
 	//First check that the target file/directory exists
 	IndexNode *checkNode = new IndexNode();
-	int targetNode = findIndexNode(oldpath, checkNode, false);
-	delete checkNode;
 
-	if ( targetNode < 0 ) {
-		Kernel::setErrno(ENOENT);
+	//Check that newpath doesn't exist
+	int checkNodeNum = findIndexNode(newpath, checkNode, false);
+	if ( checkNodeNum >= 0 ) {
+		Kernel::setErrno(EEXIST);
 		return -1;
 	}
 
@@ -1330,13 +1364,12 @@ int Kernel::symlink(String oldpath, String newpath) {
 
 	//Below here it is almost the same as link
 	String dirname = Kernel::getDeepestDir(newpath);
-	fprintf(stderr, "Directory name: %s\n", dirname);
 	StringBuffer *fname = new StringBuffer("");
 	StringCut(newpath, dirname, fname); //Get just the filename
 	String newfname = fname->toString();
-	fprintf(stderr, "New filename: %s\n", newfname);
+	//fprintf(stderr, "New filename: %s\n", newfname);
 
-	if ( newfname == "" ) {
+	if ( !strcmp(newfname, "") ) {
 		//Trying to create a link as a directory
 		Kernel::setErrno(EISDIR);
 		return -1;

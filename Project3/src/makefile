@@ -99,6 +99,8 @@ SuperBlock.o: SuperBlock.h SuperBlock.cc
 test_all: $(APPS)
 	make test_link_tests
 	make test_should_error
+	make test_unlink_tests
+	make test_boundary_tests
 
 test_%: $(APPS)
 	./tests/run_tests.py ./ ./tests/$*

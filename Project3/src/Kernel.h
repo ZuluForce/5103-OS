@@ -18,6 +18,7 @@ public:
 
 	static const int EPERM = 1; // not owner
 	static const int ENOENT = 2; // No such file or directory.
+	static const int ELOOP = 3; //Symlink loop
 	static const int EBADF = 9; // Bad file number.
 	static const int ENULL = 10; //Expected parameter was null
 	static const int EACCES = 13; // Permission denied.
@@ -36,6 +37,9 @@ public:
 	static const int EBLINK = 32; //Broken link
 
 	static const int sys_nerr = 33; // # of erros in sys_errlist
+
+	static int symHopCount;
+	static const int hopThresh = 6;
 
 	static const StringArr sys_errlist;
 

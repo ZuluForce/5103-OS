@@ -11,6 +11,25 @@ class testMod:
 			print("Failed to get module reference. testMod constructor")
 			exit(-1)
 
+		if not ('ignore_error' in dir(self.ref)):
+			self.ref.ignore_error = []
+
+		if not ('expected' in dir(self.ref)):
+			self.ref.expected = ""
+
+		if not ('options' in dir(self.ref)):
+			self.ref.options = ""
+
+		if not ('execlist' in dir(self.ref)):
+			print("Missing execlist in test module: t%d" % (num))
+			print("This is a required attribute")
+			exit(-1)
+
+		if not ('output' in dir(self.ref)):
+			print("Missing output in test module: t%d" % (num))
+			print("This is a required attribute")
+			exit(-1)
+
 	def getOutput(self):
 		return self.ref.output
 
@@ -34,6 +53,9 @@ class testMod:
 			return self.ref.description
 		except:
 			return None
+
+	def inIgnoreList(self, str):
+		return str in self.ref.ignore_error
 
 class execHandler:
 	def __init__(self, cmd):
@@ -79,10 +101,11 @@ class execHandler:
 			print("\tLine #: " + str(traceback.tb_lineno(e_trace)))
 			return (s_out,s_err,-1)
 	
-		if proc.returncode < 0:
-			print("Error executing the test: " + self.cmd)
-			print("Return Value: " + proc.returncode)
-			return (s_out,s_err,-1)
+		if proc.returncode != 0:
+			print("Error executing the test: " + ' '.join(self.cmd))
+			print("Return Value: " + str(proc.returncode))
+			print("If the script doesn't stop this was likely an intentional error")
+			return (s_out,s_err, proc.returncode)
 
 		status = 0
 		if ( self.depends ):
@@ -131,13 +154,10 @@ if __name__ == '__main__':
 	print("Switched to executing directory:\n\t" + os.getcwd())
 
 	opClean_re	 = re.compile("\\bclean\\b")
-	opStop_re	 = re.compile("\\bEStop\\b")
+	opStop_re	 = re.compile("\\bestop\\b")
 	opRebuild_re = re.compile("\\brebuild\\b")
 	opSaveFS_re	 = re.compile("\\bsavefs\\b")
 
-	opClean		= False
-	opStop		= False
-	opRebuild	= False
 
 	for testNum in range(numTests):
 		opClean		= False
@@ -164,8 +184,8 @@ if __name__ == '__main__':
 		##Open Output file before anything else
 		try:
 			outfile = open(output, "w+")
-		except IOError as e:
-			print("Failed to open output file: " + e.value)
+		except IOError as (errno,strerror):
+			print("Failed to open output file: " + strerror)
 			raw_input("Press <enter> to continue with other tests")
 			continue
 
@@ -215,10 +235,11 @@ if __name__ == '__main__':
 			proc = execHandler(stmnt)
 			(s_out, s_err,status) = proc.run()
 
-			if status < 0:
-				print("Error executing command\n")
-				if opStop:
-					raw_input("Press <enter> to continue")
+			if status != 0:
+				if not Tobj.inIgnoreList(stmnt):
+					print("Error executing command\n")
+					if opStop:
+						raw_input("Press <enter> to continue")
 
 			outputs.append(s_out)
 			errors.append(s_err)
@@ -238,7 +259,7 @@ if __name__ == '__main__':
 			outfile.write(status_msg)
 			outfile.write(err_msg)
 
-		outfile.write("[Expected Output]: " + expected + "\n")	
+		outfile.write("[Expected Output]:\n\t" + expected + "\n")	
 
 		if opSaveFS:
 			outfile.write("Saving filesystem as filesys_save%d.dat" % (testNum))
