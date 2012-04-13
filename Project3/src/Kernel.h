@@ -265,6 +265,7 @@ public:
 	 * '/' character.
 	 */
 	static String getDeepestDir(String pathname, bool ingnoreTrail = false);
+	static void incIndexNodeNlink(int fd);
 
 public:
 
@@ -362,6 +363,7 @@ static short resolveSymlinkNode
 
 static short findIndexNode(String path, IndexNode *inode, bool leaveLink = false);
 static int updateIndexNode(IndexNode *node, short nodenum);
+
 
 };
 

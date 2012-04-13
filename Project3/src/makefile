@@ -3,7 +3,7 @@ AFLAGS = -g -I.
 
 BINS = Kernel.o BitBlock.o IndexNode.o Block.o DirectoryEntry.o  ProcessContext.o FileDescriptor.o  Stat.o FileSystem.o SuperBlock.o RandomAccessFile.o io_types.o
 
-APPS = mkfs cat tee touch cp ls ln rm mkdir dump df
+APPS = mkfs cat tee touch cp ls ln rm mkdir dump df fsck
 
 all:
 	make $(BINS)
@@ -25,6 +25,9 @@ dump: dump.cc $(BINS)
 	
 df: df.cc $(BINS)
 	g++ $(AFLAGS) df.cc $(BINS) -o df
+
+fsck: fsck.cc $(BINS)
+	g++ $(AFLAGS) fsck.cc $(BINS) -o fsck
 
 cp: cp.cc $(BINS)
 	g++ $(AFLAGS) cp.cc $(BINS) -o cp

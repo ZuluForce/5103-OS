@@ -74,6 +74,7 @@ public:
 	int getTakenInodes();
 	int getBlockCount();
 	int getInodeCount();
+	BitBlock* getFreeList(int bit);
 private:
 	void loadIndexNodeBlock(short indexNodeNumber);  // throws IOException
 };
