@@ -3,7 +3,7 @@ AFLAGS = -g -I.
 
 BINS = Kernel.o BitBlock.o IndexNode.o Block.o DirectoryEntry.o  ProcessContext.o FileDescriptor.o  Stat.o FileSystem.o SuperBlock.o RandomAccessFile.o io_types.o
 
-APPS = mkfs cat tee touch cp ls ln rm mkdir dump df fsck
+APPS = mkfs cat tee touch cp ls ln rm mkdir dump df fsck find crpt
 
 all:
 	make $(BINS)
@@ -20,11 +20,17 @@ clean_all: clean
 cat: cat.cc $(BINS)
 	g++ $(AFLAGS) cat.cc $(BINS) -o cat
 
+crpt: crpt.cc $(BINS)
+	g++ $(AFLAGS) crpt.cc $(BINS) -o crpt
+
 dump: dump.cc $(BINS)
 	g++ $(AFLAGS) dump.cc $(BINS) -o dump
 	
 df: df.cc $(BINS)
 	g++ $(AFLAGS) df.cc $(BINS) -o df
+
+find: find.cc $(BINS)
+	g++ $(AFLAGS) find.cc $(BINS) -o find
 
 fsck: fsck.cc $(BINS)
 	g++ $(AFLAGS) fsck.cc $(BINS) -o fsck

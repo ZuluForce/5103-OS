@@ -1426,9 +1426,7 @@ bool Kernel::validFileName(String name) {
 void Kernel::incIndexNodeNlink(int fd){
 	FileDescriptor *fileD = process->openFiles[fd];
 	IndexNode *node = fileD->getIndexNode();
-	printf("node %d before:%d\n", fileD->getIndexNodeNumber(), node->getNlink());
 	node->incNlink();
-	printf("node %d after:%d\n", fileD->getIndexNodeNumber(), node->getNlink());
 	updateIndexNode(node, fileD->getIndexNodeNumber());
 }
 
@@ -1460,5 +1458,45 @@ int Kernel::filesysStatus(int fsn) {
 	fprintf(stdout, "Inodes Allocated: %d (total %d in %d blocks)\n",
 			takenInode, totalInode, inodeBlocks);
 	fprintf(stdout, "/* ----------------------------------------- */\n");
+
+}
+
+
+
+int Kernel::corruptFileSys(int fd){
+	 FileSystem *fs = Kernel::openFileSystems[Kernel::ROOT_FILE_SYSTEM];
+	 IndexNode temp;
+	 fs->readIndexNode(&temp, 2);
+	 temp.decNlink();
+	 updateIndexNode(&temp, 2);
+
+	 FileDescriptor *f1 = process->openFiles[fd];
+	 printf("%d: %d\n", f1->getIndexNodeNumber(), f1->getOffset());
+
+	 // Remove directory entry
+	 int fd2 = fdOpen(fd);
+	if ( fd2 < 0 )
+		return fd2;
+	 lseek(fd2, -DirectoryEntry::DIRECTORY_ENTRY_SIZE,1);
+	 DirectoryEntry currEntry;
+	 int status = readdir(fd, &currEntry);
+	 while (status > 0) {
+		 printf("%s\n", currEntry.getName());
+		writedir(fd2, &currEntry);
+		printOffsets(fd, fd2);
+		status = readdir(fd, &currEntry);
+	 }
+
+	 if ( status < 0)
+		return status;
+	 printf("How about to changeSize\n");
+	 status = changeSize(fd2,-DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
+	 printf("Change size status: %d", status);
+	 if ( status < 0 )
+		return status;
+
+	 close(fd);
+	 close(fd2);
+	 return 0;
 
 }

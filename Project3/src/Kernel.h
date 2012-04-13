@@ -267,6 +267,7 @@ public:
 	 */
 	static String getDeepestDir(String pathname, bool ingnoreTrail = false);
 	static void incIndexNodeNlink(int fd);
+	static int corruptFileSys(int fd);
 
 public:
 

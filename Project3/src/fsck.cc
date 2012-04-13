@@ -37,7 +37,7 @@ int checkDirContents(int fd, String path){
         StringBuffer *newPathBuilder = new StringBuffer(path);
         newPathBuilder->append(name);
         String newPath = newPathBuilder->toString();
-        status = Kernel::stat(newPath, stat);
+        status = Kernel::stat(newPath, stat, true);
 
         if (status < 0){
             fprintf(stderr, "stat failed!\n");
