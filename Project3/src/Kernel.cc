@@ -48,6 +48,7 @@ const StringArr Kernel::sys_errlist =
 	 , null
 	 , "Read-only file system"
 	 , "Too many links"
+	 , "Link is broken"
 	  };
 
 int Kernel::MAX_OPEN_FILE_SYSTEMS;
@@ -611,6 +612,10 @@ int Kernel::stat(String name, Stat *buf, bool leaveLink) {
 	IndexNode *indexNode = new IndexNode();
 	short indexNodeNumber = findIndexNode(path, indexNode, leaveLink);
 	if(indexNodeNumber < 0) {
+
+		if ( process->errno == EBLINK )
+			return -1;
+
 		// return ENOENT
 		process->errno = ENOENT;
 		return -1;
@@ -955,8 +960,10 @@ short Kernel::findNextIndexNode
 				indexNodeNumber = resolveSymlinkNode(fileSystem,
 													nextIndexNode, nextIndexNode);
 
-				if ( indexNodeNumber < 0 )
+				if ( indexNodeNumber < 0 ) {
+					Kernel::setErrno(EBLINK);
 					status = -1;
+				}
 			}
 
 			break;
@@ -1001,25 +1008,25 @@ short Kernel::resolveSymlinkNode(FileSystem *fs, IndexNode *inode,
 	//Get address out of symlink
 	FileDescriptor *fd = new FileDescriptor(fs, inode, O_RDONLY);
 	int _fd = open(fd);
-	if ( _fd < 0 )
+	if ( _fd < 0 ) {
+		delete fd;
 		return -1;
+	}
 
 	byte path[inode->getSize()];
 	memset((void*) path, '\0', inode->getSize());
 	status = Kernel::read(_fd, path, inode->getSize());
 	path[inode->getSize()] = '\0';
 
+	close(_fd);
+	delete fd;
+
 	if ( status < 0 )
 		return status;
 
 	status = findIndexNode((String) path, resolveInode);
-	if ( status < 0 )
-		return status;
 
-	close(_fd);
-	delete fd;
-
-	return (short) status;
+	return status;
 }
 
 // get the inode for a file which is expected to exist
@@ -1054,6 +1061,8 @@ short Kernel::findIndexNode(String path, IndexNode *inode, bool leaveLink) {
 	  (fileSystem, indexNode, s, nextIndexNode, lastNode);
 
         if(indexNodeNumber < 0) {
+			if ( process->errno == EBLINK )
+				return -1;
           // return ENOENT
           Kernel::process->errno = ENOENT;
           return -1;

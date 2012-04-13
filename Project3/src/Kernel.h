@@ -32,8 +32,9 @@ public:
 	static const int ENOSPC = 28; // No space left on device.
 	static const int EROFS = 30; // Read-only file system.
 	static const int EMLINK = 31; // Too many links.
+	static const int EBLINK = 32; //Broken link
 
-	static const int sys_nerr = 32; // # of erros in sys_errlist
+	static const int sys_nerr = 33; // # of erros in sys_errlist
 
 	static const StringArr sys_errlist;
 
