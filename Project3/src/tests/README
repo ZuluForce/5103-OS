@@ -1,0 +1,56 @@
+Instructions for using the python testing harness "run_tests.py"
+
+Usage:
+	./run_tests.py [execution directory] [test directories]+
+
+Operation:
+	There is a bit of directory switching going on so it is important to
+	know how relative paths should be used. Of course if you want to aviod
+	confusion you can always use an absolute. Remember however that these
+	scripts will be used on different machines so this is not preferred.
+
+	When the script starts it looks to all the test directories and imports
+	any tests it finds. Tests are files that match this pattern ".+_test.py".
+	The test directories given at the command line should be relative to the
+	directory that the script was executed in.
+
+	Take this directory for example(This will be used later as well):
+	
+	./src
+		..Project files...
+		/tests
+			run_tests.py
+			hello.txt
+			/link_tests
+				basic_test.py
+
+	If you execute the test script from the src directory, to include basic_test.py
+	you should add the directory tests/link_tests on the command line. If you execute
+	from the tests directory this would only be link_tests or ./link_tests. Note that
+	if you execute from the tests directory you will need to modify the execution directory
+	parameter so the commands in the tests work.
+
+	The execution directory parameter specifies the location of the execution directory
+	relative to the scripts invocation point. If you start it in src like above then
+	the execution directory can just be './'. After the script imports all the tests from
+	the specified test directories it will chdir to the given execution directory to
+	execute the commands in the script.
+
+	At the moment there is no way for a script to specify its own specific execution directory
+	so just make sure you always invoke the script in the src directory and make all commands
+	in the test assume that this is the executing directory.
+
+	Since the execution directory is src, all refrences to files in test command should be
+	relative to here. Even if I start the script in the tests directory and then chdir,
+	my commands for files should look like this:
+
+	'./cat ./tests/hello.txt' not! './cat hello.txt
+
+	It is very easy to mess this up and then your test will start displaying errors.
+
+Test Script Fromat:
+	The actual tests scripts are just python files with some strings and arrays defined
+	which the test harness will read after importing the test into its namespace.
+
+	The scripts are fairly easy to make, just look in link_tests/basic_test.py for an
+	example with comments.
