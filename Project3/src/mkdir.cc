@@ -52,10 +52,13 @@ int main(int argc, char ** args) //throws Exception
 	  Kernel::perror(PROGRAM_NAME);
 	  Kernel::Exit(4);
 	}
+
+
+      Kernel::incIndexNodeNlink(newDir);
       // get file info for ".."
       Stat *parentStat = new Stat();
       char buf[100]; // remove magic #
-      strcpy (buf, Kernel::getDeepestDir(name,true));
+      strcpy (buf, Kernel::getDeepestDir(name,false));
 
       status = Kernel::stat(buf, parentStat);
       // add entry for ".."
@@ -72,12 +75,30 @@ int main(int argc, char ** args) //throws Exception
       }
 
       // call close() to close the file
-      status = Kernel::close(newDir);
-      if(status < 0)
-	{
-	  Kernel::perror(PROGRAM_NAME);
-	  Kernel::Exit(6);
-	}
+         status = Kernel::close(newDir);
+         if(status < 0)
+		{
+		  Kernel::perror(PROGRAM_NAME);
+		  Kernel::Exit(6);
+		}
+
+      FileDescriptor *fd = new FileDescriptor(Kernel::ROOT_FILE_SYSTEM, parentStat->getIno(),
+         											Kernel::O_RDONLY);
+
+      int parentDir = Kernel::open(fd);
+      if(parentDir < 0){
+			Kernel::perror(PROGRAM_NAME);
+			fprintf (stderr, "%s%s%s\n", PROGRAM_NAME, ": ","Could not update parentDir nLinks");
+			Kernel::Exit(2);
+      }
+      Kernel::incIndexNodeNlink(parentDir);
+      status = Kernel::close(parentDir);
+      if (status < 0){
+    	  Kernel::perror(PROGRAM_NAME);
+    	  Kernel::Exit(5);
+      }
+
+
     }
 
     // exit with success if we process all the arguments

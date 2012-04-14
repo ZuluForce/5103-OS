@@ -338,3 +338,8 @@ int FileSystem::getInodeCount() {
 	return ((dataBlockOffset - inodeBlockOffset) *
 			(blockSize / IndexNode::INDEX_NODE_SIZE));
 }
+
+BitBlock * FileSystem::getFreeList(int bit){
+	loadFreeListBlock(bit);
+	return freeListBitBlock;
+}

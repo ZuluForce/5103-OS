@@ -1394,6 +1394,16 @@ bool Kernel::validFileName(String name) {
 	return true;
 }
 
+
+void Kernel::incIndexNodeNlink(int fd){
+	FileDescriptor *fileD = process->openFiles[fd];
+	IndexNode *node = fileD->getIndexNode();
+	printf("node %d before:%d\n", fileD->getIndexNodeNumber(), node->getNlink());
+	node->incNlink();
+	printf("node %d after:%d\n", fileD->getIndexNodeNumber(), node->getNlink());
+	updateIndexNode(node, fileD->getIndexNodeNumber());
+}
+
 int Kernel::filesysStatus(int fsn) {
 	if ( fsn >= MaxOpenFileSystems ) {
 		fprintf(stderr, "fsn = %d\n", fsn);
