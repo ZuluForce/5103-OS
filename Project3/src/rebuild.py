@@ -24,6 +24,7 @@
 #################################################
 
 import os,re,sys,subprocess
+import traceback
 
 class dummyMatch:
 	def __init__(self):
@@ -33,7 +34,16 @@ class dummyMatch:
 		return self.value
 
 if __name__ == '__main__':
-	infoproc = subprocess.Popen(["./df"], stdout=subprocess.PIPE)
+	try:
+		infoproc = subprocess.Popen(["./df"], stdout=subprocess.PIPE)
+	except:
+		(e_type, e_value, e_trace) = sys.exc_info()
+		print("Exception: " + str(e_type))
+		print("Message: " + str(e_value))
+		exit(-1)
+
+	if infoproc.returncode < 0:
+		print("Process df returned with bad stats: " + str(infoproc.returncode))
 
 	info = infoproc.communicate()[0]
 

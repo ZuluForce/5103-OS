@@ -1279,6 +1279,16 @@ int Kernel::symlink(String oldpath, String newpath) {
 		return -1;
 	}
 
+	//First check that the target file/directory exists
+	IndexNode *checkNode = new IndexNode();
+	int targetNode = findIndexNode(oldpath, checkNode, false);
+	delete checkNode;
+
+	if ( targetNode < 0 ) {
+		Kernel::setErrno(ENOENT);
+		return -1;
+	}
+
 	int status = 0;
 
 	//We are going to need an inode

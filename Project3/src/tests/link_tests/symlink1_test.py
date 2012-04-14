@@ -1,10 +1,10 @@
-output = "tests/link_tests/symlink1_test.result
+output = "tests/link_tests/symlink1_test.result"
 
 description = "To come later"
 
 options = "EStop rebuild"
 
-execlist = ['./cat tests/64_bytes.txt | ./tee /file64.txt',\
+execlist = ['cat ./tests/64_bytes.txt | ./tee /64file.txt',\
             './ln /64file.txt /link1.txt -s',\
             './mkdir /home',\
             './ln /64file.txt /home/link2.txt -s',\

@@ -127,12 +127,18 @@ if __name__ == '__main__':
 	opClean_re	 = re.compile("\\bclean\\b")
 	opStop_re	 = re.compile("\\bEStop\\b")
 	opRebuild_re = re.compile("\\brebuild\\b")
+	opSaveFS_re	 = re.compile("\\bsavefs\\b")
 
 	opClean		= False
 	opStop		= False
 	opRebuild	= False
 
 	for testNum in range(numTests):
+		opClean		= False
+		opStop		= False
+		opRebuild	= False
+		opSaveFS	= False
+
 		Tobj = testMod(testNum)
 
 		output	 = Tobj.getOutput()
@@ -168,6 +174,10 @@ if __name__ == '__main__':
 		if match:
 			opRebuild = True
 
+		match = opSaveFS_re.search(options)
+		if match:
+			opSaveFS = True
+
 		##Log the options to the screen
 		print("Parsed Options Settings:")
 		print("\tClean: " + str(opClean))
@@ -175,7 +185,9 @@ if __name__ == '__main__':
 		print("\tRebuild FS: " + str(opRebuild))		
 
 		if ( opRebuild ):
+			print("\n##---- Rebuilding the filesystem ---- ##")
 			os.system("./rebuild.py -noprompt")
+			print("")
 
 		proc = None
 
@@ -208,7 +220,7 @@ if __name__ == '__main__':
 		for i in range(len(execlist)):
 			out_msg = "[Output ID: %d]:\n%s\n" % (i,outputs[i])
 			status_msg = "[Return Status: %d]\n" % ( return_codes[i])
-			err_msg = "[Errors for ID: %d]:\n%s\n\n" % (i,errors[i])
+			err_msg = "[Error Output]:\n%s\n\n" % (errors[i])
 			
 			outfile.write("/* ------------------------------------ */\n")
 			outfile.write(out_msg)
@@ -218,4 +230,7 @@ if __name__ == '__main__':
 		outfile.write("[Expected Output]: " + expected)	
 		
 		outfile.close()
+
+		if opSaveFS:
+			os.system("cp filesys.dat filesys_save%d.dat" % (testNum))
 		##This terminates the given test

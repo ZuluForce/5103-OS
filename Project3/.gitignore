@@ -2,3 +2,6 @@ bin/main
 *.pyc
 *.cbp
 *.layout
+*.result
+*.o
+filesys.dat

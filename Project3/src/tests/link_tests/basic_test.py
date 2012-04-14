@@ -13,10 +13,14 @@ description = """This is a test of a simple linking operation.
 
 ##Option Values:
 ##	clean: I forgot what this was supposed to do
-##	EStop: Halts execution on execution error
+##	estop: Halts execution on execution error
 ##	rebuild: Will try to execute the rebuild script. If EStop
 ##			is enabled, failing to do this will halt
-options = "clean EStop"
+##
+##      savefs: Before going to another test it will copy the current
+##              filesys.dat so it is saved for tinkering later.
+
+options = "clean estop savefs"
 execlist = ['./mkfs filesys.dat 256 20',\
 		'./mkdir /school/',\
 		'cat ./tests/64_bytes.txt | ./tee /64_byte_file.txt',\
