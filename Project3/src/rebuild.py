@@ -35,13 +35,14 @@ class dummyMatch:
 
 if __name__ == '__main__':
 	try:
-		infoproc = subprocess.Popen(["./df"], stdout=subprocess.PIPE)
+		infoproc = subprocess.Popen(["./df"], stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
 	except:
 		(e_type, e_value, e_trace) = sys.exc_info()
 		print("Exception: " + str(e_type))
 		print("Message: " + str(e_value))
 		exit(-1)
 
+	infoproc.wait()
 	if infoproc.returncode < 0:
 		print("Process df returned with bad stats: " + str(infoproc.returncode))
 
