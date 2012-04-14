@@ -217,7 +217,7 @@ if __name__ == '__main__':
 
 		if ( opRebuild ):
 			print("\n##---- Rebuilding the filesystem ---- ##")
-			os.system("./rebuild.py -noprompt")
+			os.system("./rebuild.py -noprompt -d")
 			print("")
 
 		proc = None
