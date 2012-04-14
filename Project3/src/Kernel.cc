@@ -42,7 +42,7 @@ const StringArr Kernel::sys_errlist =
 	 , "File table overflow"
 	 , "Too many open files"
 	 , null
-	 , "Bad filename. Likely too large."
+	 , "Bad filename. Likely too long."
 	 , "File too large"
 	 , "No space left on device"
 	 , null
@@ -1115,19 +1115,27 @@ int Kernel::link(String oldpath, String newPath) {
 		return -1;
 	}
 
-	String dirname = Kernel::getDeepestDir(newPath);
-	fprintf(stderr, "Directory name: %s\n", dirname);
-	StringBuffer *fname = new StringBuffer("");
-	StringCut(newPath, dirname, fname); //Get just the filename
-	String newfname = fname->toString();
-	fprintf(stderr, "New filename: %s\n", newfname);
-
-	if ( newfname == "" ) {
-		//Trying to create a link as a directory
+	//Check that it isn't a directory
+	if ( (oldinode->getMode() & S_IFMT) == S_IFDIR ) {
 		Kernel::setErrno(EISDIR);
 		return -1;
 	}
 
+	String dirname = Kernel::getDeepestDir(newPath);
+	StringBuffer *fname = new StringBuffer("");
+	StringCut(newPath, dirname, fname); //Get just the filename
+	String newfname = fname->toString();
+	//fprintf(stderr, "New filename: %s\n", newfname);
+
+	//Make sure the file doesn't already exist
+	IndexNode *checkExist = new IndexNode();
+	int existsNode = findIndexNode(newPath, checkExist, false);
+	if ( existsNode >= 0 ) {
+		Kernel::setErrno(EEXIST);
+		return -1;
+	}
+
+	//Is it valid? This currently only checks length
 	if ( !DirectoryEntry::checkValid(newfname) ) {
 		Kernel::setErrno(EBADFN);
 		return -1;
@@ -1172,6 +1180,7 @@ int Kernel::link(String oldpath, String newPath) {
 		}
 	}
 
+	//Write all the remaining entries back
 	while (status > 0) {
 		DirectoryEntry *nextDirEntry = new DirectoryEntry();
 
@@ -1194,6 +1203,7 @@ int Kernel::link(String oldpath, String newPath) {
 	updateIndexNode(oldinode, node_num);
 
 	delete fname;
+	delete oldinode;
 
 	return 0;
 }
@@ -1231,6 +1241,10 @@ int Kernel::unlink(String pathname) {
 			refInodeNum = findIndexNode(pathname,refInode);
 			if ( refInodeNum < 0 ) {
 				perror(PROGRAM_NAME);
+				return -1;
+			}
+			if ( (refInode->getMode() & S_IFMT) == S_IFDIR ) {
+				Kernel::setErrno(EISDIR);
 				return -1;
 			}
 
@@ -1293,11 +1307,17 @@ int Kernel::symlink(String oldpath, String newpath) {
 
 	//First check that the target file/directory exists
 	IndexNode *checkNode = new IndexNode();
-	int targetNode = findIndexNode(oldpath, checkNode, false);
-	delete checkNode;
+	int checkNodeNum = findIndexNode(oldpath, checkNode, false);
 
-	if ( targetNode < 0 ) {
+	if ( checkNodeNum < 0 ) {
 		Kernel::setErrno(ENOENT);
+		return -1;
+	}
+
+	//Check that newpath doesn't exist
+	checkNodeNum = findIndexNode(newpath, checkNode, false);
+	if ( checkNodeNum >= 0 ) {
+		Kernel::setErrno(EEXIST);
 		return -1;
 	}
 
@@ -1330,13 +1350,12 @@ int Kernel::symlink(String oldpath, String newpath) {
 
 	//Below here it is almost the same as link
 	String dirname = Kernel::getDeepestDir(newpath);
-	fprintf(stderr, "Directory name: %s\n", dirname);
 	StringBuffer *fname = new StringBuffer("");
 	StringCut(newpath, dirname, fname); //Get just the filename
 	String newfname = fname->toString();
-	fprintf(stderr, "New filename: %s\n", newfname);
+	//fprintf(stderr, "New filename: %s\n", newfname);
 
-	if ( newfname == "" ) {
+	if ( !strcmp(newfname, "") ) {
 		//Trying to create a link as a directory
 		Kernel::setErrno(EISDIR);
 		return -1;

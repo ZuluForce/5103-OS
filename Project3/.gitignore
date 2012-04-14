@@ -1,4 +1,5 @@
 bin/main
+*.py~
 *.pyc
 *.cbp
 *.layout

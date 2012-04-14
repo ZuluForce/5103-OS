@@ -6,7 +6,7 @@ output = "tests/link_tests/basic_test.result"
 ## I used """ to make it multiline but this is not required
 description =\
 """This is a test of a simple linking operation. All it does is create a 
-64 byte file and hard linksit from the root directory and then from a sub 
+64 byte file and hard links it from the root directory and then from a sub 
 directory. After this it cats the original and allthe other links to show
 that they have the same content."""
 

@@ -79,10 +79,11 @@ class execHandler:
 			print("\tLine #: " + str(traceback.tb_lineno(e_trace)))
 			return (s_out,s_err,-1)
 	
-		if proc.returncode < 0:
-			print("Error executing the test: " + self.cmd)
-			print("Return Value: " + proc.returncode)
-			return (s_out,s_err,-1)
+		if proc.returncode != 0:
+			print("Error executing the test: " + ' '.join(self.cmd))
+			print("Return Value: " + str(proc.returncode))
+			print("If the script doesn't stop this was likely an intentional error")
+			return (s_out,s_err, proc.returncode)
 
 		status = 0
 		if ( self.depends ):
@@ -215,7 +216,7 @@ if __name__ == '__main__':
 			proc = execHandler(stmnt)
 			(s_out, s_err,status) = proc.run()
 
-			if status < 0:
+			if status != 0:
 				print("Error executing command\n")
 				if opStop:
 					raw_input("Press <enter> to continue")
