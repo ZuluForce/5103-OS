@@ -90,7 +90,9 @@ FileSystem.o: FileSystem.h FileSystem.cc
 SuperBlock.o: SuperBlock.h SuperBlock.cc
 	g++ $(FLAGS) SuperBlock.cc
 
+test_all: $(APPS)
+	make test_link_tests
+	make test_should_error
 
-
-
-
+test_%: $(APPS)
+	./tests/run_tests.py ./ ./tests/$*

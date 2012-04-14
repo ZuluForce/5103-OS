@@ -29,6 +29,12 @@ class testMod:
 		except:
 			return None
 
+	def getDescription(self):
+		try:
+			return self.ref.description
+		except:
+			return None
+
 class execHandler:
 	def __init__(self, cmd):
 		self.depends = None
@@ -51,7 +57,7 @@ class execHandler:
 		print("Command: " + str(self.cmd))
 
 	def run(self, input=None):
-		self.printCmd()
+		#self.printCmd()
 		s_out = ""
 		s_err = ""
 		try:
@@ -145,6 +151,7 @@ if __name__ == '__main__':
 		options	 = Tobj.getOptions()
 		execlist = Tobj.getExecList()
 		expected = Tobj.getExpected()
+		description = Tobj.getDescription()
 
 		print("\nTest output: " + output)
 		print("Test Options: " + options)
@@ -161,6 +168,10 @@ if __name__ == '__main__':
 			print("Failed to open output file: " + e.value)
 			raw_input("Press <enter> to continue with other tests")
 			continue
+
+		if description:
+			outfile.write("Test Description:\n\t")
+			outfile.write(description + "\n\n")
 
 		match = opClean_re.search(options)
 		if match:
@@ -227,10 +238,12 @@ if __name__ == '__main__':
 			outfile.write(status_msg)
 			outfile.write(err_msg)
 
-		outfile.write("[Expected Output]: " + expected)	
+		outfile.write("[Expected Output]: " + expected + "\n")	
+
+		if opSaveFS:
+			outfile.write("Saving filesystem as filesys_save%d.dat" % (testNum))
+			os.system("cp filesys.dat filesys_save%d.dat" % (testNum))
 		
 		outfile.close()
 
-		if opSaveFS:
-			os.system("cp filesys.dat filesys_save%d.dat" % (testNum))
 		##This terminates the given test
