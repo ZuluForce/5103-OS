@@ -1496,40 +1496,176 @@ int Kernel::filesysStatus(int fsn) {
 
 
 
-int Kernel::corruptFileSys(int fd){
+int Kernel::corruptFileSys(int numNodesInside, int numNodesOutside, int numBlocksAllocate, int numBlocksDeallocate){
 	 FileSystem *fs = Kernel::openFileSystems[Kernel::ROOT_FILE_SYSTEM];
 	 IndexNode temp;
-	 fs->readIndexNode(&temp, 2);
-	 temp.decNlink();
-	 updateIndexNode(&temp, 2);
-
-	 FileDescriptor *f1 = process->openFiles[fd];
-	 printf("%d: %d\n", f1->getIndexNodeNumber(), f1->getOffset());
-
-	 // Remove directory entry
-	 int fd2 = fdOpen(fd);
-	if ( fd2 < 0 )
-		return fd2;
-	 lseek(fd2, -DirectoryEntry::DIRECTORY_ENTRY_SIZE,1);
-	 DirectoryEntry currEntry;
-	 int status = readdir(fd, &currEntry);
-	 while (status > 0) {
-		 printf("%s\n", currEntry.getName());
-		writedir(fd2, &currEntry);
-		printOffsets(fd, fd2);
-		status = readdir(fd, &currEntry);
+	 int rootFd = open("/", Kernel::O_RDWR);
+	 if(rootFd < 0) {
+		 fprintf (stderr, "%s%s%s%s\n", PROGRAM_NAME,
+		 		   ": unable to open ", "/", " for reading");
+		 return -1;
 	 }
 
-	 if ( status < 0)
-		return status;
-	 printf("How about to changeSize\n");
-	 status = changeSize(fd2,-DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
-	 printf("Change size status: %d", status);
-	 if ( status < 0 )
-		return status;
+	 int numINodes = fs->getInodeCount();
+	 int i;
+	 for ( i = 1; i < numINodes; i++ ) {
+		fs->readIndexNode(&temp, i);
+		if ( temp.getNlink() != 0 ){
+			printf("Decrementing Nlink of IndexNode %d.\n", i);
+			temp.decNlink();
+			updateIndexNode(&temp, i);
+			numNodesInside--;
+			if (numNodesInside == 0){
+				break;
+			}
+		}
+	 }
 
-	 close(fd);
-	 close(fd2);
+	 int resultFd;
+
+	 for (i = i+1; i < numINodes; i++){
+		 fs->readIndexNode(&temp, i);
+		 if (temp.getNlink() != 0){
+			 printf("Removing a directory entry that points to IndexNode %d.\n", i);
+			 int resultFd;
+			 int result = findDirEntryWithNodeNum("/", rootFd, i, &resultFd);
+			 if (result < 0){
+				fprintf(stderr, "%s: Could not find a directory entry pointing to IndexNode %d\n", PROGRAM_NAME, i);
+				return -1;
+			 }
+
+			 // Remove directory entry
+			 int fd2 = fdOpen(resultFd);
+			 if ( fd2 < 0 ){
+				 fprintf(stderr, "%s: Could not open duplicate fd\n", PROGRAM_NAME);
+				return -1;
+			 }
+			 lseek(fd2, -DirectoryEntry::DIRECTORY_ENTRY_SIZE,1);
+			 DirectoryEntry currEntry;
+			 int status = readdir(resultFd, &currEntry);
+			 while (status > 0) {
+				writedir(fd2, &currEntry);
+				//printOffsets(resultFd, fd2);
+				status = readdir(resultFd, &currEntry);
+			 }
+
+			 if ( status < 0)
+				return status;
+			 status = changeSize(fd2,-DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
+			 if ( status < 0 )
+				return status;
+			 if (resultFd != rootFd){
+				 close(resultFd);
+			 }
+			 close(fd2);
+			 numNodesOutside--;
+			 if (numNodesOutside == 0){
+				 break;
+			 }
+			 // Reset the rootFd offset
+			 status = lseek(rootFd, 0, 0);
+			 if (status < 0){
+				 fprintf(stderr, "%s: lseek failed", PROGRAM_NAME);
+				 return status;
+			 }
+		 }
+	 }
+
+	 close(rootFd);
+
+	 // Allocate numBlocksAllocate blocks if possible, but don't assign them to an inode
+	 BitBlock *freeList;
+	 BitBlock *freeListPrev = NULL;
+	 int countSet = 0;
+	 int numDataBlocks = fs->getBlockCount() - fs->getDataBlockOffset();
+	 int* blocksToFree = new int[numBlocksDeallocate];
+	 int numFreed = 0;
+	 for (int i = 1; i < numDataBlocks; i++){
+		freeList = fs->getFreeList(i);
+		if (freeList != freeListPrev){
+			countSet+= freeList->countSet();
+		}
+		freeListPrev = freeList;
+		if (freeList->isBitSet(i)){
+			if (numFreed < numBlocksDeallocate){
+				blocksToFree[numFreed++] = i;
+			}
+		}
+	 }
+
+	 int newBlock = 0;
+	 for (int i = 0; i < numBlocksAllocate; i++){
+		 newBlock = fs->allocateBlock();
+		 printf("Allocated new physical block %d.\n", newBlock);
+	 }
+	 for (int i = 0; i < numBlocksDeallocate; i++){
+		 freeList = fs->getFreeList(i);
+		 fs->freeBlock(blocksToFree[i]);
+		 printf("Freed physical block %d.\n", blocksToFree[i]);
+	 }
+
+
+
 	 return 0;
 
+}
+
+int Kernel::findDirEntryWithNodeNum(String path, int fd, int nodenum, int *resultFd){
+
+    int status;
+    int subFd;
+    Stat statEntry;
+    String name;
+    DirectoryEntry directoryEntry;
+
+    while (1){
+    	//printf("dirname: %s\n", path);
+        // read an entry; quit loop if error or nothing read
+        status = readdir(fd, &directoryEntry);
+        if(status <= 0)
+            break;
+        name = directoryEntry.getName();
+        //printf("\t name\: %s\n", name);
+        if (strcmp(name, ".") == 0 || strcmp(name, "..") == 0){
+        	continue;
+        }
+        StringBuffer newPathBuilder(path);
+        newPathBuilder.append(name);
+        String newPath = newPathBuilder.toString();
+
+        status = stat(newPath, &statEntry, true);
+        if (status < 0){
+            fprintf(stderr, "%s: stat failed on %s\n", PROGRAM_NAME, newPath);
+            return -1;
+        }
+
+        if (statEntry.getIno() == nodenum){
+        	*resultFd = fd;
+        	return 0;
+        }
+
+        if ((statEntry.getMode() & S_IFMT) == S_IFDIR){
+            subFd = open(newPath, O_RDWR);
+            if (subFd < 0){
+                fprintf (stderr, "%s%s%s%s\n", PROGRAM_NAME,
+                   ": unable to open ", newPath, " for reading");
+                return -1;
+            }
+            newPathBuilder.append("/");
+            if (findDirEntryWithNodeNum(newPathBuilder.toString(), subFd, nodenum, resultFd) == 0){
+            	return 0;
+            }
+        }
+    }
+
+
+    // check to see if our last read failed
+    if(status < 0){
+        fprintf(stderr, "%s: unable to read directory entry\n", PROGRAM_NAME);
+       	return -1;
+    }
+
+    // close the directory
+    close(fd);
+    return -1;
 }

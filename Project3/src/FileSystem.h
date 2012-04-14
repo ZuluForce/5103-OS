@@ -43,6 +43,7 @@ private:
 public:
 	void freeBlock(int dataBlockNumber);  // throws IOException
 	int allocateBlock();   // throws IOException
+	void allocateBlock(int dataBlockNumber);
 
 private:
 	void loadFreeListBlock(int dataBlockNumber);  // throws IOException

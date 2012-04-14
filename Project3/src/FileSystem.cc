@@ -162,6 +162,15 @@ int FileSystem::allocateBlock() {
 	}
 }
 
+/* Allocate a specific data block from the list of free blocks.
+*/
+void FileSystem::allocateBlock(int dataBlockNumber) {
+	loadFreeListBlock(dataBlockNumber);
+	freeListBitBlock->setBit(dataBlockNumber % (blockSize * 8));
+	file->Seek((freeListBlockOffset + currentFreeListBlock) * blockSize);
+	freeListBitBlock->write(file);
+}
+
 /* Loads the block containing the specified data block bit into
    the free list block buffer.  This is a convenience method;
    dataBlockNumber is the data block number.
@@ -305,10 +314,18 @@ void FileSystem::loadIndexNodeBlock(short indexNodeNumber) {
 }
 
 int FileSystem::getTakenDBlocks() {
-	for (int i  = 0; i < blockCount; ++i) {
-		loadFreeListBlock(i);
+	int countSet = 0;
+	BitBlock *freeList;
+	BitBlock *freeListPrev = NULL;
+	int numDataBlocks = getBlockCount() - getDataBlockOffset();
+	for (int i  = 0; i < numDataBlocks; ++i) {
+		freeList = getFreeList(i);
+		if (freeList != freeListPrev){
+			countSet+= freeList->countSet();
+		}
+		freeListPrev = freeList;
 	}
-	return freeListBitBlock->countSet();
+	return countSet;
 }
 
 int FileSystem::getTakenInodes() {

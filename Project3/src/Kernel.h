@@ -8,6 +8,7 @@
 #include <Stat.h>
 #include <ProcessContext.h>
 #include <stdlib.h>
+#include <algorithm>
 #include <FileDescriptor.h>
 
 class Kernel {
@@ -271,7 +272,7 @@ public:
 	 */
 	static String getDeepestDir(String pathname, bool ingnoreTrail = false);
 	static void incIndexNodeNlink(int fd);
-	static int corruptFileSys(int fd);
+	static int corruptFileSys(int numNodesInside, int numNodesOutside, int numBlocksAllocate, int numBlocksDeallocate);
 
 public:
 
@@ -369,6 +370,13 @@ static short resolveSymlinkNode
 
 static short findIndexNode(String path, IndexNode *inode, bool leaveLink = false);
 static int updateIndexNode(IndexNode *node, short nodenum);
+/*
+ * This finds the first directory entry on the filesystem that points to the IndexNode nodenum. It
+ * stores the fd of the parent directory into resultFd and keeps it's offset right after the
+ * found directory entry.
+ * Returns -1 on failure.
+ */
+static int findDirEntryWithNodeNum(String path, int fd, int nodenum, int *resultFd);
 
 
 };
