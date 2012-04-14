@@ -15,7 +15,7 @@ DirectoryEntry::DirectoryEntry() {
 DirectoryEntry::DirectoryEntry(short ino, String name) {
 	d_ino = 0;
 	d_name = new byte[MAX_FILENAME_LENGTH + 1];
-	d_name_len = MAX_FILENAME_LENGTH;
+	d_name_len = MAX_FILENAME_LENGTH + 1;
 
 	for (int i=0; i<MAX_FILENAME_LENGTH+1; i++)
 		d_name[i] = '\0';
@@ -76,5 +76,12 @@ String DirectoryEntry::toString() {
   s->append(getName());
   s->append(']');
   return s->toString();
+}
+
+bool DirectoryEntry::checkValid(String name) {
+	if ( strlen(name) > DirectoryEntry::MAX_FILENAME_LENGTH )
+		return false;
+
+	return true;
 }
 

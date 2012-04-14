@@ -28,6 +28,7 @@ public:
 	static const int EINVAL = 22; // Invalid argument.
 	static const int ENFILE = 23; // File table overflow.
 	static const int EMFILE = 24; // Too many open files.
+	static const int EBADFN = 26; //Bad filename. Usually means too long
 	static const int EFBIG = 27; // File too large.
 	static const int ENOSPC = 28; // No space left on device.
 	static const int EROFS = 30; // Read-only file system.

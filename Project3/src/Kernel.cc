@@ -42,7 +42,7 @@ const StringArr Kernel::sys_errlist =
 	 , "File table overflow"
 	 , "Too many open files"
 	 , null
-	 , null
+	 , "Bad filename. Likely too large."
 	 , "File too large"
 	 , "No space left on device"
 	 , null
@@ -152,6 +152,11 @@ int Kernel::creat(String pathname, short mode)
 			indexNodeNumber = findNextIndexNode
 			(fileSystem, prevIndexNode, name, currIndexNode);
 		}
+	}
+
+	if ( !DirectoryEntry::checkValid(name) ) {
+		Kernel::setErrno(EBADFN);
+		return -1;
 	}
 
   // ??? we need to set some fields in the file descriptor
@@ -1106,18 +1111,25 @@ int Kernel::link(String oldpath, String newPath) {
 	short node_num = Kernel::findIndexNode(oldpath, oldinode);
 	fprintf(stderr, "Got inode to link to (%d)\n", node_num);
 	if ( node_num < 0 ) {
-		return status;
+		Kernel::setErrno(ENOENT);
+		return -1;
 	}
 
 	String dirname = Kernel::getDeepestDir(newPath);
 	fprintf(stderr, "Directory name: %s\n", dirname);
 	StringBuffer *fname = new StringBuffer("");
 	StringCut(newPath, dirname, fname); //Get just the filename
-	fprintf(stderr, "New filename: %s\n", fname->toString());
+	String newfname = fname->toString();
+	fprintf(stderr, "New filename: %s\n", newfname);
 
-	if ( fname->toString() == "" ) {
+	if ( newfname == "" ) {
 		//Trying to create a link as a directory
 		Kernel::setErrno(EISDIR);
+		return -1;
+	}
+
+	if ( !DirectoryEntry::checkValid(newfname) ) {
+		Kernel::setErrno(EBADFN);
 		return -1;
 	}
 
@@ -1128,7 +1140,7 @@ int Kernel::link(String oldpath, String newPath) {
 	}
 
 	DirectoryEntry* currDirEntry = new DirectoryEntry();
-	DirectoryEntry* newDirEntry = new DirectoryEntry(node_num, fname->toString());
+	DirectoryEntry* newDirEntry = new DirectoryEntry(node_num, newfname);
 
 	int cmpStatus = 0;
 	while (true) {
@@ -1321,11 +1333,17 @@ int Kernel::symlink(String oldpath, String newpath) {
 	fprintf(stderr, "Directory name: %s\n", dirname);
 	StringBuffer *fname = new StringBuffer("");
 	StringCut(newpath, dirname, fname); //Get just the filename
-	fprintf(stderr, "New filename: %s\n", fname->toString());
+	String newfname = fname->toString();
+	fprintf(stderr, "New filename: %s\n", newfname);
 
-	if ( fname->toString() == "" ) {
+	if ( newfname == "" ) {
 		//Trying to create a link as a directory
 		Kernel::setErrno(EISDIR);
+		return -1;
+	}
+
+	if ( !DirectoryEntry::checkValid(newfname) ) {
+		Kernel::setErrno(EBADFN);
 		return -1;
 	}
 
@@ -1336,7 +1354,7 @@ int Kernel::symlink(String oldpath, String newpath) {
 	}
 
 	DirectoryEntry* currDirEntry = new DirectoryEntry();
-	DirectoryEntry* newDirEntry = new DirectoryEntry(newInodeNum, fname->toString());
+	DirectoryEntry* newDirEntry = new DirectoryEntry(newInodeNum, newfname);
 	fprintf(stdout, "New symlink name: %s\n", fname->toString());
 
 	int cmpStatus = 0;

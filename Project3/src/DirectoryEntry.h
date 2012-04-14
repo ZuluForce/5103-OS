@@ -51,5 +51,7 @@ public:
 
 	// Converts a DirectoryEntry to a printable string.
 	String toString();
+
+	static bool checkValid(String name);
 };
 #endif
