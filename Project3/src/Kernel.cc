@@ -1238,7 +1238,7 @@ int Kernel::unlink(String pathname) {
 			//Found the directory entry
 			IndexNode* refInode = new IndexNode();
 			short refInodeNum = 0;
-			refInodeNum = findIndexNode(pathname,refInode);
+			refInodeNum = findIndexNode(pathname,refInode, true);
 			if ( refInodeNum < 0 ) {
 				perror(PROGRAM_NAME);
 				return -1;

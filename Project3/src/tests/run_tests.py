@@ -35,6 +35,9 @@ class testMod:
 		except:
 			return None
 
+	def inIgnoreList(self, str):
+		return str in self.ref.ignore_error
+
 class execHandler:
 	def __init__(self, cmd):
 		self.depends = None
@@ -132,7 +135,7 @@ if __name__ == '__main__':
 	print("Switched to executing directory:\n\t" + os.getcwd())
 
 	opClean_re	 = re.compile("\\bclean\\b")
-	opStop_re	 = re.compile("\\bEStop\\b")
+	opStop_re	 = re.compile("\\bestop\\b")
 	opRebuild_re = re.compile("\\brebuild\\b")
 	opSaveFS_re	 = re.compile("\\bsavefs\\b")
 
@@ -217,9 +220,10 @@ if __name__ == '__main__':
 			(s_out, s_err,status) = proc.run()
 
 			if status != 0:
-				print("Error executing command\n")
-				if opStop:
-					raw_input("Press <enter> to continue")
+				if not Tobj.inIgnoreList(stmnt):
+					print("Error executing command\n")
+					if opStop:
+						raw_input("Press <enter> to continue")
 
 			outputs.append(s_out)
 			errors.append(s_err)
@@ -239,7 +243,7 @@ if __name__ == '__main__':
 			outfile.write(status_msg)
 			outfile.write(err_msg)
 
-		outfile.write("[Expected Output]: " + expected + "\n")	
+		outfile.write("[Expected Output]:\n\t" + expected + "\n")	
 
 		if opSaveFS:
 			outfile.write("Saving filesystem as filesys_save%d.dat" % (testNum))
