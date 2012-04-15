@@ -1289,7 +1289,7 @@ int Kernel::unlink(String pathname) {
 
 			status = readdir(dirfd, currEntry);
 			while (status > 0) {
-				printOffsets(dirfd, fd2);
+				//printOffsets(dirfd, fd2);
 				writedir(fd2, currEntry);
 
 				status = readdir(dirfd, currEntry);
