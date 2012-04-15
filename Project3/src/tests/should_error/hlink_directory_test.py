@@ -2,7 +2,7 @@ output = "./tests/should_error/hlink_dir.result"
 
 description = "Test that hard linking directories results in an error"
 
-options = "estop rebuild"
+options = "rebuild"
 
 execlist = ['./mkdir /home',\
 			'./ln /home /home_link.lnk',\

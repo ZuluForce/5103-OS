@@ -11,6 +11,25 @@ class testMod:
 			print("Failed to get module reference. testMod constructor")
 			exit(-1)
 
+		if not ('ignore_error' in dir(self.ref)):
+			self.ref.ignore_error = []
+
+		if not ('expected' in dir(self.ref)):
+			self.ref.expected = ""
+
+		if not ('options' in dir(self.ref)):
+			self.ref.options = ""
+
+		if not ('execlist' in dir(self.ref)):
+			print("Missing execlist in test module: t%d" % (num))
+			print("This is a required attribute")
+			exit(-1)
+
+		if not ('output' in dir(self.ref)):
+			print("Missing output in test module: t%d" % (num))
+			print("This is a required attribute")
+			exit(-1)
+
 	def getOutput(self):
 		return self.ref.output
 
@@ -139,9 +158,6 @@ if __name__ == '__main__':
 	opRebuild_re = re.compile("\\brebuild\\b")
 	opSaveFS_re	 = re.compile("\\bsavefs\\b")
 
-	opClean		= False
-	opStop		= False
-	opRebuild	= False
 
 	for testNum in range(numTests):
 		opClean		= False
@@ -168,8 +184,8 @@ if __name__ == '__main__':
 		##Open Output file before anything else
 		try:
 			outfile = open(output, "w+")
-		except IOError as e:
-			print("Failed to open output file: " + e.value)
+		except IOError as (errno,strerror):
+			print("Failed to open output file: " + strerror)
 			raw_input("Press <enter> to continue with other tests")
 			continue
 

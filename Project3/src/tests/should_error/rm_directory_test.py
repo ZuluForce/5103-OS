@@ -12,4 +12,4 @@ execlist = ['./mkdir /home','./rm /home',\
 			'./ls /']
 			
 expected = """The first removal should fail because it is on a directory.
-The second should work because it is removing a symbolic link."""
+The second should work because it is removing a symbolic link to a directory."""
