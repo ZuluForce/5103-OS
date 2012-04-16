@@ -2,7 +2,7 @@ output = "tests/find_tests/find1_test.result"
 
 description = "Tests the recursive capabilities of find."
 
-options = "EStop rebuild"
+options = "estop rebuild"
 
 execlist = ['cat ./tests/64_bytes.txt | ./tee /config.txt',\
 		'./mkdir /home',\

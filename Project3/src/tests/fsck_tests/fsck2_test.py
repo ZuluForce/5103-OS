@@ -2,7 +2,7 @@ output = "tests/fsck_tests/fsck2_test.result"
 
 description = "Tests fsck."
 
-options = "EStop rebuild"
+options = "estop rebuild"
 
 execlist = ['cat ./tests/64_bytes.txt | ./tee /config.txt',\
 		'./mkdir /home',\

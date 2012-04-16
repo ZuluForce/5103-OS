@@ -11,7 +11,7 @@ directory. After this it cats the original and allthe other links to show
 that they have the same content."""
 
 ##Option Values:
-##	EStop: Halts execution on execution error. Should always use this.
+##	estop: Halts execution on execution error. Should always use this.
 ##
 ##	rebuild: Will try to execute the rebuild script. If EStop
 ##			is enabled, failing to do this will halt

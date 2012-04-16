@@ -101,6 +101,8 @@ test_all: $(APPS)
 	make test_should_error
 	make test_unlink_tests
 	make test_boundary_tests
+	make test_find_tests
+	make test_fsck_tests
 
 test_%: $(APPS)
 	./tests/run_tests.py ./ ./tests/$*
