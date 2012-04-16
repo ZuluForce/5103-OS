@@ -8,3 +8,24 @@ Kevin Mehlhaff
 Dylan Bettermann
 	x500: bett0159
 	ID#: 3966450
+	
+How to run:
+	$ make
+		- Creates all object files for the file system
+		
+	$ make all_apps
+		- Compiles and links all the user space utilities
+		
+	$ make clean_all
+		- Cleans all object and executable files
+	
+	$ make test_all
+		- Runs all the filesystem tests using the python testing harness
+		
+		
+Completed Extra-Credits:
+	Fsck with error correction
+	
+	Find utility
+	
+	Symbolic links

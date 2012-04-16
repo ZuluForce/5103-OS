@@ -9,7 +9,10 @@ execlist = ['./mkdir /home','./rm /home',\
 			'./ln /home /home_link.lnk -s',\
 			'./ls /',\
 			'./rm /home_link.lnk',\
-			'./ls /']
+			'./ls /',\
+			'echo "Hello" | ./tee /hello.txt',\
+			'./ls /','./rm /hello.txt/']
 			
 expected = """The first removal should fail because it is on a directory.
-The second should work because it is removing a symbolic link to a directory."""
+The second should work because it is removing a symbolic link to a directory.
+The last test creates a file and then attempts an unlink but specifies the target as a directory. This should fail."""

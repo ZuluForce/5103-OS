@@ -1113,7 +1113,6 @@ int Kernel::updateIndexNode(IndexNode *node, short nodenum) {
 
 int Kernel::link(String oldpath, String newPath) {
 	if ( oldpath == NULL || newPath == NULL ) {
-		//Should set errno here
 		Kernel::setErrno(ENULL);
 		return -1;
 	}
@@ -1135,11 +1134,18 @@ int Kernel::link(String oldpath, String newPath) {
 		return -1;
 	}
 
+	//Separate directory and filename for newPath
 	String dirname = Kernel::getDeepestDir(newPath);
 	StringBuffer *fname = new StringBuffer("");
 	StringCut(newPath, dirname, fname); //Get just the filename
 	String newfname = fname->toString();
 	//fprintf(stderr, "New filename: %s\n", newfname);
+
+	if ( newfname[strlen(newfname)-1] == '/' ) {
+		//newPath defines a directory
+		Kernel::setErrno(EISDIR);
+		return -1;
+	}
 
 	//Make sure the file doesn't already exist
 	IndexNode *checkExist = new IndexNode();
@@ -1161,7 +1167,9 @@ int Kernel::link(String oldpath, String newPath) {
 		return -1;
 	}
 
+	//Container for traversing directories
 	DirectoryEntry* currDirEntry = new DirectoryEntry();
+	//New directory entry
 	DirectoryEntry* newDirEntry = new DirectoryEntry(node_num, newfname);
 
 	int cmpStatus = 0;
@@ -1179,12 +1187,13 @@ int Kernel::link(String oldpath, String newPath) {
 			//its position
 			cmpStatus = strcmp(currDirEntry->getName(),newDirEntry->getName());
 			if ( cmpStatus > 0) {
+				//Place the new dir entry here
 				int seek_status = lseek(dir, - DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
 				if (seek_status < 0) {
 					fprintf(stderr, ": error during seek in link\n");
 					exit(Kernel::EXIT_F);
 				}
-
+				//Actually write it out
 				writedir(dir, newDirEntry);
 				break;
 			} else if ( cmpStatus == 0 ) {
@@ -1218,11 +1227,13 @@ int Kernel::link(String oldpath, String newPath) {
 
 	delete fname;
 	delete oldinode;
+	delete checkExist;
 
 	return 0;
 }
 
 int Kernel::unlink(String pathname) {
+	//Split directory and filename from pathname
 	String dirname = Kernel::getDeepestDir(pathname);
 	StringBuffer *_fname = new StringBuffer("");
 	StringCut(pathname,dirname,_fname);
@@ -1248,8 +1259,7 @@ int Kernel::unlink(String pathname) {
 			exit(Kernel::EXIT_F);
 		}
 		if (!strcmp(currEntry->getName(),fname)) {
-			fprintf(stderr, "Found matching directory entry\n");
-			//Found the directory entry
+			//Found the directory entry. Now get its referenced inode
 			IndexNode* refInode = new IndexNode();
 			short refInodeNum = 0;
 			refInodeNum = findIndexNode(pathname,refInode, true);
@@ -1260,6 +1270,7 @@ int Kernel::unlink(String pathname) {
 
 				return -1;
 			}
+			//we don't suppport removing directories
 			if ( (refInode->getMode() & S_IFMT) == S_IFDIR ) {
 				Kernel::setErrno(EISDIR);
 				return -1;
@@ -1325,7 +1336,6 @@ int Kernel::symlink(String oldpath, String newpath) {
 		return -1;
 	}
 
-	//First check that the target file/directory exists
 	IndexNode *checkNode = new IndexNode();
 
 	//Check that newpath doesn't exist
@@ -1344,9 +1354,12 @@ int Kernel::symlink(String oldpath, String newpath) {
 	if ( newInodeNum == -1)
 		return -1;
 
+	//Set the inode accordingly
 	IndexNode *inode = new IndexNode();
 	inode->setMode(S_IFSYM);
 	inode->setNlink((short)1);
+
+	//Open the inode to write to it.
 	newFd = new FileDescriptor(fs, inode, O_WRONLY);
 	int _newFd = open(newFd);
 
@@ -1356,32 +1369,28 @@ int Kernel::symlink(String oldpath, String newpath) {
 	//Write the pathname into the symlink
 	Kernel::write(_newFd, (byte*) oldpath, strlen(oldpath)+1);
 
-	IndexNode *temp = new IndexNode();
-	fs->readIndexNode(temp, newInodeNum);
-
 	close(_newFd);
 	delete newFd;
 
 	//Below here it is almost the same as link
-	String dirname = Kernel::getDeepestDir(newpath);
+	String dirname = Kernel::getDeepestDir(newpath, true);
+	fprintf(stderr, "New Directory: %s\n", dirname);
 	StringBuffer *fname = new StringBuffer("");
 	StringCut(newpath, dirname, fname); //Get just the filename
 	String newfname = fname->toString();
-	//fprintf(stderr, "New filename: %s\n", newfname);
-
-	if ( !strcmp(newfname, "") ) {
-		//Trying to create a link as a directory
-		Kernel::setErrno(EISDIR);
-		return -1;
-	}
+	fprintf(stderr, "New filename: %s\n", newfname);
 
 	if ( !DirectoryEntry::checkValid(newfname) ) {
+		fs->freeIndexNode(newInodeNum);
+
 		Kernel::setErrno(EBADFN);
 		return -1;
 	}
 
 	int dir = open(dirname, O_RDWR);
 	if (dir < 0) {
+		fs->freeIndexNode(newInodeNum);
+
 		perror(PROGRAM_NAME);
 		return -1;
 	}

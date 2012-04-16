@@ -215,19 +215,57 @@ public:
 
 	static int writedir(int fd, DirectoryEntry *dirp); // throws Exception
 
+	/* Creates a hard link on the filesystem.
+	 *
+	 * This takes oldpath and makes the new directory
+	 * entry point to the inode for oldpath.
+	 *
+	 * Returns 0 on success or -1 on error and sets
+	 * errno appropriately.
+	 */
 	static int link(String oldpath, String newPath);
+
+	/* Unlinks a directory entry from an inode
+	 *
+	 * This finds the appropriate directory entry
+	 * specified by paathname and decrements the link
+	 * count on it.
+	 * If the link count reaches 0 and the inode isn't open
+	 * in a file descriptor it is deallocated.
+	 *
+	 * Returns -1 on error and sets errno accordingly
+	 */
 	static int unlink(String pathname);
 
+	/* Creates a symlink
+	 *
+	 * A new directory entry and file is created at newpath. The
+	 * contents of the newpath file is the path specified by oldpath.
+	 *
+	 * To stay true to the unix symlink this does not error if the
+	 * oldpath doesn't exist. For other errors it will return -1
+	 * and set errno accordingly.
+	 */
 	static int symlink(String oldpath, String newpath);
 
+	/* Print filesystem information
+	 *
+	 * This utility is called by the userspace df program. Originally
+	 * this was inteneded to just return a struct with the information
+	 * but since it was written with the print statements for testing
+	 * it was left this way.
+	 *
+	 * Currently it only gives this information:
+	 * 	- Block Size
+	 *	- Total Blocks
+	 *	- Data Blocks Allocated (Total D Blocks)
+	 *	- Inodes Allocated (total inodes in howmany blocks)
+	 */
 	static int filesysStatus(int fsn = ROOT_FILE_SYSTEM);
 	/*
 	to be done:
 	   int access(const char *pathname, int mode);
-	   int link(const char *oldpath, const char *newpath);
-	   int unlink(const char *pathname);
 	   int rename(const char *oldpath, const char *newpath);
-	   int symlink(const char *oldpath, const char *newpath);
 	   int lstat(const char *file_name, struct stat *buf);
 	   int chmod(const char *path, mode_t mode);
 	   int fchmod(int fildes, mode_t mode);
@@ -272,6 +310,11 @@ public:
 	 */
 	static String getDeepestDir(String pathname, bool ingnoreTrail = false);
 	static void incIndexNodeNlink(int fd);
+
+	/* Not a function you would usually find in a kernel but
+	 * it is useful for producing problems for fsck to detect
+	 * and fix
+	 */
 	static int corruptFileSys(int numNodesInside, int numNodesOutside, int numBlocksAllocate, int numBlocksDeallocate);
 
 public:
@@ -369,6 +412,11 @@ static short resolveSymlinkNode
 	(FileSystem *fileSystem,IndexNode *Inode,IndexNode *nextInode);
 
 static short findIndexNode(String path, IndexNode *inode, bool leaveLink = false);
+
+/* Updates the index node on the backing file. After link or
+ * unink update information for an inode it needs to be updated
+ * in the actual filesystem since they were working on copies.
+ */
 static int updateIndexNode(IndexNode *node, short nodenum);
 /*
  * This finds the first directory entry on the filesystem that points to the IndexNode nodenum. It
