@@ -25,8 +25,21 @@ How to run:
 		
 Completed Extra-Credits:
 	Fsck with error correction
-	
+		- FSCK first makes sure that the inodes referenced by directory entries have the correct number of Nlinks. It next
+		determines if the physical block allocation of the filesystem is correct. It checks that all the blocks mentioned
+		in the inodes are marked as allocated blocks and that all blocks not metnioned in the inodes are marked as free blocks.
+		After each step in the process, the user is prompted to determine whether to automatically fix the errors.
+		- The "-silent" option runs FSCK without prompts and automatically fixes errors.
+		- In order to "corrupt" the filesystem, a new utility, crpt, was created. Usage of crpt is as follows:
+		usage: crpt <num_inodes> <num_blocks>
+		Where num_nodes is the number of inodes to corrupt. It corrupts (num_inodes/2) IndexNodes by decrementing their Nlinks
+		and corrupts the remaining (num_inodes - num_inodes/2) IndexNodes by deleting a DirectoryEntry to each of them.
+		Num_blocks is the number of physical blocks to manupulate. It allocates num_blocks/2 blocks without assigning them to
+		a particular IndexNode and then deallocates (num_blocks - num_blocks/2) blocks that are in use by IndexNodes.
+
 	Find utility
+		- Find takes any number of space-separated pathnames or filenames and recursively scans the file system from each o
+		those points in a manner similar to Unix find (depth first search). It prints out in order each file or directory it finds.
 	
 	Symbolic links
 		- Symbolic links are created with a new kernel function called symlink with an identical interface to the

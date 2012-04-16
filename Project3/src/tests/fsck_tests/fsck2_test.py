@@ -1,6 +1,6 @@
 output = "tests/fsck_tests/fsck2_test.result"
 
-description = "Tests fsck."
+description = "Tests fsck by corrupting the filesystem even further."
 
 options = "estop rebuild"
 

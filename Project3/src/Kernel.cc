@@ -1508,6 +1508,7 @@ int Kernel::filesysStatus(int fsn) {
 int Kernel::corruptFileSys(int numNodesInside, int numNodesOutside, int numBlocksAllocate, int numBlocksDeallocate){
 	 FileSystem *fs = Kernel::openFileSystems[Kernel::ROOT_FILE_SYSTEM];
 	 IndexNode temp;
+	 // Open the root directory.
 	 int rootFd = open("/", Kernel::O_RDWR);
 	 if(rootFd < 0) {
 		 fprintf (stderr, "%s%s%s%s\n", PROGRAM_NAME,
@@ -1515,6 +1516,7 @@ int Kernel::corruptFileSys(int numNodesInside, int numNodesOutside, int numBlock
 		 return -1;
 	 }
 
+	 // Corrupt numNodesInside IndexNodes by decrementing their Nlinks
 	 int numINodes = fs->getInodeCount();
 	 int i;
 	 for ( i = 1; i < numINodes; i++ ) {
@@ -1530,20 +1532,23 @@ int Kernel::corruptFileSys(int numNodesInside, int numNodesOutside, int numBlock
 		}
 	 }
 
+	 // Corrupt numNodesOutside IndexNodes by removing a DirectoryEntry that
+	 // points to each of them without updating the Nlink counts.
 	 int resultFd;
-
 	 for (i = i+1; i < numINodes; i++){
 		 fs->readIndexNode(&temp, i);
 		 if (temp.getNlink() != 0){
 			 printf("Removing a directory entry that points to IndexNode %d.\n", i);
 			 int resultFd;
+			 // Set the resultFd to a FileDescriptor with offset at the end of the DirectoryEntry
+			 // that points to IndexNode i.
 			 int result = findDirEntryWithNodeNum("/", rootFd, i, &resultFd);
 			 if (result < 0){
 				fprintf(stderr, "%s: Could not find a directory entry pointing to IndexNode %d\n", PROGRAM_NAME, i);
 				return -1;
 			 }
 
-			 // Remove directory entry
+			 // Remove directory entry by copying up entries below the removed entry
 			 int fd2 = fdOpen(resultFd);
 			 if ( fd2 < 0 ){
 				 fprintf(stderr, "%s: Could not open duplicate fd\n", PROGRAM_NAME);
@@ -1582,19 +1587,13 @@ int Kernel::corruptFileSys(int numNodesInside, int numNodesOutside, int numBlock
 
 	 close(rootFd);
 
-	 // Allocate numBlocksAllocate blocks if possible, but don't assign them to an inode
+	 // Find numBlocksDeallocate blocks that are in use by IndexNodes to deallocate.
 	 BitBlock *freeList;
-	 BitBlock *freeListPrev = NULL;
-	 int countSet = 0;
 	 int numDataBlocks = fs->getBlockCount() - fs->getDataBlockOffset();
 	 int* blocksToFree = new int[numBlocksDeallocate];
 	 int numFreed = 0;
 	 for (int i = 1; i < numDataBlocks; i++){
 		freeList = fs->getFreeList(i);
-		if (freeList != freeListPrev){
-			countSet+= freeList->countSet();
-		}
-		freeListPrev = freeList;
 		if (freeList->isBitSet(i)){
 			if (numFreed < numBlocksDeallocate){
 				blocksToFree[numFreed++] = i;
@@ -1602,11 +1601,13 @@ int Kernel::corruptFileSys(int numNodesInside, int numNodesOutside, int numBlock
 		}
 	 }
 
+	 // Allocate numBlocksAllocate blocks if possible, but don't assign them to an IndexNode.
 	 int newBlock = 0;
 	 for (int i = 0; i < numBlocksAllocate; i++){
 		 newBlock = fs->allocateBlock();
 		 printf("Allocated new physical block %d.\n", newBlock);
 	 }
+	 // Then deallocate the blocks found earlier
 	 for (int i = 0; i < numBlocksDeallocate; i++){
 		 freeList = fs->getFreeList(i);
 		 fs->freeBlock(blocksToFree[i]);
