@@ -1,5 +1,0 @@
-<map id="G" name="G">
-<area shape="rect" id="node3" href="$d3/dbc/classcIOExc.xhtml" title="Class handling exceptions in the I/O system." alt="" coords="5,80,72,107"/>
-<area shape="rect" id="node5" href="$d5/d34/classcPRExc.xhtml" title="Exception specific to the PR module." alt="" coords="97,80,167,107"/>
-<area shape="rect" id="node7" href="$d7/d66/classcVMMExc.xhtml" title="A class handling exceptions in the VMM Core." alt="" coords="192,80,273,107"/>
-</map>

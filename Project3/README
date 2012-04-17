@@ -29,3 +29,14 @@ Completed Extra-Credits:
 	Find utility
 	
 	Symbolic links
+	- Symbolic links are created with a new kernel function called symlink with an identical interface to the
+	original Kernel::link method. A new type S_IFSYM was created for symlinks. If this inode type is
+	encountered while traversing inodes it is dereferenced recursively. An additional parameter (given a default
+	value) was added to findIndexNode to allow symlinks on the end of a path to not be dereferenced. This is
+	useful for the user space utility ls so that it can dispay the symlink rather than the item it points to.
+
+	A new option -r was added to ls which will dereference any symbolic links.
+
+
+Python Testing Harness:
+	Look at src/tests/README for information on this script and how to make your own tests.
