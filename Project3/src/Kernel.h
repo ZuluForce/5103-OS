@@ -158,8 +158,10 @@ public:
 	 * new fd to be at the same offset as the one given.
 	 */
 	static int fdOpen(int fd);
+	/* Used for debugging. Prints offsets of 2 file descriptors */
 	static void printOffsets(int fd1, int fd2);
 
+	/* Check if an inode is being referenced by an open file */
 	static bool isOpen(short nodeNum);
 	static bool isOpen(IndexNode* node);
 
@@ -243,7 +245,7 @@ public:
 	 * contents of the newpath file is the path specified by oldpath.
 	 *
 	 * To stay true to the unix symlink this does not error if the
-	 * oldpath doesn't exist. For other errors it will return -1
+	 * oldpath doesn't exist (when creating it). For other errors it will return -1
 	 * and set errno accordingly.
 	 */
 	static int symlink(String oldpath, String newpath);
@@ -309,6 +311,11 @@ public:
 	 * '/' character.
 	 */
 	static String getDeepestDir(String pathname, bool ingnoreTrail = false);
+
+	/* Increments the nlink of the inode and updates the original.
+	 * This is just a convenience function but I don't believe we
+	 * actually referenced it anywhere
+	 */
 	static void incIndexNodeNlink(int fd);
 
 	/* Not a function you would usually find in a kernel but

@@ -1416,7 +1416,7 @@ int Kernel::symlink(String oldpath, String newpath) {
 			if ( cmpStatus > 0) {
 				int seek_status = lseek(dir, - DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
 				if (seek_status < 0) {
-					fprintf(stderr, ": error during seek in link\n");
+					fprintf(stderr, ": error during seek in symlink\n");
 					exit(Kernel::EXIT_F);
 				}
 
@@ -1436,7 +1436,7 @@ int Kernel::symlink(String oldpath, String newpath) {
 		if (status > 0)	{
 			int seek_status = lseek(dir, -DirectoryEntry::DIRECTORY_ENTRY_SIZE, 1);
 			if (seek_status < 0) {
-				fprintf(stderr, ": error during seek in link\n");
+				fprintf(stderr, ": error during seek in symlink\n");
 				exit(Kernel::EXIT_F);
 			}
 		}

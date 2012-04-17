@@ -14,6 +14,7 @@ int main(int argc, char **argv) {
 
 	int status = 0;
 
+	//Check if a symbolic link is desired
 	if ( argc >= 4 && !strcmp(argv[3], "-s") ) {
 		status = Kernel::symlink(argv[1],argv[2]);
 	} else {
