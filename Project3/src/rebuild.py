@@ -41,19 +41,32 @@ class dummyMatch:
 		return self.value
 
 if __name__ == '__main__':
+	skip_proc_check = False
+
 	try:
+		##Fix for problem on class VM
+		try:
+			fsys_stat = os.stat("filesys.dat")
+		except:
+			raise IOError
+
 		infoproc = subprocess.Popen(["./df"], stdout=subprocess.PIPE,stderr=subprocess.STDOUT)
+	except IOError:
+		skip_proc_check = True		
 	except:
 		(e_type, e_value, e_trace) = sys.exc_info()
 		print("Message: " + str(e_value))
 		print("Check that the user space utilities (especially df) are compiled")
 		exit(-1)
 
-	infoproc.wait()
-	if infoproc.returncode < 0:
-		print("Process df returned with bad stats: " + str(infoproc.returncode))
+	if not skip_proc_check:
+		infoproc.wait()
+		if infoproc.returncode < 0:
+			print("Process df returned with bad stats: " + str(infoproc.returncode))
 
-	info = infoproc.communicate()[0]
+		info = infoproc.communicate()[0]
+	else:
+		info = ""
 
 	blkSize = re.compile("Block Size: (\d+)")
 	totalBlocks = re.compile("Total Blocks: (\d+)")

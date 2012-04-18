@@ -1492,7 +1492,6 @@ int Kernel::filesysStatus(int fsn) {
 	int totalDBlocks = totalBlocks - inodeBlocks - 2;
 
 
-
 	fprintf(stdout, "/* ---- Printing Status of Filesystem %d ---- */\n", fsn);
 	fprintf(stdout, "Block Size: %d\n", fs->getBlockSize());
 	fprintf(stdout, "Total Blocks: %d\n", totalBlocks);

@@ -9,7 +9,7 @@ Dylan Bettermann
 	x500: bett0159
 	ID#: 3966450
 	
-How to run:
+How to run: (makefile in /src)
 	$ make
 		- Creates all object files for the file system
 		
@@ -57,3 +57,12 @@ Python Testing Harness:
 
 	The only dependency to use this script is a python interpreter version 2.6+ and it should
 	be located in /usr/bin/python.
+	
+	The python rebuild script in the src directory is used to easily rebuild the fileys.dat. If given no
+	parameters it will prompt to rebuild with the same parameters. There are more options available for
+	this script which are defined in the script.
+	**This script depends on the userspace utility df to be
+	built. If filesys.dat doesn't exist the script should still work and print appropriate instructions
+	and warnings but on the particular version of python used by the class VM there is potential for
+	the script to hang while waiting for the df process to terminate. If this problem occurs just
+	manually make the filesys.dat first and it should work.
