@@ -36,11 +36,11 @@ struct scull_buffer {
 	struct item *bufferPtr;		/* pointer to the item buffer */
 	int readIndex,writeIndex;
 	struct semaphore sem; 	/* mutual exclusion semaphore */
-	struct semaphore rsem;	/* couting semaphore for consumers */
-	struct semaphore wsem;	/* couting semaphore for producers */
+	struct semaphore item_sem;	/* couting semaphore for the # of items */
+	struct semaphore space_sem;	/* couting semaphore for the buffer space */
 	int readerCnt;			/* count of no of readers accessing the device */
 	int writerCnt;			/* count of no of writers accessing the device */
-	int size;				/* amount of data held in the buffer currently */
+	int size;				/* amount of data held in the buffer currently (# items) */
 	struct cdev cdev;		/* Char device structure		*/
 };
 

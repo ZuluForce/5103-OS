@@ -49,6 +49,7 @@ int scull_init_module(void)
 
 	/* alloc space for the buffer (scull_size bytes) */
 	scullBufferDevice.bufferPtr = kmalloc( scull_size * sizeof(struct item), GFP_KERNEL);
+	memset((void*) scullBufferDevice.bufferPtr, 0, scull_size * sizeof(struct item));
 	if(scullBufferDevice.bufferPtr == NULL)
 	{
 		scull_cleanup_module();
@@ -65,8 +66,8 @@ int scull_init_module(void)
 
 	/* Initialize the semaphore*/
 	sema_init(&scullBufferDevice.sem, 1);
-	sema_init(&scullBufferDevice.rsem,0);
-	sema_init(&scullBufferDevice.wsem,0);
+	sema_init(&scullBufferDevice.item_sem,0);
+	sema_init(&scullBufferDevice.space_sem,0);
 
 	/* Finally, set up the c dev. Now we can start accepting calls! */
 	scull_setup_cdev(&scullBufferDevice);
@@ -166,30 +167,80 @@ ssize_t scullBuffer_read(
 {
 	struct scull_buffer *dev = (struct scull_buffer *)filp->private_data;
 	ssize_t countRead = 0;
+	struct item *forUser;
 
 	/* get exclusive access */
 	if (down_interruptible(&dev->sem))
 		return -ERESTARTSYS;
 
-	printk(KERN_DEBUG "scullBuffer: read called count= %d\n", count);
+	printk(KERN_DEBUG "scullBuffer: read called count= %d\n", (int)count);
 	printk(KERN_DEBUG "scullBuffer: cur pos= %lld, size= %d \n", *f_pos, dev->size);
 
 	/* have we crossed reading the device? */
-	if( *f_pos >= dev->size)
-		goto out;
+	//if( *f_pos >= dev->size)
+	//	goto out;
 	/* read till the end of device */
-	if( (*f_pos + count) > dev->size)
-		count = dev->size - *f_pos;
+	//if( (*f_pos + count) > dev->size)
+	//	count = dev->size - *f_pos;
 
-	printk(KERN_DEBUG "scullBuffer: reading %d bytes\n", (int)count);
-	/* copy data to user space buffer */
-	if (copy_to_user(buf, dev->bufferPtr + *f_pos, count)) {
+	//Check that there are items in the buffer
+	if ( dev->size == 0 ) {
+		if ( dev->writerCnt == 0 )
+			return 0; //No data with no writers
+
+		up(&dev->sem); //Allow someone else to access device
+
+		//Wait for item to become available
+		if (down_interruptible(&dev->item_sem))
+			return -ERESTARTSYS;
+
+		//Get back the lock
+		if (down_interruptible(&dev->sem)) {
+			/* I think we should return the item to the semaphore
+			 * so someone else could potentially get it, assuming
+			 * they can also the lock*/
+			up(&dev->item_sem);
+			return -ERESTARTSYS;
+		}
+	}
+
+	if ( count == 0 ) {
+		/* Do we treat a 0 read as consuming an item without
+		 * actually reading it or do we not consume any items? */
+		return 0;
+	}
+
+	//Get the item from the buffer
+	forUser = &dev->bufferPtr[dev->readIndex];
+
+	//Get actual # of bytes to copy
+	count = count < forUser->size ? count : forUser->size;
+
+	if (copy_to_user(buf, forUser->data, count)) {
 		countRead = -EFAULT;
 		goto out;
 	}
-	printk(KERN_DEBUG "scullBuffer: new pos= %lld\n", *f_pos);
-	*f_pos += count;
-	countRead = count;
+
+	--dev->size;
+	dev->readIndex = dev->readIndex+1 % scull_size;
+
+	//Set the size of the item to -1 to mark unused
+	forUser->size = -1;
+
+	//Notify any waiting producers that there is space
+	up(&dev->space_sem);
+
+	/*
+
+	printk(KERN_DEBUG "scullBuffer: reading %d bytes\n", (int)count);
+	copy data to user space buffer */
+	//if (copy_to_user(buf, dev->bufferPtr + *f_pos, count)) {
+	//	countRead = -EFAULT;
+	//	goto out;
+	//}
+	//printk(KERN_DEBUG "scullBuffer: new pos= %lld\n", *f_pos);
+	//*f_pos += count;
+	//countRead = count;
 
 	/* now we're done release the semaphore */
 	out:
@@ -210,7 +261,7 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 		return -ERESTARTSYS;
 
 	/* have we crossed the size of the buffer? */
-	printk(KERN_DEBUG "scullBuffer: write called count= %d\n", count);
+	printk(KERN_DEBUG "scullBuffer: write called count= %d\n", (int) count);
 	printk(KERN_DEBUG "scullBuffer: cur pos= %lld, size= %d \n", *f_pos, (int)dev->size);
 
 	if( *f_pos >= scull_size)
