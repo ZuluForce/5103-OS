@@ -25,6 +25,7 @@
 #define SCULL_MAJOR 0   /* dynamic major by default */
 #define SCULL_NR_DEVS 1    /* scullBuffer0 */
 #define SCULL_SIZE 4096 /* default size of buffer */
+#define SCULL_ISIZE 512 /* Maximum buffer item size */
 
 struct scull_buffer {
 	void *bufferPtr; /* pointer to the data buffer */

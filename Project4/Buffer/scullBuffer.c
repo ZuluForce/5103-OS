@@ -4,10 +4,12 @@
 int scull_major = SCULL_MAJOR;
 int scull_minor = 0;
 int scull_size = SCULL_SIZE;	/* number of scull Buffer items */
+int scull_isize = SCULL_ISIZE;
 
 module_param(scull_major, int, S_IRUGO);
 module_param(scull_minor, int, S_IRUGO);
 module_param(scull_size, int, S_IRUGO);
+module_param(scull_isize,int, S_IRUGO);
 
 MODULE_AUTHOR("Piyush");
 MODULE_LICENSE("Dual BSD/GPL");
