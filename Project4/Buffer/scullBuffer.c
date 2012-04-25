@@ -4,12 +4,10 @@
 int scull_major = SCULL_MAJOR;
 int scull_minor = 0;
 int scull_size = SCULL_SIZE;	/* number of scull Buffer items */
-int scull_isize = SCULL_ISIZE;
 
 module_param(scull_major, int, S_IRUGO);
 module_param(scull_minor, int, S_IRUGO);
 module_param(scull_size, int, S_IRUGO);
-module_param(scull_isize,int, S_IRUGO);
 
 MODULE_AUTHOR("Piyush");
 MODULE_LICENSE("Dual BSD/GPL");
@@ -27,13 +25,13 @@ struct file_operations scullBuffer_fops = {
 
 /*
  * Method used to allocate resources and set things up when the module
- * is being loaded. 
+ * is being loaded.
 */
 int scull_init_module(void)
 {
 	int result = 0;
 	dev_t dev = 0;
-	
+
 	/* first check if someone has passed a major number */
 	if (scull_major) {
 		dev = MKDEV(scull_major, scull_minor);
@@ -48,27 +46,32 @@ int scull_init_module(void)
 		printk(KERN_WARNING "scullBuffer: can't get major %d\n", scull_major);
 		return result;
 	}
-	
+
 	/* alloc space for the buffer (scull_size bytes) */
-	scullBufferDevice.bufferPtr = kmalloc( scull_size , GFP_KERNEL);
+	scullBufferDevice.bufferPtr = kmalloc( scull_size * sizeof(struct item), GFP_KERNEL);
 	if(scullBufferDevice.bufferPtr == NULL)
 	{
 		scull_cleanup_module();
 		return -ENOMEM;
 	}
-	
+	/* Set the read/write pointers */
+	scullBufferDevice.readIndex =
+	scullBufferDevice.writeIndex = 0;
+
 	/* Init the count vars */
 	scullBufferDevice.readerCnt = 0;
 	scullBufferDevice.writerCnt = 0;
 	scullBufferDevice.size = 0;
-		
+
 	/* Initialize the semaphore*/
 	sema_init(&scullBufferDevice.sem, 1);
-	
+	sema_init(&scullBufferDevice.rsem,0);
+	sema_init(&scullBufferDevice.wsem,0);
+
 	/* Finally, set up the c dev. Now we can start accepting calls! */
 	scull_setup_cdev(&scullBufferDevice);
 	printk(KERN_DEBUG "scullBuffer: Done with init module ready for requests buffer size= %d\n",scull_size);
-	return result; 
+	return result;
 }
 
 /*
@@ -78,7 +81,7 @@ int scull_init_module(void)
 static void scull_setup_cdev(struct scull_buffer *dev)
 {
 	int err, devno = MKDEV(scull_major, scull_minor);
-    
+
 	cdev_init(&dev->cdev, &scullBuffer_fops);
 	dev->cdev.owner = THIS_MODULE;
 	dev->cdev.ops = &scullBuffer_fops;
@@ -99,13 +102,13 @@ void scull_cleanup_module(void)
 	/* if buffer was allocated, get rid of it */
 	if(scullBufferDevice.bufferPtr != NULL)
 		kfree(scullBufferDevice.bufferPtr);
-		
+
 	/* Get rid of our char dev entries */
 	cdev_del(&scullBufferDevice.cdev);
 
 	/* cleanup_module is never called if registering failed */
 	unregister_chrdev_region(devno, SCULL_NR_DEVS);
-	
+
 	printk(KERN_DEBUG "scullBuffer: Done with cleanup module \n");
 }
 
@@ -129,12 +132,12 @@ int scullBuffer_open(struct inode *inode, struct file *filp)
 		dev->readerCnt++;
 	if (filp->f_mode & FMODE_WRITE)
 		dev->writerCnt++;
-		
+
 	up(&dev->sem);
 	return 0;
 }
 
-/* 
+/*
  * Implementation of the close system call
 */
 int scullBuffer_release(struct inode *inode, struct file *filp)
@@ -142,12 +145,12 @@ int scullBuffer_release(struct inode *inode, struct file *filp)
 	struct scull_buffer *dev = (struct scull_buffer *)filp->private_data;
 	if (down_interruptible(&dev->sem) )
 		return -ERESTARTSYS;
-		
+
 	if (filp->f_mode & FMODE_READ)
 		dev->readerCnt--;
 	if (filp->f_mode & FMODE_WRITE)
 		dev->writerCnt--;
-		
+
 	up(&dev->sem);
 	return 0;
 }
@@ -163,21 +166,21 @@ ssize_t scullBuffer_read(
 {
 	struct scull_buffer *dev = (struct scull_buffer *)filp->private_data;
 	ssize_t countRead = 0;
-	
+
 	/* get exclusive access */
 	if (down_interruptible(&dev->sem))
-		return -ERESTARTSYS;	
-		
+		return -ERESTARTSYS;
+
 	printk(KERN_DEBUG "scullBuffer: read called count= %d\n", count);
 	printk(KERN_DEBUG "scullBuffer: cur pos= %lld, size= %d \n", *f_pos, dev->size);
-	
+
 	/* have we crossed reading the device? */
 	if( *f_pos >= dev->size)
 		goto out;
 	/* read till the end of device */
 	if( (*f_pos + count) > dev->size)
 		count = dev->size - *f_pos;
-	
+
 	printk(KERN_DEBUG "scullBuffer: reading %d bytes\n", (int)count);
 	/* copy data to user space buffer */
 	if (copy_to_user(buf, dev->bufferPtr + *f_pos, count)) {
@@ -186,10 +189,10 @@ ssize_t scullBuffer_read(
 	}
 	printk(KERN_DEBUG "scullBuffer: new pos= %lld\n", *f_pos);
 	*f_pos += count;
-	countRead = count;	
-	
+	countRead = count;
+
 	/* now we're done release the semaphore */
-	out: 
+	out:
 	up(&dev->sem);
 	return countRead;
 }
@@ -202,13 +205,14 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 {
 	int countWritten = 0;
 	struct scull_buffer *dev = (struct scull_buffer *)filp->private_data;
-	
+
 	if (down_interruptible(&dev->sem))
-		return -ERESTARTSYS;	
-	
+		return -ERESTARTSYS;
+
 	/* have we crossed the size of the buffer? */
 	printk(KERN_DEBUG "scullBuffer: write called count= %d\n", count);
 	printk(KERN_DEBUG "scullBuffer: cur pos= %lld, size= %d \n", *f_pos, (int)dev->size);
+
 	if( *f_pos >= scull_size)
 		goto out;
 	/* write till the end of buffer */
@@ -220,11 +224,11 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 		countWritten = -EFAULT;
 		goto out;
 	}
-	
+
 	*f_pos += count;
 	countWritten = count;
 	/* update the size of the device */
-	dev->size = *f_pos; 
+	dev->size = *f_pos;
 	printk(KERN_DEBUG "scullBuffer: new pos= %lld, new size= %d \n", *f_pos, (int)dev->size);
 	out:
 	up(&dev->sem);

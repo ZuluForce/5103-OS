@@ -6,42 +6,50 @@
 #include <linux/module.h>
 #include <linux/moduleparam.h>
 #include <linux/init.h>
-#include <linux/kernel.h>	
-#include <linux/slab.h>		
-#include <linux/fs.h>		
-#include <linux/errno.h>	
-#include <linux/types.h>	
+#include <linux/kernel.h>
+#include <linux/slab.h>
+#include <linux/fs.h>
+#include <linux/errno.h>
+#include <linux/types.h>
 #include <linux/proc_fs.h>
-#include <linux/fcntl.h>	
+#include <linux/fcntl.h>
 #include <linux/seq_file.h>
 #include <linux/cdev.h>
 #include <linux/wait.h>
 #include <linux/sched.h>
-#include <linux/ioctl.h> 
+#include <linux/ioctl.h>
 
-#include <asm/system.h>		
-#include <asm/uaccess.h>	
+#include <asm/system.h>
+#include <asm/uaccess.h>
 
 #define SCULL_MAJOR 0   /* dynamic major by default */
 #define SCULL_NR_DEVS 1    /* scullBuffer0 */
-#define SCULL_SIZE 4096 /* default size of buffer */
-#define SCULL_ISIZE 512 /* Maximum buffer item size */
+#define SCULL_SIZE 64	/* default # items for buffer */
+#define ITEM_SIZE 512
+
+struct item {
+	int size;
+	char data[ITEM_SIZE];
+};
 
 struct scull_buffer {
-	void *bufferPtr; /* pointer to the data buffer */
-	struct semaphore sem;  /* mutual exclusion semaphore     */
-	int readerCnt; /* count of no of readers accessing the device */
-	int writerCnt; /* count of no of writers accessing the device */
-	int size; /* amount of data held in the buffer currently */
-	struct cdev cdev;	  /* Char device structure		*/
+	struct item *bufferPtr;		/* pointer to the item buffer */
+	int readIndex,writeIndex;
+	struct semaphore sem; 	/* mutual exclusion semaphore */
+	struct semaphore rsem;	/* couting semaphore for consumers */
+	struct semaphore wsem;	/* couting semaphore for producers */
+	int readerCnt;			/* count of no of readers accessing the device */
+	int writerCnt;			/* count of no of writers accessing the device */
+	int size;				/* amount of data held in the buffer currently */
+	struct cdev cdev;		/* Char device structure		*/
 };
 
 /*
  * The different configurable parameters
  */
-extern int scull_major;     
+extern int scull_major;
 extern int scull_minor;
-extern int scull_size; 
+extern int scull_size;
 
 /* Function prototypes */
 void scull_cleanup_module(void);
