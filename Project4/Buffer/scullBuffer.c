@@ -67,7 +67,7 @@ int scull_init_module(void)
 	/* Initialize the semaphore*/
 	sema_init(&scullBufferDevice.sem, 1);
 	sema_init(&scullBufferDevice.item_sem,0);
-	sema_init(&scullBufferDevice.space_sem,0);
+	sema_init(&scullBufferDevice.space_sem,scull_size);
 
 	/* Finally, set up the c dev. Now we can start accepting calls! */
 	scull_setup_cdev(&scullBufferDevice);
@@ -171,13 +171,18 @@ ssize_t scullBuffer_read(
 	struct item *forUser;
 	
 	printk(KERN_DEBUG "scullBuffer: Read system call was made\n");
+	if ( dev->size > scull_size ) {
+		printk(KERN_DEBUG "scullBuffer: Scull buffer has exceeded allocated size");
+		return -1;
+	}
 
 	/* get exclusive access */
 	if (down_interruptible(&dev->sem))
 		return -ERESTARTSYS;
 
 	printk(KERN_DEBUG "scullBuffer: read called count= %d\n", (int)count);
-	printk(KERN_DEBUG "scullBuffer: cur pos= %lld, size= %d \n", *f_pos, dev->size);
+	printk(KERN_DEBUG "scullBuffer: cur pos= (%d,%d), size= %d \n",
+			dev->readIndex, dev->writeIndex, dev->size);
 	printk(KERN_DEBUG "scullBuffer: #writers = %d   #readers = %d\n",dev->writerCnt, dev->readerCnt);
 
 	/* have we crossed reading the device? */
@@ -189,8 +194,12 @@ ssize_t scullBuffer_read(
 
 	//Check that there are items in the buffer
 	if ( dev->size == 0 ) {
-		if ( dev->writerCnt == 0 )
+		printk(KERN_DEBUG "scullBuffer: Device is empty\n");
+
+		if ( dev->writerCnt == 0 ) {
+			up(&dev->sem);
 			return 0; //No data with no writers
+		}
 
 		printk(KERN_DEBUG "scullBuffer: Waiting for producers, blocking consumer\n");
 		up(&dev->sem); //Allow someone else to access device
@@ -205,6 +214,11 @@ ssize_t scullBuffer_read(
 			 * so someone else could potentially get it, assuming
 			 * they can also the lock*/
 			up(&dev->item_sem);
+			return -ERESTARTSYS;
+		}
+	} else {
+		if (down_interruptible(&dev->item_sem)) {
+			up(&dev->sem);
 			return -ERESTARTSYS;
 		}
 	}
@@ -225,9 +239,11 @@ ssize_t scullBuffer_read(
 		countRead = -EFAULT;
 		goto out;
 	}
+	
+	countRead = count;
 
 	--dev->size;
-	dev->readIndex = dev->readIndex+1 % scull_size;
+	dev->readIndex = (dev->readIndex+1) % scull_size;
 
 	//Set the size of the item to -1 to mark unused
 	forUser->size = -1;
@@ -264,13 +280,18 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 	struct item *newItem;
 	
 	printk(KERN_DEBUG "scullBuffer: write called on device\n");
+	if ( dev->size > scull_size ) {
+		printk(KERN_DEBUG "scullBuffer: Scull buffer has exceeded allocated size");
+		return -1;
+	}
 
 	if (down_interruptible(&dev->sem))
 		return -ERESTARTSYS;
 
 	/* have we crossed the size of the buffer? */
 	printk(KERN_DEBUG "scullBuffer: write called count= %d\n", (int) count);
-	printk(KERN_DEBUG "scullBuffer: cur pos= %lld, size= %d \n", *f_pos, (int)dev->size);
+	printk(KERN_DEBUG "scullBuffer: cur pos= (%d,%d), size= %d \n",
+			dev->readIndex, dev->writeIndex, (int)dev->size);
 	printk(KERN_DEBUG "scullBuffer: (write) #write = %d   #read = %d\n",
 			dev->writerCnt, dev->readerCnt);
 
@@ -281,7 +302,10 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 	//	count = scull_size - *f_pos;
         
 	if ( dev->size == scull_size ) {
+		printk(KERN_DEBUG "scullBuffer: Device is full\n");
+		
 		if (dev->readerCnt == 0) {
+			up(&dev->sem);
 			return 0;
 		}
 
@@ -297,13 +321,18 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 			up(&dev->space_sem);
 			return -ERESTARTSYS;
 		}
+	} else {
+		if (down_interruptible(&dev->space_sem)) {
+			up(&dev->sem);
+			return -ERESTARTSYS;
+		}
 	}
 
 	//Get struct from buffer to insert the new item
 	newItem = &dev->bufferPtr[dev->writeIndex];
 
 	//truncate to at most ITEM_SIZE
-	count = count > scull_size ? scull_size : count;
+	count = count > ITEM_SIZE ? ITEM_SIZE : count;
 	printk(KERN_DEBUG "scullBuffer: writing %d bytes \n", (int)count);
 	
 	newItem->size = count;
@@ -314,7 +343,7 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 	}
 
 	++dev->size;
-	dev->writeIndex = dev->writeIndex+1 % scull_size;
+	dev->writeIndex = (dev->writeIndex+1) % scull_size;
 	countWritten = count;
 	/* write data to the buffer */
 	//if (copy_from_user(dev->bufferPtr + *f_pos, buf, count)) {
@@ -326,9 +355,10 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 	//countWritten = count;
 	/* update the size of the device */
 	//dev->size = *f_pos;
-	printk(KERN_DEBUG "scullBuffer: new pos= %lld, new size= %d \n", *f_pos, (int)dev->size);
+	printk(KERN_DEBUG "scullBuffer: new pos= (%d,%d), new size= %d \n",
+			dev->readIndex, dev->writeIndex, (int)dev->size);
 	out:
 	up(&dev->sem);
-	up(&dev->item_sem);
+	up(&dev->item_sem); //Notify that there are items
 	return countWritten;
 }

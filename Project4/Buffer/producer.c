@@ -49,17 +49,27 @@ int main(int argc, char **argv) {
 	
 	int error;
 	while (true) {
-		error = write(device, writeBuffer, bufferSize);
-		if ( error < 0 ) {
-			fprintf(stdout, "Producer %d encountered an error while writing (%d)\n",
-					producerID, error);
+		error = 0;
 
-			return error;
-		}
-		
-		fprintf(stdout, "Producer wrote %d bytes\n", error);
-		//Sleep anywhere from 100 ms to 1 second
-		usleep((rand()%10) * 100);
+		do {
+			error = write(device, writeBuffer, bufferSize);
+			
+			if ( error < 0 ) {
+				fprintf(stderr, "Producer %d encountered an error while writing (%d)\n",
+						producerID, error);
+
+				return error;
+			} else if ( error == 0 ) {
+				fprintf(stderr, "Producer %d: Device full with no consumers. Retry in 4 seconds\n",
+						producerID);
+				
+				sleep(4);
+			} else {
+				fprintf(stdout, "Producer wrote %d bytes\n", error);
+				//Sleep anywhere from 100 ms to 1 second
+				usleep((rand()%10) * 10000);
+			}
+		} while (error == 0);
 	}
 	
 	return 0;
