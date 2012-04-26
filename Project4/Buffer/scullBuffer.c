@@ -9,7 +9,7 @@ module_param(scull_major, int, S_IRUGO);
 module_param(scull_minor, int, S_IRUGO);
 module_param(scull_size, int, S_IRUGO);
 
-MODULE_AUTHOR("Piyush");
+MODULE_AUTHOR("Andrew Helgeson, Kevin Melhaff, Dylan Betterman");
 MODULE_LICENSE("Dual BSD/GPL");
 
 struct scull_buffer scullBufferDevice;	/* instance of the scullBuffer structure */
@@ -126,6 +126,7 @@ int scullBuffer_open(struct inode *inode, struct file *filp)
 	dev = container_of(inode->i_cdev, struct scull_buffer, cdev);
 	filp->private_data = dev;
 
+	printk(KERN_DEBUG "scullBuffer: scullBuffer open was called\n");
 	if (down_interruptible(&dev->sem))
 		return -ERESTARTSYS;
 
@@ -168,6 +169,8 @@ ssize_t scullBuffer_read(
 	struct scull_buffer *dev = (struct scull_buffer *)filp->private_data;
 	ssize_t countRead = 0;
 	struct item *forUser;
+	
+	printk(KERN_DEBUG "scullBuffer: Read system call was made\n");
 
 	/* get exclusive access */
 	if (down_interruptible(&dev->sem))
@@ -175,6 +178,7 @@ ssize_t scullBuffer_read(
 
 	printk(KERN_DEBUG "scullBuffer: read called count= %d\n", (int)count);
 	printk(KERN_DEBUG "scullBuffer: cur pos= %lld, size= %d \n", *f_pos, dev->size);
+	printk(KERN_DEBUG "scullBuffer: #writers = %d   #readers = %d\n",dev->writerCnt, dev->readerCnt);
 
 	/* have we crossed reading the device? */
 	//if( *f_pos >= dev->size)
@@ -188,6 +192,7 @@ ssize_t scullBuffer_read(
 		if ( dev->writerCnt == 0 )
 			return 0; //No data with no writers
 
+		printk(KERN_DEBUG "scullBuffer: Waiting for producers, blocking consumer\n");
 		up(&dev->sem); //Allow someone else to access device
 
 		//Wait for item to become available
@@ -256,6 +261,9 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 {
 	int countWritten = 0;
 	struct scull_buffer *dev = (struct scull_buffer *)filp->private_data;
+	struct item *newItem;
+	
+	printk(KERN_DEBUG "scullBuffer: write called on device\n");
 
 	if (down_interruptible(&dev->sem))
 		return -ERESTARTSYS;
@@ -263,25 +271,64 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 	/* have we crossed the size of the buffer? */
 	printk(KERN_DEBUG "scullBuffer: write called count= %d\n", (int) count);
 	printk(KERN_DEBUG "scullBuffer: cur pos= %lld, size= %d \n", *f_pos, (int)dev->size);
+	printk(KERN_DEBUG "scullBuffer: (write) #write = %d   #read = %d\n",
+			dev->writerCnt, dev->readerCnt);
 
-	if( *f_pos >= scull_size)
-		goto out;
+	//if( *f_pos >= scull_size)
+	//	goto out;
 	/* write till the end of buffer */
-	if( *f_pos + count > scull_size)
-		count = scull_size - *f_pos;
+	//if( *f_pos + count > scull_size)
+	//	count = scull_size - *f_pos;
+        
+	if ( dev->size == scull_size ) {
+		if (dev->readerCnt == 0) {
+			return 0;
+		}
+
+		printk(KERN_DEBUG "scullBuffer: No available space, blocking for consumers\n");
+		up(&dev->sem);
+
+		//Wait for space to open up
+		if (down_interruptible(&dev->space_sem))
+			return -ERESTARTSYS;
+
+		//Get back the lock
+		if (down_interruptible(&dev->sem)) {
+			up(&dev->space_sem);
+			return -ERESTARTSYS;
+		}
+	}
+
+	//Get struct from buffer to insert the new item
+	newItem = &dev->bufferPtr[dev->writeIndex];
+
+	//truncate to at most ITEM_SIZE
+	count = count > scull_size ? scull_size : count;
 	printk(KERN_DEBUG "scullBuffer: writing %d bytes \n", (int)count);
-	/* write data to the buffer */
-	if (copy_from_user(dev->bufferPtr + *f_pos, buf, count)) {
+	
+	newItem->size = count;
+	if (copy_from_user((void*)newItem->data, buf, count)) {
+		newItem->size = -1;
 		countWritten = -EFAULT;
 		goto out;
 	}
 
-	*f_pos += count;
+	++dev->size;
+	dev->writeIndex = dev->writeIndex+1 % scull_size;
 	countWritten = count;
+	/* write data to the buffer */
+	//if (copy_from_user(dev->bufferPtr + *f_pos, buf, count)) {
+	//	countWritten = -EFAULT;
+	//	goto out;
+	//}
+
+	//*f_pos += count;
+	//countWritten = count;
 	/* update the size of the device */
-	dev->size = *f_pos;
+	//dev->size = *f_pos;
 	printk(KERN_DEBUG "scullBuffer: new pos= %lld, new size= %d \n", *f_pos, (int)dev->size);
 	out:
 	up(&dev->sem);
+	up(&dev->item_sem);
 	return countWritten;
 }

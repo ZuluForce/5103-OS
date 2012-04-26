@@ -1,0 +1,66 @@
+#include <stdio.h>
+#include <string.h>
+#include <time.h>
+#include <fcntl.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <sys/stat.h>
+#include <sys/types.h>
+
+static char deviceName[] = "/dev/scullBuffer0";
+static int flags = O_WRONLY;
+
+#define MAX_BUFFER 1024
+
+typedef enum {false,true} bool;
+
+int main(int argc, char **argv) {
+	int device = open(deviceName, flags);
+	if ( device < 0 ) {
+		perror("Failed to open deivce");
+		return -1;
+	}
+	
+	srand(time(NULL));
+	int producerID;
+
+	if ( argc > 1 )
+		producerID = atoi(argv[1]);
+	else
+		producerID = rand() % 100;
+	
+	/* I made the minimum 4 so that we could at least
+	 * write the producerID out as a string */
+	int bufferSize = (rand() % MAX_BUFFER) + 4;
+	char writeBuffer[bufferSize];
+	
+	fprintf(stdout, "Producer %d started with buffer size %d\n",
+			producerID, bufferSize);
+	
+	//Pick some ascii character between a-Z to fill the buffer
+	char fillChar = 65 + (producerID % 58);
+	
+	fprintf(stdout, "Producer %d using character %c to fill buffer\n",
+			producerID, fillChar);
+	memset((void*)writeBuffer, fillChar, bufferSize);
+	
+	sprintf(writeBuffer, "%d", producerID);
+	writeBuffer[bufferSize-1] = '\0';
+	
+	int error;
+	while (true) {
+		error = write(device, writeBuffer, bufferSize);
+		if ( error < 0 ) {
+			fprintf(stdout, "Producer %d encountered an error while writing (%d)\n",
+					producerID, error);
+
+			return error;
+		}
+		
+		fprintf(stdout, "Producer wrote %d bytes\n", error);
+		//Sleep anywhere from 100 ms to 1 second
+		usleep((rand()%10) * 100);
+	}
+	
+	return 0;
+}

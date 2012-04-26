@@ -19,7 +19,7 @@ modules_install:
 	$(MAKE) -C $(KERNELDIR) M=$(PWD) modules_install
 
 clean:
-	rm -rf *.o *~ core .depend .*.cmd *.ko *.mod.c .tmp_versions
+	rm -rf *.o *~ core .depend .*.cmd *.ko *.mod.c .tmp_versions producer consumer
 
 .PHONY: modules modules_install clean
 
@@ -28,4 +28,10 @@ else
     obj-m := scullBuffer.o
 endif
 
+CC=gcc
 
+producer: producer.c
+	$(CC) producer.c -O2 -Wall -o producer
+
+consumer: consumer.c
+	$(CC) consumer.c -O2 -Wall -o consumer
