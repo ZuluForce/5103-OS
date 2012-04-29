@@ -171,10 +171,10 @@ ssize_t scullBuffer_read(
 	struct item *forUser;
 	
 	printk(KERN_DEBUG "scullBuffer: Read system call was made\n");
-	if ( dev->size > scull_size ) {
+	/*if ( dev->size > scull_size ) {
 		printk(KERN_DEBUG "scullBuffer: Scull buffer has exceeded allocated size");
 		return -1;
-	}
+	}*/
 
 	/* get exclusive access */
 	if (down_interruptible(&dev->sem))
@@ -280,10 +280,10 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 	struct item *newItem;
 	
 	printk(KERN_DEBUG "scullBuffer: write called on device\n");
-	if ( dev->size > scull_size ) {
+	/*if ( dev->size > scull_size ) {
 		printk(KERN_DEBUG "scullBuffer: Scull buffer has exceeded allocated size");
 		return -1;
-	}
+	}*/
 
 	if (down_interruptible(&dev->sem))
 		return -ERESTARTSYS;
@@ -358,7 +358,7 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 	printk(KERN_DEBUG "scullBuffer: new pos= (%d,%d), new size= %d \n",
 			dev->readIndex, dev->writeIndex, (int)dev->size);
 	out:
-	up(&dev->sem);
 	up(&dev->item_sem); //Notify that there are items
+	up(&dev->sem);
 	return countWritten;
 }

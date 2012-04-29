@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <signal.h>
 #include <string.h>
 #include <time.h>
 #include <fcntl.h>
@@ -14,8 +15,19 @@ static int flags = O_RDONLY;
 
 typedef enum {false,true} bool;
 
+int device = -1;
+
+void sigint(){
+	printf("Caught a signal, closing device %d.\n", device);
+	if (device >= 0){
+		close(device);
+	}
+	exit(0);
+}
+
 int main(int argc, char **argv) {
-	int device = open(deviceName,flags);
+	signal(SIGINT, sigint);
+	device = open(deviceName,flags);
 	if (device < 0) {
 		perror("Failed to open device");
 		return device;

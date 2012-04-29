@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <signal.h>
 #include <string.h>
 #include <time.h>
 #include <fcntl.h>
@@ -14,8 +15,19 @@ static int flags = O_WRONLY;
 
 typedef enum {false,true} bool;
 
+int device;
+
+void sigint(){
+	printf("Caught a signal, closing device %d.\n", device);
+	if (device >= 0){
+		close(device);
+	}
+	exit(0);
+}
+
 int main(int argc, char **argv) {
-	int device = open(deviceName, flags);
+	signal(SIGINT, sigint);
+	device = open(deviceName, flags);
 	if ( device < 0 ) {
 		perror("Failed to open deivce");
 		return -1;
@@ -45,6 +57,11 @@ int main(int argc, char **argv) {
 	memset((void*)writeBuffer, fillChar, bufferSize);
 	
 	sprintf(writeBuffer, "%d", producerID);
+	if (producerID < 10){
+		writeBuffer[1] = fillChar;
+	} else{
+		writeBuffer[2] = fillChar;
+	}
 	writeBuffer[bufferSize-1] = '\0';
 	
 	int error;
@@ -66,8 +83,9 @@ int main(int argc, char **argv) {
 				sleep(4);
 			} else {
 				fprintf(stdout, "Producer wrote %d bytes\n", error);
+				fprintf(stdout, "Wrote: '%s'\n", writeBuffer);
 				//Sleep anywhere from 100 ms to 1 second
-				usleep((rand()%10) * 10000);
+				usleep((rand()%10) * 100000);
 			}
 		} while (error == 0);
 	}
