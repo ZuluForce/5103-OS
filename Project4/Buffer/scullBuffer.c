@@ -185,41 +185,38 @@ ssize_t scullBuffer_read(
 			dev->readIndex, dev->writeIndex, dev->size);
 	printk(KERN_DEBUG "scullBuffer: #writers = %d   #readers = %d\n",dev->writerCnt, dev->readerCnt);
 
-	/* have we crossed reading the device? */
-	//if( *f_pos >= dev->size)
-	//	goto out;
-	/* read till the end of device */
-	//if( (*f_pos + count) > dev->size)
-	//	count = dev->size - *f_pos;
-
-	//Check that there are items in the buffer
-	if ( dev->size == 0 ) {
-		printk(KERN_DEBUG "scullBuffer: Device is empty\n");
-
+	if (down_trylock(&dev->item_sem)) {
 		if ( dev->writerCnt == 0 ) {
 			up(&dev->sem);
-			return 0; //No data with no writers
+			return 0;
 		}
 
-		printk(KERN_DEBUG "scullBuffer: Waiting for producers, blocking consumer\n");
-		up(&dev->sem); //Allow someone else to access device
+		while (true) {
+			up(&dev->sem); //Let someone else use the device
+			if (down_interruptible(&dev->item_sem))
+				return -ERESTARTSYS;
 
-		//Wait for item to become available
-		if (down_interruptible(&dev->item_sem))
-			return -ERESTARTSYS;
+			if (down_interruptible(&dev->sem)) {
+				up(&dev->item_sem);
+				return -ERESTARTSYS;
+			}
 
-		//Get back the lock
-		if (down_interruptible(&dev->sem)) {
-			/* I think we should return the item to the semaphore
-			 * so someone else could potentially get it, assuming
-			 * they can also the lock*/
-			up(&dev->item_sem);
-			return -ERESTARTSYS;
-		}
-	} else {
-		if (down_interruptible(&dev->item_sem)) {
-			up(&dev->sem);
-			return -ERESTARTSYS;
+			if (dev->size == 0) {
+				if (dev->writerCnt == 0) {
+					if (dev->readerCnt > 0) {
+						/* This does the chain wakup for readers, letting
+						* them know that there are no more writers.
+						*/
+						up(&dev->item_sem);
+					}
+
+					up(&dev->sem); //Release lock
+					return 0;
+				}
+				continue;
+			}
+
+			break; //This is the normal scenario
 		}
 	}
 
@@ -295,36 +292,39 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 	printk(KERN_DEBUG "scullBuffer: (write) #write = %d   #read = %d\n",
 			dev->writerCnt, dev->readerCnt);
 
-	//if( *f_pos >= scull_size)
-	//	goto out;
-	/* write till the end of buffer */
-	//if( *f_pos + count > scull_size)
-	//	count = scull_size - *f_pos;
         
-	if ( dev->size == scull_size ) {
-		printk(KERN_DEBUG "scullBuffer: Device is full\n");
-		
-		if (dev->readerCnt == 0) {
+	if (down_trylock(&dev->space_sem)) {
+		if ( dev->readerCnt == 0 ) {
 			up(&dev->sem);
 			return 0;
 		}
 
-		printk(KERN_DEBUG "scullBuffer: No available space, blocking for consumers\n");
-		up(&dev->sem);
+		while (true) {
+			up(&dev->sem); //Let someone else use the device
+			if (down_interruptible(&dev->space_sem))
+				return -ERESTARTSYS;
 
-		//Wait for space to open up
-		if (down_interruptible(&dev->space_sem))
-			return -ERESTARTSYS;
+			if (down_interruptible(&dev->sem)) {
+				up(&dev->space_sem);
+				return -ERESTARTSYS;
+			}
 
-		//Get back the lock
-		if (down_interruptible(&dev->sem)) {
-			up(&dev->space_sem);
-			return -ERESTARTSYS;
-		}
-	} else {
-		if (down_interruptible(&dev->space_sem)) {
-			up(&dev->sem);
-			return -ERESTARTSYS;
+			if (dev->size == scull_size) {
+				if (dev->readerCnt == 0) {
+					if (dev->writerCnt > 0) {
+						/* This does the chain wakup for readers, letting
+						* them know that there are no more writers.
+						*/
+						up(&dev->space_sem);
+					}
+
+					up(&dev->sem); //Release lock
+					return 0;
+				}
+				continue;
+			}
+
+			break; //This is the normal scenario
 		}
 	}
 
