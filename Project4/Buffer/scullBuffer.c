@@ -62,6 +62,8 @@ int scull_init_module(void)
 	/* Init the count vars */
 	scullBufferDevice.readerCnt = 0;
 	scullBufferDevice.writerCnt = 0;
+	scullBufferDevice.inReadCnt = 0;
+	scullBufferDevice.inWriteCnt = 0;
 	scullBufferDevice.size = 0;
 
 	/* Initialize the semaphore*/
@@ -186,7 +188,7 @@ ssize_t scullBuffer_read(
 	printk(KERN_DEBUG "scullBuffer: #writers = %d   #readers = %d\n",dev->writerCnt, dev->readerCnt);
 
 	if (down_trylock(&dev->item_sem)) {
-		if ( dev->writerCnt == 0 ) {
+		if ( dev->inWriteCnt == 0 ) {
 			up(&dev->sem);
 			return 0;
 		}
@@ -201,21 +203,6 @@ ssize_t scullBuffer_read(
 				return -ERESTARTSYS;
 			}
 
-			if (dev->size == 0) {
-				if (dev->writerCnt == 0) {
-					if (dev->readerCnt > 0) {
-						/* This does the chain wakup for readers, letting
-						* them know that there are no more writers.
-						*/
-						up(&dev->item_sem);
-					}
-
-					up(&dev->sem); //Release lock
-					return 0;
-				}
-				continue;
-			}
-
 			break; //This is the normal scenario
 		}
 	}
@@ -225,6 +212,8 @@ ssize_t scullBuffer_read(
 		 * actually reading it or do we not consume any items? */
 		return 0;
 	}
+
+	dev->inReadCnt++;
 
 	//Get the item from the buffer
 	forUser = &dev->bufferPtr[dev->readIndex];
@@ -262,6 +251,7 @@ ssize_t scullBuffer_read(
 
 	/* now we're done release the semaphore */
 	out:
+	dev->inReadCnt--;
 	up(&dev->sem);
 	return countRead;
 }
@@ -294,7 +284,7 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 
         
 	if (down_trylock(&dev->space_sem)) {
-		if ( dev->readerCnt == 0 ) {
+		if ( dev->inReadCnt == 0 ) {
 			up(&dev->sem);
 			return 0;
 		}
@@ -328,6 +318,8 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 		}
 	}
 
+	dev->inWriteCnt++;
+
 	//Get struct from buffer to insert the new item
 	newItem = &dev->bufferPtr[dev->writeIndex];
 
@@ -359,6 +351,7 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 			dev->readIndex, dev->writeIndex, (int)dev->size);
 	out:
 	up(&dev->item_sem); //Notify that there are items
+	dev->inWriteCnt--;
 	up(&dev->sem);
 	return countWritten;
 }

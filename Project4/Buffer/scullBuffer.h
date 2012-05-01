@@ -40,6 +40,8 @@ struct scull_buffer {
 	struct semaphore space_sem;	/* couting semaphore for the buffer space */
 	int readerCnt;			/* count of no of readers accessing the device */
 	int writerCnt;			/* count of no of writers accessing the device */
+	int inReadCnt;		/* count of number readers in read */
+	int inWriteCnt;		/* count of number writers in write */
 	int size;				/* amount of data held in the buffer currently (# items) */
 	struct cdev cdev;		/* Char device structure		*/
 };
