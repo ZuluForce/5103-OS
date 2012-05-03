@@ -66,7 +66,7 @@ int scull_init_module(void)
 	scullBufferDevice.inWriteCnt = 0;
 	scullBufferDevice.size = 0;
 
-	/* Initialize the semaphore*/
+	/* Initialize the semaphores */
 	sema_init(&scullBufferDevice.sem, 1);
 	sema_init(&scullBufferDevice.item_sem,0);
 	sema_init(&scullBufferDevice.space_sem,scull_size);
@@ -173,10 +173,6 @@ ssize_t scullBuffer_read(
 	struct item *forUser;
 	
 	printk(KERN_DEBUG "scullBuffer: Read system call was made\n");
-	/*if ( dev->size > scull_size ) {
-		printk(KERN_DEBUG "scullBuffer: Scull buffer has exceeded allocated size");
-		return -1;
-	}*/
 
 	/* get exclusive access */
 	if (down_interruptible(&dev->sem))
@@ -188,22 +184,22 @@ ssize_t scullBuffer_read(
 	printk(KERN_DEBUG "scullBuffer: #writers = %d   #readers = %d\n",dev->writerCnt, dev->readerCnt);
 
 	if (down_trylock(&dev->item_sem)) {
+		
+		//If no writers currently present return
 		if ( dev->inWriteCnt == 0 ) {
 			up(&dev->sem);
 			return 0;
 		}
 
-		while (true) {
-			up(&dev->sem); //Let someone else use the device
-			if (down_interruptible(&dev->item_sem))
-				return -ERESTARTSYS;
+		up(&dev->sem); //Let someone else use the device
+		
+		//Wait for an item to come in
+		if (down_interruptible(&dev->item_sem))
+			return -ERESTARTSYS;
 
-			if (down_interruptible(&dev->sem)) {
-				up(&dev->item_sem);
-				return -ERESTARTSYS;
-			}
-
-			break; //This is the normal scenario
+		if (down_interruptible(&dev->sem)) {
+			up(&dev->item_sem);
+			return -ERESTARTSYS;
 		}
 	}
 
@@ -229,7 +225,7 @@ ssize_t scullBuffer_read(
 	countRead = count;
 
 	--dev->size;
-	dev->readIndex = (dev->readIndex+1) % scull_size;
+	dev->readIndex = (dev->readIndex+1) % scull_size; //Move ring buffer
 
 	//Set the size of the item to -1 to mark unused
 	forUser->size = -1;
@@ -237,19 +233,7 @@ ssize_t scullBuffer_read(
 	//Notify any waiting producers that there is space
 	up(&dev->space_sem);
 
-	/*
-
-	printk(KERN_DEBUG "scullBuffer: reading %d bytes\n", (int)count);
-	copy data to user space buffer */
-	//if (copy_to_user(buf, dev->bufferPtr + *f_pos, count)) {
-	//	countRead = -EFAULT;
-	//	goto out;
-	//}
-	//printk(KERN_DEBUG "scullBuffer: new pos= %lld\n", *f_pos);
-	//*f_pos += count;
-	//countRead = count;
-
-	/* now we're done release the semaphore */
+	/* now we're done, release the semaphore */
 	out:
 	dev->inReadCnt--;
 	up(&dev->sem);
@@ -267,10 +251,6 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 	struct item *newItem;
 	
 	printk(KERN_DEBUG "scullBuffer: write called on device\n");
-	/*if ( dev->size > scull_size ) {
-		printk(KERN_DEBUG "scullBuffer: Scull buffer has exceeded allocated size");
-		return -1;
-	}*/
 
 	if (down_interruptible(&dev->sem))
 		return -ERESTARTSYS;
@@ -289,32 +269,20 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 			return 0;
 		}
 
-		while (true) {
-			up(&dev->sem); //Let someone else use the device
-			if (down_interruptible(&dev->space_sem))
-				return -ERESTARTSYS;
+		up(&dev->sem); //Let someone else use the device
+		
+		//Wait for space to open up
+		if (down_interruptible(&dev->space_sem))
+			return -ERESTARTSYS;
 
-			if (down_interruptible(&dev->sem)) {
-				up(&dev->space_sem);
-				return -ERESTARTSYS;
-			}
-
-			if (dev->size == scull_size) {
-				if (dev->readerCnt == 0) {
-					if (dev->writerCnt > 0) {
-						/* This does the chain wakup for readers, letting
-						* them know that there are no more writers.
-						*/
-						up(&dev->space_sem);
-					}
-
-					up(&dev->sem); //Release lock
-					return 0;
-				}
-				continue;
-			}
-
-			break; //This is the normal scenario
+		/* Since we have already acquired the resource through
+		 * this single channel then nobody else can get it meaning
+		 * that there is no race condition between there and getting
+		 * the binary semaphore.
+		 */
+		if (down_interruptible(&dev->sem)) {
+			up(&dev->space_sem);
+			return -ERESTARTSYS;
 		}
 	}
 
@@ -327,26 +295,20 @@ ssize_t scullBuffer_write(struct file *filp, const char __user *buf, size_t coun
 	count = count > ITEM_SIZE ? ITEM_SIZE : count;
 	printk(KERN_DEBUG "scullBuffer: writing %d bytes \n", (int)count);
 	
+	//Put the user's data into item struct
 	newItem->size = count;
 	if (copy_from_user((void*)newItem->data, buf, count)) {
-		newItem->size = -1;
+		newItem->size = -1; //Identity for unused item struct
 		countWritten = -EFAULT;
 		goto out;
 	}
 
 	++dev->size;
+	
+	//Move ring buffer
 	dev->writeIndex = (dev->writeIndex+1) % scull_size;
 	countWritten = count;
-	/* write data to the buffer */
-	//if (copy_from_user(dev->bufferPtr + *f_pos, buf, count)) {
-	//	countWritten = -EFAULT;
-	//	goto out;
-	//}
 
-	//*f_pos += count;
-	//countWritten = count;
-	/* update the size of the device */
-	//dev->size = *f_pos;
 	printk(KERN_DEBUG "scullBuffer: new pos= (%d,%d), new size= %d \n",
 			dev->readIndex, dev->writeIndex, (int)dev->size);
 	out:

@@ -36,6 +36,7 @@ int main(int argc, char **argv) {
 	srand(time(NULL));
 	int producerID;
 
+	//Either choose a random ID or use the specified one
 	if ( argc > 1 )
 		producerID = atoi(argv[1]);
 	else
@@ -50,13 +51,26 @@ int main(int argc, char **argv) {
 			producerID, bufferSize);
 	
 	//Pick some ascii character between a-Z to fill the buffer
+	//65 is 'a' and there are 58 ascii characters between a-Z
 	char fillChar = 65 + (producerID % 58);
 	
 	fprintf(stdout, "Producer %d using character %c to fill buffer\n",
 			producerID, fillChar);
 	memset((void*)writeBuffer, fillChar, bufferSize);
 	
+	//Write producerID into data
 	sprintf(writeBuffer, "%d", producerID);
+	
+	/* I'm not sure if it is only in C++ but you can use
+	 * ternary operators as lvalues so you could write the
+	 * following as:
+	 * producerID < 10 ? writeBuffer[1] : writeBuffer[2] = fillChar
+	 *
+	 * Just something neat I wanted to throw out.
+	 * 
+	 * Anywyas, as an actual comment this is just for getting rid of
+	 * the null terminator after the sprintf.
+	 */
 	if (producerID < 10){
 		writeBuffer[1] = fillChar;
 	} else{
@@ -64,6 +78,7 @@ int main(int argc, char **argv) {
 	}
 	writeBuffer[bufferSize-1] = '\0';
 	
+	//Start filling up that buffer
 	int error;
 	while (true) {
 		error = 0;

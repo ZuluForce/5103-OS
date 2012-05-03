@@ -35,3 +35,5 @@ producer: producer.c
 
 consumer: consumer.c
 	$(CC) consumer.c -O2 -Wall -o consumer
+
+all: producer consumer modules

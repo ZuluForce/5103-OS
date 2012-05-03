@@ -56,6 +56,7 @@ int main(int argc, char **argv) {
 			} else {
 				fprintf(stderr, "Consumer: Read %d bytes\n", error);
 
+				//Copy the producerID to its own buffer for atoi
 				memcpy(producerID,readBuffer,2);
 				fprintf(stdout, "consumer: Message from producer (%d)-%s\n",
 						atoi(producerID), readBuffer+2);

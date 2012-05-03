@@ -1,0 +1,59 @@
+Group Members:
+Andrew Helgeson
+	x500: Helge206
+	ID#: 4013171
+Kevin Mehlhaff
+	x500: mehlh014
+	ID#: 3876070
+Dylan Bettermann
+	x500: bett0159
+	ID#: 3966450
+
+Build Instructions
+==================
+	$ make all
+		- Builds consumer, producer and the module
+
+	$ make clean
+		- Cleans out the module, its build files, and the producer/consumer
+
+	$ make producer/consumer
+		- Build just the producer/consumer respectively
+
+	The python load and unload scripts have not been modified.
+
+
+Implementation
+==============
+
+Internally the scullBuffer uses an array of 'item' structs. Each item struct
+holds a size referencing how much of the data in the item's 512 byte buffer
+is user data.
+
+Items(data) are added and removed from this array in a ring buffer method. The
+size of the scullBuffer's interal item array can be set at load time but it
+defaults to 64. Because we are using a fixed struct array for simplicity, even
+if many items are written that are less than 512 bytes the scullBuffer will still
+hold a maximum of 64 (or w/e was specified) items.
+
+	Producer
+	========
+		The producer is highly randomized so we could test many various
+		usage scenarios. There is a fair amount of documentation within
+		the source file for reference.
+
+	Consumer
+	========
+		The consumer simply makes a request for the max 512 byte item and
+		whatever it recieves it simply prints out. Since the first 1 or 2
+		bytes of the data is the producerID it extracts this and prints it
+		along with the message.
+
+	- Both the producer and consumer will run indefinitely but they can be killed
+	cleanly with Ctrl+C given their signal handlers.
+
+	- Producers will wait some random amount of time from 100ms to 1 second before trying to write again.
+	Consumers on the other hand will read as fast as possible. Whenever a producer or consumer
+	receives a 0 response from their respective system calls they block for	4 seconds before retrying the
+	call. Because of this it will likely happen that even with many producers and consumers running you
+	will see everyone simultaneously waiting for 4 seconds.
