@@ -58,8 +58,14 @@ int main(int argc, char **argv) {
 
 				//Copy the producerID to its own buffer for atoi
 				memcpy(producerID,readBuffer,2);
-				fprintf(stdout, "consumer: Message from producer (%d)-%s\n",
-						atoi(producerID), readBuffer+2);
+
+				if (atoi(producerID) < 10){
+					fprintf(stdout, "consumer: Message from producer (%d)-%s\n",
+							atoi(producerID), readBuffer+1);
+				} else {
+					fprintf(stdout, "consumer: Message from producer (%d)-%s\n",
+							atoi(producerID), readBuffer+2);
+				}
 			}
 		} while (error == 0);
 	}

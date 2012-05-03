@@ -23,6 +23,24 @@ Build Instructions
 	The python load and unload scripts have not been modified.
 
 
+Module Parameters
+=================
+	scull_size
+		Param Type: int
+		- The scull size represents the number of items the scullBuffer should hold.
+		It does not change the size of the items (512 bytes) in any way.
+
+	SCULL_MAJOR
+		Param Type: int
+		- You can pass in your own major number of the device but it should be left
+		as 0 for dynamic allocation.
+
+	SCULL_MINOR
+		Param Type: int
+		- Similarly, it should just be left to its default 0.
+
+
+
 Implementation
 ==============
 
@@ -56,4 +74,4 @@ hold a maximum of 64 (or w/e was specified) items.
 	Consumers on the other hand will read as fast as possible. Whenever a producer or consumer
 	receives a 0 response from their respective system calls they block for	4 seconds before retrying the
 	call. Because of this it will likely happen that even with many producers and consumers running you
-	will see everyone simultaneously waiting for 4 seconds.
+	will see everyone simultaneously waiting.
