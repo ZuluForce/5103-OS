@@ -30,14 +30,18 @@ Module Parameters
 		- The scull size represents the number of items the scullBuffer should hold.
 		It does not change the size of the items (512 bytes) in any way.
 
-	SCULL_MAJOR
+	scull_major
 		Param Type: int
 		- You can pass in your own major number of the device but it should be left
 		as 0 for dynamic allocation.
 
-	SCULL_MINOR
+	scull_minor
 		Param Type: int
 		- Similarly, it should just be left to its default 0.
+
+	In order to pass these to the scullBuffer module just add the given key=value pair along
+	with the load script. ie. "sudo ./load.py scull_size=10" to create a scullBuffer device
+	that can hold 10 items.
 
 
 
